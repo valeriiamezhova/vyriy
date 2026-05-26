@@ -1175,6 +1175,7 @@ h1 {
     border-radius: 8px;
     cursor: pointer;
     transition: color 0.2s;
+    white-space: nowrap;
 }
 
 .btn-preview:hover {
