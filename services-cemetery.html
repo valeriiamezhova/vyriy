@@ -112,6 +112,8 @@
         .sc-body-16 { font-size: 16px; font-weight: 500; line-height: 1.4; color: #2E5B79; margin: 0; }
         /* Body 14 — 14px | 140% | Medium */
         .sc-body-14 { font-size: 14px; font-weight: 500; line-height: 1.4; color: #2E5B79; margin: 0; }
+        /* Body 14 Accent — inline bold */
+        .sc-b14-accent { font-size: 14px; font-weight: 700; line-height: 1.4; color: #2E5B79; }
 
         /* ════════════════════════════════════════
            BREADCRUMB — white, above the white card
@@ -169,7 +171,7 @@
 
         /* ── HERO ── */
         .sc-hero-section {
-            padding: 64px 60px 0;
+            padding: 64px 103.5px 0;
             position: relative;
         }
 
@@ -272,7 +274,7 @@
 
         /* ── Sections inside white card ── */
         .sc-section-wrap {
-            padding: 0 60px 0;
+            padding: 0 103.5px 0;
         }
 
         /* Divider — 2px, #F1F1F1, rounded */
@@ -435,7 +437,7 @@
         .sc-faq-title-block {
             position: relative;
             text-align: center;
-            margin-bottom: 34px;
+            margin-bottom: 48px;
         }
         .sc-faq-blob {
             position: absolute;
@@ -454,8 +456,8 @@
         }
         .sc-faq-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            grid-template-columns: repeat(3, 336.33px);
+            gap: 32px;
             position: relative;
             z-index: 1;
         }
@@ -509,7 +511,7 @@
 
         /* 1300px — підлаштування відступів */
         @media (max-width: 1300px) {
-            .sc-hero-section { padding: 56px 80px 0; }
+            .sc-hero-section { padding: 56px 60px 0; }
             .sc-section-wrap { padding: 0 48px 0; }
         }
 
@@ -517,7 +519,7 @@
         @media (max-width: 1200px) {
             .sc-h1 { font-size: 52px; }
             .sc-h2 { font-size: 40px; }
-            .sc-hero-section { padding: 52px 60px 0; }
+            .sc-hero-section { padding: 52px 48px 0; }
             .sc-section-wrap { padding: 0 40px 0; }
             .sc-steps-col { width: 440px; }
             .sc-btn-light, .sc-btn-primary { width: 290px; font-size: 18px; }
@@ -746,17 +748,17 @@
 
             <div>
                 <p class="sc-h6">Чи можна забронювати місце на закритому кладовищі на майбутнє?</p>
-                <p class="sc-body-14">Ні, законодавство України забороняє приватизацію або завчасний продаж землі на закритих чи напівзакритих цвинтарях. Оформлення можливе лише за фактом смерті.</p>
+                <p class="sc-body-14">Ні, законодавство України <span class="sc-b14-accent">забороняє приватизацію або завчасний продаж землі.</span> на закритих чи напівзакритих цвинтарях. Оформлення можливе лише за фактом смерті.</p>
             </div>
 
             <div>
                 <p class="sc-h6">Який термін має пройти для підпоховання в родинну могилу?</p>
-                <p class="sc-body-14">За санітарними нормами, підпоховання труни в ту саму могилу дозволено щонайменше через 20 років після першого поховання. Для підпоховання урни з прахом часових обмежень немає.</p>
+                <p class="sc-body-14">За санітарними нормами, підпоховання труни в ту саму могилу дозволено <span class="sc-b14-accent">щонайменше через 20 років після першого поховання.</span> Для підпоховання урни з прахом часових обмежень немає.</p>
             </div>
 
             <div>
                 <p class="sc-h6">Що робити, якщо документи на родинну могилу втрачено?</p>
-                <p class="sc-body-14">Наші юристи допомагають відновити свідоцтво про поховання через архівні книги адміністрації кладовища або комерційного комунального підприємства.</p>
+                <p class="sc-body-14">Наші юристи <span class="sc-b14-accent">допомагають відновити свідоцтво</span> про поховання через архівні книги адміністрації кладовища або комерційного комунального підприємства.</p>
             </div>
 
         </div>
