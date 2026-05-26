@@ -1038,6 +1038,7 @@ h1 {
     display: flex;
     align-items: center;
     gap: 4px;
+    justify-content: flex-end;
 }
 
 .toolbar-center {
