@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вирій — Місце на кладовищі</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+
+        /* ════════════════════════════════════════
+           DESIGN SYSTEM — BRAND COLORS (correct)
+           25: #F6FBFF | 50: #E2F3FF | 100: #CEEBFF
+           200: #BAE3FF | 300: #A6DBFF | 400: #82BADF
+           500: #6298BD | 600: #45799B | 700: #2E5B79
+           800: #1B3F57 | 900: #0F2E43
+        ════════════════════════════════════════ */
+
+        /* PAGE BACKGROUND */
+        html {
+            background: linear-gradient(180deg, #6298BD 0%, #CEEBFF 45%, #F6FBFF 70%, #BAE3FF 100%);
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            background: transparent;
+            overflow-x: hidden;
+            max-width: 100vw;
+            position: relative;
+        }
+
+        /* All elements constrained to parent width */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            min-width: 0;
+        }
+
+        /* Header and footer inner containers — flexible */
+        .header-inner {
+            max-width: 1303px;
+            width: calc(100% - 80px);
+        }
+        .footer-top-container,
+        .footer-bottom-container {
+            max-width: 1280px;
+            width: calc(100% - 80px);
+        }
+
+        /* Images — constrained except absolute blobs */
+        img:not(.sc-blob):not(.sc-faq-blob):not(.sc-cta-bg) { max-width: 100%; }
+
+        /* ════════════════════════════════════════
+           TYPOGRAPHY — design system exact values
+        ════════════════════════════════════════ */
+
+        /* H1 / Desktop / AA — 64px | 120% | Bold | uppercase */
+        .sc-h1 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.2;
+            text-transform: uppercase;
+            color: #1B3F57;
+            margin: 0;
+        }
+        /* H2 / Desktop / AA — 48px | 120% | SemiBold | uppercase */
+        .sc-h2 {
+            font-size: 48px;
+            font-weight: 600;
+            line-height: 1.2;
+            text-transform: uppercase;
+            color: #1B3F57;
+            margin: 0 0 24px 0;
+        }
+        /* H3 / Desktop / AA — 24px | 120% | SemiBold | uppercase */
+        .sc-h3 {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.2;
+            text-transform: uppercase;
+            color: #1B3F57;
+            margin: 0 0 8px 0;
+        }
+        /* H4 / Desktop / Aa — 22px | 120% | SemiBold */
+        .sc-h4 {
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: #2E5B79;
+            margin: 0;
+        }
+        /* H5 / Desktop / Aa — 20px | 120% | SemiBold */
+        .sc-h5 {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: #1B3F57;
+            margin: 0 0 8px 0;
+        }
+        /* H6 / Desktop / Aa — 18px | 120% | Bold */
+        .sc-h6 {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #1B3F57;
+            margin: 0 0 12px 0;
+        }
+        /* Body 22 — 22px | 120% | Medium */
+        .sc-body-22 { font-size: 22px; font-weight: 500; line-height: 1.2; color: #2E5B79; margin: 0; }
+        /* Body 22 Accent — 22px | 120% | Bold */
+        .sc-body-22-accent { font-size: 22px; font-weight: 700; line-height: 1.2; color: #2E5B79; }
+        /* Body 16 — 16px | 140% | Medium */
+        .sc-body-16 { font-size: 16px; font-weight: 500; line-height: 1.4; color: #2E5B79; margin: 0; }
+        /* Body 14 — 14px | 140% | Medium */
+        .sc-body-14 { font-size: 14px; font-weight: 500; line-height: 1.4; color: #2E5B79; margin: 0; }
+
+        /* ════════════════════════════════════════
+           BREADCRUMB — white, above the white card
+        ════════════════════════════════════════ */
+        .sc-bc-bar {
+            max-width: 1280px;
+            width: calc(100% - 80px);
+            margin: 0 auto;
+            padding: 28px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sc-bc-link {
+            font-size: 16px;
+            font-weight: 500;
+            color: #FFFFFF;
+            text-decoration: none;
+            transition: opacity 0.15s;
+        }
+        .sc-bc-link:hover { opacity: 0.72; }
+        .sc-bc-sep {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: #FFFFFF;
+            mask-image: url('icons/chevron-right.svg');
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            -webkit-mask-image: url('icons/chevron-right.svg');
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+            flex-shrink: 0;
+        }
+        .sc-bc-current {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        /* ════════════════════════════════════════
+           WHITE CARD — single block for all content
+        ════════════════════════════════════════ */
+        .sc-white-card {
+            max-width: 1280px;
+            width: calc(100% - 80px);
+            margin: 0 auto 60px;
+            background: #FFFFFF;
+            border-radius: 34px;
+            overflow: hidden;
+            padding-bottom: 64px;
+        }
+
+        /* ── HERO ── */
+        .sc-hero-section {
+            padding: 64px 115px 0;
+            position: relative;
+        }
+
+        /* Title + blob — centred */
+        .sc-hero-title-block {
+            position: relative;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .sc-blob {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 860px;
+            height: auto;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.7;
+        }
+        .sc-hero-title-block .sc-h1 {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Description + price | Buttons */
+        .sc-hero-bottom {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .sc-hero-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+        .sc-price-block {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .sc-price-val {
+            font-size: 48px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: #1B3F57;
+            margin: 0;
+        }
+        .sc-hero-right {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Buttons — Button / Desktop / AA: 20px | 100% | Bold | uppercase */
+        .sc-btn-light {
+            width: 350px;
+            max-width: 100%;
+            height: 68px;
+            padding: 24px 34px;
+            box-sizing: border-box;
+            border: 2px solid #1B3F57;
+            border-radius: 62px;
+            background: #FFFFFF;
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1;
+            color: #1B3F57;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+        .sc-btn-light:hover { background: #FFFFFF; border-color: #45799B; color: #45799B; }
+
+        .sc-btn-primary {
+            width: 350px;
+            max-width: 100%;
+            height: 68px;
+            padding: 24px 34px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 62px;
+            background: #1B3F57;
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1;
+            color: #FFFFFF;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .sc-btn-primary:hover { background: #45799B; }
+
+        /* ── Sections inside white card ── */
+        .sc-section-wrap {
+            padding: 0 60px 0;
+        }
+
+        /* Divider — 2px, #F1F1F1, rounded */
+        .sc-divider {
+            border: none;
+            height: 2px;
+            background: #F1F1F1;
+            border-radius: 2px;
+            margin: 40px 0;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        /* ── Що входить у вартість ── */
+        .sc-cards-grid {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+        }
+        .sc-included-card {
+            flex: 1;
+            min-width: 256px;
+            background: #E2F3FF;
+            border-radius: 20px;
+            padding: 24px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .sc-check-wrap {
+            width: 54px;
+            height: 54px;
+            min-height: 54px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            flex-shrink: 0;
+        }
+        .sc-check-wrap::after {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background-color: #1B3F57;
+            mask-image: url('icons/check.svg');
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            -webkit-mask-image: url('icons/check.svg');
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+        }
+        /* card title: H3 gap 8px already in sc-h3 */
+        /* card text: sc-body-16 */
+
+        /* ── Як це відбувається ── */
+        .sc-how-layout {
+            display: flex;
+            align-items: flex-start;
+        }
+        .sc-steps-col {
+            width: 523px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Step card — brand-50 bg, border-radius 60px */
+        .sc-step-card {
+            width: 100%;
+            min-height: 96px;
+            padding: 12px 24px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            background: #E2F3FF;       /* brand-50 */
+            border-radius: 60px;       /* as specified */
+        }
+
+        /* Step number circle — WHITE, H3 style */
+        .sc-step-num {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            border-radius: 50%;
+            background: #FFFFFF;       /* white circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px;           /* H3 */
+            font-weight: 600;          /* SemiBold */
+            line-height: 1.2;
+            color: #1B3F57;            /* brand-800 */
+            flex-shrink: 0;
+        }
+        .sc-step-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Vertical divider between steps and docs */
+        .sc-how-vdivider {
+            width: 2px;
+            background: #F1F1F1;
+            border-radius: 2px;
+            margin: 0 34px;
+            flex-shrink: 0;
+            align-self: stretch;
+        }
+        .sc-docs-col { flex: 1; }
+        .sc-docs-card {
+            background: #45799B;       /* brand-600 */
+            border-radius: 20px;
+            padding: 16px 24px 24px;
+            box-sizing: border-box;
+        }
+        .sc-docs-title {
+            font-size: 18px;           /* H6 */
+            font-weight: 700;
+            line-height: 1.2;
+            color: #FFFFFF;
+            margin: 0 0 16px 0;
+        }
+        .sc-docs-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .sc-docs-list li {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: #FFFFFF;
+            padding-left: 16px;
+            position: relative;
+        }
+        .sc-docs-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #FFFFFF;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* ── FAQ ── */
+        .sc-faq-wrap {
+            position: relative;
+        }
+        .sc-faq-title-block {
+            position: relative;
+            text-align: center;
+            margin-bottom: 34px;
+        }
+        .sc-faq-blob {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 594px;
+            height: auto;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .sc-faq-title-block .sc-h2 {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 0;
+        }
+        .sc-faq-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ════════════════════════════════════════
+           CTA — on gradient, no white card
+        ════════════════════════════════════════ */
+        .sc-cta-section {
+            position: relative;
+            width: 100%;
+        }
+        .sc-cta-bg {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .sc-cta-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 960px;
+            width: calc(100% - 80px);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sc-cta-title {
+            font-size: 64px;           /* H1 */
+            font-weight: 700;
+            line-height: 1.2;
+            text-transform: uppercase;
+            color: #1B3F57;
+            margin: 0 0 20px 0;
+        }
+        .sc-cta-desc {
+            font-size: 22px;           /* body-22 */
+            font-weight: 500;
+            line-height: 1.2;
+            color: #2E5B79;
+            margin: 0 0 40px 0;
+            max-width: 788px;
+            width: 100%;
+        }
+
+        /* ════════════════════════════════════════
+           RESPONSIVE — desktop breakpoints
+        ════════════════════════════════════════ */
+
+        /* 1300px — підлаштування відступів */
+        @media (max-width: 1300px) {
+            .sc-hero-section { padding: 56px 80px 0; }
+            .sc-section-wrap { padding: 0 48px 0; }
+        }
+
+        /* 1200px — менші шрифти, менші відступи */
+        @media (max-width: 1200px) {
+            .sc-h1 { font-size: 52px; }
+            .sc-h2 { font-size: 40px; }
+            .sc-hero-section { padding: 52px 60px 0; }
+            .sc-section-wrap { padding: 0 40px 0; }
+            .sc-steps-col { width: 440px; }
+            .sc-btn-light, .sc-btn-primary { width: 290px; font-size: 18px; }
+        }
+
+        /* 1100px — 2-колоночні картки, кнопки вниз */
+        @media (max-width: 1100px) {
+            .sc-h1 { font-size: 44px; }
+            .sc-h2 { font-size: 36px; }
+            .sc-cards-grid { flex-wrap: wrap; }
+            .sc-included-card { min-width: calc(50% - 8px); flex: none; }
+            .sc-hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
+            .sc-hero-right { flex-direction: row; }
+            .sc-btn-light, .sc-btn-primary { width: 260px; }
+        }
+
+        /* 1024px — повна адаптація компонентів */
+        @media (max-width: 1024px) {
+            .sc-white-card, .sc-bc-bar { width: calc(100% - 40px); }
+            .sc-h1 { font-size: 36px; }
+            .sc-h2 { font-size: 30px; }
+            .sc-h3 { font-size: 20px; }
+            .sc-h4 { font-size: 18px; }
+            .sc-price-val { font-size: 36px; }
+            .sc-hero-section { padding: 44px 32px 0; }
+            .sc-section-wrap { padding: 0 32px 0; }
+            .sc-hero-blob { width: 600px; }
+            .sc-steps-col { width: 100%; }
+            .sc-how-layout { flex-direction: column; gap: 24px; }
+            .sc-how-vdivider { display: none; }
+            .sc-faq-grid { grid-template-columns: 1fr 1fr; }
+            .sc-cta-title { font-size: 44px; }
+            .sc-cta-inner { width: 90%; }
+            .sc-cta-desc { width: 100%; }
+            .sc-btn-light, .sc-btn-primary { width: 240px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     HEADER
+════════════════════════════════════ -->
+<header class="site-header">
+    <div class="header-inner">
+        <nav class="header-nav">
+            <a href="#" class="nav-item">Головна</a>
+            <a href="#" class="nav-item has-icon">Порядок дій</a>
+            <a href="#" class="nav-item has-icon">Товари</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Послуги</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="#" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item nav-dropdown-active">Місце на кладовищі</a>
+                    <a href="#" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="#" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="#" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="#" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="#" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="#" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="#" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="#" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="#" class="nav-item">Про нас</a>
+        </nav>
+        <div class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
+        </div>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="#" class="nav-dropdown-item">Онлайн-консультація</a>
+                    <a href="#" class="nav-dropdown-item">Групова підтримка</a>
+                    <a href="#" class="nav-dropdown-item">Корисні ресурси</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <div class="icon-placeholder cart-icon"></div>
+                <div class="icon-placeholder account-icon"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ════════════════════════════════════
+     BREADCRUMB — white text on gradient
+════════════════════════════════════ -->
+<nav class="sc-bc-bar">
+    <a href="#" class="sc-bc-link">Послуги</a>
+    <span class="sc-bc-sep"></span>
+    <span class="sc-bc-current">Місце на кладовищі</span>
+</nav>
+
+<!-- ════════════════════════════════════
+     SINGLE WHITE CARD (hero → FAQ)
+════════════════════════════════════ -->
+<div class="sc-white-card">
+
+    <!-- ── Hero ── -->
+    <div class="sc-hero-section">
+
+        <!-- Title + blob: CENTRED -->
+        <div class="sc-hero-title-block">
+            <img src="icons/blob_services.svg" alt="" class="sc-blob">
+            <h1 class="sc-h1">Підбір та оформлення<br>місця на кладовищі</h1>
+        </div>
+
+        <!-- Description + price | Buttons -->
+        <div class="sc-hero-bottom">
+            <div class="sc-hero-left">
+                <p class="sc-body-22">Повний юридичний та організаційний супровід процедури виділення, бронювання або підпоховання на кладовищах міста та області.</p>
+                <div class="sc-price-block">
+                    <p class="sc-h4">від</p>
+                    <p class="sc-price-val">4 500 ₴</p>
+                </div>
+            </div>
+            <div class="sc-hero-right">
+                <button class="sc-btn-light">Замовити консультацію</button>
+                <button class="sc-btn-primary">Додати в кошик</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── Що входить у вартість ── -->
+    <div class="sc-section-wrap">
+        <hr class="sc-divider">
+        <h2 class="sc-h2">Що входить у вартість</h2>
+        <div class="sc-cards-grid">
+
+            <div class="sc-included-card">
+                <div class="sc-check-wrap"></div>
+                <h3 class="sc-h3">Правовий аудит локацій</h3>
+                <p class="sc-body-16">Консультація щодо доступних статусів кладовищ (відкриті, напівзакриті, закриті).</p>
+            </div>
+
+            <div class="sc-included-card">
+                <div class="sc-check-wrap"></div>
+                <h3 class="sc-h3">Офіційне погодження</h3>
+                <p class="sc-body-16">Взаємодія з адміністрацією цвинтаря та оформлення офіційного договору.</p>
+            </div>
+
+            <div class="sc-included-card">
+                <div class="sc-check-wrap"></div>
+                <h3 class="sc-h3">Інспекція ділянки</h3>
+                <p class="sc-body-16">Виїзд агента на місце для перевірки, замірів та погодження території.</p>
+            </div>
+
+            <div class="sc-included-card">
+                <div class="sc-check-wrap"></div>
+                <h3 class="sc-h3">Родинне підпоховання</h3>
+                <p class="sc-body-16">Документальний супровід процесу поховання в існуючу родинну могилу (за потреби).</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ── Як це відбувається ── -->
+    <div class="sc-section-wrap">
+        <hr class="sc-divider">
+        <h2 class="sc-h2">Як це відбувається</h2>
+        <div class="sc-how-layout">
+
+            <!-- Steps: 523px, brand-50, br-60 -->
+            <div class="sc-steps-col">
+                <div class="sc-step-card">
+                    <div class="sc-step-num">1</div>
+                    <div class="sc-step-body">
+                        <p class="sc-h5">Аналіз запиту</p>
+                        <p class="sc-body-14">Визначення бажаного кладовища та типу поховання (нове чи родинне).</p>
+                    </div>
+                </div>
+                <div class="sc-step-card">
+                    <div class="sc-step-num">2</div>
+                    <div class="sc-step-body">
+                        <p class="sc-h5">Перевірка документів</p>
+                        <p class="sc-body-14">Перевірка правових підстав (особливо для підпоховання).</p>
+                    </div>
+                </div>
+                <div class="sc-step-card">
+                    <div class="sc-step-num">3</div>
+                    <div class="sc-step-body">
+                        <p class="sc-h5">Оформлення</p>
+                        <p class="sc-body-14">Отримання офіційного дозволу від адміністрації та закріплення ділянки.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vertical divider: 34px each side -->
+            <div class="sc-how-vdivider"></div>
+
+            <!-- Necessary documents: brand-600 -->
+            <div class="sc-docs-col">
+                <div class="sc-docs-card">
+                    <p class="sc-docs-title">Необхідні документи</p>
+                    <ul class="sc-docs-list">
+                        <li>Свідоцтво про смерть (оригінал).</li>
+                        <li>Паспорт заявника (родича або представника).</li>
+                        <li>Для підпоховання: документи, що підтверджують родинний зв'язок із раніше похованим, та оригінал свідоцтва про його смерть.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ── Питання та відповіді ── -->
+    <div class="sc-section-wrap sc-faq-wrap">
+        <hr class="sc-divider">
+        <div class="sc-faq-title-block">
+            <img src="img/blob_services-2.png" alt="" class="sc-faq-blob">
+            <h2 class="sc-h2">Питання та відповіді</h2>
+        </div>
+        <div class="sc-faq-grid">
+
+            <div>
+                <p class="sc-h6">Чи можна забронювати місце на закритому кладовищі на майбутнє?</p>
+                <p class="sc-body-14">Ні, законодавство України забороняє приватизацію або завчасний продаж землі на закритих чи напівзакритих цвинтарях. Оформлення можливе лише за фактом смерті.</p>
+            </div>
+
+            <div>
+                <p class="sc-h6">Який термін має пройти для підпоховання в родинну могилу?</p>
+                <p class="sc-body-14">За санітарними нормами, підпоховання труни в ту саму могилу дозволено щонайменше через 20 років після першого поховання. Для підпоховання урни з прахом часових обмежень немає.</p>
+            </div>
+
+            <div>
+                <p class="sc-h6">Що робити, якщо документи на родинну могилу втрачено?</p>
+                <p class="sc-body-14">Наші юристи допомагають відновити свідоцтво про поховання через архівні книги адміністрації кладовища або комерційного комунального підприємства.</p>
+            </div>
+
+        </div>
+    </div>
+
+</div><!-- /sc-white-card -->
+
+<!-- ════════════════════════════════════
+     CTA — directly on gradient, no card
+════════════════════════════════════ -->
+<section class="sc-cta-section">
+    <img src="img/services_cloud.png" alt="" class="sc-cta-bg">
+    <div class="sc-cta-inner">
+        <h2 class="sc-cta-title">Залишилися запитання<br>або потрібна допомога?</h2>
+        <p class="sc-cta-desc"><span class="sc-body-22-accent">Ми на зв'язку 24/7.</span> Отримайте пряму, спокійну та безкоштовну консультацію без жодних зобов'язань.</p>
+        <button class="sc-btn-primary" style="width: auto; padding: 0 34px;">Консультація</button>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Головна</a></li>
+                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="#">Готові пакети</a></li>
+                        <li><a href="#">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
