@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вирій — Сторінка пам'яті</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="share-overlay" id="share-overlay" onclick="closeShare()" style="display:none"></div>
+<div class="share-modal" id="share-modal" style="display:none">
+    <div class="share-header">
+        <div class="share-title-row">
+            <span class="btn-icon users-icon share-title-icon"></span>
+            <h4 class="share-title">Поділитися</h4>
+        </div>
+        <button class="share-close" onclick="closeShare()">
+            <span class="btn-icon close-icon"></span>
+        </button>
+    </div>
+
+    <div class="share-body">
+        <div class="share-section">
+            <p class="share-label">Додати користувача</p>
+            <div class="share-input-wrap">
+                <span class="btn-icon share-email-icon"></span>
+                <input type="email" class="share-input" placeholder="">
+            </div>
+        </div>
+
+        <div class="share-section">
+            <p class="share-users-title">Користувачі, що мають доступ</p>
+            <div class="share-users-list">
+                <div class="share-user">
+                    <img src="img/user_irina.jpg" class="share-avatar" alt="Ірина">
+                    <div class="share-user-info">
+                        <p class="share-user-name">Ірина (Ви)</p>
+                        <p class="share-user-email">пошта@gmail.com</p>
+                    </div>
+                    <span class="share-user-role">Власник</span>
+                </div>
+                <div class="share-user">
+                    <img src="img/user_olena.jpg" class="share-avatar" alt="Олена">
+                    <div class="share-user-info">
+                        <p class="share-user-name">Олена</p>
+                        <p class="share-user-email">o.melnyk@gmail.com</p>
+                    </div>
+                    <span class="share-user-role">Користувач</span>
+                    <button class="share-delete-btn">
+                        <span class="btn-icon trash-icon"></span>
+                    </button>
+                </div>
+                <div class="share-user">
+                    <img src="img/user_artem.jpg" class="share-avatar" alt="Артем">
+                    <div class="share-user-info">
+                        <p class="share-user-name">Артем</p>
+                        <p class="share-user-email">artem.bond@gmail.com</p>
+                    </div>
+                    <span class="share-user-role">Користувач</span>
+                    <button class="share-delete-btn">
+                        <span class="btn-icon trash-icon"></span>
+                    </button>
+                </div>
+                <div class="share-user">
+                    <img src="img/user_viktor.jpg" class="share-avatar" alt="Віктор">
+                    <div class="share-user-info">
+                        <p class="share-user-name">Віктор</p>
+                        <p class="share-user-email">v.poberezhny@gmail.com</p>
+                    </div>
+                    <span class="share-user-role">Користувач</span>
+                    <button class="share-delete-btn">
+                        <span class="btn-icon trash-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="share-section">
+            <p class="share-users-title">Загальний доступ</p>
+            <div class="share-access-row">
+                <div class="share-access-icon-wrap open" id="lock-icon-wrap" onclick="toggleLockMenu()">
+                    <span class="btn-icon lock-open-icon" id="lock-icon"></span>
+                </div>
+                <div class="share-access-info">
+                    <div class="share-access-title-row">
+                        <div class="share-lock-select">
+                            <span class="share-access-title" id="lock-label">Усі, хто має посилання</span>
+                            <button class="share-lock-btn" onclick="toggleLockMenu()">
+                                <span class="btn-icon chevron-down-icon"></span>
+                            </button>
+                            <div class="share-lock-dropdown" id="share-lock-dropdown" style="display:none">
+                                <div class="share-access-option" onclick="setLock('open')">
+                                    Усі, хто має посилання
+                                </div>
+                                <div class="share-access-option" onclick="setLock('closed')">
+                                    Обмежений доступ
+                                </div>
+                            </div>
+                        </div>
+                        <div class="share-access-select" id="share-access-select">
+                            <button class="share-access-btn" id="access-mode-btn" onclick="toggleAccessMenu()">
+                                <span id="access-label">Може переглядати</span>
+                                <span class="btn-icon chevron-down-icon"></span>
+                            </button>
+                            <div class="share-access-dropdown" id="share-access-dropdown" style="display:none">
+                                <div class="share-access-option" onclick="setAccess('viewer')">Може переглядати</div>
+                                <div class="share-access-option" onclick="setAccess('editor')">Може редагувати</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="share-access-description" id="share-access-desc">
+                        Усі користувачі, які мають це посилання, можуть переглядати
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="share-footer">
+        <button class="share-copy-btn">
+            <span class="btn-icon link-icon"></span>
+            Копіювати посилання
+        </button>
+        <button class="share-qr-btn">Згенерувати QR-код</button>
+    </div>
+</div>
+
+<header class="site-header">
+    <div class="header-inner">
+        <nav class="header-nav">
+            <a href="#" class="nav-item">Головна</a>
+            <a href="#" class="nav-item has-icon">Порядок дій</a>
+            <a href="#" class="nav-item has-icon">Товари</a>
+            <a href="#" class="nav-item has-icon">Послуги</a>
+            <a href="#" class="nav-item">Про нас</a>
+        </nav>
+        <div class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
+        </div>
+        <div class="header-right">
+            <div class="header-contacts">
+                <a href="mailto:info@vyriy.ua">info@vyriy.ua</a>
+                <span class="separator">|</span>
+                <a href="tel:+380000000000">+380 (00) 000 00 00</a>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <div class="icon-placeholder cart-icon"></div>
+                <div class="icon-placeholder account-icon"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="editor-toolbar" id="editor-toolbar">
+    <div class="toolbar-left">
+        <button class="toolbar-btn has-dropdown" onclick="toggleMenu('blocks')">Блоки</button>
+        <button class="toolbar-btn has-dropdown" onclick="toggleMenu('media')">Медіа</button>
+        <button class="toolbar-btn has-dropdown" onclick="toggleMenu('bg')">Фон</button>
+        <button class="toolbar-btn has-dropdown" onclick="toggleMenu('decor')">Декор</button>
+        <div class="toolbar-divider"></div>
+        <button class="toolbar-btn toolbar-btn-icon-left" onclick="toggleLayers()">
+            <span class="btn-icon layers-icon"></span>
+            Шари
+        </button>
+        <div class="toolbar-divider"></div>
+    </div>
+    <div class="toolbar-center">
+        <div class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
+            <span class="btn-icon sun-icon theme-icon-active"></span>
+        </div>
+        <div class="toolbar-divider"></div>
+        <button class="toolbar-icon-btn" onclick="undoAction()">
+            <span class="btn-icon undo-icon"></span>
+        </button>
+        <button class="toolbar-icon-btn" onclick="redoAction()">
+            <span class="btn-icon redo-icon"></span>
+        </button>
+        <div class="toolbar-divider"></div>
+        <button class="zoom-btn" onclick="toggleZoom()">
+            <span class="btn-icon zoom-in-icon" id="zoom-icon"></span>
+            <span id="zoom-label">100%</span>
+        </button>
+        <div class="toolbar-divider"></div>
+        <div class="save-cloud" id="save-cloud">
+            <span class="btn-icon cloud-icon"></span>
+        </div>
+        <div class="toolbar-divider"></div>
+    </div>
+    <div class="toolbar-right">
+        <button class="btn-preview">Попередній перегляд</button>
+        <button class="btn-publish">Опублікувати</button>
+        <button class="btn-share" onclick="openShare()">
+            <span class="btn-icon users-icon"></span>
+            Поділитися
+        </button>
+    </div>
+</div>
+
+<div class="dropdown-menu" id="menu-blocks">
+    <div class="dropdown-item">
+        <img src="icons/block_hero.svg" alt="Титульний блок" class="dropdown-preview">
+        <span>Титульний блок</span>
+    </div>
+    <div class="dropdown-item">
+        <img src="icons/block_bio.svg" alt="Біографія" class="dropdown-preview">
+        <span>Біографія</span>
+    </div>
+    <div class="dropdown-item">
+        <img src="icons/block_world.svg" alt="Світ людини" class="dropdown-preview">
+        <span>Світ людини</span>
+    </div>
+    <div class="dropdown-item">
+        <img src="icons/block_memory_left.svg" alt="Спогади (ліворуч)" class="dropdown-preview">
+        <span>Спогади (ліворуч)</span>
+    </div>
+    <div class="dropdown-item">
+        <img src="icons/block_memory_right.svg" alt="Спогади (праворуч)" class="dropdown-preview">
+        <span>Спогади (праворуч)</span>
+    </div>
+    <div class="dropdown-item">
+        <img src="icons/block_video.svg" alt="Відео" class="dropdown-preview">
+        <span>Відео</span>
+    </div>
+    <div class="dropdown-item">
+        <img src="icons/block_quote.svg" alt="Цитата" class="dropdown-preview">
+        <span>Цитата</span>
+    </div>
+    <div class="dropdown-item">
+        <img src="icons/block_family.svg" alt="Вшанування" class="dropdown-preview">
+        <span>Вшанування</span>
+    </div>
+</div>
+
+<div class="dropdown-menu" id="menu-media">
+    <button class="dropdown-upload-btn">Передати файли</button>
+    <div class="dropdown-tabs">
+        <button class="dropdown-tab active" onclick="switchTab(this, 'media-images')">Зображення</button>
+        <button class="dropdown-tab" onclick="switchTab(this, 'media-video')">Відео</button>
+    </div>
+    <div class="dropdown-tab-content" id="media-images">
+        <div class="dropdown-grid">
+            <div class="dropdown-grid-item"><img src="img/memory1.jpg"></div>
+            <div class="dropdown-grid-item"><img src="img/memory2.jpg"></div>
+        </div>
+    </div>
+    <div class="dropdown-tab-content" id="media-video" style="display:none">
+        <p class="dropdown-empty">Відео поки не додані</p>
+    </div>
+</div>
+
+<div class="dropdown-menu" id="menu-bg">
+    <button class="dropdown-upload-btn">Передати файли</button>
+    <p class="dropdown-size-hint">Рекомендований розмір: 1440 × 900 px</p>
+    <div class="dropdown-tabs">
+        <button class="dropdown-tab active" onclick="switchTab(this, 'bg-templates')">Шаблони</button>
+        <button class="dropdown-tab" onclick="switchTab(this, 'bg-added')">Додані</button>
+    </div>
+    <div class="dropdown-tab-content" id="bg-templates">
+        <div class="dropdown-grid">
+            <div class="dropdown-grid-item bg-item" style="background: linear-gradient(to bottom, #FFFFFF 0%, #E2F3FF 31%, #F1F8FF 59%, #C4DFF2 81%, #82BADF 100%)"></div>
+            <div class="dropdown-grid-item bg-item" style="background: linear-gradient(to bottom, #6298BD 0%, #BAE3FF 46%, #F4FAFF 92%)"></div>
+            <div class="dropdown-grid-item bg-item" style="background: linear-gradient(to bottom, #1B3F57 0%, #6298BD 44%, #F6FBFF 92%)"></div>
+            <div class="dropdown-grid-item bg-item" style="background: #F6FBFF"></div>
+        </div>
+    </div>
+    <div class="dropdown-tab-content" id="bg-added" style="display:none">
+        <p class="dropdown-empty">Фони поки не додані</p>
+    </div>
+</div>
+
+<div class="dropdown-menu" id="menu-decor">
+    <button class="dropdown-upload-btn">Передати файли</button>
+    <div class="dropdown-tabs">
+        <button class="dropdown-tab active" onclick="switchTab(this, 'decor-brand')">Фірмовий</button>
+        <button class="dropdown-tab" onclick="switchTab(this, 'decor-added')">Доданий</button>
+    </div>
+    <div class="dropdown-tab-content" id="decor-brand">
+        <div class="dropdown-grid">
+            <div class="dropdown-grid-item"><img src="img/sticker_lego.png"></div>
+            <div class="dropdown-grid-item"><img src="img/sticker_notes.png"></div>
+            <div class="dropdown-grid-item"><img src="img/sticker_chestnut.png"></div>
+            <div class="dropdown-grid-item"><img src="img/sticker_tree.png"></div>
+            <div class="dropdown-grid-item"><img src="img/sticker_strudel.png"></div>
+            <div class="dropdown-grid-item"><img src="img/sticker_vinyl.png"></div>
+        </div>
+    </div>
+    <div class="dropdown-tab-content" id="decor-added" style="display:none">
+        <div class="dropdown-grid"></div>
+    </div>
+</div>
+
+<div class="layers-window" id="layers-window" style="display:none">
+    <div class="layers-header" id="layers-drag-handle">
+        <div class="layers-title">
+            <span class="btn-icon layers-icon"></span>
+            <span>Шари</span>
+        </div>
+        <button class="layers-close" onclick="toggleLayers()">
+            <span class="btn-icon close-icon"></span>
+        </button>
+    </div>
+    <div class="layers-list"></div>
+</div>
+
+<main id="page-canvas">
+    <div class="container">
+
+        <div class="page-control-layer">
+            <div class="warning-badge">
+                <div class="warning-icon"></div>
+                <p class="warning-text">Матеріали додані користувачем. Сторінка не проходила офіційну перевірку агенцією.</p>
+            </div>
+            <button class="edit-page-btn">
+                <div class="edit-icon"></div>
+            </button>
+        </div>
+
+        <p class="page-label">Сторінка пам'яті</p>
+
+        <section class="hero-block page-editable-block">
+            <div class="hero-photo">
+    <img src="img/alex.jpg" alt="Олександр Мельник" class="photo-img">
+    <div class="photo-placeholder">
+        <button class="placeholder-add-btn placeholder-add-photo-btn">Додати фото</button>
+    </div>
+</div>
+            <div class="hero-right">
+                <img src="img/sticker_building.png" alt="Будівля" class="hero-building-sticker">
+                <div class="hero-info">
+                    <h1>Олександр Мельник</h1>
+                    <p class="dates">15.05.1950 – 24.04.2024</p>
+                </div>
+                <div class="quote-wrapper">
+                    <p class="quote-text">«Ми будуємо міста, але насправді міста будують нас»</p>
+                    <p class="quote-author">О. Мельник</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bio-block page-editable-block">
+            <h2 class="section-title">БІОГРАФІЯ</h2>
+            <div class="bio-content">
+                <div class="bio-column">
+                    <p>Олександр Мельник народився у 1950 році у Львові, в родині, де архітектура була не просто професією, а мовою спілкування. Дитинство, проведене серед креслень та прогулянок вузькими вуличками старого міста, визначило його подальший шлях.</p>
+                    <p>Він не просто відновлював фасади — він шукав душу кожної будівлі. Його колеги згадують, як Олександр міг годинами вивчати фактуру старої цегли, намагаючись відтворити оригінальний розчин.</p>
+                </div>
+                <div class="bio-column">
+                    <p>Окрім професійної діяльності, Олександр був людиною глибоких захоплень. Його домашня майстерня завжди пахла деревом та каніфоллю, а вечорами з вікон часто було чути звуки скрипки. Він любив Львів особливою, тихою любов'ю.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="human-world-section page-editable-block">
+            <div class="human-world-container">
+                <h2 class="section-title">СВІТ ЛЮДИНИ</h2>
+                <div class="world-grid">
+                    <div class="world-card">
+        <div class="sticker-frame">
+            <div class="sticker-frame-placeholder">
+                <button class="frame-add-photo-btn">Фото</button>
+                <button class="frame-add-sticker-btn">Стікер</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <h3>ДЕВІЗ:</h3>
+            <p>«Будувати не стіни, а мости».</p>
+        </div>
+    </div>
+    <div class="world-card">
+        <div class="sticker-frame">
+            <div class="sticker-frame-placeholder">
+                <button class="frame-add-photo-btn">Фото</button>
+                <button class="frame-add-sticker-btn">Стікер</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <h3>ХОБІ:</h3>
+            <p>Реставрація старих меблів та гра на скрипці вечорами.</p>
+        </div>
+    </div>
+    <div class="world-card">
+        <div class="sticker-frame">
+            <div class="sticker-frame-placeholder">
+                <button class="frame-add-photo-btn">Фото</button>
+                <button class="frame-add-sticker-btn">Стікер</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <h3>МРІЯ:</h3>
+            <p>Побачити, як посаджені ним каштани стануть вищими за дахи міста.</p>
+        </div>
+    </div>
+    <div class="world-card">
+        <div class="sticker-frame">
+            <div class="sticker-frame-placeholder">
+                <button class="frame-add-photo-btn">Фото</button>
+                <button class="frame-add-sticker-btn">Стікер</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <h3>УЛЮБЛЕНА ЇЖА</h3>
+            <p>Яблучний штрудель з корицею</p>
+        </div>
+    </div>
+    <div class="world-card">
+        <div class="sticker-frame">
+            <div class="sticker-frame-placeholder">
+                <button class="frame-add-photo-btn">Фото</button>
+                <button class="frame-add-sticker-btn">Стікер</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <h3>УЛЮБЛЕНІ ПІСНІ:</h3>
+            <p>Мирослав Скорик — «Мелодія»</p>
+        </div>
+    </div>
+</div>
+<button class="world-add-card-btn">
+    <span class="btn-icon plus-circle-icon"></span>
+    Додати картку
+</button>
+            </div>
+        </section>
+
+        <div class="memory-section-block page-editable-block">            <div class="memory-content">
+                <h2>СПОГАДИ</h2>
+                <p>«Тато завжди знав, як виправити будь-яку поломку — і в будинку, і в настрої. Його сміх був найкращими ліками».</p>
+            </div>
+            <div class="memory-photo">
+    <img src="img/memory1.jpg" alt="Спогад" class="photo-img">
+    <div class="photo-placeholder">
+        <button class="placeholder-add-btn placeholder-add-photo-btn">Додати фото</button>
+    </div>
+</div>
+        </div>
+
+        <div class="memory-section-block page-editable-block">
+            <div class="memory-photo">
+    <img src="img/memory2.jpg" alt="Спогад" class="photo-img">
+    <div class="photo-placeholder">
+        <button class="placeholder-add-btn placeholder-add-photo-btn">Додати фото</button>
+    </div>
+</div>
+            <img src="img/sticker_tree.png" alt="Дерево" class="memory-tree-sticker">
+            <div class="memory-content">
+                <h2>СПОГАДИ</h2>
+                <p>Олександр мав унікальну здатність бачити красу в деталях, які інші часто не помічали.</p>
+            </div>
+        </div>
+
+        <section class="video-block page-editable-block">
+            <h2 class="section-title">МИ</h2>
+            <p class="video-description">«Тато завжди знав, як виправити будь-яку поломку — і в будинку, і в настрої. Його сміх був найкращими ліками».</p>
+            <div class="video-player">
+                <img src="img/video.jpg" alt="Відео" class="video-thumbnail photo-img">
+                <div class="photo-placeholder">
+                    <button class="placeholder-add-btn placeholder-add-video-btn">Додати відео</button>
+                </div>
+                <div class="video-ui" style="display:none">
+                    <div class="video-play-overlay">
+                        <button class="video-play-big"></button>
+                    </div>
+                    <div class="video-bar">
+                        <div class="video-seek-row">
+                            <input type="range" class="video-seek" min="0" max="100" value="0" step="0.1">
+                        </div>
+                        <div class="video-bar-controls">
+                            <div class="video-bar-left">
+                                <button class="video-play-btn"></button>
+                                <span class="video-time">0:00 / 0:00</span>
+                            </div>
+                            <div class="video-bar-right">
+                                <select class="video-speed">
+                                    <option value="0.5">0.5×</option>
+                                    <option value="1" selected>1×</option>
+                                    <option value="1.5">1.5×</option>
+                                    <option value="2">2×</option>
+                                </select>
+                                <button class="video-mute-btn"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </div>
+
+    <section class="quote-cloud-section page-editable-block">
+        <div class="top-cloud-quote">
+            <div class="cloud-quote-inner-box">
+                <p class="cloud-quote-text">«Сенс життя не в тому, щоб залишити після себе стіни, а в тому, щоб залишити після себе світло в очах тих, хто йде за нами».</p>
+                <p class="cloud-quote-author">О. Мельник</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="family-tribute-section page-editable-block">
+        <img src="img/clouds_bg.svg" alt="Вшанування пам'яті — Хмари та птахи" class="bg-clouds-layer">
+        <div class="family-tribute-container">
+            <div class="family-memory-card">
+                <h1>ВІД РОДИНИ</h1>
+                <p class="family-memory-text">
+                    «Твоє життя було архітектурою доброти. Ти навчив нас будувати не просто стіни, а дім, де завжди чекають. Твій голос продовжує звучати в кожному посадженому дереві та в кожній відновленій брамі нашого міста. Ми не кажемо "прощавай", ми кажемо "дякуємо за світло", яке ти залишив у наших серцях. Спочивай з миром, наш головний архітекторе».
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ПАНЕЛЬ ПЕРЕГЛЯДУ -->
+<div class="preview-panel" id="preview-panel" style="display:none">
+    <span class="preview-panel-label">Режим перегляду</span>
+    <div class="preview-panel-actions">
+        <button class="preview-panel-exit-btn" onclick="exitPreviewMode()">Вийти</button>
+        <button class="preview-panel-share-btn" onclick="openShare()">
+            <span class="btn-icon users-icon preview-share-icon"></span>
+            Поділитися
+        </button>
+        <button class="preview-panel-publish-btn" onclick="openPublishModal()">Опублікувати</button>
+    </div>
+</div>
+
+<!-- МОДАЛЬНЕ ВІКНО ПУБЛІКАЦІЇ -->
+<div class="publish-modal-overlay" id="publish-modal" style="display:none">
+    <div class="publish-modal-box">
+        <div class="publish-check">
+            <span class="btn-icon check-icon" style="width:28px;height:28px;background:#6298BD;"></span>
+        </div>
+        <h2 class="publish-modal-title">Сторінку опубліковано</h2>
+        <p class="publish-modal-desc">Сторінку пам'яті успішно створено. Ви можете знайти її у своєму профілі.</p>
+        <div class="publish-url-row">
+            <span class="publish-url-text" id="publish-url-text">viriy.ua/memory/сторінка</span>
+        </div>
+        <div class="publish-link-actions">
+            <button class="publish-copy-link-btn" onclick="copyPublishUrl()">
+                <span class="btn-icon link-icon publish-link-icon"></span>
+                Копіювати посилання
+            </button>
+            <button class="publish-qr-btn">Згенерувати QR-код</button>
+        </div>
+        <div class="publish-modal-actions">
+            <button class="publish-close-btn" onclick="closePublishModal()">Закрити</button>
+            <button class="publish-profile-btn">Перейти до профілю</button>
+        </div>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Головна</a></li>
+                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="#">Готові пакети</a></li>
+                        <li><a href="#">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<!-- ПАНЕЛЬ КЕРУВАННЯ БЛОКОМ -->
+<div class="block-toolbar" id="block-toolbar" style="display:none">
+    <button class="block-toolbar-btn" id="btn-move-up" title="Вгору">
+        <span class="btn-icon arrow-up-icon"></span>
+    </button>
+    <button class="block-toolbar-btn" id="btn-move-down" title="Вниз">
+        <span class="btn-icon arrow-down-icon"></span>
+    </button>
+    <div class="block-toolbar-divider"></div>
+    <button class="block-toolbar-btn block-toolbar-btn-delete" id="btn-delete-block" title="Видалити">
+        <span class="btn-icon close-icon"></span>
+    </button>
+</div>
+</body>
+</html>
