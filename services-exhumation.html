@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вирій — Місце на кладовищі</title>
+    <title>Вирій — Ексгумація та перепоховання</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -18,7 +18,7 @@
 
         /* PAGE BACKGROUND */
         html {
-            background: linear-gradient(180deg, #6298BD 0%, #CEEBFF 45%, #F6FBFF 70%, #BAE3FF 100%);
+            background: linear-gradient(180deg, #A6DBFF 0%, #BAE3FF 50%, #F4FAFF 100%);
             min-height: 100%;
             overflow-x: hidden;
         }
@@ -29,13 +29,11 @@
             position: relative;
         }
 
-        /* All elements constrained to parent width */
         *, *::before, *::after {
             box-sizing: border-box;
             min-width: 0;
         }
 
-        /* Header and footer inner containers — flexible */
         .header-inner {
             max-width: 1303px;
             width: calc(100% - 80px);
@@ -46,14 +44,11 @@
             width: calc(100% - 80px);
         }
 
-        /* Images — constrained except absolute blobs */
         img:not(.sc-blob):not(.sc-faq-blob):not(.sc-cta-bg) { max-width: 100%; }
 
         /* ════════════════════════════════════════
-           TYPOGRAPHY — design system exact values
+           TYPOGRAPHY
         ════════════════════════════════════════ */
-
-        /* H1 / Desktop / AA — 64px | 120% | Bold | uppercase */
         .sc-h1 {
             font-size: 64px;
             font-weight: 700;
@@ -62,7 +57,6 @@
             color: #1B3F57;
             margin: 0;
         }
-        /* H2 / Desktop / AA — 48px | 120% | SemiBold | uppercase */
         .sc-h2 {
             font-size: 48px;
             font-weight: 600;
@@ -71,7 +65,6 @@
             color: #1B3F57;
             margin: 0 0 24px 0;
         }
-        /* H3 / Desktop / AA — 24px | 120% | SemiBold | uppercase */
         .sc-h3 {
             font-size: 24px;
             font-weight: 600;
@@ -80,7 +73,6 @@
             color: #1B3F57;
             margin: 0 0 8px 0;
         }
-        /* H4 / Desktop / Aa — 22px | 120% | SemiBold */
         .sc-h4 {
             font-size: 22px;
             font-weight: 600;
@@ -88,7 +80,6 @@
             color: #2E5B79;
             margin: 0;
         }
-        /* H5 / Desktop / Aa — 20px | 120% | SemiBold */
         .sc-h5 {
             font-size: 20px;
             font-weight: 600;
@@ -96,7 +87,6 @@
             color: #1B3F57;
             margin: 0 0 8px 0;
         }
-        /* H6 / Desktop / Aa — 18px | 120% | Bold */
         .sc-h6 {
             font-size: 18px;
             font-weight: 700;
@@ -104,19 +94,14 @@
             color: #1B3F57;
             margin: 0 0 12px 0;
         }
-        /* Body 22 — 22px | 120% | Medium */
         .sc-body-22 { font-size: 22px; font-weight: 500; line-height: 1.2; color: #2E5B79; margin: 0; }
-        /* Body 22 Accent — 22px | 120% | Bold */
         .sc-body-22-accent { font-size: 22px; font-weight: 700; line-height: 1.2; color: #2E5B79; }
-        /* Body 16 — 16px | 140% | Medium */
         .sc-body-16 { font-size: 16px; font-weight: 500; line-height: 1.4; color: #2E5B79; margin: 0; }
-        /* Body 14 — 14px | 140% | Medium */
         .sc-body-14 { font-size: 14px; font-weight: 500; line-height: 1.4; color: #2E5B79; margin: 0; }
-        /* Body 14 Accent — inline bold */
         .sc-b14-accent { font-size: 14px; font-weight: 700; line-height: 1.4; color: #2E5B79; }
 
         /* ════════════════════════════════════════
-           BREADCRUMB — white, above the white card
+           BREADCRUMB — brand-800
         ════════════════════════════════════════ */
         .sc-bc-bar {
             max-width: 1280px;
@@ -130,7 +115,7 @@
         .sc-bc-link {
             font-size: 16px;
             font-weight: 500;
-            color: #FFFFFF;
+            color: #1B3F57;
             text-decoration: none;
             transition: opacity 0.15s;
         }
@@ -139,7 +124,7 @@
             display: inline-block;
             width: 16px;
             height: 16px;
-            background-color: #FFFFFF;
+            background-color: #1B3F57;
             mask-image: url('icons/chevron-right.svg');
             mask-repeat: no-repeat;
             mask-position: center;
@@ -153,11 +138,11 @@
         .sc-bc-current {
             font-size: 16px;
             font-weight: 700;
-            color: #FFFFFF;
+            color: #1B3F57;
         }
 
         /* ════════════════════════════════════════
-           WHITE CARD — single block for all content
+           WHITE CARD
         ════════════════════════════════════════ */
         .sc-white-card {
             max-width: 1280px;
@@ -174,8 +159,6 @@
             padding: 64px 103.5px 0;
             position: relative;
         }
-
-        /* Title + blob — centred */
         .sc-hero-title-block {
             position: relative;
             text-align: center;
@@ -196,8 +179,6 @@
             position: relative;
             z-index: 1;
         }
-
-        /* Description + price | Buttons */
         .sc-hero-bottom {
             display: flex;
             align-items: center;
@@ -229,7 +210,6 @@
             flex-shrink: 0;
         }
 
-        /* Buttons — Button / Desktop / AA: 20px | 100% | Bold | uppercase */
         .sc-btn-light {
             width: 350px;
             max-width: 100%;
@@ -272,12 +252,9 @@
         }
         .sc-btn-primary:hover { background: #45799B; }
 
-        /* ── Sections inside white card ── */
         .sc-section-wrap {
             padding: 0 103.5px 0;
         }
-
-        /* Divider — 2px, #F1F1F1, rounded */
         .sc-divider {
             border: none;
             height: 2px;
@@ -330,8 +307,6 @@
             -webkit-mask-position: center;
             -webkit-mask-size: contain;
         }
-        /* card title: H3 gap 8px already in sc-h3 */
-        /* card text: sc-body-16 */
 
         /* ── Як це відбувається ── */
         .sc-how-layout {
@@ -345,8 +320,6 @@
             flex-direction: column;
             gap: 16px;
         }
-
-        /* Step card — brand-50 bg, border-radius 60px */
         .sc-step-card {
             width: 100%;
             min-height: 96px;
@@ -355,33 +328,29 @@
             display: flex;
             align-items: center;
             gap: 24px;
-            background: #E2F3FF;       /* brand-50 */
-            border-radius: 60px;       /* as specified */
+            background: #E2F3FF;
+            border-radius: 60px;
         }
-
-        /* Step number circle — WHITE, H3 style */
         .sc-step-num {
             width: 60px;
             height: 60px;
             min-width: 60px;
             border-radius: 50%;
-            background: #FFFFFF;       /* white circle */
+            background: #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Raleway', sans-serif;
-            font-size: 24px;           /* H3 */
-            font-weight: 600;          /* SemiBold */
+            font-size: 24px;
+            font-weight: 600;
             line-height: 1.2;
-            color: #1B3F57;            /* brand-800 */
+            color: #1B3F57;
             flex-shrink: 0;
         }
         .sc-step-body {
             display: flex;
             flex-direction: column;
         }
-
-        /* Vertical divider between steps and docs */
         .sc-how-vdivider {
             width: 2px;
             background: #F1F1F1;
@@ -392,13 +361,13 @@
         }
         .sc-docs-col { flex: 1; }
         .sc-docs-card {
-            background: #45799B;       /* brand-600 */
+            background: #45799B;
             border-radius: 20px;
             padding: 16px 24px 24px;
             box-sizing: border-box;
         }
         .sc-docs-title {
-            font-size: 18px;           /* H6 */
+            font-size: 18px;
             font-weight: 700;
             line-height: 1.2;
             color: #FFFFFF;
@@ -431,9 +400,7 @@
         }
 
         /* ── FAQ ── */
-        .sc-faq-wrap {
-            position: relative;
-        }
+        .sc-faq-wrap { position: relative; }
         .sc-faq-title-block {
             position: relative;
             text-align: center;
@@ -463,7 +430,7 @@
         }
 
         /* ════════════════════════════════════════
-           CTA — on gradient, no white card
+           CTA
         ════════════════════════════════════════ */
         .sc-cta-section {
             position: relative;
@@ -488,7 +455,7 @@
             align-items: center;
         }
         .sc-cta-title {
-            font-size: 64px;           /* H1 */
+            font-size: 64px;
             font-weight: 700;
             line-height: 1.2;
             text-transform: uppercase;
@@ -496,7 +463,7 @@
             margin: 0 0 20px 0;
         }
         .sc-cta-desc {
-            font-size: 22px;           /* body-22 */
+            font-size: 22px;
             font-weight: 500;
             line-height: 1.2;
             color: #2E5B79;
@@ -506,16 +473,12 @@
         }
 
         /* ════════════════════════════════════════
-           RESPONSIVE — desktop breakpoints
+           RESPONSIVE
         ════════════════════════════════════════ */
-
-        /* 1300px — підлаштування відступів */
         @media (max-width: 1300px) {
             .sc-hero-section { padding: 56px 60px 0; }
             .sc-section-wrap { padding: 0 48px 0; }
         }
-
-        /* 1200px — менші шрифти, менші відступи */
         @media (max-width: 1200px) {
             .sc-h1 { font-size: 52px; }
             .sc-h2 { font-size: 40px; }
@@ -524,8 +487,6 @@
             .sc-steps-col { width: 440px; }
             .sc-btn-light, .sc-btn-primary { width: 290px; font-size: 18px; }
         }
-
-        /* 1100px — 2-колоночні картки, кнопки вниз */
         @media (max-width: 1100px) {
             .sc-h1 { font-size: 44px; }
             .sc-h2 { font-size: 36px; }
@@ -535,8 +496,6 @@
             .sc-hero-right { flex-direction: row; }
             .sc-btn-light, .sc-btn-primary { width: 260px; }
         }
-
-        /* 1024px — повна адаптація компонентів */
         @media (max-width: 1024px) {
             .sc-white-card, .sc-bc-bar { width: calc(100% - 40px); }
             .sc-h1 { font-size: 36px; }
@@ -546,7 +505,6 @@
             .sc-price-val { font-size: 36px; }
             .sc-hero-section { padding: 44px 32px 0; }
             .sc-section-wrap { padding: 0 32px 0; }
-            .sc-hero-blob { width: 600px; }
             .sc-steps-col { width: 100%; }
             .sc-how-layout { flex-direction: column; gap: 24px; }
             .sc-how-vdivider { display: none; }
@@ -593,10 +551,10 @@
                 <div class="nav-dropdown-menu">
                     <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="#" class="nav-dropdown-item">Юридичний супровід</a>
-                    <a href="services-cemetery.html" class="nav-dropdown-item nav-dropdown-active">Місце на кладовищі</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
                     <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
                     <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
-                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item nav-dropdown-active">Ексгумація та перепоховання</a>
                     <a href="#" class="nav-dropdown-item">Бальзамування</a>
                     <a href="#" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
                     <a href="#" class="nav-dropdown-item">Зберігання тіла</a>
@@ -635,12 +593,12 @@
 </header>
 
 <!-- ════════════════════════════════════
-     BREADCRUMB — white text on gradient
+     BREADCRUMB — brand-800
 ════════════════════════════════════ -->
 <nav class="sc-bc-bar">
     <a href="#" class="sc-bc-link">Послуги</a>
     <span class="sc-bc-sep"></span>
-    <span class="sc-bc-current">Місце на кладовищі</span>
+    <span class="sc-bc-current">Ексгумація та перепоховання</span>
 </nav>
 
 <!-- ════════════════════════════════════
@@ -651,19 +609,17 @@
     <!-- ── Hero ── -->
     <div class="sc-hero-section">
 
-        <!-- Title + blob: CENTRED -->
         <div class="sc-hero-title-block">
             <img src="icons/blob_services.svg" alt="" class="sc-blob">
-            <h1 class="sc-h1">Підбір та оформлення<br>місця на кладовищі</h1>
+            <h1 class="sc-h1">Ексгумація та<br>перепоховання</h1>
         </div>
 
-        <!-- Description + price | Buttons -->
         <div class="sc-hero-bottom">
             <div class="sc-hero-left">
-                <p class="sc-body-22">Повний юридичний та організаційний супровід процедури виділення, бронювання або підпоховання на кладовищах міста та області.</p>
+                <p class="sc-body-22">Професійне вилучення тіла (праху) з місця поховання для проведення експертизи або перенесення на інше кладовище. Суворий юридичний та санітарний контроль.</p>
                 <div class="sc-price-block">
                     <p class="sc-h4">від</p>
-                    <p class="sc-price-val">4 500 ₴</p>
+                    <p class="sc-price-val">18 000 ₴</p>
                 </div>
             </div>
             <div class="sc-hero-right">
@@ -682,26 +638,26 @@
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Правовий аудит локацій</h3>
-                <p class="sc-body-16">Консультація щодо доступних статусів кладовищ (відкриті, напівзакриті, закриті).</p>
+                <h3 class="sc-h3">Дозвільна доку&shy;ментація</h3>
+                <p class="sc-body-16">Отримання офіційних погоджень від СЕС, прокуратури та адміністрації кладовищ.</p>
             </div>
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Офіційне погодження</h3>
-                <p class="sc-body-16">Взаємодія з адміністрацією цвинтаря та оформлення офіційного договору.</p>
+                <h3 class="sc-h3">Технічні роботи</h3>
+                <p class="sc-body-16">Спеціалізовані роботи з розкопу могили та дбайливого вилучення залишків.</p>
             </div>
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Інспекція ділянки</h3>
-                <p class="sc-body-16">Виїзд агента на місце для перевірки, замірів та погодження території.</p>
+                <h3 class="sc-h3">Спецконтейнер</h3>
+                <p class="sc-body-16">Надання нового герметичного цинкового або дерев'яного транспортувального ящика.</p>
             </div>
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Родинне підпоховання</h3>
-                <p class="sc-body-16">Документальний супровід процесу поховання в існуючу родинну могилу (за потреби).</p>
+                <h3 class="sc-h3">Санітарна безпека</h3>
+                <p class="sc-body-16">Обов'язкова повна дезінфекція та рекультивація місця колишнього поховання.</p>
             </div>
 
         </div>
@@ -713,42 +669,39 @@
         <h2 class="sc-h2">Як це відбувається</h2>
         <div class="sc-how-layout">
 
-            <!-- Steps: 523px, brand-50, br-60 -->
             <div class="sc-steps-col">
                 <div class="sc-step-card">
                     <div class="sc-step-num">1</div>
                     <div class="sc-step-body">
-                        <p class="sc-h5">Аналіз запиту</p>
-                        <p class="sc-body-14">Визначення бажаного кладовища та типу поховання (нове чи родинне).</p>
+                        <p class="sc-h5">Правовий дозвіл</p>
+                        <p class="sc-body-14">Збір довідок та обґрунтування причин перепоховання.</p>
                     </div>
                 </div>
                 <div class="sc-step-card">
                     <div class="sc-step-num">2</div>
                     <div class="sc-step-body">
-                        <p class="sc-h5">Перевірка документів</p>
-                        <p class="sc-body-14">Перевірка правових підстав (особливо для підпоховання).</p>
+                        <p class="sc-h5">Процедура</p>
+                        <p class="sc-body-14">Роботи на кладовищі у присутності медичних та правоохоронних органів.</p>
                     </div>
                 </div>
                 <div class="sc-step-card">
                     <div class="sc-step-num">3</div>
                     <div class="sc-step-body">
-                        <p class="sc-h5">Оформлення</p>
-                        <p class="sc-body-14">Отримання офіційного дозволу від адміністрації та закріплення ділянки.</p>
+                        <p class="sc-h5">Транспортування</p>
+                        <p class="sc-body-14">Перевезення залишків до нового місця поховання.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Vertical divider: 34px each side -->
             <div class="sc-how-vdivider"></div>
 
-            <!-- Necessary documents: brand-600 -->
             <div class="sc-docs-col">
                 <div class="sc-docs-card">
                     <p class="sc-docs-title">Необхідні документи</p>
                     <ul class="sc-docs-list">
-                        <li>Свідоцтво про смерть (оригінал).</li>
-                        <li>Паспорт заявника (родича або представника).</li>
-                        <li>Для підпоховання: документи, що підтверджують родинний зв'язок із раніше похованим, та оригінал свідоцтва про його смерть.</li>
+                        <li>Свідоцтво про смерть та документ про первинне місце поховання.</li>
+                        <li>Дозвіл органів місцевого самоврядування та Держпродспоживслужби (СЕС).</li>
+                        <li>Документи, що підтверджують право на нову ділянку для перепоховання.</li>
                     </ul>
                 </div>
             </div>
@@ -766,18 +719,18 @@
         <div class="sc-faq-grid">
 
             <div>
-                <p class="sc-h6">Чи можна забронювати місце на закритому кладовищі на майбутнє?</p>
-                <p class="sc-body-14">Ні, законодавство України <span class="sc-b14-accent">забороняє приватизацію або завчасний продаж землі.</span> на закритих чи напівзакритих цвинтарях. Оформлення можливе лише за фактом смерті.</p>
+                <p class="sc-h6">Хто має право ініціювати ексгумацію?</p>
+                <p class="sc-body-14">Тільки <span class="sc-b14-accent">прямі родичі померлого</span> (за наявності документів про спорідненість) або правоохоронні органи в межах кримінального провадження.</p>
             </div>
 
             <div>
-                <p class="sc-h6">Який термін має пройти для підпоховання в родинну могилу?</p>
-                <p class="sc-body-14">За санітарними нормами, підпоховання труни в ту саму могилу дозволено <span class="sc-b14-accent">щонайменше через 20 років після першого поховання.</span> Для підпоховання урни з прахом часових обмежень немає.</p>
+                <p class="sc-h6">Чи обов'язкова присутність родичів під час розкопу могили?</p>
+                <p class="sc-body-14">Ні, ваша присутність не обов'язкова. На місці мають бути присутні лише <span class="sc-b14-accent">представники судово-медичної експертизи,</span> адміністрація кладовища та санітарні інспектори.</p>
             </div>
 
             <div>
-                <p class="sc-h6">Що робити, якщо документи на родинну могилу втрачено?</p>
-                <p class="sc-body-14">Наші юристи <span class="sc-b14-accent">допомагають відновити свідоцтво</span> про поховання через архівні книги адміністрації кладовища або комерційного комунального підприємства.</p>
+                <p class="sc-h6">Що відбувається зі старою труною та хрестом після вилучення тіла?</p>
+                <p class="sc-body-14">Стара труна та дерев'яні елементи <span class="sc-b14-accent">утилізуються на місці</span> згідно із санітарними правилами. Залишки перекладаються в новий герметичний спецконтейнер.</p>
             </div>
 
         </div>
@@ -786,7 +739,7 @@
 </div><!-- /sc-white-card -->
 
 <!-- ════════════════════════════════════
-     CTA — directly on gradient, no card
+     CTA
 ════════════════════════════════════ -->
 <section class="sc-cta-section">
     <img src="img/services_cloud.png" alt="" class="sc-cta-bg">
