@@ -348,6 +348,9 @@ function setAccess(role) {
 // 4. ІНІЦІАЛІЗАЦІЯ DOM
 // ==========================================
 
+history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
 document.addEventListener('DOMContentLoaded', function () {
 
     // ==========================================
@@ -1458,10 +1461,14 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
         const cx = bRect.left + bRect.width / 2;
         const cy = bRect.top + bRect.height / 2;
 
-        // Фактичні (до повороту) напівширина / напіввисота
-        const hw = sticker.offsetWidth / 2;
-        const hh = sticker.offsetHeight / 2;
         const rad = rotation * Math.PI / 180;
+        const ow = sticker.offsetWidth;
+        const oh = sticker.offsetHeight;
+        // Виводимо scale canvas із співвідношення AABB до pre-rotate розмірів
+        const aabbW = Math.abs(ow * Math.cos(rad)) + Math.abs(oh * Math.sin(rad));
+        const parentScale = aabbW > 0 ? bRect.width / aabbW : 1;
+        const hw = ow * parentScale / 2;
+        const hh = oh * parentScale / 2;
 
         // Повертає точку (dx, dy) відносно центру стікера у viewport-координати
         function rotPt(dx, dy) {
@@ -2745,8 +2752,8 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
 </div>`;
             case 'video': return `
 <section class="video-block page-editable-block">
-    <h2 class="section-title">МИ</h2>
-    <p class="video-description">«Текст...»</p>
+    <h2 class="section-title">Додати назву</h2>
+    <p class="video-description">Додати текст...</p>
     <div class="video-player">
         <div class="photo-placeholder"><button class="placeholder-add-btn placeholder-add-video-btn">Додати відео</button></div>
         <div class="video-ui" style="display:none">
@@ -2783,8 +2790,8 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
 <section class="family-tribute-section page-editable-block">
     <img src="img/clouds_bg.svg" alt="" class="bg-clouds-layer">
     <div class="family-tribute-container"><div class="family-memory-card">
-        <h1>ВІД РОДИНИ</h1>
-        <p class="family-memory-text">«Текст від родини...»</p>
+        <h1>Від кого</h1>
+        <p class="family-memory-text">Додати текст...</p>
     </div></div>
 </section>`;
             default: return '';
