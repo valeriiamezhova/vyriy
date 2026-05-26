@@ -162,6 +162,12 @@ body {
     color: #163F5A;
 }
 
+/* Active state — trigger or nav-item on current page */
+.nav-dropdown-trigger.nav-active,
+.nav-item.nav-active {
+    color: #45799B;
+}
+
 .header-right {
     display: flex;
     align-items: center;
