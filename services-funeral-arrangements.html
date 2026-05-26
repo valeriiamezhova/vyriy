@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вирій — Місце на кладовищі</title>
+    <title>Вирій — Організація поховання</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -18,7 +18,7 @@
 
         /* PAGE BACKGROUND */
         html {
-            background: linear-gradient(180deg, #6298BD 0%, #CEEBFF 45%, #F6FBFF 70%, #BAE3FF 100%);
+            background: linear-gradient(180deg, #A6DBFF 0%, #7FB5DA 39%, #BAE3FF 73%, #F4FAFF 92%);
             min-height: 100%;
             overflow-x: hidden;
         }
@@ -116,7 +116,7 @@
         .sc-b14-accent { font-size: 14px; font-weight: 700; line-height: 1.4; color: #2E5B79; }
 
         /* ════════════════════════════════════════
-           BREADCRUMB — white, above the white card
+           BREADCRUMB — brand-800 on gradient
         ════════════════════════════════════════ */
         .sc-bc-bar {
             max-width: 1280px;
@@ -130,7 +130,7 @@
         .sc-bc-link {
             font-size: 16px;
             font-weight: 500;
-            color: #FFFFFF;
+            color: #1B3F57;
             text-decoration: none;
             transition: opacity 0.15s;
         }
@@ -139,7 +139,7 @@
             display: inline-block;
             width: 16px;
             height: 16px;
-            background-color: #FFFFFF;
+            background-color: #1B3F57;
             mask-image: url('icons/chevron-right.svg');
             mask-repeat: no-repeat;
             mask-position: center;
@@ -153,7 +153,7 @@
         .sc-bc-current {
             font-size: 16px;
             font-weight: 700;
-            color: #FFFFFF;
+            color: #1B3F57;
         }
 
         /* ════════════════════════════════════════
@@ -330,8 +330,6 @@
             -webkit-mask-position: center;
             -webkit-mask-size: contain;
         }
-        /* card title: H3 gap 8px already in sc-h3 */
-        /* card text: sc-body-16 */
 
         /* ── Як це відбувається ── */
         .sc-how-layout {
@@ -355,8 +353,8 @@
             display: flex;
             align-items: center;
             gap: 24px;
-            background: #E2F3FF;       /* brand-50 */
-            border-radius: 60px;       /* as specified */
+            background: #E2F3FF;
+            border-radius: 60px;
         }
 
         /* Step number circle — WHITE, H3 style */
@@ -365,15 +363,15 @@
             height: 60px;
             min-width: 60px;
             border-radius: 50%;
-            background: #FFFFFF;       /* white circle */
+            background: #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Raleway', sans-serif;
-            font-size: 24px;           /* H3 */
-            font-weight: 600;          /* SemiBold */
+            font-size: 24px;
+            font-weight: 600;
             line-height: 1.2;
-            color: #1B3F57;            /* brand-800 */
+            color: #1B3F57;
             flex-shrink: 0;
         }
         .sc-step-body {
@@ -392,13 +390,13 @@
         }
         .sc-docs-col { flex: 1; }
         .sc-docs-card {
-            background: #45799B;       /* brand-600 */
+            background: #45799B;
             border-radius: 20px;
             padding: 16px 24px 24px;
             box-sizing: border-box;
         }
         .sc-docs-title {
-            font-size: 18px;           /* H6 */
+            font-size: 18px;
             font-weight: 700;
             line-height: 1.2;
             color: #FFFFFF;
@@ -488,7 +486,7 @@
             align-items: center;
         }
         .sc-cta-title {
-            font-size: 64px;           /* H1 */
+            font-size: 64px;
             font-weight: 700;
             line-height: 1.2;
             text-transform: uppercase;
@@ -496,7 +494,7 @@
             margin: 0 0 20px 0;
         }
         .sc-cta-desc {
-            font-size: 22px;           /* body-22 */
+            font-size: 22px;
             font-weight: 500;
             line-height: 1.2;
             color: #2E5B79;
@@ -509,13 +507,11 @@
            RESPONSIVE — desktop breakpoints
         ════════════════════════════════════════ */
 
-        /* 1300px — підлаштування відступів */
         @media (max-width: 1300px) {
             .sc-hero-section { padding: 56px 60px 0; }
             .sc-section-wrap { padding: 0 48px 0; }
         }
 
-        /* 1200px — менші шрифти, менші відступи */
         @media (max-width: 1200px) {
             .sc-h1 { font-size: 52px; }
             .sc-h2 { font-size: 40px; }
@@ -525,7 +521,6 @@
             .sc-btn-light, .sc-btn-primary { width: 290px; font-size: 18px; }
         }
 
-        /* 1100px — 2-колоночні картки, кнопки вниз */
         @media (max-width: 1100px) {
             .sc-h1 { font-size: 44px; }
             .sc-h2 { font-size: 36px; }
@@ -536,7 +531,6 @@
             .sc-btn-light, .sc-btn-primary { width: 260px; }
         }
 
-        /* 1024px — повна адаптація компонентів */
         @media (max-width: 1024px) {
             .sc-white-card, .sc-bc-bar { width: calc(100% - 40px); }
             .sc-h1 { font-size: 36px; }
@@ -593,8 +587,8 @@
                 <div class="nav-dropdown-menu">
                     <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="#" class="nav-dropdown-item">Юридичний супровід</a>
-                    <a href="services-cemetery.html" class="nav-dropdown-item nav-dropdown-active">Місце на кладовищі</a>
-                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item nav-dropdown-active">Організація поховання</a>
                     <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
                     <a href="#" class="nav-dropdown-item">Ексгумація та перепоховання</a>
                     <a href="#" class="nav-dropdown-item">Бальзамування</a>
@@ -635,12 +629,12 @@
 </header>
 
 <!-- ════════════════════════════════════
-     BREADCRUMB — white text on gradient
+     BREADCRUMB — brand-800 on gradient
 ════════════════════════════════════ -->
 <nav class="sc-bc-bar">
     <a href="#" class="sc-bc-link">Послуги</a>
     <span class="sc-bc-sep"></span>
-    <span class="sc-bc-current">Місце на кладовищі</span>
+    <span class="sc-bc-current">Організація поховання</span>
 </nav>
 
 <!-- ════════════════════════════════════
@@ -654,16 +648,16 @@
         <!-- Title + blob: CENTRED -->
         <div class="sc-hero-title-block">
             <img src="icons/blob_services.svg" alt="" class="sc-blob">
-            <h1 class="sc-h1">Підбір та оформлення<br>місця на кладовищі</h1>
+            <h1 class="sc-h1">Організація церемонії<br>поховання</h1>
         </div>
 
         <!-- Description + price | Buttons -->
         <div class="sc-hero-bottom">
             <div class="sc-hero-left">
-                <p class="sc-body-22">Повний юридичний та організаційний супровід процедури виділення, бронювання або підпоховання на кладовищах міста та області.</p>
+                <p class="sc-body-22">Комплексна координація похоронного процесу від оформлення документів до фінального поминального слова. Ми беремо на себе весь тягар менеджменту, щоб ви могли побути з близькими.</p>
                 <div class="sc-price-block">
                     <p class="sc-h4">від</p>
-                    <p class="sc-price-val">4 500 ₴</p>
+                    <p class="sc-price-val">8 500 ₴</p>
                 </div>
             </div>
             <div class="sc-hero-right">
@@ -682,26 +676,26 @@
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Правовий аудит локацій</h3>
-                <p class="sc-body-16">Консультація щодо доступних статусів кладовищ (відкриті, напівзакриті, закриті).</p>
+                <h3 class="sc-h3">Персональний супровід</h3>
+                <p class="sc-body-16">Закріплення розпорядника (координатора) для ведення процесу від початку до кінця.</p>
             </div>
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Офіційне погодження</h3>
-                <p class="sc-body-16">Взаємодія з адміністрацією цвинтаря та оформлення офіційного договору.</p>
+                <h3 class="sc-h3">Синхронізація служб</h3>
+                <p class="sc-body-16">Погодження часу та логістики всіх інстанцій (морг, транспорт, кладовище/крематорій).</p>
             </div>
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Інспекція ділянки</h3>
-                <p class="sc-body-16">Виїзд агента на місце для перевірки, замірів та погодження території.</p>
+                <h3 class="sc-h3">Сценарій прощання</h3>
+                <p class="sc-body-16">Режисура та організація релігійного, військового або світського обряду.</p>
             </div>
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Родинне підпоховання</h3>
-                <p class="sc-body-16">Документальний супровід процесу поховання в існуючу родинну могилу (за потреби).</p>
+                <h3 class="sc-h3">Естетика та таймінг</h3>
+                <p class="sc-body-16">Музичний супровід, координація гостей та контроль таймінгу під час поховання.</p>
             </div>
 
         </div>
@@ -718,22 +712,22 @@
                 <div class="sc-step-card">
                     <div class="sc-step-num">1</div>
                     <div class="sc-step-body">
-                        <p class="sc-h5">Аналіз запиту</p>
-                        <p class="sc-body-14">Визначення бажаного кладовища та типу поховання (нове чи родинне).</p>
+                        <p class="sc-h5">Планування</p>
+                        <p class="sc-body-14">Вибір формату церемонії та узгодження таймінгу.</p>
                     </div>
                 </div>
                 <div class="sc-step-card">
                     <div class="sc-step-num">2</div>
                     <div class="sc-step-body">
-                        <p class="sc-h5">Перевірка документів</p>
-                        <p class="sc-body-14">Перевірка правових підстав (особливо для підпоховання).</p>
+                        <p class="sc-h5">Координація</p>
+                        <p class="sc-body-14">Агент зв'язується з усіма локаціями та службами.</p>
                     </div>
                 </div>
                 <div class="sc-step-card">
                     <div class="sc-step-num">3</div>
                     <div class="sc-step-body">
-                        <p class="sc-h5">Оформлення</p>
-                        <p class="sc-body-14">Отримання офіційного дозволу від адміністрації та закріплення ділянки.</p>
+                        <p class="sc-h5">Супровід</p>
+                        <p class="sc-body-14">Розпорядник особисто керує процесом у день похорону.</p>
                     </div>
                 </div>
             </div>
@@ -746,9 +740,9 @@
                 <div class="sc-docs-card">
                     <p class="sc-docs-title">Необхідні документи</p>
                     <ul class="sc-docs-list">
-                        <li>Свідоцтво про смерть (оригінал).</li>
-                        <li>Паспорт заявника (родича або представника).</li>
-                        <li>Для підпоховання: документи, що підтверджують родинний зв'язок із раніше похованим, та оригінал свідоцтва про його смерть.</li>
+                        <li>Лікарське свідоцтво про смерть.</li>
+                        <li>Державне свідоцтво про смерть (з гербовою печаткою).</li>
+                        <li>Паспорт особи, що організовує поховання.</li>
                     </ul>
                 </div>
             </div>
@@ -766,18 +760,18 @@
         <div class="sc-faq-grid">
 
             <div>
-                <p class="sc-h6">Чи можна забронювати місце на закритому кладовищі на майбутнє?</p>
-                <p class="sc-body-14">Ні, законодавство України <span class="sc-b14-accent">забороняє приватизацію або завчасний продаж землі.</span> на закритих чи напівзакритих цвинтарях. Оформлення можливе лише за фактом смерті.</p>
+                <p class="sc-h6">Чи обов'язкова присутність родичів під час усіх етапів підготовки?</p>
+                <p class="sc-body-14">Ні. Ви підписуєте договір та передаєте документи розпоряднику. Усі проміжні етапи (морг, РАЦС, логістика) <span class="sc-b14-accent">ми закриваємо самостійно.</span> Ви приходите безпосередньо на церемонію прощання.</p>
             </div>
 
             <div>
-                <p class="sc-h6">Який термін має пройти для підпоховання в родинну могилу?</p>
-                <p class="sc-body-14">За санітарними нормами, підпоховання труни в ту саму могилу дозволено <span class="sc-b14-accent">щонайменше через 20 років після першого поховання.</span> Для підпоховання урни з прахом часових обмежень немає.</p>
+                <p class="sc-h6">Що робити, якщо плани або час церемонії змінилися в день поховання?</p>
+                <p class="sc-body-14">Усі екстрені коригування координує <span class="sc-b14-accent">ваш персональний розпорядник.</span> Він оперативно перенаправляє транспорт та перемовляється з локаціями.</p>
             </div>
 
             <div>
-                <p class="sc-h6">Що робити, якщо документи на родинну могилу втрачено?</p>
-                <p class="sc-body-14">Наші юристи <span class="sc-b14-accent">допомагають відновити свідоцтво</span> про поховання через архівні книги адміністрації кладовища або комерційного комунального підприємства.</p>
+                <p class="sc-h6">Чи входить релігійний обряд (відспівування) у базову організацію?</p>
+                <p class="sc-body-14">Послуга організації <span class="sc-b14-accent">включає менеджмент:</span> ми домовляємося з храмом чи запрошуємо священника обраної вами конфесії, але сам обряд координується окремо.</p>
             </div>
 
         </div>
