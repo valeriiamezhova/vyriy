@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вирій — Організація поховання</title>
+    <title>Вирій — Організація поминальних обідів</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -18,7 +18,7 @@
 
         /* PAGE BACKGROUND */
         html {
-            background: linear-gradient(180deg, #A6DBFF 0%, #7FB5DA 39%, #BAE3FF 73%, #F4FAFF 92%);
+            background: linear-gradient(180deg, #A6DBFF 0%, #6298BD 30%, #BAE3FF 65%, #F4FAFF 100%);
             min-height: 100%;
             overflow-x: hidden;
         }
@@ -29,13 +29,11 @@
             position: relative;
         }
 
-        /* All elements constrained to parent width */
         *, *::before, *::after {
             box-sizing: border-box;
             min-width: 0;
         }
 
-        /* Header and footer inner containers — flexible */
         .header-inner {
             max-width: 1303px;
             width: calc(100% - 80px);
@@ -46,14 +44,12 @@
             width: calc(100% - 80px);
         }
 
-        /* Images — constrained except absolute blobs */
         img:not(.sc-blob):not(.sc-faq-blob):not(.sc-cta-bg) { max-width: 100%; }
 
         /* ════════════════════════════════════════
-           TYPOGRAPHY — design system exact values
+           TYPOGRAPHY
         ════════════════════════════════════════ */
 
-        /* H1 / Desktop / AA — 64px | 120% | Bold | uppercase */
         .sc-h1 {
             font-size: 64px;
             font-weight: 700;
@@ -62,7 +58,6 @@
             color: #1B3F57;
             margin: 0;
         }
-        /* H2 / Desktop / AA — 48px | 120% | SemiBold | uppercase */
         .sc-h2 {
             font-size: 48px;
             font-weight: 600;
@@ -71,7 +66,6 @@
             color: #1B3F57;
             margin: 0 0 24px 0;
         }
-        /* H3 / Desktop / AA — 24px | 120% | SemiBold | uppercase */
         .sc-h3 {
             font-size: 24px;
             font-weight: 600;
@@ -80,7 +74,6 @@
             color: #1B3F57;
             margin: 0 0 8px 0;
         }
-        /* H4 / Desktop / Aa — 22px | 120% | SemiBold */
         .sc-h4 {
             font-size: 22px;
             font-weight: 600;
@@ -88,7 +81,6 @@
             color: #2E5B79;
             margin: 0;
         }
-        /* H5 / Desktop / Aa — 20px | 120% | SemiBold */
         .sc-h5 {
             font-size: 20px;
             font-weight: 600;
@@ -96,7 +88,6 @@
             color: #1B3F57;
             margin: 0 0 8px 0;
         }
-        /* H6 / Desktop / Aa — 18px | 120% | Bold */
         .sc-h6 {
             font-size: 18px;
             font-weight: 700;
@@ -104,19 +95,14 @@
             color: #1B3F57;
             margin: 0 0 12px 0;
         }
-        /* Body 22 — 22px | 120% | Medium */
         .sc-body-22 { font-size: 22px; font-weight: 500; line-height: 1.2; color: #2E5B79; margin: 0; }
-        /* Body 22 Accent — 22px | 120% | Bold */
         .sc-body-22-accent { font-size: 22px; font-weight: 700; line-height: 1.2; color: #2E5B79; }
-        /* Body 16 — 16px | 140% | Medium */
         .sc-body-16 { font-size: 16px; font-weight: 500; line-height: 1.4; color: #2E5B79; margin: 0; }
-        /* Body 14 — 14px | 140% | Medium */
         .sc-body-14 { font-size: 14px; font-weight: 500; line-height: 1.4; color: #2E5B79; margin: 0; }
-        /* Body 14 Accent — inline bold */
         .sc-b14-accent { font-size: 14px; font-weight: 700; line-height: 1.4; color: #2E5B79; }
 
         /* ════════════════════════════════════════
-           BREADCRUMB — brand-800 on gradient
+           BREADCRUMB — brand 800 (#1B3F57)
         ════════════════════════════════════════ */
         .sc-bc-bar {
             max-width: 1280px;
@@ -157,7 +143,7 @@
         }
 
         /* ════════════════════════════════════════
-           WHITE CARD — single block for all content
+           WHITE CARD
         ════════════════════════════════════════ */
         .sc-white-card {
             max-width: 1280px;
@@ -174,8 +160,6 @@
             padding: 64px 103.5px 0;
             position: relative;
         }
-
-        /* Title + blob — centred */
         .sc-hero-title-block {
             position: relative;
             text-align: center;
@@ -196,8 +180,6 @@
             position: relative;
             z-index: 1;
         }
-
-        /* Description + price | Buttons */
         .sc-hero-bottom {
             display: flex;
             align-items: center;
@@ -222,6 +204,13 @@
             color: #1B3F57;
             margin: 0;
         }
+        .sc-price-unit {
+            font-size: 22px;
+            font-weight: 500;
+            line-height: 1.2;
+            color: #2E5B79;
+            margin: 0;
+        }
         .sc-hero-right {
             display: flex;
             flex-direction: column;
@@ -229,7 +218,6 @@
             flex-shrink: 0;
         }
 
-        /* Buttons — Button / Desktop / AA: 20px | 100% | Bold | uppercase */
         .sc-btn-light {
             width: 350px;
             max-width: 100%;
@@ -272,12 +260,9 @@
         }
         .sc-btn-primary:hover { background: #45799B; }
 
-        /* ── Sections inside white card ── */
         .sc-section-wrap {
             padding: 0 103.5px 0;
         }
-
-        /* Divider — 2px, #F1F1F1, rounded */
         .sc-divider {
             border: none;
             height: 2px;
@@ -343,8 +328,6 @@
             flex-direction: column;
             gap: 16px;
         }
-
-        /* Step card — brand-50 bg, border-radius 60px */
         .sc-step-card {
             width: 100%;
             min-height: 96px;
@@ -356,8 +339,6 @@
             background: #E2F3FF;
             border-radius: 60px;
         }
-
-        /* Step number circle — WHITE, H3 style */
         .sc-step-num {
             width: 60px;
             height: 60px;
@@ -378,8 +359,6 @@
             display: flex;
             flex-direction: column;
         }
-
-        /* Vertical divider between steps and docs */
         .sc-how-vdivider {
             width: 2px;
             background: #F1F1F1;
@@ -429,9 +408,7 @@
         }
 
         /* ── FAQ ── */
-        .sc-faq-wrap {
-            position: relative;
-        }
+        .sc-faq-wrap { position: relative; }
         .sc-faq-title-block {
             position: relative;
             text-align: center;
@@ -461,7 +438,7 @@
         }
 
         /* ════════════════════════════════════════
-           CTA — on gradient, no white card
+           CTA
         ════════════════════════════════════════ */
         .sc-cta-section {
             position: relative;
@@ -529,14 +506,12 @@
         }
 
         /* ════════════════════════════════════════
-           RESPONSIVE — desktop breakpoints
+           RESPONSIVE
         ════════════════════════════════════════ */
-
         @media (max-width: 1300px) {
             .sc-hero-section { padding: 56px 60px 0; }
             .sc-section-wrap { padding: 0 48px 0; }
         }
-
         @media (max-width: 1200px) {
             .sc-h1 { font-size: 52px; }
             .sc-h2 { font-size: 40px; }
@@ -545,7 +520,6 @@
             .sc-steps-col { width: 440px; }
             .sc-btn-light, .sc-btn-primary { width: 290px; font-size: 18px; }
         }
-
         @media (max-width: 1100px) {
             .sc-h1 { font-size: 44px; }
             .sc-h2 { font-size: 36px; }
@@ -555,7 +529,6 @@
             .sc-hero-right { flex-direction: row; }
             .sc-btn-light, .sc-btn-primary { width: 260px; }
         }
-
         @media (max-width: 1024px) {
             .sc-white-card, .sc-bc-bar { width: calc(100% - 40px); }
             .sc-h1 { font-size: 36px; }
@@ -565,7 +538,6 @@
             .sc-price-val { font-size: 36px; }
             .sc-hero-section { padding: 44px 32px 0; }
             .sc-section-wrap { padding: 0 32px 0; }
-            .sc-hero-blob { width: 600px; }
             .sc-steps-col { width: 100%; }
             .sc-how-layout { flex-direction: column; gap: 24px; }
             .sc-how-vdivider { display: none; }
@@ -613,14 +585,14 @@
                     <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
-                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item nav-dropdown-active">Організація поховання</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
                     <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
                     <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
                     <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
                     <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
                     <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
                     <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
-                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item nav-dropdown-active">Поминальні обіди</a>
                 </div>
             </div>
             <a href="#" class="nav-item">Про нас</a>
@@ -654,12 +626,12 @@
 </header>
 
 <!-- ════════════════════════════════════
-     BREADCRUMB — brand-800 on gradient
+     BREADCRUMB — brand 800 (#1B3F57)
 ════════════════════════════════════ -->
 <nav class="sc-bc-bar">
     <a href="#" class="sc-bc-link">Послуги</a>
     <span class="sc-bc-sep"></span>
-    <span class="sc-bc-current">Організація поховання</span>
+    <span class="sc-bc-current">Поминальні обіди</span>
 </nav>
 
 <!-- ════════════════════════════════════
@@ -670,19 +642,18 @@
     <!-- ── Hero ── -->
     <div class="sc-hero-section">
 
-        <!-- Title + blob: CENTRED -->
         <div class="sc-hero-title-block">
             <img src="icons/blob_services.svg" alt="" class="sc-blob">
-            <h1 class="sc-h1">Організація церемонії<br>поховання</h1>
+            <h1 class="sc-h1">Організація<br>поминальних обідів</h1>
         </div>
 
-        <!-- Description + price | Buttons -->
         <div class="sc-hero-bottom">
             <div class="sc-hero-left">
-                <p class="sc-body-22">Комплексна координація похоронного процесу від оформлення документів до фінального поминального слова. Ми беремо на себе весь тягар менеджменту, щоб ви могли побути з близькими.</p>
+                <p class="sc-body-22">Підбір залу, погодження традиційного меню та повне адміністрування трапези пам'яті. Ми звільняємо вас від побутових турбот у день прощання.</p>
                 <div class="sc-price-block">
                     <p class="sc-h4">від</p>
-                    <p class="sc-price-val">8 500 ₴</p>
+                    <p class="sc-price-val">450 ₴</p>
+                    <p class="sc-price-unit">/ особа</p>
                 </div>
             </div>
             <div class="sc-hero-right">
@@ -701,26 +672,26 @@
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Персональний супровід</h3>
-                <p class="sc-body-16">Закріплення розпорядника (координатора) для ведення процесу від початку до кінця.</p>
+                <h3 class="sc-h3">Локація «під ключ»</h3>
+                <p class="sc-body-16">Підбір та бронювання ізольованого залу у потрібному районі міста.</p>
             </div>
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Синхронізація служб</h3>
-                <p class="sc-body-16">Погодження часу та логістики всіх інстанцій (морг, транспорт, кладовище/крематорій).</p>
+                <h3 class="sc-h3">Канонічне меню</h3>
+                <p class="sc-body-16">Формування та узгодження страв відповідно до традицій (традиційне, пісне, поминальне).</p>
             </div>
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Сценарій прощання</h3>
-                <p class="sc-body-16">Режисура та організація релігійного, військового або світського обряду.</p>
+                <h3 class="sc-h3">Сервіс і таймінг</h3>
+                <p class="sc-body-16">Повне обслуговування офіціантами та підготовка столів точно до часу прибуття гостей.</p>
             </div>
 
             <div class="sc-included-card">
                 <div class="sc-check-wrap"></div>
-                <h3 class="sc-h3">Естетика та таймінг</h3>
-                <p class="sc-body-16">Музичний супровід, координація гостей та контроль таймінгу під час поховання.</p>
+                <h3 class="sc-h3">Приватність</h3>
+                <p class="sc-body-16">Забезпечення закритого простору без присутності сторонніх відвідувачів у залі.</p>
             </div>
 
         </div>
@@ -732,42 +703,38 @@
         <h2 class="sc-h2">Як це відбувається</h2>
         <div class="sc-how-layout">
 
-            <!-- Steps: 523px, brand-50, br-60 -->
             <div class="sc-steps-col">
                 <div class="sc-step-card">
                     <div class="sc-step-num">1</div>
                     <div class="sc-step-body">
-                        <p class="sc-h5">Планування</p>
-                        <p class="sc-body-14">Вибір формату церемонії та узгодження таймінгу.</p>
+                        <p class="sc-h5">Локація</p>
+                        <p class="sc-body-14">Вибір ресторану чи кафе на основі ваших вимог до району та бюджету.</p>
                     </div>
                 </div>
                 <div class="sc-step-card">
                     <div class="sc-step-num">2</div>
                     <div class="sc-step-body">
-                        <p class="sc-h5">Координація</p>
-                        <p class="sc-body-14">Агент зв'язується з усіма локаціями та службами.</p>
+                        <p class="sc-h5">Меню</p>
+                        <p class="sc-body-14">Затвердження кількості гостей та переліку страв.</p>
                     </div>
                 </div>
                 <div class="sc-step-card">
                     <div class="sc-step-num">3</div>
                     <div class="sc-step-body">
-                        <p class="sc-h5">Супровід</p>
-                        <p class="sc-body-14">Розпорядник особисто керує процесом у день похорону.</p>
+                        <p class="sc-h5">Проведення</p>
+                        <p class="sc-body-14">Зал готовий до прибуття гостей одразу після завершення церемонії поховання.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Vertical divider: 34px each side -->
             <div class="sc-how-vdivider"></div>
 
-            <!-- Necessary documents: brand-600 -->
             <div class="sc-docs-col">
                 <div class="sc-docs-card">
-                    <p class="sc-docs-title">Необхідні документи</p>
+                    <p class="sc-docs-title">Необхідні дані</p>
                     <ul class="sc-docs-list">
-                        <li>Лікарське свідоцтво про смерть.</li>
-                        <li>Державне свідоцтво про смерть (з гербовою печаткою).</li>
-                        <li>Паспорт особи, що організовує поховання.</li>
+                        <li>Орієнтовна кількість присутніх.</li>
+                        <li>Специфіка меню (пісне, вегетаріанське, традиційне).</li>
                     </ul>
                 </div>
             </div>
@@ -785,18 +752,18 @@
         <div class="sc-faq-grid">
 
             <div>
-                <p class="sc-h6">Чи обов'язкова присутність родичів під час усіх етапів підготовки?</p>
-                <p class="sc-body-14">Ні. Ви підписуєте договір та передаєте документи розпоряднику. Усі проміжні етапи (морг, РАЦС, логістика) <span class="sc-b14-accent">ми закриваємо самостійно.</span> Ви приходите безпосередньо на церемонію прощання.</p>
+                <p class="sc-h6">Чи можна приносити свій алкоголь та фрукти на поминальний обід?</p>
+                <p class="sc-body-14">У більшості випадків — так. <span class="sc-b14-accent">Ми узгоджуємо ці нюанси з адміністрацією закладу заздалегідь,</span> щоб мінімізувати ваші витрати.</p>
             </div>
 
             <div>
-                <p class="sc-h6">Що робити, якщо плани або час церемонії змінилися в день поховання?</p>
-                <p class="sc-body-14">Усі екстрені коригування координує <span class="sc-b14-accent">ваш персональний розпорядник.</span> Він оперативно перенаправляє транспорт та перемовляється з локаціями.</p>
+                <p class="sc-h6">Чи передбачено меню для людей, які тримають релігійний піст?</p>
+                <p class="sc-body-14">Так, ми розробляємо <span class="sc-b14-accent">окреме повноцінне пісне меню,</span> яке повністю відповідає канонам церковного календаря.</p>
             </div>
 
             <div>
-                <p class="sc-h6">Чи входить релігійний обряд (відспівування) у базову організацію?</p>
-                <p class="sc-body-14">Послуга організації <span class="sc-b14-accent">включає менеджмент:</span> ми домовляємося з храмом чи запрошуємо священника обраної вами конфесії, але сам обряд координується окремо.</p>
+                <p class="sc-h6">Скільки за часом зазвичай триває поминальний обід?</p>
+                <p class="sc-body-14">Стандартне бронювання залу розраховане на <span class="sc-b14-accent">2–3 години,</span> чого абсолютно достатньо для спокійної трапези та слів пам'яті.</p>
             </div>
 
         </div>
@@ -805,7 +772,7 @@
 </div><!-- /sc-white-card -->
 
 <!-- ════════════════════════════════════
-     CTA — directly on gradient, no card
+     CTA
 ════════════════════════════════════ -->
 <section class="sc-cta-section">
     <div class="sc-cta-bg"></div>

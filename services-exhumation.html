@@ -435,18 +435,43 @@
         .sc-cta-section {
             position: relative;
             width: 100%;
+            min-height: 835px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
         .sc-cta-bg {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            display: block;
+            position: absolute;
+            inset: 0;
+            background-image: url('img/clouds_bg.png');
+            background-size: auto;
+            background-position: center 44.84px;
+            z-index: 0;
+        }
+        .sc-cta-birds-desk {
+            position: absolute;
+            left: 50%; top: calc(50% + 80px);
+            transform: translate(-50%, -50%);
+            transform-origin: center center;
+            width: 80%; max-width: 800px; height: auto;
+            z-index: 1; pointer-events: none;
+            animation: sc-birds-spin 70s linear infinite;
+        }
+        .sc-cta-birds-mob {
+            display: none;
+            position: absolute; left: 50%; top: -56px;
+            transform: translateX(-50%);
+            width: 160vw; height: auto;
+            z-index: 2; pointer-events: none;
+        }
+        @keyframes sc-birds-spin {
+            0%   { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); }
         }
         .sc-cta-inner {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            z-index: 2;
             max-width: 960px;
             width: calc(100% - 80px);
             text-align: center;
@@ -524,7 +549,7 @@
 <header class="site-header">
     <div class="header-inner">
         <nav class="header-nav">
-            <a href="#" class="nav-item">Головна</a>
+            <a href="home.html" class="nav-item">Головна</a>
             <div class="nav-dropdown-wrap">
                 <button class="nav-dropdown-trigger">Порядок дій</button>
                 <div class="nav-dropdown-menu">
@@ -550,23 +575,23 @@
                 <button class="nav-dropdown-trigger nav-active">Послуги</button>
                 <div class="nav-dropdown-menu">
                     <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
-                    <a href="#" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
                     <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
                     <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
                     <a href="services-exhumation.html" class="nav-dropdown-item nav-dropdown-active">Ексгумація та перепоховання</a>
-                    <a href="#" class="nav-dropdown-item">Бальзамування</a>
-                    <a href="#" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
-                    <a href="#" class="nav-dropdown-item">Зберігання тіла</a>
-                    <a href="#" class="nav-dropdown-item">Транспортування тіла</a>
-                    <a href="#" class="nav-dropdown-item">Поминальні обіди</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
                 </div>
             </div>
             <a href="#" class="nav-item">Про нас</a>
         </nav>
-        <div class="header-logo">
-            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
-        </div>
+        <a href="home.html" class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРИЙ" class="logo-img">
+        </a>
         <div class="header-right">
             <div class="nav-dropdown-wrap">
                 <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
@@ -742,7 +767,9 @@
      CTA
 ════════════════════════════════════ -->
 <section class="sc-cta-section">
-    <img src="img/services_cloud.png" alt="" class="sc-cta-bg">
+    <div class="sc-cta-bg"></div>
+    <img src="icons/desktop_birds.svg" alt="" class="sc-cta-birds-desk">
+    <img src="icons/footer_mobile_birds.svg" alt="" class="sc-cta-birds-mob">
     <div class="sc-cta-inner">
         <h2 class="sc-cta-title">Залишилися запитання<br>або потрібна допомога?</h2>
         <p class="sc-cta-desc"><span class="sc-body-22-accent">Ми на зв'язку 24/7.</span> Отримайте пряму, спокійну та безкоштовну консультацію без жодних зобов'язань.</p>
@@ -808,5 +835,6 @@
     </div>
 </footer>
 
+<a href="tel:+387777777" class="floating-help-btn"><span class="floating-help-btn__text">Потрібна допомога?</span><span class="floating-help-btn__icon"></span></a>
 </body>
 </html>

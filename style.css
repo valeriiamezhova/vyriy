@@ -3349,3 +3349,56 @@ h1 {
     transition: background 0.2s;
 }
 .publish-profile-btn:hover { background: #0F2E43; }
+
+/* ════════════════════════════════════════
+   FLOATING HELP BUTTON — global, all pages
+════════════════════════════════════════ */
+@keyframes floating-help-ring {
+    0%   { box-shadow: 0 0 0 0   rgba(27,63,87,0.38), 0px 8px 24px rgba(27,63,87,0.22); }
+    60%  { box-shadow: 0 0 0 10px rgba(27,63,87,0),   0px 8px 24px rgba(27,63,87,0.22); }
+    100% { box-shadow: 0 0 0 0   rgba(27,63,87,0),    0px 8px 24px rgba(27,63,87,0.22); }
+}
+.floating-help-btn {
+    position: fixed;
+    right: 25px;
+    bottom: 40px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #1B3F57;
+    border-radius: 40px;
+    padding: 11px 18px;
+    width: 236px;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    animation: floating-help-ring 2.8s ease-out infinite;
+    transition: background 0.2s;
+}
+.floating-help-btn:hover {
+    background: #2E5B79;
+    animation-play-state: paused;
+    box-shadow: 0px 12px 28px rgba(27,63,87,0.35);
+}
+.floating-help-btn__text {
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: #FFFFFF; line-height: 1; flex: 1;
+}
+.floating-help-btn__icon {
+    width: 34px; height: 34px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.floating-help-btn__icon::after {
+    content: '';
+    width: 17px; height: 17px;
+    background-color: #1B3F57;
+    mask-image: url('icons/phone-call.svg');
+    mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+    -webkit-mask-image: url('icons/phone-call.svg');
+    -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+}
