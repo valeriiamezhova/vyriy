@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товари — Вирій</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ═══ TOKENS: 25:#F6FBFF 50:#E2F3FF 600:#45799B 700:#2E5B79 800:#1B3F57 900:#0F2E43 ═══ */
+
+        html { scroll-behavior:smooth; background:#FFFFFF; min-height:100%; overflow-x:hidden; }
+        body { background:#FFFFFF; background-image:none; overflow-x:hidden; max-width:100vw; }
+        *, *::before, *::after { box-sizing:border-box; min-width:0; }
+        img { max-width:100%; }
+
+        .header-inner { max-width:1303px; width:calc(100% - 80px); }
+        .footer-top-container, .footer-bottom-container { max-width:1280px; width:calc(100% - 80px); }
+
+        /* ─── FLOATING HELP BUTTON ─── */
+        @keyframes hp-help-ring {
+            0%   { box-shadow:0 0 0 0   rgba(27,63,87,.38), 0 8px 24px rgba(27,63,87,.22); }
+            60%  { box-shadow:0 0 0 10px rgba(27,63,87,0),  0 8px 24px rgba(27,63,87,.22); }
+            100% { box-shadow:0 0 0 0   rgba(27,63,87,0),   0 8px 24px rgba(27,63,87,.22); }
+        }
+        .hp-help-btn {
+            position:fixed; right:25px; bottom:40px; z-index:9999;
+            display:inline-flex; align-items:center; gap:12px;
+            background:#1B3F57; border-radius:40px; padding:11px 18px; width:236px;
+            cursor:pointer; text-decoration:none; border:none;
+            animation:hp-help-ring 2.8s ease-out infinite; transition:background .2s;
+        }
+        .hp-help-btn:hover { background:#2E5B79; animation-play-state:paused; box-shadow:0 12px 28px rgba(27,63,87,.35); }
+        .hp-help-btn span { font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; color:#fff; line-height:1; flex:1; }
+        .hp-help-icon { width:34px; height:34px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-help-icon::after {
+            content:''; width:17px; height:17px; background-color:#1B3F57;
+            mask-image:url('icons/phone-call.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain;
+            -webkit-mask-image:url('icons/phone-call.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain;
+        }
+
+        /* ─── MOBILE HEADER ─── */
+        .hp-mob-menu-btn { display:none; width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-mob-menu-icon {
+            width:24px; height:24px; background-color:#1B3F57;
+            mask-image:url('icons/align-justify.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain;
+            -webkit-mask-image:url('icons/align-justify.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain;
+        }
+        /* ─── MOBILE NAV (redesigned) ─── */
+        .hp-mob-nav { display:none; position:fixed; inset:0; z-index:9999; background:#fff; flex-direction:column; transform:translateX(-100%); transition:transform .3s ease; overflow:hidden; }
+        .hp-mob-nav.is-open { transform:translateX(0); }
+        .hp-mob-nav-head { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; flex-shrink:0; border-bottom:1px solid rgba(69,121,155,.12); }
+        .hp-mob-nav-close { width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:background .15s; }
+        .hp-mob-nav-close:hover { background:#F6FBFF; }
+        .hp-mob-nav-close-icon { width:24px; height:24px; background-color:#1B3F57; mask-image:url('icons/close.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/close.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-search-wrap { padding:12px 16px; border-bottom:1px solid rgba(69,121,155,.08); flex-shrink:0; }
+        .hp-mob-nav-search { display:flex; align-items:center; gap:8px; border:1px solid #45799B; border-radius:24px; padding:9px 14px; background:#fff; }
+        .hp-mob-nav-search-input { flex:1; border:none; outline:none; font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57; background:transparent; }
+        .hp-mob-nav-search-input::placeholder { color:#45799B; }
+        .hp-mob-nav-search-icon { width:18px; height:18px; flex-shrink:0; background-color:#45799B; mask-image:url('icons/search.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/search.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-scroll { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+        .hp-mob-nav-items { display:flex; flex-direction:column; }
+        .hp-mob-nav-link { display:block; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.08); transition:color .15s; }
+        .hp-mob-nav-link:hover { color:#45799B; }
+        .hp-mob-nav-link.is-active { color:#45799B; }
+        .hp-mob-acc { border-bottom:1px solid rgba(69,121,155,.08); }
+        .hp-mob-acc-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; background:none; border:none; cursor:pointer; text-align:left; transition:color .15s; }
+        .hp-mob-acc-trigger:hover { color:#45799B; }
+        .hp-mob-acc-trigger.is-active { color:#45799B; }
+        .hp-mob-acc-chevron { width:20px; height:20px; flex-shrink:0; background-color:currentColor; mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; transition:transform .22s; }
+        .hp-mob-acc.is-open .hp-mob-acc-chevron { transform:rotate(180deg); }
+        .hp-mob-acc-body { display:none; background:#FAFCFF; }
+        .hp-mob-acc.is-open .hp-mob-acc-body { display:block; }
+        .hp-mob-acc-link { display:block; padding:12px 16px 12px 28px; font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#2E5B79; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.06); transition:color .15s; }
+        .hp-mob-acc-link:last-child { border-bottom:none; }
+        .hp-mob-acc-link:hover { color:#1B3F57; }
+        .hp-mob-nav-sep { border:none; height:1px; background:rgba(69,121,155,.1); margin:0; }
+        .hp-mob-nav-footer-section { padding:20px 16px 32px; display:flex; flex-direction:column; gap:0; }
+        .hp-mob-nav-footer-title { font-family:'Raleway',sans-serif; font-size:12px; font-weight:700; color:#6298BD; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+        .hp-mob-nav-footer-link { display:block; padding:8px 0; font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#45799B; text-decoration:none; transition:color .15s; border-bottom:1px solid rgba(69,121,155,.06); }
+        .hp-mob-nav-footer-link:last-child { border-bottom:none; }
+        .hp-mob-nav-footer-link:hover { color:#1B3F57; }
+        .hp-mob-header-icons { display:none; gap:16px; align-items:center; }
+
+        /* ─── PAGE WRAPPER ─── */
+        .products-page { width:100%; padding:0 80px 64px; display:flex; flex-direction:column; gap:20px; }
+
+        /* ─── TITLE ROW ─── */
+        .products-title-row {
+            display:flex; align-items:center; justify-content:space-between;
+            min-height:58px; padding-top:32px; gap:24px;
+        }
+        .products-title { font-family:'Raleway',sans-serif; font-size:48px; font-weight:600; line-height:1.2; text-transform:capitalize; color:#1B3F57; margin:0; }
+        .search-wrap { width:379px; flex-shrink:0; position:relative; }
+        .search-input {
+            width:100%; height:44px; border:1px solid #45799B; border-radius:24px;
+            background:#fff; box-shadow:0 1px 2px rgba(10,13,18,.05);
+            padding:10px 44px 10px 16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; outline:none;
+        }
+        .search-input::placeholder { color:#45799B; }
+        .search-input-icon {
+            position:absolute; right:14px; top:50%; transform:translateY(-50%);
+            width:24px; height:24px; background-color:#45799B; pointer-events:none;
+            -webkit-mask-image:url('icons/search.svg'); mask-image:url('icons/search.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center;
+        }
+
+        /* ─── ACTIVE FILTER TAGS ROW ─── */
+        .products-tags-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+
+        /* Category tag — dark blue */
+        .filter-tag { display:inline-flex; align-items:center; gap:6px; padding:0 14px; height:34px; border-radius:12px; border:none; cursor:pointer; font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; line-height:1; transition:background .15s; white-space:nowrap; }
+        .filter-tag--cat { background:#1B3F57; color:#fff; }
+        .filter-tag--cat:hover { background:#265879; }
+        .filter-tag--cat .tag-x { background-color:#fff; }
+        /* SVG icon inside category chip */
+        .tag-cat-icon {
+            width:14px; height:14px; flex-shrink:0;
+            background-size:contain; background-repeat:no-repeat; background-position:center;
+            filter:brightness(0) invert(1);
+        }
+        .tag-cat-icon--coffins     { background-image:url('icons/categories/cat-coffins.svg'); }
+        .tag-cat-icon--floristry   { background-image:url('icons/categories/cat-floristry.svg'); }
+        .tag-cat-icon--crosses     { background-image:url('icons/categories/cat-crosses.svg'); }
+        .tag-cat-icon--urns        { background-image:url('icons/categories/cat-urns.svg'); }
+        .tag-cat-icon--textile     { background-image:url('icons/categories/cat-textile.svg'); }
+        .tag-cat-icon--accessories { background-image:url('icons/categories/cat-accessories.svg'); }
+        /* Filter tag — light blue */
+        .filter-tag--filter { background:#E2F3FF; color:#1B3F57; }
+        .filter-tag--filter:hover { background:#CEEBFF; }
+        .filter-tag--filter .tag-x { background-color:#1B3F57; }
+        /* X icon inside tag */
+        .tag-icon { font-size:13px; line-height:1; }
+        .tag-x {
+            display:block; width:10px; height:10px; flex-shrink:0;
+            -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none'%3E%3Cpath d='M1 1L9 9M9 1L1 9' stroke='currentColor' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+            mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none'%3E%3Cpath d='M1 1L9 9M9 1L1 9' stroke='currentColor' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+        }
+        /* Reset all — at end of row */
+        .btn-reset-all {
+            display:inline-flex; align-items:center; gap:8px; padding:0; height:34px;
+            background:none; border:none; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; text-decoration:underline; white-space:nowrap; margin-left:4px;
+        }
+        .btn-reset-all:hover { color:#2E5B79; }
+
+        /* ─── SORT BAR ─── */
+        .products-sort-bar { background:#F6FBFF; border-radius:12px; box-shadow:0 1px 2px rgba(10,13,18,.05); padding:10px 14px; display:flex; align-items:center; gap:8px; }
+        .sort-found { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; line-height:140%; color:#45799B; margin:0; flex:1; }
+        .sort-found strong { font-weight:600; color:#2E5B79; }
+        .sort-label { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#45799B; white-space:nowrap; }
+        .sort-dropdown { position:relative; }
+        .sort-dropdown-btn { display:flex; align-items:center; gap:8px; padding:8px 14px; min-width:220px; background:#fff; border-radius:24px; border:none; cursor:pointer; box-shadow:0 1px 2px rgba(10,13,18,.05); font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; line-height:1.4; color:#2E5B79; transition:box-shadow .15s; }
+        .sort-dropdown-btn:hover { box-shadow:0 4px 12px rgba(10,13,18,.1); }
+        .sort-dropdown-btn-text { flex:1; text-align:left; }
+        .sort-chevron { width:24px; height:24px; background-color:#2E5B79; flex-shrink:0; transition:transform .2s; -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9L12 15L18 9' stroke='%232E5B79' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9L12 15L18 9' stroke='%232E5B79' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
+        .sort-dropdown.is-open .sort-chevron { transform:rotate(180deg); }
+        .sort-dropdown-menu { display:none; position:absolute; top:calc(100% + 6px); left:0; min-width:100%; background:#fff; border-radius:16px; border:1px solid #E2F3FF; box-shadow:0 8px 32px rgba(15,46,67,.14); padding:8px; z-index:200; }
+        .sort-dropdown.is-open .sort-dropdown-menu { display:block; }
+        .sort-option { display:block; width:100%; padding:10px 16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#2E5B79; background:none; border:none; text-align:left; cursor:pointer; border-radius:10px; transition:background .15s; white-space:nowrap; }
+        .sort-option:hover { background:#E2F3FF; }
+        .sort-option.is-active { font-weight:600; background:#E2F3FF; }
+
+        /* ─── MAIN ROW ─── */
+        .products-main-row { display:flex; gap:32px; align-items:flex-start; width:100%; }
+
+        /* ─── SIDEBAR (295px, two panels stacked) ─── */
+        .products-sidebar { width:295px; flex-shrink:0; display:flex; flex-direction:column; gap:24px; }
+
+        /* Shared panel base */
+        .cat-panel, .filter-panel {
+            background:#fff; border:1px solid #F1F1F1; border-radius:20px;
+            padding:20px 24px; display:flex; flex-direction:column; gap:24px;
+        }
+
+        /* ─── CATEGORY PANEL ─── */
+        .cat-panel-title { font-family:'Raleway',sans-serif; font-size:22px; font-weight:600; line-height:1.2; color:#1B3F57; margin:0; }
+
+        /* Category list — Figma: row item with checkbox + icon + name, pill count */
+        .cat-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:4px; }
+        .cat-item { display:block; cursor:pointer; }
+        .cat-item label {
+            display:flex; align-items:center; justify-content:space-between; gap:12px;
+            padding:8px 12px; border-radius:8px; cursor:pointer; transition:background .15s;
+        }
+        .cat-item label:hover { background:#F6FBFF; }
+        .cat-item.is-active label { background:#E2F3FF; }
+        .cat-item input[type="checkbox"] { display:none; }
+
+        /* Left side: checkbox + [icon + name] */
+        .cat-left { display:flex; align-items:center; gap:16px; }
+        .cat-cb {
+            width:20px; height:20px; border-radius:6px; border:1.5px solid #45799B;
+            background:#fff; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:background .15s, border-color .15s;
+        }
+        .cat-item.is-active .cat-cb { background:#2E5B79; border-color:#2E5B79; }
+        .cat-item.is-active .cat-cb::after {
+            content:''; width:10px; height:7px; background-color:#fff;
+            -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 3.5L3.5 6L9 1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 3.5L3.5 6L9 1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center;
+        }
+        .cat-meta { display:flex; align-items:center; gap:12px; }
+        .cat-icon {
+            width:20px; height:20px; flex-shrink:0;
+            background-size:contain; background-repeat:no-repeat; background-position:center;
+        }
+        .cat-icon--coffins     { background-image:url('icons/categories/cat-coffins.svg'); }
+        .cat-icon--floristry   { background-image:url('icons/categories/cat-floristry.svg'); }
+        .cat-icon--crosses     { background-image:url('icons/categories/cat-crosses.svg'); }
+        .cat-icon--urns        { background-image:url('icons/categories/cat-urns.svg'); }
+        .cat-icon--textile     { background-image:url('icons/categories/cat-textile.svg'); }
+        .cat-icon--accessories { background-image:url('icons/categories/cat-accessories.svg'); }
+
+        .cat-name { font-family:'Raleway',sans-serif; font-size:14px; font-weight:700; line-height:140%; color:#2E5B79; }
+        .cat-item.is-active .cat-name { color:#1B3F57; }
+
+        /* Count badge pill */
+        .cat-count {
+            min-width:26px; height:18px; padding:0 6px; border-radius:6px;
+            font-family:'Raleway',sans-serif; font-size:12px; font-weight:500; line-height:1;
+            display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+            background:#F1F1F1; color:#1B3F57; transition:background .15s, color .15s;
+        }
+        .cat-item.is-active .cat-count { background:#2E5B79; color:#fff; }
+
+        /* Filter block inner — gap 24px between sections */
+        .filter-block { display:flex; flex-direction:column; gap:24px; }
+        .filter-top { display:flex; justify-content:space-between; align-items:center; }
+        /* H4 Figma: Raleway SemiBold 600 22px 120% TITLE */
+        .filter-panel-title { font-family:'Raleway',sans-serif; font-size:22px; font-weight:600; line-height:1.2; color:#1B3F57; margin:0; }
+        .filter-sliders-icon { width:16px; height:16px; background-color:#1B3F57; flex-shrink:0; -webkit-mask-image:url('icons/sliders.svg'); mask-image:url('icons/sliders.svg'); -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain; }
+        .filter-hr { width:100%; height:1px; background:#F1F1F1; border:none; margin:0; flex-shrink:0; }
+
+        .filter-section { display:flex; flex-direction:column; gap:16px; }
+        .filter-section-head { display:flex; justify-content:space-between; align-items:center; cursor:pointer; user-select:none; }
+        /* H5 Figma: Raleway SemiBold 600 20px 120% */
+        .filter-section-title { font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; line-height:1.2; color:#1B3F57; margin:0; }
+        .filter-section-toggle { width:16px; height:16px; background-color:#1B3F57; flex-shrink:0; transition:transform .22s; -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%231B3F57' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%231B3F57' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
+        .filter-section.is-collapsed .filter-section-toggle { transform:rotate(-90deg); }
+        .filter-section-body { display:flex; flex-direction:column; gap:16px; }
+        .filter-section.is-collapsed .filter-section-body { display:none; }
+
+        /* Price slider */
+        .price-values { display:flex; justify-content:space-between; }
+        .price-val { font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#1B3F57; }
+        .price-slider-wrap { position:relative; height:28px; display:flex; align-items:center; }
+        .price-slider-track { position:absolute; left:0; right:0; height:8px; border-radius:4px; background:#E2F3FF; }
+        .price-slider-fill { position:absolute; height:8px; border-radius:4px; background:#2E5B79; left:0; right:0; }
+        .price-slider-wrap input[type="range"] { position:absolute; width:100%; -webkit-appearance:none; appearance:none; background:transparent; pointer-events:none; height:8px; border-radius:4px; z-index:1; }
+        .price-slider-wrap input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; pointer-events:all; width:22px; height:22px; border-radius:50%; background:#fff; border:2px solid #2E5B79; cursor:grab; box-shadow:0 2px 4px rgba(46,91,121,.2); }
+        .price-slider-wrap input[type="range"]::-moz-range-thumb { pointer-events:all; width:18px; height:18px; border-radius:50%; background:#fff; border:2px solid #2E5B79; cursor:grab; }
+        .filter-bonus-discount-row { display:flex; gap:16px; flex-wrap:wrap; }
+
+        /* Checkbox */
+        .filter-check-item { display:flex; align-items:center; gap:8px; cursor:pointer; }
+        .filter-check-item input[type="checkbox"] { display:none; }
+        .check-box { width:18px; height:18px; border-radius:5px; border:1.25px solid #45799B; background:#fff; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:background .15s; }
+        .filter-check-item input:checked + .check-box { background:#E2F3FF; }
+        .filter-check-item input:checked + .check-box::after { content:''; width:10px; height:7px; background-color:#2E5B79; -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 3.5L3.5 6L9 1' stroke='%232E5B79' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 3.5L3.5 6L9 1' stroke='%232E5B79' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
+        .check-label { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; line-height:140%; color:#1B3F57; }
+
+        /* Radio */
+        .filter-radio-item { display:flex; align-items:center; gap:8px; cursor:pointer; }
+        .filter-radio-item input[type="radio"] { display:none; }
+        .radio-circle { width:18px; height:18px; border-radius:50%; border:1.25px solid #45799B; background:#fff; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:background .15s; }
+        .filter-radio-item input:checked + .radio-circle { background:#E2F3FF; }
+        .filter-radio-item input:checked + .radio-circle::after { content:''; width:8px; height:8px; border-radius:50%; background:#2E5B79; }
+        .radio-label { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; line-height:140%; color:#2E5B79; }
+
+        /* Color swatches */
+        .color-swatches { display:flex; flex-direction:column; gap:14px; }
+        .color-row { display:flex; justify-content:space-between; align-items:center; }
+        .color-swatch { width:34px; height:34px; border-radius:50%; cursor:pointer; border:2px solid transparent; transition:transform .15s, box-shadow .15s; }
+        .color-swatch:hover { transform:scale(1.1); }
+        .color-swatch.is-selected { box-shadow:0 0 0 2px #fff, 0 0 0 4px #2E5B79; }
+        .color-swatch--light { border-color:#E0E0E0; }
+
+        /* Dynamic filter group */
+        #dynFilters { display:contents; }
+        .dyn-group { display:flex; flex-direction:column; gap:24px; }
+        .dyn-group[hidden] { display:none; }
+        .dyn-group:not([hidden]) { border-top:1px solid #F1F1F1; padding-top:24px; }
+
+        /* Apply button — 247px fits exactly inside 295px - 24px*2 padding */
+        .btn-apply-filters { width:100%; height:48px; background:#1B3F57; border-radius:62px; border:none; cursor:pointer; font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#fff; display:flex; align-items:center; justify-content:center; transition:background .2s; margin-top:4px; }
+        .btn-apply-filters:hover { background:#265879; }
+
+        /* ─── PRODUCT GRID (953px, 4 cols × 223px, gap 20px) ─── */
+        .products-grid { flex:1; min-width:0; display:flex; flex-wrap:wrap; gap:20px; align-content:flex-start; }
+        .products-row { display:contents; }
+
+        /* Product card 223px */
+        .product-card { width:223px; flex-shrink:0; border:1px solid #F1F1F1; border-radius:24px; overflow:hidden; background:#fff; display:flex; flex-direction:column; text-decoration:none; transition:box-shadow .2s, transform .18s; cursor:pointer; }
+        .product-card:hover { box-shadow:0 8px 24px rgba(15,46,67,.1); transform:translateY(-3px); }
+
+        /* Image area 223×180, relative for badges */
+        .product-img-wrap { width:100%; height:180px; background:#F8F6F4; border-radius:20px; overflow:hidden; display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; }
+        .product-img { width:100%; height:100%; object-fit:contain; object-position:center; }
+
+        /* Badges */
+        /* Badge container — top-left, flex row */
+        .product-badges { position:absolute; top:9px; left:10px; display:flex; gap:4px; flex-wrap:wrap; pointer-events:none; }
+        .product-badge { display:inline-flex; align-items:center; gap:4px; height:22px; padding:0 8px; border-radius:16px; font-family:'Raleway',sans-serif; font-size:12px; font-weight:600; line-height:1; color:#fff; }
+        .product-badge--bonus { background:#45799B; }
+        .badge-bonus-icon { width:14px; height:14px; flex-shrink:0; background-image:url('icons/bonus.svg'); background-size:contain; background-repeat:no-repeat; background-position:center; }
+        .product-badge--discount { background:#D9272D; }
+
+        /* Text block — 191px content (223 - 16px*2) */
+        .product-info { padding:0 16px 16px; display:flex; flex-direction:column; gap:12px; flex:1; }
+        .product-top-info { display:flex; flex-direction:column; gap:6px; }
+        /* Name — left-aligned, SemiBold 16px, min-height 44px (2 lines) */
+        .product-name { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; line-height:140%; color:#1B3F57; margin:0; text-align:left; min-height:44px; display:flex; align-items:center; }
+        .product-status { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; line-height:140%; color:#3C9264; margin:0; text-align:left; }
+        /* Price + cart in one row */
+        .product-bottom-info { display:flex; justify-content:space-between; align-items:center; margin-top:auto; }
+        .product-price-block { display:flex; flex-direction:column; justify-content:center; gap:1px; }
+        .product-price { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; line-height:140%; color:#1B3F57; margin:0; }
+        .product-price--old { font-family:'Raleway',sans-serif; font-size:13px; font-weight:600; line-height:140%; color:rgba(27,63,87,.5); text-decoration:line-through; margin:0; }
+        .product-price--sale { font-family:'Raleway',sans-serif; font-size:16px; font-weight:700; line-height:140%; color:#D9272D; margin:0; }
+        .product-cart-btn { width:36px; height:36px; border-radius:50%; background:#1B3F57; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .2s; }
+        .product-cart-btn:hover { background:#265879; }
+        .product-cart-icon { width:18px; height:18px; background-color:#fff; -webkit-mask-image:url('icons/shopping-cart.svg'); mask-image:url('icons/shopping-cart.svg'); -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain; }
+
+        /* ─── PAGINATION — centered under grid ─── */
+        .products-pagination { display:flex; align-items:center; justify-content:center; gap:8px; padding-top:12px; }
+        .pagination-numbers { display:flex; gap:2px; }
+        .pagination-btn { width:40px; height:40px; border-radius:8px; background:transparent; border:none; cursor:pointer; font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; line-height:140%; display:flex; align-items:center; justify-content:center; transition:background .15s; }
+        .pagination-btn:hover { background:#F6FBFF; }
+        .pagination-btn.is-active { background:#E2F3FF; font-weight:600; }
+        .pagination-next { display:flex; align-items:center; gap:8px; padding:8px 16px; height:40px; background:#E2F3FF; border-radius:24px; border:none; cursor:pointer; font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#1B3F57; box-shadow:0 1px 2px rgba(10,13,18,.05); transition:background .15s; margin-left:8px; }
+        .pagination-next:hover { background:#CEEBFF; }
+        .pagination-next-icon { width:18px; height:18px; background-color:#1B3F57; flex-shrink:0; -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M4 10H16M10 4L16 10L10 16' stroke='%231B3F57' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M4 10H16M10 4L16 10L10 16' stroke='%231B3F57' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
+
+        /* ─── MOBILE FILTER BUTTON ─── */
+        .mob-filter-btn {
+            display:none; align-items:center; justify-content:center; gap:8px;
+            height:44px; padding:0 18px;
+            background:#2E5B79; border-radius:22px; border:none; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:700; color:#fff;
+            flex-shrink:0; transition:background .2s; white-space:nowrap;
+        }
+        .mob-filter-btn:hover { background:#1B3F57; }
+        .mob-filter-btn-icon {
+            width:18px; height:18px; background-color:#fff; flex-shrink:0;
+            mask-image:url('icons/sliders.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain;
+            -webkit-mask-image:url('icons/sliders.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain;
+        }
+        .mob-filter-badge {
+            display:none; min-width:18px; height:18px; padding:0 5px; border-radius:9px;
+            background:#fff; color:#2E5B79;
+            font-family:'Raleway',sans-serif; font-size:11px; font-weight:700; line-height:18px;
+            text-align:center; flex-shrink:0;
+        }
+        .mob-filter-badge.has-count { display:inline-block; }
+
+        /* ─── MOBILE FILTER OVERLAY (bottom sheet) ─── */
+        .mob-filter-overlay {
+            display:none; position:fixed; inset:0; z-index:1500;
+            background:rgba(15,46,67,.45);
+            align-items:flex-end;
+        }
+        .mob-filter-overlay.is-open { display:flex; }
+        .mob-filter-sheet {
+            background:#fff; border-radius:20px 20px 0 0; width:100%;
+            max-height:88vh; display:flex; flex-direction:column;
+            box-shadow:0 -8px 32px rgba(15,46,67,.18); overflow:hidden;
+        }
+        .mob-filter-drag { width:40px; height:4px; border-radius:2px; background:#D0D5DD; margin:12px auto 4px; flex-shrink:0; }
+        .mob-filter-head {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:12px 20px 16px; flex-shrink:0; border-bottom:1px solid #F1F1F1;
+        }
+        .mob-filter-head-title { font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; color:#1B3F57; }
+        .mob-filter-head-close {
+            width:36px; height:36px; background:none; border:none; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; padding:0;
+            border-radius:50%; transition:background .15s; flex-shrink:0;
+        }
+        .mob-filter-head-close:hover { background:#F6FBFF; }
+        .mob-filter-close-icon {
+            width:22px; height:22px; background-color:#1B3F57;
+            mask-image:url('icons/close.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain;
+            -webkit-mask-image:url('icons/close.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain;
+        }
+        .mob-filter-body { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+
+        /* Sidebar adjustments when inside mobile filter modal */
+        .mob-filter-body .products-sidebar { display:flex !important; width:100%; gap:0; }
+        .mob-filter-body .cat-panel { border:none; border-radius:0; padding:20px 20px 24px; border-bottom:8px solid #F6FBFF; }
+        .mob-filter-body .filter-panel { border:none; border-radius:0; padding:20px 20px 32px; }
+        .mob-filter-body .cat-panel-title { font-size:18px; }
+        .mob-filter-body .filter-panel-title { font-size:18px; }
+        .mob-filter-body .filter-section-title { font-size:17px; }
+        .mob-filter-body .cat-name { font-size:15px; }
+
+        /* ─── REPLACE BANNER ─── */
+        .replace-banner {
+            background:#E2F3FF; border-radius:14px; padding:14px 20px;
+            align-items:center; gap:12px;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#1B3F57;
+        }
+        .replace-banner-icon {
+            display:inline-block; width:20px; height:20px; background-color:#2E5B79; flex-shrink:0;
+            -webkit-mask-image:url('icons/shopping-cart.svg'); mask-image:url('icons/shopping-cart.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+            -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .replace-banner-link {
+            margin-left:auto; font-size:13px; font-weight:600; color:#2E5B79;
+            text-decoration:underline; white-space:nowrap; flex-shrink:0;
+        }
+        @media (max-width:600px) {
+            .replace-banner { flex-wrap:wrap; padding:12px 14px; gap:8px; font-size:14px; border-radius:12px; }
+            .replace-banner-link { margin-left:0; order:3; }
+        }
+
+        /* ─── BREAKPOINTS ─── */
+        @media (max-width:1280px) {
+            .products-page { padding:0 40px 48px; }
+            .product-card { width:calc(33.333% - 14px); }
+        }
+        @media (max-width:1024px) {
+            .product-card { width:calc(50% - 10px); }
+        }
+        @media (max-width:768px) {
+            .products-page { padding:0 20px 40px; }
+            .products-title-row { flex-wrap:wrap; align-items:center; padding-top:20px; gap:8px 12px; }
+            .products-title { font-size:32px; text-align:left; flex:1; min-width:0; width:auto; }
+            .search-wrap { width:100%; order:10; }
+            .mob-filter-btn { display:flex; }
+            .products-tags-row { justify-content:flex-start; }
+            .products-sort-bar { flex-wrap:wrap; gap:8px; }
+            .sort-label { display:none; }
+            .sort-dropdown-btn { min-width:unset; }
+            .products-main-row { flex-direction:column; }
+            .products-sidebar { display:none; }
+            .products-grid { gap:12px; }
+            .product-card { width:calc(50% - 6px); }
+            .product-img-wrap { height:150px; padding:10px 12px; }
+            .product-name { font-size:14px; min-height:38px; }
+            .product-price { font-size:14px; }
+            .product-price--sale { font-size:14px; }
+            .product-price--old { font-size:12px; }
+            .product-status { font-size:13px; }
+        }
+        @media (max-width:480px) {
+            .header-inner { width:100%; max-width:none; padding:0 16px; height:60px; position:relative; }
+            .products-title { font-size:26px; }
+            .product-img-wrap { height:140px; }
+            .hp-mob-menu-btn { display:flex; }
+            .logo-img { width:64px; height:auto; }
+            .hp-mob-nav { display:flex; }
+            .header-nav, .header-right { display:none !important; }
+            .header-logo { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:1; }
+            .hp-mob-header-icons { display:flex; margin-left:auto; }
+            .hp-help-btn { width:60px; height:60px; border-radius:50%; padding:13px; gap:0; right:12px; bottom:20px; }
+            .hp-help-btn span { display:none; }
+            /* Footer mobile */
+            .site-footer { background-color: #2E5B79; }
+            .footer-top-wrapper { padding: 32px 0 0; border-bottom: none; width: 100%; }
+            .footer-top-container { width: 100%; flex-direction: column; align-items: flex-start; gap: 42px; padding: 0 16px; box-sizing: border-box; }
+            .footer-brand-col { width: 100%; gap: 24px; }
+            .logo-footer { width: auto; }
+            .logo-footer img { height: 90px; width: auto; }
+            .footer-tagline { color: rgba(255,255,255,0.7); font-weight: 400; line-height: 1.5; }
+            .footer-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; width: 100%; }
+            .footer-menu-col:last-child { grid-column: 1 / -1; }
+            .footer-category-title { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); }
+            .footer-menu-list { gap: 12px; }
+            .footer-menu-list li a { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.9); }
+            .footer-bottom-wrapper { background-color: transparent; border-top: 1px solid rgba(255,255,255,0.2); padding: 24px 16px; width: 100%; margin-top: 32px; box-sizing: border-box; }
+            .footer-bottom-container { width: 100%; flex-direction: column; height: auto; gap: 16px; padding: 0; align-items: center; }
+            .footer-socials { gap: 24px; }
+            .social-icon { background-color: rgba(255,255,255,0.7); width: 24px; height: 24px; }
+            .social-icon:hover { background-color: #FFFFFF; }
+            .footer-bottom-container .copyright { color: rgba(255,255,255,0.5); font-size: 14px; text-align: center; order: 1; }
+            .footer-socials { order: -1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+    <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню">
+            <span class="hp-mob-menu-icon"></span>
+        </button>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-item">Головна</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Порядок дій</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Що робити в першу чергу?</a>
+                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="#" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="#" class="nav-dropdown-item">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Послуги</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="products.html" class="nav-item nav-active" style="color:#45799B;">Товари</a>
+            <a href="#" class="nav-item">Про нас</a>
+        </nav>
+        <a href="home.html" class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
+        </a>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="#" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="#" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="#" class="nav-dropdown-item">Професійні консультації</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+                <a href="register.html" class="icon-placeholder account-icon"></a>
+            </div>
+        </div>
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+            <a href="register.html" class="icon-placeholder account-icon"></a>
+        </div>
+    </div>
+</header>
+
+<!-- ══ FLOATING HELP BUTTON ══ -->
+<a href="tel:+387777777" class="hp-help-btn">
+    <span>Потрібна допомога?</span>
+    <div class="hp-help-icon"></div>
+</a>
+
+<!-- ══ MAIN ══ -->
+<main class="products-page">
+
+    <!-- Replace mode banner (shown only when coming from package "Замінити") -->
+    <div id="replaceBanner" class="replace-banner" style="display:none;">
+        <span class="replace-banner-icon" aria-hidden="true"></span>
+        <span id="replaceBannerText">Оберіть товар для заміни у пакеті</span>
+        <a href="cart.html" class="replace-banner-link">← Повернутись до кошика</a>
+    </div>
+
+    <!-- Row 1: Title + Filter button (mobile) + Search -->
+    <div class="products-title-row">
+        <h1 class="products-title">Товари</h1>
+        <button class="mob-filter-btn" id="mobFilterBtn" aria-label="Відкрити фільтри">
+            <span class="mob-filter-btn-icon" aria-hidden="true"></span>
+            Фільтри
+            <span class="mob-filter-badge" id="mobFilterBadge" aria-hidden="true"></span>
+        </button>
+        <div class="search-wrap">
+            <input type="text" class="search-input" placeholder="Пошук товарів" aria-label="Пошук товарів">
+            <span class="search-input-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+
+    <!-- Row 2: Active filter tags (populated by JS) -->
+    <div class="products-tags-row" id="activeTagsRow">
+        <!-- Reset all — at end -->
+        <button class="btn-reset-all" id="btnResetAll">Скинути усі фільтри</button>
+    </div>
+
+    <!-- Row 3: Found + Sort -->
+    <div class="products-sort-bar">
+        <p class="sort-found">Знайдено: <strong>16 товарів</strong></p>
+        <span class="sort-label">Сортувати:</span>
+        <div class="sort-dropdown" id="sortDropdown">
+            <button class="sort-dropdown-btn" id="sortDropdownBtn" aria-haspopup="listbox" aria-expanded="false">
+                <span class="sort-dropdown-btn-text" id="sortDropdownText">За популярністю</span>
+                <span class="sort-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="sort-dropdown-menu" role="listbox">
+                <button class="sort-option is-active" role="option">За популярністю</button>
+                <button class="sort-option" role="option">Ціна: від низької</button>
+                <button class="sort-option" role="option">Ціна: від високої</button>
+                <button class="sort-option" role="option">Новинки</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ MAIN ROW: SIDEBAR + GRID ══ -->
+    <div class="products-main-row">
+
+        <!-- ══ SIDEBAR ══ -->
+        <aside class="products-sidebar" aria-label="Фільтри">
+
+            <!-- Категорія panel -->
+            <div class="cat-panel">
+                <h2 class="cat-panel-title">Категорія</h2>
+                <ul class="cat-list" id="catList">
+                    <li class="cat-item" data-cat="coffins">
+                        <label>
+                            <span class="cat-left">
+                                <span class="cat-cb"></span>
+                                <span class="cat-meta">
+                                    <span class="cat-icon cat-icon--coffins" aria-hidden="true"></span>
+                                    <span class="cat-name">Труни</span>
+                                </span>
+                            </span>
+                            <span class="cat-count">12</span>
+                        </label>
+                    </li>
+                    <li class="cat-item" data-cat="floristry">
+                        <label>
+                            <span class="cat-left">
+                                <span class="cat-cb"></span>
+                                <span class="cat-meta">
+                                    <span class="cat-icon cat-icon--floristry" aria-hidden="true"></span>
+                                    <span class="cat-name">Флористика</span>
+                                </span>
+                            </span>
+                            <span class="cat-count">8</span>
+                        </label>
+                    </li>
+                    <li class="cat-item" data-cat="crosses">
+                        <label>
+                            <span class="cat-left">
+                                <span class="cat-cb"></span>
+                                <span class="cat-meta">
+                                    <span class="cat-icon cat-icon--crosses" aria-hidden="true"></span>
+                                    <span class="cat-name">Хрести та таблички</span>
+                                </span>
+                            </span>
+                            <span class="cat-count">15</span>
+                        </label>
+                    </li>
+                    <li class="cat-item" data-cat="urns">
+                        <label>
+                            <span class="cat-left">
+                                <span class="cat-cb"></span>
+                                <span class="cat-meta">
+                                    <span class="cat-icon cat-icon--urns" aria-hidden="true"></span>
+                                    <span class="cat-name">Урни для праху</span>
+                                </span>
+                            </span>
+                            <span class="cat-count">6</span>
+                        </label>
+                    </li>
+                    <li class="cat-item" data-cat="textile">
+                        <label>
+                            <span class="cat-left">
+                                <span class="cat-cb"></span>
+                                <span class="cat-meta">
+                                    <span class="cat-icon cat-icon--textile" aria-hidden="true"></span>
+                                    <span class="cat-name">Текстиль</span>
+                                </span>
+                            </span>
+                            <span class="cat-count">9</span>
+                        </label>
+                    </li>
+                    <li class="cat-item" data-cat="accessories">
+                        <label>
+                            <span class="cat-left">
+                                <span class="cat-cb"></span>
+                                <span class="cat-meta">
+                                    <span class="cat-icon cat-icon--accessories" aria-hidden="true"></span>
+                                    <span class="cat-name">Аксесуари</span>
+                                </span>
+                            </span>
+                            <span class="cat-count">21</span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Фільтр panel -->
+            <div class="filter-panel">
+                <div class="filter-top">
+                    <h2 class="filter-panel-title">Фільтр</h2>
+                    <span class="filter-sliders-icon" aria-hidden="true"></span>
+                </div>
+                <hr class="filter-hr">
+
+                <!-- Filter sections -->
+                <div class="filter-block">
+
+                <!-- Вартість + бонуси/знижки -->
+                <div class="filter-section" id="filterPrice">
+                    <div class="filter-section-head">
+                        <h3 class="filter-section-title">Вартість</h3>
+                        <span class="filter-section-toggle" aria-hidden="true"></span>
+                    </div>
+                    <div class="filter-section-body">
+                        <div class="price-values">
+                            <span class="price-val" id="priceMin">0 ₴</span>
+                            <span class="price-val" id="priceMax">4000 ₴</span>
+                        </div>
+                        <div class="price-slider-wrap">
+                            <div class="price-slider-track">
+                                <div class="price-slider-fill" id="sliderFill"></div>
+                            </div>
+                            <input type="range" id="rangeMin" min="0" max="10000" value="0" step="50" aria-label="Мін. ціна">
+                            <input type="range" id="rangeMax" min="0" max="10000" value="4000" step="50" aria-label="Макс. ціна">
+                        </div>
+                        <div class="filter-bonus-discount-row">
+                            <label class="filter-check-item">
+                                <input type="checkbox" id="cbBonus">
+                                <span class="check-box"></span>
+                                <span class="check-label">З бонусами</span>
+                            </label>
+                            <label class="filter-check-item">
+                                <input type="checkbox" id="cbDiscount">
+                                <span class="check-box"></span>
+                                <span class="check-label">Зі знижкою</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic category-specific filters (shown/hidden by JS) -->
+                <div id="dynFilters">
+                    <!-- Труни -->
+                    <div class="dyn-group" data-for="coffins">
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Розмір труни</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="standard" checked><span class="radio-circle"></span><span class="radio-label">Стандартний</span></label>
+                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="medium"><span class="radio-circle"></span><span class="radio-label">Середній</span></label>
+                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="large"><span class="radio-circle"></span><span class="radio-label">Великий</span></label>
+                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="special"><span class="radio-circle"></span><span class="radio-label">Спецрозмір</span></label>
+                            </div>
+                        </div>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Матеріал</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Сосна</span></label>
+                                <label class="filter-check-item"><input type="checkbox" checked><span class="check-box"></span><span class="check-label">Дуб</span></label>
+                                <label class="filter-check-item"><input type="checkbox" checked><span class="check-box"></span><span class="check-label">Горіх</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">MDF</span></label>
+                            </div>
+                        </div>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Оббивка</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-check-item"><input type="checkbox" checked><span class="check-box"></span><span class="check-label">Оксамит</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Атлас</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Без оббивки</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Флористика -->
+                    <div class="dyn-group" data-for="floristry" hidden>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Тип</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-check-item"><input type="checkbox" checked><span class="check-box"></span><span class="check-label">Вінок</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Композиція</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Букет</span></label>
+                            </div>
+                        </div>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Квіти</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-check-item"><input type="checkbox" checked><span class="check-box"></span><span class="check-label">Живі</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Штучні</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Змішані</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Хрести -->
+                    <div class="dyn-group" data-for="crosses" hidden>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Матеріал</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-check-item"><input type="checkbox" checked><span class="check-box"></span><span class="check-label">Дерево</span></label>
+                                <label class="filter-check-item"><input type="checkbox" checked><span class="check-box"></span><span class="check-label">Метал</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Граніт</span></label>
+                            </div>
+                        </div>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Висота</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-radio-item"><input type="radio" name="cross-height" value="s"><span class="radio-circle"></span><span class="radio-label">До 1 м</span></label>
+                                <label class="filter-radio-item"><input type="radio" name="cross-height" value="m" checked><span class="radio-circle"></span><span class="radio-label">1 – 1,5 м</span></label>
+                                <label class="filter-radio-item"><input type="radio" name="cross-height" value="l"><span class="radio-circle"></span><span class="radio-label">Понад 1,5 м</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Урни -->
+                    <div class="dyn-group" data-for="urns" hidden>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Матеріал</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Кераміка</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Метал</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Дерево</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Біорозкладна</span></label>
+                            </div>
+                        </div>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Об'єм</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-radio-item"><input type="radio" name="urn-vol" value="std" checked><span class="radio-circle"></span><span class="radio-label">Стандартний</span></label>
+                                <label class="filter-radio-item"><input type="radio" name="urn-vol" value="child"><span class="radio-circle"></span><span class="radio-label">Дитячий</span></label>
+                                <label class="filter-radio-item"><input type="radio" name="urn-vol" value="double"><span class="radio-circle"></span><span class="radio-label">Подвійний</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Текстиль -->
+                    <div class="dyn-group" data-for="textile" hidden>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Тип</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Покривало</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Подушка</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Комплект</span></label>
+                            </div>
+                        </div>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Матеріал</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Оксамит</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Атлас</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Бавовна</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Аксесуари -->
+                    <div class="dyn-group" data-for="accessories" hidden>
+                        <div class="filter-section">
+                            <div class="filter-section-head"><h3 class="filter-section-title">Тип</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
+                            <div class="filter-section-body">
+                                <label class="filter-check-item"><input type="checkbox" checked><span class="check-box"></span><span class="check-label">Лампадки</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Свічки</span></label>
+                                <label class="filter-check-item"><input type="checkbox" checked><span class="check-box"></span><span class="check-label">Ліхтарі</span></label>
+                                <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Рамки</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /dynFilters -->
+
+                <hr class="filter-hr">
+
+                <!-- Наявність (radio) -->
+                <div class="filter-section" id="filterAvailability">
+                    <div class="filter-section-head">
+                        <h3 class="filter-section-title">Наявність</h3>
+                        <span class="filter-section-toggle" aria-hidden="true"></span>
+                    </div>
+                    <div class="filter-section-body">
+                        <label class="filter-radio-item">
+                            <input type="radio" name="availability" value="instock" checked>
+                            <span class="radio-circle"></span>
+                            <span class="radio-label">В наявності</span>
+                        </label>
+                        <label class="filter-radio-item">
+                            <input type="radio" name="availability" value="order">
+                            <span class="radio-circle"></span>
+                            <span class="radio-label">Під замовлення (24–48 год)</span>
+                        </label>
+                    </div>
+                </div>
+                <hr class="filter-hr">
+
+                <!-- Кольори -->
+                <div class="filter-section is-collapsed" id="filterColors">
+                    <div class="filter-section-head">
+                        <h3 class="filter-section-title">Кольори</h3>
+                        <span class="filter-section-toggle" aria-hidden="true"></span>
+                    </div>
+                    <div class="filter-section-body">
+                        <div class="color-swatches">
+                            <div class="color-row">
+                                <span class="color-swatch is-selected" style="background:#3C9264;" title="Зелений" role="button" tabindex="0"></span>
+                                <span class="color-swatch" style="background:#E31F1F;" title="Червоний" role="button" tabindex="0"></span>
+                                <span class="color-swatch" style="background:#FFE573;" title="Жовтий" role="button" tabindex="0"></span>
+                                <span class="color-swatch" style="background:#FFB877;" title="Помаранчевий" role="button" tabindex="0"></span>
+                                <span class="color-swatch" style="background:#81CEDF;" title="Блакитний" role="button" tabindex="0"></span>
+                            </div>
+                            <div class="color-row">
+                                <span class="color-swatch" style="background:#2877AC;" title="Синій" role="button" tabindex="0"></span>
+                                <span class="color-swatch" style="background:#BE84F8;" title="Фіолетовий" role="button" tabindex="0"></span>
+                                <span class="color-swatch" style="background:#FFA4E0;" title="Рожевий" role="button" tabindex="0"></span>
+                                <span class="color-swatch color-swatch--light" style="background:#FFFFFF;" title="Білий" role="button" tabindex="0"></span>
+                                <span class="color-swatch" style="background:#1B3F57;" title="Темно-синій" role="button" tabindex="0"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="filter-hr">
+
+                <!-- Віра -->
+                <div class="filter-section is-collapsed" id="filterReligion">
+                    <div class="filter-section-head">
+                        <h3 class="filter-section-title">Віра</h3>
+                        <span class="filter-section-toggle" aria-hidden="true"></span>
+                    </div>
+                    <div class="filter-section-body">
+                        <label class="filter-check-item"><input type="checkbox" checked><span class="check-box"></span><span class="check-label">Православ'я</span></label>
+                        <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Католицизм</span></label>
+                        <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Юдаїзм</span></label>
+                        <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Іслам</span></label>
+                        <label class="filter-check-item"><input type="checkbox"><span class="check-box"></span><span class="check-label">Без релігійної символіки</span></label>
+                    </div>
+                </div>
+
+                <button class="btn-apply-filters">Застосувати фільтри</button>
+                </div><!-- /filter-block -->
+            </div><!-- /filter-panel -->
+
+        </aside><!-- /sidebar -->
+
+        <!-- ══ PRODUCT GRID ══ -->
+        <div class="products-grid">
+
+            <!-- Row 1 — Труни -->
+            <div class="products-row">
+                <a href="product.html?id=coffin-pine" class="product-card" data-category="coffins" data-price="1490" data-bonus="true">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-coffin.png" alt="Труна соснова" class="product-img" loading="lazy">
+                        <div class="product-badges"><span class="product-badge product-badge--bonus"><span class="badge-bonus-icon" aria-hidden="true"></span>+25 бонусів</span></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Труна соснова</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">1 490 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html" class="product-card" data-category="coffins" data-price="1500" data-bonus="true" data-discount="true">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-coffin-oak.png" alt="Дубова труна" class="product-img" loading="lazy">
+                        <div class="product-badges"><span class="product-badge product-badge--bonus"><span class="badge-bonus-icon" aria-hidden="true"></span>+30 бонусів</span><span class="product-badge product-badge--discount">-20%</span></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Дубова труна</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block">
+                                <p class="product-price--old">1 800 ₴</p>
+                                <p class="product-price--sale">1 500 ₴</p>
+                            </div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=coffin-sarcophagus" class="product-card" data-category="coffins" data-price="3800">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-sarcophagus.png" alt="Саркофаг оббитий" class="product-img" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Саркофаг оббитий</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">3 800 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=coffin-walnut" class="product-card" data-category="coffins" data-price="2200">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-coffin-walnut.png" alt="Труна горіхова" class="product-img" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Труна горіхова</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">2 200 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 2 — Хрести -->
+            <div class="products-row">
+                <a href="product.html?id=cross-metal" class="product-card" data-category="crosses" data-price="1400">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-cross-twisted-5cbf23.png" alt="Хрест металевий кований" class="product-img" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Хрест металевий кований</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">1 400 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=cross-wood-black" class="product-card" data-category="crosses" data-price="890" data-bonus="true">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-cross-black-4ce638.png" alt="Хрест дерев'яний чорний" class="product-img" loading="lazy">
+                        <div class="product-badges"><span class="product-badge product-badge--bonus"><span class="badge-bonus-icon" aria-hidden="true"></span>+30 бонусів</span></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Хрест дерев'яний чорний</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">890 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=cross-wood-grey" class="product-card" data-category="crosses" data-price="1500" data-bonus="true">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-cross-grey-6a56a8.png" alt="Хрест дерев'яний сірий" class="product-img" loading="lazy">
+                        <div class="product-badges"><span class="product-badge product-badge--bonus"><span class="badge-bonus-icon" aria-hidden="true"></span>+30 бонусів</span></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Хрест дерев'яний сірий</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">1 500 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=cross-carved" class="product-card" data-category="crosses" data-price="960" data-discount="true">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-cross-carved.png" alt="Хрест дерев'яний різьблений" class="product-img" loading="lazy">
+                        <div class="product-badges"><span class="product-badge product-badge--discount">-20%</span></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Хрест дерев'яний різьблений</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block">
+                                <p class="product-price--old">1 200 ₴</p>
+                                <p class="product-price--sale">960 ₴</p>
+                            </div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 3 — Флористика -->
+            <div class="products-row">
+                <a href="product.html?id=wreath-eternal" class="product-card" data-category="floristry" data-price="1200">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-wreath-eternal.png" alt="Вічний спокій" class="product-img" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">"Вічний спокій"</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">1 200 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=wreath-meadow" class="product-card" data-category="floristry" data-price="980" data-bonus="true">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-wreath-meadow.png" alt="Луговий вінок" class="product-img" loading="lazy">
+                        <div class="product-badges"><span class="product-badge product-badge--bonus"><span class="badge-bonus-icon" aria-hidden="true"></span>+30 бонусів</span></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">"Луговий вінок"</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">980 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=wreath-memory" class="product-card" data-category="floristry" data-price="1400">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-wreath-memory.png" alt="Пам'ять" class="product-img" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">"Пам'ять"</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">1 400 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=wreath-sunny" class="product-card" data-category="floristry" data-price="1500">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-wreath-sunny.png" alt="Сонячна пам'ять" class="product-img" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">"Сонячна пам'ять"</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">1 500 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 4 — Аксесуари -->
+            <div class="products-row">
+                <a href="product.html?id=lamp-gold" class="product-card" data-category="accessories" data-price="320">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-lampada-gold.png" alt='Лампадка "Бронза"' class="product-img" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Лампадка "Бронза"</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">320 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=lamp-dark" class="product-card" data-category="accessories" data-price="280">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-lampada-dark-gold.png" alt='Лампадка "Нічна"' class="product-img" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Лампадка "Нічна"</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">280 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=lamp-silver" class="product-card" data-category="accessories" data-price="350" data-bonus="true">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-lampada-white.png" alt='Лампадка "Срібло"' class="product-img" loading="lazy">
+                        <div class="product-badges"><span class="product-badge product-badge--bonus"><span class="badge-bonus-icon" aria-hidden="true"></span>+30 бонусів</span></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Лампадка "Срібло"</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">350 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+                <a href="product.html?id=lantern" class="product-card" data-category="accessories" data-price="540">
+                    <div class="product-img-wrap">
+                        <img src="img/products/product-lantern.png" alt="Ліхтар підвісний" class="product-img" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-top-info">
+                            <h3 class="product-name">Ліхтар підвісний</h3>
+                            <span class="product-status">В наявності</span>
+                        </div>
+                        <div class="product-bottom-info">
+                            <div class="product-price-block"><p class="product-price">540 ₴</p></div>
+                            <button class="product-cart-btn" aria-label="Додати в кошик" onclick="addProductToCart(this,event)"><span class="product-cart-icon" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div><!-- /products-grid -->
+    </div><!-- /products-main-row -->
+
+    <!-- ══ PAGINATION — centered ══ -->
+    <nav class="products-pagination" aria-label="Пагінація">
+        <div class="pagination-numbers">
+            <button class="pagination-btn is-active" aria-current="page">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn" aria-label="Більше сторінок">...</button>
+            <button class="pagination-btn">8</button>
+            <button class="pagination-btn">9</button>
+            <button class="pagination-btn">10</button>
+        </div>
+        <button class="pagination-next">
+            <span class="pagination-next-icon" aria-hidden="true"></span>
+            Далі
+        </button>
+    </nav>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="#">Готові пакети</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ══ MOBILE NAV ══ -->
+<div class="hp-mob-nav" id="mobNav" aria-modal="true" role="dialog" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link" data-mob-page="home">Головна</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="order">
+                    Порядок дій
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="#" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="#" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="services">
+                    Послуги
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link" data-mob-page="products">Товари</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="memory">
+                    Вшанування Пам'яті
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="index.html" class="hp-mob-acc-link">Сторінка пам'яті</a>
+                    <a href="#" class="hp-mob-acc-link">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="support">
+                    Психологічна підтримка
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Як підтримати близьких</a>
+                    <a href="#" class="hp-mob-acc-link">Короткі поради</a>
+                    <a href="#" class="hp-mob-acc-link">Професійні консультації</a>
+                </div>
+            </div>
+            <a href="#" class="hp-mob-nav-link" data-mob-page="about">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<!-- ══ MOBILE FILTER BOTTOM SHEET ══ -->
+<div class="mob-filter-overlay" id="mobFilterOverlay" role="dialog" aria-modal="true" aria-label="Фільтри">
+    <div class="mob-filter-sheet" id="mobFilterSheet">
+        <div class="mob-filter-drag" aria-hidden="true"></div>
+        <div class="mob-filter-head">
+            <span class="mob-filter-head-title">Фільтр</span>
+            <button class="mob-filter-head-close" id="mobFilterClose" aria-label="Закрити фільтр">
+                <span class="mob-filter-close-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="mob-filter-body" id="mobFilterBody"></div>
+    </div>
+</div>
+
+<script>
+    /* ── Mobile menu ── */
+    (function() {
+        var btn = document.getElementById('mobMenuBtn');
+        var nav = document.getElementById('mobNav');
+        var cls = document.getElementById('mobNavClose');
+        if (!btn) return;
+        function openNav()  { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
+        function closeNav() { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
+        btn.addEventListener('click', openNav);
+        cls.addEventListener('click', closeNav);
+        nav.addEventListener('click', function(e) { if (e.target === nav) closeNav(); });
+    })();
+
+    /* ── Mobile nav accordion ── */
+    document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+            var acc = this.closest('.hp-mob-acc');
+            var isOpen = acc.classList.contains('is-open');
+            document.querySelectorAll('.hp-mob-acc').forEach(function(a) {
+                a.classList.remove('is-open');
+                a.querySelector('.hp-mob-acc-trigger').setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) {
+                acc.classList.add('is-open');
+                this.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+
+    /* ── Mobile nav active page highlight ── */
+    (function() {
+        var filename = window.location.pathname.split('/').pop() || 'home.html';
+        var pageMap = {
+            'home.html':     'home',
+            'products.html': 'products',
+            'product.html':  'products'
+        };
+        var servicePages = ['services-legal','services-cemetery','services-funeral','services-cremation','services-exhumation','services-embalmment','services-repatriation','services-storage','services-transportation','services-dinners'];
+
+        var activePage = pageMap[filename];
+        if (!activePage) {
+            for (var i = 0; i < servicePages.length; i++) {
+                if (filename.indexOf(servicePages[i]) !== -1) { activePage = 'services'; break; }
+            }
+        }
+        if (!activePage) return;
+
+        document.querySelectorAll('[data-mob-page="' + activePage + '"]').forEach(function(el) {
+            el.classList.add('is-active');
+        });
+    })();
+
+    /* ── Sort dropdown + real sorting ── */
+    var currentSort = 'pop';
+    (function() {
+        var dd  = document.getElementById('sortDropdown');
+        var btn = document.getElementById('sortDropdownBtn');
+        var txt = document.getElementById('sortDropdownText');
+        if (!dd) return;
+
+        /* Store original DOM order once */
+        document.querySelectorAll('.product-card').forEach(function(c, i) { c.dataset.origOrder = i; });
+
+        var SORT_MAP = {
+            'За популярністю':  'pop',
+            'Ціна: від низької': 'price-asc',
+            'Ціна: від високої': 'price-desc',
+            'Новинки':           'new'
+        };
+
+        function applySort(type) {
+            currentSort = type;
+            var all = Array.from(document.querySelectorAll('.product-card'));
+            var sorted;
+            if (type === 'price-asc') {
+                sorted = all.slice().sort(function(a, b) { return +a.dataset.price - +b.dataset.price; });
+            } else if (type === 'price-desc') {
+                sorted = all.slice().sort(function(a, b) { return +b.dataset.price - +a.dataset.price; });
+            } else if (type === 'new') {
+                sorted = all.slice().sort(function(a, b) { return +b.dataset.origOrder - +a.dataset.origOrder; });
+            } else {
+                sorted = all.slice().sort(function(a, b) { return +a.dataset.origOrder - +b.dataset.origOrder; });
+            }
+            sorted.forEach(function(c, i) { c.style.order = i; });
+        }
+
+        btn.addEventListener('click', function(e) { e.stopPropagation(); var o = dd.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); });
+        dd.querySelectorAll('.sort-option').forEach(function(o) {
+            o.addEventListener('click', function() {
+                dd.querySelectorAll('.sort-option').forEach(function(x) { x.classList.remove('is-active'); });
+                this.classList.add('is-active'); txt.textContent = this.textContent.trim();
+                dd.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false');
+                var type = SORT_MAP[this.textContent.trim()];
+                if (type) applySort(type);
+            });
+        });
+        document.addEventListener('click', function() { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); });
+    })();
+
+    /* ── Filter section collapse (arrow toggles dropdown) ── */
+    function initFilterSections() {
+        document.querySelectorAll('.filter-section-head').forEach(function(h) {
+            if (h._initDone) return;
+            h._initDone = true;
+            h.addEventListener('click', function() {
+                this.closest('.filter-section').classList.toggle('is-collapsed');
+            });
+        });
+    }
+    initFilterSections();
+
+    /* ── Price range dual slider ── */
+    (function() {
+        var rMin = document.getElementById('rangeMin');
+        var rMax = document.getElementById('rangeMax');
+        var fill = document.getElementById('sliderFill');
+        var lMin = document.getElementById('priceMin');
+        var lMax = document.getElementById('priceMax');
+        if (!rMin) return;
+        function fmt(n) { return n.toLocaleString('uk-UA') + ' \u20b4'; }
+        function upd() {
+            var mn = +rMin.value, mx = +rMax.value, tot = +rMax.max - +rMin.min;
+            fill.style.left  = ((mn - +rMin.min) / tot * 100) + '%';
+            fill.style.right = (100 - (mx - +rMin.min) / tot * 100) + '%';
+            lMin.textContent = fmt(mn); lMax.textContent = fmt(mx);
+        }
+        rMin.addEventListener('input', function() { if (+this.value > +rMax.value - 500) this.value = +rMax.value - 500; upd(); filterProducts(); });
+        rMax.addEventListener('input', function() { if (+this.value < +rMin.value + 500) this.value = +rMin.value + 500; upd(); filterProducts(); });
+        upd();
+    })();
+
+    /* ── Bonus / Discount checkboxes ── */
+    ['cbBonus','cbDiscount'].forEach(function(id) {
+        var cb = document.getElementById(id);
+        if (cb) cb.addEventListener('change', filterProducts);
+    });
+
+    /* ── Color swatch toggle ── */
+    document.querySelectorAll('.color-swatch').forEach(function(s) {
+        s.addEventListener('click', function() { this.classList.toggle('is-selected'); });
+        s.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.classList.toggle('is-selected'); } });
+    });
+
+    /* ══ CATEGORY FILTERING ══
+       .cat-item[data-cat] in sidebar — click toggles is-active.
+       .product-card[data-category] in grid — hidden if no matching active cat.
+       No active cats → show all products.
+    */
+    var CAT_META = {
+        coffins:     { label:'Труни',          icon:'coffins' },
+        floristry:   { label:'Флористика',     icon:'floristry' },
+        crosses:     { label:'Хрести',         icon:'crosses' },
+        urns:        { label:'Урни для праху', icon:'urns' },
+        textile:     { label:'Текстиль',       icon:'textile' },
+        accessories: { label:'Аксесуари',      icon:'accessories' }
+    };
+
+    function getActiveCats() {
+        return Array.from(document.querySelectorAll('#catList .cat-item.is-active'))
+                    .map(function(el) { return el.dataset.cat; });
+    }
+
+    function filterProducts() {
+        var active      = getActiveCats();
+        var priceMin    = +(document.getElementById('rangeMin') || {value:0}).value;
+        var priceMax    = +(document.getElementById('rangeMax') || {value:999999}).value;
+        var wantBonus   = (document.getElementById('cbBonus')    || {}).checked;
+        var wantDiscount= (document.getElementById('cbDiscount') || {}).checked;
+        var anyBadge    = wantBonus || wantDiscount;
+        var cards       = document.querySelectorAll('.product-card');
+        var visible     = 0;
+        cards.forEach(function(card) {
+            var catOk    = active.length === 0 || active.indexOf(card.dataset.category) !== -1;
+            var price    = +(card.dataset.price) || 0;
+            var priceOk  = price >= priceMin && price <= priceMax;
+            var badgeOk  = !anyBadge ||
+                           (wantBonus    && card.dataset.bonus    === 'true') ||
+                           (wantDiscount && card.dataset.discount === 'true');
+            var show     = catOk && priceOk && badgeOk;
+            card.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+        var strong = document.querySelector('.sort-found strong');
+        if (strong) {
+            var d = visible % 10, m = visible % 100;
+            var word = (m>=11&&m<=14) ? '\u0442\u043e\u0432\u0430\u0440\u0456\u0432' : d===1 ? '\u0442\u043e\u0432\u0430\u0440' : (d>=2&&d<=4) ? '\u0442\u043e\u0432\u0430\u0440\u0438' : '\u0442\u043e\u0432\u0430\u0440\u0456\u0432';
+            strong.textContent = visible + ' ' + word;
+        }
+    }
+
+    function syncCatState() {
+        var active  = getActiveCats();
+        var tagsRow = document.getElementById('activeTagsRow');
+        var resetBtn = document.getElementById('btnResetAll');
+
+        document.querySelectorAll('.dyn-group').forEach(function(grp) {
+            var willHide = active.indexOf(grp.dataset.for) === -1;
+            if (!willHide && grp.hidden) {
+                grp.querySelectorAll('.filter-section').forEach(function(s) { s.classList.add('is-collapsed'); });
+            }
+            grp.hidden = willHide;
+        });
+        initFilterSections();
+
+        Object.keys(CAT_META).forEach(function(cat) {
+            var meta     = CAT_META[cat];
+            var existing = tagsRow.querySelector('.filter-tag--cat[data-cat="' + cat + '"]');
+            var isActive = active.indexOf(cat) !== -1;
+            if (isActive && !existing) {
+                var tag = document.createElement('button');
+                tag.className = 'filter-tag filter-tag--cat';
+                tag.dataset.cat = cat;
+                tag.innerHTML = '<span class="tag-cat-icon tag-cat-icon--' + meta.icon + '" aria-hidden="true"></span><span>' + meta.label + '</span><span class="tag-x"></span>';
+                tagsRow.insertBefore(tag, resetBtn);
+            } else if (!isActive && existing) {
+                existing.remove();
+            }
+        });
+
+        filterProducts();
+    }
+
+    document.getElementById('catList').addEventListener('click', function(e) {
+        var item = e.target.closest('.cat-item');
+        if (!item) return;
+        e.preventDefault();
+        item.classList.toggle('is-active');
+        syncCatState();
+    });
+
+    document.getElementById('activeTagsRow').addEventListener('click', function(e) {
+        var tag = e.target.closest('.filter-tag');
+        if (!tag) return;
+        if (tag.classList.contains('filter-tag--cat')) {
+            var cat  = tag.dataset.cat;
+            var item = document.querySelector('#catList .cat-item[data-cat="' + cat + '"]');
+            if (item) { item.classList.remove('is-active'); syncCatState(); }
+        } else {
+            tag.remove();
+        }
+    });
+
+    document.getElementById('btnResetAll').addEventListener('click', function() {
+        document.querySelectorAll('#catList .cat-item').forEach(function(i) { i.classList.remove('is-active'); });
+        syncCatState();
+        document.querySelectorAll('#activeTagsRow .filter-tag--filter').forEach(function(t) { t.remove(); });
+    });
+
+    syncCatState();
+
+    /* ── Pagination ── */
+    document.querySelectorAll('.pagination-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            if (this.textContent.trim() === '...') return;
+            document.querySelectorAll('.pagination-btn').forEach(function(b) { b.classList.remove('is-active'); b.removeAttribute('aria-current'); });
+            this.classList.add('is-active'); this.setAttribute('aria-current', 'page');
+        });
+    });
+
+    /* ── Mobile filter badge count ── */
+    function updateMobFilterBadge() {
+        var badge = document.getElementById('mobFilterBadge');
+        if (!badge) return;
+        var activeCats = getActiveCats().length;
+        var cbBonus    = document.getElementById('cbBonus');
+        var cbDiscount = document.getElementById('cbDiscount');
+        var count = activeCats
+            + (cbBonus    && cbBonus.checked    ? 1 : 0)
+            + (cbDiscount && cbDiscount.checked ? 1 : 0);
+        if (count > 0) { badge.textContent = count; badge.classList.add('has-count'); }
+        else           { badge.classList.remove('has-count'); }
+    }
+
+    /* ── Mobile filter portal (moves sidebar into bottom sheet) ── */
+    (function() {
+        var openBtn  = document.getElementById('mobFilterBtn');
+        var closeBtn = document.getElementById('mobFilterClose');
+        var overlay  = document.getElementById('mobFilterOverlay');
+        var body     = document.getElementById('mobFilterBody');
+        if (!openBtn) return;
+
+        var sidebar = document.querySelector('.products-sidebar');
+        var mainRow = document.querySelector('.products-main-row');
+        var isOpen  = false;
+
+        function openFilter() {
+            if (isOpen) return;
+            isOpen = true;
+            body.appendChild(sidebar);
+            overlay.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            body.scrollTop = 0;
+        }
+
+        function closeFilter() {
+            if (!isOpen) return;
+            isOpen = false;
+            var grid = mainRow.querySelector('.products-grid');
+            mainRow.insertBefore(sidebar, grid);
+            overlay.classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+
+        openBtn.addEventListener('click', openFilter);
+        closeBtn.addEventListener('click', closeFilter);
+        /* tap on dark backdrop closes sheet */
+        overlay.addEventListener('click', function(e) { if (e.target === overlay) closeFilter(); });
+        /* "Застосувати фільтри" closes sheet */
+        document.addEventListener('click', function(e) {
+            if (isOpen && e.target.closest('.btn-apply-filters')) closeFilter();
+        });
+        /* restore sidebar on resize to desktop */
+        window.addEventListener('resize', function() { if (isOpen && window.innerWidth > 768) closeFilter(); });
+
+        /* update badge whenever filters change */
+        document.addEventListener('change', function(e) {
+            if (e.target.closest('.products-sidebar')) updateMobFilterBadge();
+        });
+        document.getElementById('catList').addEventListener('click', function() {
+            setTimeout(updateMobFilterBadge, 0);
+        });
+        document.getElementById('btnResetAll').addEventListener('click', updateMobFilterBadge);
+    })();
+</script>
+<script src="cart-storage.js"></script>
+<script>
+/* ── Replace mode ── */
+var _replaceCtx = null;
+(function() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('replaceMode') === '1') {
+        try { _replaceCtx = JSON.parse(sessionStorage.getItem('replaceMode')); } catch(e) {}
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!_replaceCtx) return;
+        /* Show banner */
+        var banner = document.getElementById('replaceBanner');
+        var bannerText = document.getElementById('replaceBannerText');
+        if (banner) banner.style.display = 'flex';
+        var catParam = params.get('category') || '';
+        var catNames = { coffins:'труни', floristry:'флористику', textile:'текстиль', crosses:'хрести', urns:'урни', accessories:'аксесуари' };
+        if (bannerText && catParam) bannerText.textContent = 'Оберіть ' + (catNames[catParam] || 'товар') + ' для заміни у пакеті';
+        /* Auto-activate category filter */
+        if (catParam) {
+            var catItem = document.querySelector('.cat-item input[value="' + catParam + '"]');
+            if (!catItem) {
+                /* Try by data or trigger click on matching cat */
+                document.querySelectorAll('.cat-item').forEach(function(ci) {
+                    var lbl = ci.querySelector('.cat-name');
+                    if (lbl && lbl.textContent.trim().toLowerCase().includes(catParam.replace(/s$/,''))) {
+                        ci.classList.add('is-active');
+                        /* Hide other product rows */
+                        document.querySelectorAll('.product-card').forEach(function(card) {
+                            card.closest('.product-card').parentElement.style.display = card.dataset.category === catParam ? '' : 'none';
+                        });
+                    }
+                });
+                /* Filter grid directly */
+                document.querySelectorAll('.product-card').forEach(function(card) {
+                    var show = !catParam || card.dataset.category === catParam;
+                    card.style.display = show ? '' : 'none';
+                });
+            }
+        }
+        /* Swap cart icon → replace icon on all cart buttons */
+        document.querySelectorAll('.product-cart-btn').forEach(function(btn) {
+            btn.title = 'Замінити в пакеті';
+            btn.querySelector('.product-cart-icon').style.cssText =
+                '-webkit-mask-image:url(icons/arrow-up-circle.svg);mask-image:url(icons/arrow-up-circle.svg);' +
+                '-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;' +
+                '-webkit-mask-size:contain;mask-size:contain;' +
+                '-webkit-mask-position:center;mask-position:center;';
+        });
+    });
+})();
+
+function addProductToCart(btn, event) {
+    event.stopPropagation();
+    event.preventDefault();
+    var card = btn.closest('.product-card');
+    if (!card) return;
+    var href = card.getAttribute('href') || '';
+    var id = href.includes('id=') ? href.split('id=')[1] : (card.querySelector('.product-name') ? card.querySelector('.product-name').textContent.trim().replace(/\s+/g,'-').toLowerCase() : 'product');
+    var name = card.querySelector('.product-name') ? card.querySelector('.product-name').textContent.trim() : '';
+    var price = parseFloat(card.dataset.price) || 0;
+    var imgEl = card.querySelector('.product-img');
+    var img = imgEl ? imgEl.getAttribute('src') : '';
+
+    if (_replaceCtx) {
+        /* Replace mode: update item in package */
+        var cart = CartStorage.get();
+        var pkgs = cart.filter(function(i) { return i.type === 'package'; });
+        var pkg = pkgs[_replaceCtx.pkgIdx] || cart.find(function(i) { return i.id === _replaceCtx.pkgId; });
+        if (pkg && pkg.items) {
+            for (var i = 0; i < pkg.items.length; i++) {
+                if (pkg.items[i].key === _replaceCtx.itemKey) {
+                    pkg.items[i].name  = name;
+                    pkg.items[i].price = price;
+                    pkg.items[i].img   = img;
+                    pkg.items[i].attrs = '';
+                    break;
+                }
+            }
+            CartStorage.save(cart);
+        }
+        sessionStorage.removeItem('replaceMode');
+        CartStorage.toast(name + ' замінено в пакеті');
+        window.location.href = 'cart.html';
+        return;
+    }
+
+    CartStorage.add({ id: id, type: 'product', name: name, price: price, img: img, attrs: '' });
+    btn.classList.add('is-added');
+    setTimeout(function() { btn.classList.remove('is-added'); }, 1500);
+}
+</script>
+</body>
+</html>

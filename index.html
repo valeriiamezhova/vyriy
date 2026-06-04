@@ -132,6 +132,7 @@
 
 <header class="site-header">
     <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню"><span class="hp-mob-menu-icon"></span></button>
         <nav class="header-nav">
             <a href="home.html" class="nav-item">Головна</a>
             <div class="nav-dropdown-wrap">
@@ -142,17 +143,6 @@
                     <a href="#" class="nav-dropdown-item">Організація та процес поховання</a>
                     <a href="#" class="nav-dropdown-item">Документи та пільги</a>
                     <a href="#" class="nav-dropdown-item">Традиції, обряди та етикет</a>
-                </div>
-            </div>
-            <div class="nav-dropdown-wrap">
-                <button class="nav-dropdown-trigger">Товари</button>
-                <div class="nav-dropdown-menu">
-                    <a href="#" class="nav-dropdown-item">Усі товари</a>
-                    <a href="#" class="nav-dropdown-item">Флористика</a>
-                    <a href="#" class="nav-dropdown-item">Хрести та таблички</a>
-                    <a href="#" class="nav-dropdown-item">Урни для праху</a>
-                    <a href="#" class="nav-dropdown-item">Текстиль</a>
-                    <a href="#" class="nav-dropdown-item">Аксесуари</a>
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
@@ -171,6 +161,7 @@
                     <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
                 </div>
             </div>
+            <a href="products.html" class="nav-item">Товари</a>
             <a href="#" class="nav-item">Про нас</a>
         </nav>
         <a href="home.html" class="header-logo">
@@ -194,11 +185,12 @@
             </div>
             <div class="header-icons">
                 <div class="icon-placeholder search-icon"></div>
-                <div class="icon-placeholder cart-icon"></div>
-                <div class="icon-placeholder account-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+                <a href="register.html" class="icon-placeholder account-icon"></a>
             </div>
         </div>
     </div>
+        <div class="hp-mob-header-icons"><a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a><a href="register.html" class="icon-placeholder account-icon"></a></div>
 </header>
 
 <div class="editor-toolbar" id="editor-toolbar">
@@ -614,7 +606,7 @@
                         <li><a href="#">Головна</a></li>
                         <li><a href="#">Порядок дій</a></li>
                         <li><a href="#">Готові пакети</a></li>
-                        <li><a href="#">Товари</a></li>
+                        <li><a href="products.html">Товари</a></li>
                         <li><a href="#">Послуги</a></li>
                         <li><a href="#">Підтримка</a></li>
                     </ul>
@@ -668,5 +660,115 @@
     </button>
 </div>
 <a href="tel:+387777777" class="floating-help-btn"><span class="floating-help-btn__text">Потрібна допомога?</span><span class="floating-help-btn__icon"></span></a>
+
+<!-- ══ MOBILE NAV ══ -->
+<div class="hp-mob-nav" id="mobNav" role="dialog" aria-modal="true" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link" data-mob-page="home">Головна</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="order">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="#" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="#" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="services">Послуги<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link" data-mob-page="products">Товари</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="memory">Вшанування Пам’яті<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="index.html" class="hp-mob-acc-link">Сторінка пам’яті</a>
+                    <a href="#" class="hp-mob-acc-link">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="support">Психологічна підтримка<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Як підтримати близьких</a>
+                    <a href="#" class="hp-mob-acc-link">Короткі поради</a>
+                    <a href="#" class="hp-mob-acc-link">Професійні консультації</a>
+                </div>
+            </div>
+            <a href="#" class="hp-mob-nav-link" data-mob-page="about">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    /* ── Mobile menu ── */
+    (function() {
+        var btn = document.getElementById('mobMenuBtn');
+        var nav = document.getElementById('mobNav');
+        var cls = document.getElementById('mobNavClose');
+        if (!btn) return;
+        function openNav()  { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
+        function closeNav() { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
+        btn.addEventListener('click', openNav);
+        cls.addEventListener('click', closeNav);
+        nav.addEventListener('click', function(e) { if (e.target === nav) closeNav(); });
+    })();
+    /* ── Mobile nav accordion ── */
+    document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+            var acc = this.closest('.hp-mob-acc');
+            var isOpen = acc.classList.contains('is-open');
+            document.querySelectorAll('.hp-mob-acc').forEach(function(a) {
+                a.classList.remove('is-open');
+                a.querySelector('.hp-mob-acc-trigger').setAttribute('aria-expanded','false');
+            });
+            if (!isOpen) { acc.classList.add('is-open'); this.setAttribute('aria-expanded','true'); }
+        });
+    });
+    /* ── Mobile nav active page ── */
+    (function() {
+        var f = window.location.pathname.split('/').pop() || 'home.html';
+        var m = { 'home.html':'home','products.html':'products','product.html':'products','index.html':'memory' };
+        var p = m[f];
+        if (!p) { var s=['services-legal','services-cemetery','services-funeral','services-cremation','services-exhumation','services-embalmment','services-repatriation','services-storage','services-transportation','services-dinners']; for(var i=0;i<s.length;i++){ if(f.indexOf(s[i])!==-1){p='services';break;} } }
+        if (!p) return;
+        document.querySelectorAll('[data-mob-page="'+p+'"]').forEach(function(el){el.classList.add('is-active');});
+    })();
+</script>
+<script src="cart-storage.js"></script>
 </body>
 </html>

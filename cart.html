@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кошик — Вирій</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ═══ TOKENS: 25:#F6FBFF 50:#E2F3FF 600:#45799B 700:#2E5B79 800:#1B3F57 900:#0F2E43 ═══ */
+
+        html { scroll-behavior:smooth; background:#FFFFFF; min-height:100%; overflow-x:clip; }
+        body { background:#FFFFFF; background-image:none; overflow-x:clip; max-width:100vw; }
+        *, *::before, *::after { box-sizing:border-box; min-width:0; }
+        img { max-width:100%; }
+
+        .header-inner { max-width:1303px; width:calc(100% - 80px); }
+        .footer-top-container, .footer-bottom-container { max-width:1280px; width:calc(100% - 80px); }
+
+        /* ─── FLOATING HELP BUTTON ─── */
+        @keyframes hp-help-ring {
+            0%   { box-shadow:0 0 0 0   rgba(27,63,87,.38), 0 8px 24px rgba(27,63,87,.22); }
+            60%  { box-shadow:0 0 0 10px rgba(27,63,87,0),  0 8px 24px rgba(27,63,87,.22); }
+            100% { box-shadow:0 0 0 0   rgba(27,63,87,0),   0 8px 24px rgba(27,63,87,.22); }
+        }
+        .hp-help-btn {
+            position:fixed; right:25px; bottom:40px; z-index:9999;
+            display:inline-flex; align-items:center; gap:12px;
+            background:#1B3F57; border-radius:40px; padding:11px 18px; width:236px;
+            cursor:pointer; text-decoration:none; border:none;
+            animation:hp-help-ring 2.8s ease-out infinite; transition:background .2s;
+        }
+        .hp-help-btn:hover { background:#2E5B79; animation-play-state:paused; box-shadow:0 12px 28px rgba(27,63,87,.35); }
+        .hp-help-btn span { font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; color:#fff; line-height:1; flex:1; }
+        .hp-help-icon { width:34px; height:34px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-help-icon::after {
+            content:''; width:17px; height:17px; background-color:#1B3F57;
+            mask-image:url('icons/phone-call.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain;
+            -webkit-mask-image:url('icons/phone-call.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain;
+        }
+
+        /* ─── MOBILE HEADER ─── */
+        .hp-mob-menu-btn { display:none; width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-mob-menu-icon {
+            width:24px; height:24px; background-color:#1B3F57;
+            mask-image:url('icons/align-justify.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain;
+            -webkit-mask-image:url('icons/align-justify.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain;
+        }
+        .hp-mob-nav { display:none; position:fixed; inset:0; z-index:9999; background:#fff; flex-direction:column; transform:translateX(-100%); transition:transform .3s ease; overflow:hidden; }
+        .hp-mob-nav.is-open { transform:translateX(0); }
+        .hp-mob-nav-head { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; flex-shrink:0; border-bottom:1px solid rgba(69,121,155,.12); }
+        .hp-mob-nav-close { width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:background .15s; }
+        .hp-mob-nav-close:hover { background:#F6FBFF; }
+        .hp-mob-nav-close-icon { width:24px; height:24px; background-color:#1B3F57; mask-image:url('icons/close.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/close.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-search-wrap { padding:12px 16px; border-bottom:1px solid rgba(69,121,155,.08); flex-shrink:0; }
+        .hp-mob-nav-search { display:flex; align-items:center; gap:8px; border:1px solid #45799B; border-radius:24px; padding:9px 14px; background:#fff; }
+        .hp-mob-nav-search-input { flex:1; border:none; outline:none; font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57; background:transparent; }
+        .hp-mob-nav-search-input::placeholder { color:#45799B; }
+        .hp-mob-nav-search-icon { width:18px; height:18px; flex-shrink:0; background-color:#45799B; mask-image:url('icons/search.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/search.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-scroll { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+        .hp-mob-nav-items { display:flex; flex-direction:column; }
+        .hp-mob-nav-link { display:block; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.08); transition:color .15s; }
+        .hp-mob-nav-link:hover { color:#45799B; }
+        .hp-mob-nav-link.is-active { color:#45799B; }
+        .hp-mob-acc { border-bottom:1px solid rgba(69,121,155,.08); }
+        .hp-mob-acc-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; background:none; border:none; cursor:pointer; text-align:left; transition:color .15s; }
+        .hp-mob-acc-trigger:hover { color:#45799B; }
+        .hp-mob-acc-chevron { width:20px; height:20px; flex-shrink:0; background-color:currentColor; mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; transition:transform .22s; }
+        .hp-mob-acc.is-open .hp-mob-acc-chevron { transform:rotate(180deg); }
+        .hp-mob-acc-body { display:none; background:#FAFCFF; }
+        .hp-mob-acc.is-open .hp-mob-acc-body { display:block; }
+        .hp-mob-acc-link { display:block; padding:12px 16px 12px 28px; font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#2E5B79; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.06); transition:color .15s; }
+        .hp-mob-acc-link:last-child { border-bottom:none; }
+        .hp-mob-acc-link:hover { color:#1B3F57; }
+        .hp-mob-nav-sep { border:none; height:1px; background:rgba(69,121,155,.1); margin:0; }
+        .hp-mob-nav-footer-section { padding:20px 16px 32px; display:flex; flex-direction:column; gap:0; }
+        .hp-mob-nav-footer-title { font-family:'Raleway',sans-serif; font-size:12px; font-weight:700; color:#6298BD; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+        .hp-mob-nav-footer-link { display:block; padding:8px 0; font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#45799B; text-decoration:none; transition:color .15s; border-bottom:1px solid rgba(69,121,155,.06); }
+        .hp-mob-nav-footer-link:last-child { border-bottom:none; }
+        .hp-mob-nav-footer-link:hover { color:#1B3F57; }
+        .hp-mob-header-icons { display:none; gap:16px; align-items:center; }
+
+        /* ─── CART PAGE ─── */
+        .cart-page { width:100%; padding:0 80px 64px; display:flex; flex-direction:column; gap:24px; }
+
+        /* ─── EMPTY STATE ─── */
+        .cart-empty { display:flex; flex-direction:column; align-items:center; gap:16px; padding:80px 20px; text-align:center; }
+        .cart-empty-icon {
+            width:96px; height:96px; background:#E2F3FF; border-radius:50%;
+            background-image:url('icons/shopping-cart.svg'); background-repeat:no-repeat; background-position:center; background-size:40px 40px;
+        }
+        .cart-empty-title { font-family:'Raleway',sans-serif; font-size:28px; font-weight:700; color:#1B3F57; margin:0; }
+        .cart-empty-desc { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#45799B; margin:0; max-width:380px; }
+        .cart-empty-actions { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:8px; }
+        .cart-empty-btn {
+            display:inline-flex; align-items:center; height:48px; padding:0 28px; border-radius:62px;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; text-decoration:none; transition:background .2s;
+        }
+        .cart-empty-btn--primary { background:#1B3F57; color:#fff; }
+        .cart-empty-btn--primary:hover { background:#2E5B79; }
+        .cart-empty-btn--secondary { background:#E2F3FF; color:#1B3F57; }
+        .cart-empty-btn--secondary:hover { background:#CEEBFF; }
+
+        .cart-title-row { padding-top:32px; }
+        .cart-title { font-family:'Raleway',sans-serif; font-size:48px; font-weight:600; color:#1B3F57; margin:0; text-transform:none; }
+
+        .cart-layout { display:flex; gap:32px; align-items:flex-start; }
+        .cart-left { flex:1; min-width:0; display:flex; flex-direction:column; gap:26px; }
+        .cart-right { width:380px; flex-shrink:0; position:sticky; top:106px; align-self:flex-start; display:flex; flex-direction:column; gap:16px; }
+
+        /* Section cards */
+        .cart-section { background:#fff; border:1px solid #F1F1F1; border-radius:24px; padding:20px 24px; display:flex; flex-direction:column; gap:24px; }
+        .cart-section-title { font-family:'Raleway',sans-serif; font-size:22px; font-weight:700; color:#1B3F57; margin:0; }
+        .cart-divider { width:100%; height:1px; background:#F1F1F1; border:none; margin:8px 0; flex-shrink:0; }
+        /* productsList / servicesList — flex with gap */
+        #productsList, #servicesList { display:flex; flex-direction:column; gap:16px; }
+
+        /* ─── PRODUCT ITEM (card) ─── */
+        .cart-item {
+            display:flex; gap:16px; align-items:stretch;
+            background:#fff; border:1px solid #F1F1F1; border-radius:20px;
+            padding:16px;
+        }
+        .cart-item-img {
+            width:100px; height:100px; border-radius:16px; background:#F5F0EB;
+            flex-shrink:0; display:flex; align-items:center; justify-content:center; overflow:hidden; align-self:flex-start;
+        }
+        .cart-item-img img { width:100%; height:100%; object-fit:contain; }
+        .cart-item-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:6px; }
+        .cart-item-name { font-family:'Raleway',sans-serif; font-size:17px; font-weight:700; color:#1B3F57; margin:0; }
+        .cart-item-attrs { display:flex; flex-wrap:wrap; gap:0; font-family:'Raleway',sans-serif; font-size:13px; font-weight:500; color:#45799B; margin:0; }
+        .cart-item-attr { white-space:nowrap; }
+        .cart-item-attr + .cart-item-attr::before { content:' • '; color:#45799B; }
+        .cart-item-price { font-family:'Raleway',sans-serif; font-size:20px; font-weight:700; color:#1B3F57; margin:0; }
+        .cart-item-hint { font-family:'Raleway',sans-serif; font-size:12px; font-weight:400; color:#45799B; font-style:italic; }
+        .cart-item-qty {
+            display:inline-flex; align-items:center; background:#E2F3FF; border-radius:62px; height:36px;
+            gap:0; width:fit-content;
+        }
+        /* right column: delete top, qty bottom */
+        .cart-item-side {
+            display:flex; flex-direction:column; align-items:flex-end; justify-content:space-between;
+            flex-shrink:0; gap:8px;
+        }
+        .qty-btn {
+            width:36px; height:36px; background:none; border:none; cursor:pointer; display:flex;
+            align-items:center; justify-content:center; flex-shrink:0;
+            font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; color:#2E5B79; line-height:1;
+            border-radius:50%; transition:background .15s;
+        }
+        .qty-btn:hover { background:rgba(46,91,121,.15); }
+        .qty-val {
+            font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#1B3F57;
+            min-width:28px; text-align:center; flex-shrink:0;
+        }
+        .btn-delete {
+            width:36px; height:36px; border-radius:50%; background:none; border:1.5px solid #F1F1F1;
+            cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s, border-color .15s; flex-shrink:0;
+        }
+        .btn-delete:hover { background:#FFF0F0; border-color:#FFCDD2; }
+        .btn-delete-icon {
+            width:18px; height:18px; background-color:#D9272D; flex-shrink:0;
+            -webkit-mask-image:url('icons/trash.svg'); mask-image:url('icons/trash.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+
+        /* ─── PACKAGE ─── */
+        .cart-package { display:flex; flex-direction:column; gap:12px; }
+        .cart-package-header { display:flex; align-items:center; gap:12px; margin-bottom:-4px; }
+        .cart-package-name { font-family:'Raleway',sans-serif; font-size:17px; font-weight:700; color:#1B3F57; flex:1; margin:0; }
+        .cart-package-price { font-family:'Raleway',sans-serif; font-size:18px; font-weight:700; color:#1B3F57; white-space:nowrap; }
+        .pkg-what-label { font-family:'Raleway',sans-serif; font-size:16px; font-weight:700; color:#2E5B79; }
+        .pkg-items { display:flex; flex-direction:column; gap:10px; }
+        /* Card item (replaceable — has image) */
+        .pkg-item {
+            display:flex; align-items:center; gap:12px; padding:14px;
+            border:1px solid #F1F1F1; border-radius:16px; background:#fff; transition:opacity .2s;
+        }
+        /* Simple row (non-replaceable — no border, just padding) */
+        .pkg-item--simple {
+            display:flex; align-items:center; gap:10px; padding:6px 4px;
+            border:none; border-radius:0; background:transparent;
+        }
+        .pkg-item.is-unchecked,
+        .pkg-item--simple.is-unchecked { opacity:.45; }
+        .pkg-item-simple-name {
+            flex:1; font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#2E5B79;
+        }
+
+        .pkg-cb-wrap { flex-shrink:0; }
+        .pkg-cb-wrap input[type="checkbox"] { display:none; }
+        .pkg-cb-box {
+            width:20px; height:20px; border-radius:6px; border:1.5px solid #45799B; background:#fff;
+            display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s, border-color .15s;
+        }
+        .pkg-cb-wrap input:checked + .pkg-cb-box { background:#2E5B79; border-color:#2E5B79; }
+        .pkg-cb-wrap input:checked + .pkg-cb-box::after {
+            content:''; width:10px; height:7px; background-color:#fff;
+            -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 3.5L3.5 6L9 1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 3.5L3.5 6L9 1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center;
+        }
+        .pkg-item-img {
+            width:56px; height:56px; border-radius:10px; background:#F5F0EB;
+            flex-shrink:0; display:flex; align-items:center; justify-content:center; overflow:hidden;
+        }
+        .pkg-item-img img { width:100%; height:100%; object-fit:contain; }
+        .pkg-item-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+        .pkg-item-name { font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#1B3F57; margin:0; }
+        .pkg-item-attrs { font-family:'Raleway',sans-serif; font-size:12px; font-weight:400; color:#45799B; margin:0; }
+        .pkg-item-right { display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0; }
+        .pkg-item-price { font-family:'Raleway',sans-serif; font-size:14px; font-weight:700; color:#1B3F57; white-space:nowrap; }
+        .btn-replace {
+            display:inline-flex; align-items:center; gap:5px; padding:5px 10px; border-radius:62px;
+            background:#E2F3FF; border:none; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:12px; font-weight:600; color:#1B3F57;
+            transition:background .15s; white-space:nowrap;
+        }
+        .btn-replace:hover { background:#CEEBFF; }
+        .btn-replace-icon {
+            width:12px; height:12px; background-color:#1B3F57; flex-shrink:0;
+            -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M23 4v6h-6M1 20v-6h6' stroke='%231B3F57' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15' stroke='%231B3F57' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M23 4v6h-6M1 20v-6h6' stroke='%231B3F57' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15' stroke='%231B3F57' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+
+        /* ─── SERVICE ─── */
+        .cart-service { display:flex; flex-direction:column; gap:14px; }
+        .cart-service-header { display:flex; align-items:center; gap:12px; }
+        .cart-service-name { font-family:'Raleway',sans-serif; font-size:17px; font-weight:700; color:#1B3F57; flex:1; margin:0; }
+        .cart-service-price { font-family:'Raleway',sans-serif; font-size:18px; font-weight:700; color:#1B3F57; white-space:nowrap; }
+        .service-what { font-family:'Raleway',sans-serif; font-size:13px; font-weight:600; color:#2E5B79; margin:0; }
+        .service-includes { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+        .service-includes li { display:flex; align-items:flex-start; gap:8px; font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#2E5B79; }
+        .svc-check {
+            width:18px; height:18px; flex-shrink:0; background:#E2F3FF; border-radius:5px;
+            display:flex; align-items:center; justify-content:center; margin-top:1px;
+        }
+        .svc-check::after {
+            content:''; width:10px; height:7px; background-color:#2E5B79;
+            -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 3.5L3.5 6L9 1' stroke='%232E5B79' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 3.5L3.5 6L9 1' stroke='%232E5B79' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center;
+        }
+        /* Wishes */
+        .wishes-label { display:flex; align-items:flex-start; gap:10px; cursor:pointer; }
+        .wishes-label input[type="checkbox"] { display:none; }
+        .wishes-cb {
+            width:18px; height:18px; border-radius:5px; border:1.25px solid #45799B; background:#fff;
+            flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:background .15s; margin-top:2px;
+        }
+        .wishes-label input:checked + .wishes-cb { background:#E2F3FF; }
+        .wishes-label input:checked + .wishes-cb::after {
+            content:''; width:10px; height:7px; background-color:#2E5B79;
+            -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 3.5L3.5 6L9 1' stroke='%232E5B79' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpath d='M1 3.5L3.5 6L9 1' stroke='%232E5B79' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center;
+        }
+        .wishes-cb-label { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57; }
+        .wishes-textarea {
+            display:none; width:100%; min-height:88px; padding:12px 16px;
+            border:1px solid #45799B; border-radius:16px; background:#fff;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57;
+            outline:none; resize:vertical; line-height:1.5;
+        }
+        .wishes-textarea.is-open { display:block; }
+        .wishes-textarea::placeholder { color:#45799B; }
+        .wishes-warning {
+            display:none; padding:12px 14px; background:#FFFAE8; border:1px solid #F5C842; border-radius:12px;
+            gap:8px; align-items:flex-start;
+            font-family:'Raleway',sans-serif; font-size:13px; font-weight:500; color:#7A5500; line-height:1.5;
+        }
+        .wishes-warning.is-visible { display:flex; }
+        .wishes-warn-icon {
+            width:16px; height:16px; flex-shrink:0; margin-top:1px; background-color:#D4890A;
+            -webkit-mask-image:url('icons/alert-circle.svg'); mask-image:url('icons/alert-circle.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+
+        /* ─── TRANSPORTATION ─── */
+        .cart-transport { display:flex; flex-direction:column; gap:14px; }
+        .transport-fields { display:flex; flex-direction:column; gap:10px; }
+        .transport-input-wrap { position:relative; }
+        .transport-input {
+            width:100%; height:48px; padding:0 16px 0 46px;
+            border:1px solid #D0D5DD; border-radius:24px; background:#F6FBFF;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#1B3F57;
+            outline:none; box-shadow:0 1px 2px rgba(10,13,18,.05); transition:border-color .15s, background .15s;
+        }
+        .transport-input::placeholder { color:#45799B; }
+        .transport-input:focus { border-color:#45799B; background:#fff; }
+        .transport-ico {
+            position:absolute; left:14px; top:50%; transform:translateY(-50%);
+            width:20px; height:20px; background-color:#45799B; pointer-events:none;
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .transport-ico--pin {
+            -webkit-mask-image:url('icons/map-pin.svg'); mask-image:url('icons/map-pin.svg');
+        }
+        .transport-ico--flag {
+            -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7' stroke='%2345799B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7' stroke='%2345799B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        }
+        .transport-route { display:none; font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#3C9264; }
+        .transport-route.is-visible { display:block; }
+        .transport-tariff-row { display:none; align-items:center; gap:8px; flex-wrap:wrap; }
+        .transport-tariff-row.is-visible { display:flex; }
+        .tariff-hint { font-family:'Raleway',sans-serif; font-size:13px; font-weight:500; color:#45799B; }
+        .tariff-pill {
+            display:inline-flex; align-items:center; height:28px; padding:0 12px; border-radius:14px;
+            font-family:'Raleway',sans-serif; font-size:13px; font-weight:600;
+            border:1.5px solid #D0D5DD; background:#fff; color:#2E5B79; pointer-events:none; user-select:none;
+        }
+        .tariff-pill.is-active { background:#2E5B79; color:#fff; border-color:#2E5B79; }
+        .tariff-price-val { font-family:'Raleway',sans-serif; font-size:16px; font-weight:700; color:#1B3F57; }
+
+        /* ─── DELIVERY ─── */
+        #sectionDelivery { gap:14px; }
+        .delivery-head { display:flex; flex-direction:column; gap:6px; }
+        .delivery-note {
+            padding:8px 12px; background:#F6FBFF; border-radius:8px;
+            font-family:'Raleway',sans-serif; font-size:13px; font-weight:500; color:#45799B;
+        }
+        .delivery-options { display:flex; flex-direction:column; gap:10px; }
+        .delivery-opt {
+            display:flex; align-items:flex-start; gap:12px; padding:14px 16px;
+            border:1.5px solid #E4EBF0; border-radius:14px; background:#fff; cursor:pointer;
+            transition:border-color .2s, background .2s, box-shadow .2s;
+        }
+        .delivery-opt:hover { border-color:#B3CDD9; }
+        .delivery-opt.is-selected {
+            border-color:#A8C6D8; background:#F0F7FC;
+            box-shadow:0 2px 10px rgba(46,91,121,.08);
+        }
+        .delivery-opt input[type="radio"] { display:none; }
+        .dopt-radio {
+            width:20px; height:20px; border-radius:50%; border:1.5px solid #45799B; background:#fff;
+            flex-shrink:0; display:flex; align-items:center; justify-content:center; margin-top:1px; transition:all .15s;
+        }
+        .delivery-opt.is-selected .dopt-radio { border-color:#2E5B79; background:#DCF0FF; }
+        .delivery-opt.is-selected .dopt-radio::after { content:''; width:8px; height:8px; border-radius:50%; background:#2E5B79; }
+        .dopt-content { flex:1; display:flex; flex-direction:column; gap:10px; }
+        .dopt-header { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+        /* Delivery option icons */
+        .dopt-icon { width:28px; height:28px; flex-shrink:0; display:block; object-fit:contain; }
+        .dopt-name { font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#2E5B79; }
+        .dopt-desc { font-family:'Raleway',sans-serif; font-size:13px; font-weight:400; color:#45799B; }
+        .dopt-address { display:inline-flex; align-items:center; gap:5px; font-family:'Raleway',sans-serif; font-size:13px; font-weight:500; color:#45799B; }
+        .dopt-np-fields { display:flex; flex-direction:column; gap:8px; }
+        .dopt-select-wrap { position:relative; }
+        .dopt-select {
+            width:100%; height:44px; padding:0 40px 0 16px;
+            border:1.5px solid #45799B; border-radius:24px; background:#fff;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57;
+            outline:none; -webkit-appearance:none; appearance:none; cursor:pointer;
+        }
+        .dopt-select-chev {
+            position:absolute; right:14px; top:50%; transform:translateY(-50%);
+            width:18px; height:18px; background-color:#2E5B79; pointer-events:none;
+            -webkit-mask-image:url('icons/chevron-down.svg'); mask-image:url('icons/chevron-down.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .btn-map {
+            display:inline-flex; align-items:center; gap:6px; padding:7px 14px;
+            background:#fff; border:1.5px solid #C5D8E4; border-radius:62px; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:13px; font-weight:600; color:#2E5B79;
+            transition:border-color .15s, background .15s; align-self:flex-start;
+        }
+        .btn-map:hover { background:#F0F7FC; border-color:#2E5B79; }
+
+        /* ─── PAYMENT ─── */
+        .payment-options { display:flex; flex-direction:column; gap:14px; }
+        .payment-opt { display:flex; flex-direction:column; gap:10px; }
+        .payment-opt-row { display:flex; align-items:flex-start; gap:12px; cursor:pointer; }
+        .payment-opt.is-disabled .payment-opt-row { cursor:not-allowed; }
+        .payment-opt.is-disabled { opacity:.4; pointer-events:none; }
+        .popt-radio {
+            width:20px; height:20px; border-radius:50%; border:1.5px solid #45799B; background:#fff;
+            flex-shrink:0; display:flex; align-items:center; justify-content:center; margin-top:2px;
+        }
+        .payment-opt-row input[type="radio"] { display:none; }
+        .payment-opt-row input:checked ~ .popt-radio,
+        .payment-opt-row input:checked + .popt-radio { background:#E2F3FF; border-color:#2E5B79; }
+        .payment-opt-row input:checked ~ .popt-radio::after,
+        .payment-opt-row input:checked + .popt-radio::after { content:''; width:8px; height:8px; border-radius:50%; background:#2E5B79; }
+        .popt-text { flex:1; display:flex; flex-direction:column; gap:4px; }
+        .popt-name { font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#2E5B79; }
+        .popt-icons { display:flex; gap:4px; align-items:center; flex-wrap:wrap; }
+        .popt-pay-icon {
+            width:40px; height:26px; border-radius:4px; flex-shrink:0;
+            object-fit:contain; display:block;
+        }
+        .popt-note {
+            padding:10px 14px; border-radius:12px; display:flex; gap:8px; align-items:flex-start;
+            font-family:'Raleway',sans-serif; font-size:13px; font-weight:500; line-height:1.5;
+        }
+        .popt-note--warn { background:#FFFAE8; border:1px solid #F5C842; color:#7A5500; }
+        .popt-note--info { background:#F6FBFF; border:1px solid #E2F3FF; color:#2E5B79; }
+        .popt-note-icon {
+            width:16px; height:16px; flex-shrink:0; margin-top:1px;
+            -webkit-mask-image:url('icons/alert-circle.svg'); mask-image:url('icons/alert-circle.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .popt-note--warn .popt-note-icon { background-color:#D4890A; }
+        .popt-note--info .popt-note-icon { background-color:#2E5B79; }
+        .popt-note strong { font-weight:700; }
+        .popt-subnote { font-family:'Raleway',sans-serif; font-size:12px; font-weight:400; color:#45799B; }
+
+        /* ─── RECIPIENT ─── */
+        .recipient-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        .form-field { display:flex; flex-direction:column; gap:6px; }
+        .form-field--full { grid-column:1 / -1; }
+        .form-label { font-family:'Raleway',sans-serif; font-size:13px; font-weight:600; color:#2E5B79; }
+        .form-input {
+            height:44px; padding:0 16px;
+            border:1px solid #D0D5DD; border-radius:8px; background:#fff;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#1B3F57;
+            outline:none; box-shadow:0 1px 2px rgba(10,13,18,.05); transition:border-color .15s;
+        }
+        .form-input:focus { border-color:#45799B; }
+        .form-input.is-invalid { border-color:#D9272D !important; }
+        .form-phone-wrap.is-invalid { border-color:#D9272D !important; }
+        .form-error-msg {
+            font-family:'Raleway',sans-serif; font-size:12px; font-weight:500; color:#D9272D;
+            margin:0; display:none;
+        }
+        .form-error-msg.is-visible { display:block; }
+        .form-input-icon-wrap { position:relative; width:100%; display:block; }
+        .form-input-icon-wrap .form-input { padding-left:42px; padding-right:16px; width:100%; }
+        .form-field-icon {
+            position:absolute; left:14px; top:50%; transform:translateY(-50%);
+            width:18px; height:18px; background-color:#45799B; pointer-events:none;
+            -webkit-mask-image:url('icons/mail.svg'); mask-image:url('icons/mail.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .form-phone-wrap {
+            display:flex; border:1px solid #D0D5DD; border-radius:8px; background:#fff;
+            overflow:hidden; box-shadow:0 1px 2px rgba(10,13,18,.05); transition:border-color .15s;
+        }
+        .form-phone-wrap:focus-within { border-color:#45799B; }
+        .form-phone-prefix {
+            padding:0 12px; height:44px; display:flex; align-items:center; flex-shrink:0;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; color:#0F2E43;
+            border-right:1px solid #D0D5DD; background:#F6FBFF;
+        }
+        .form-phone-input {
+            flex:1; height:44px; padding:0 12px; border:none; outline:none; background:transparent;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#1B3F57;
+        }
+        .form-phone-input::placeholder { color:#45799B; }
+
+        /* ─── RIGHT SIDEBAR ─── */
+        .cart-summary-block {
+            background:#fff; border:1px solid #F1F1F1; border-radius:24px;
+            padding:24px; display:flex; flex-direction:column; gap:20px;
+        }
+        .summary-block-title { font-family:'Raleway',sans-serif; font-size:20px; font-weight:700; color:#1B3F57; margin:0; }
+
+        /* Promo */
+        .promo-row { display:flex; gap:8px; align-items:center; }
+        .promo-input-wrap { flex:1; }
+        .promo-input {
+            width:100%; height:44px; padding:0 16px;
+            border:1.5px solid #D0D5DD; border-radius:62px; background:#F6FBFF;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57;
+            outline:none; transition:border-color .15s; box-shadow:0 1px 2px rgba(10,13,18,.05);
+        }
+        .promo-input::placeholder { color:#45799B; }
+        .promo-input:focus { border-color:#45799B; background:#fff; }
+        .promo-input.is-error { border-color:#D9272D; }
+        .promo-input.is-ok { border-color:#3C9264; }
+        .btn-promo {
+            height:44px; padding:0 16px; border-radius:62px; border:none; cursor:pointer;
+            background:#E2F3FF; font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#1B3F57;
+            white-space:nowrap; flex-shrink:0; transition:background .15s;
+        }
+        .btn-promo:hover { background:#CEEBFF; }
+        .promo-msg {
+            font-family:'Raleway',sans-serif; font-size:13px; font-weight:500;
+            display:none;
+        }
+        .promo-msg.is-error { display:block; color:#D9272D; }
+        .promo-msg.is-ok { display:block; color:#3C9264; }
+
+        /* Summary rows */
+        .summary-rows { display:flex; flex-direction:column; gap:10px; }
+        .summary-row { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+        .summary-row-label { font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#45799B; }
+        .summary-row-val { font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#1B3F57; text-align:right; }
+        .summary-row-val--red { color:#D9272D; }
+        .summary-row-val--muted { color:#45799B; font-weight:500; }
+        .summary-divider { height:1px; background:#F1F1F1; border:none; }
+        .summary-total { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+        .summary-total-label { font-family:'Raleway',sans-serif; font-size:16px; font-weight:700; color:#1B3F57; }
+        .summary-total-val { font-family:'Raleway',sans-serif; font-size:28px; font-weight:700; color:#1B3F57; }
+
+        /* Checkout button */
+        .btn-checkout {
+            width:100%; height:56px; border-radius:62px; border:none; cursor:pointer;
+            background:#1B3F57; display:flex; align-items:center; justify-content:center; gap:10px;
+            font-family:'Raleway',sans-serif; font-size:16px; font-weight:700; color:#fff;
+            transition:background .2s; letter-spacing:.01em;
+        }
+        .btn-checkout:hover { background:#2E5B79; }
+        .btn-checkout-arrow {
+            width:20px; height:20px; background-color:#fff; flex-shrink:0;
+            -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M4 10h12M10 4l6 6-6 6' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M4 10h12M10 4l6 6-6 6' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+
+        /* Hidden utility */
+        [hidden] { display:none !important; }
+
+        /* ─── BREAKPOINTS ─── */
+        /* ─── 1280px ─── */
+        @media (max-width:1280px) {
+            .cart-page { padding:0 40px 48px; }
+            .cart-right { width:340px; }
+        }
+
+        /* ─── 1024px — колонки в стовпець ─── */
+        @media (max-width:1024px) {
+            .cart-layout { flex-direction:column; }
+            .cart-right { width:100%; position:static; }
+        }
+
+        /* ─── 768px ─── */
+        @media (max-width:768px) {
+            .cart-page { padding:0 16px 40px; gap:16px; }
+            .cart-title-row { padding-top:20px; }
+            .cart-title { font-size:36px; font-weight:700; text-transform:none; line-height:1.2; text-align:left; }
+            .cart-layout { gap:16px; }
+
+            /* Секції */
+            .cart-section { padding:14px 14px; gap:14px; border-radius:16px; }
+            .cart-section-title { font-size:18px; }
+
+            /* Товар */
+            .cart-item { gap:10px; }
+            .cart-item-img { width:72px; height:72px; border-radius:12px; }
+            .cart-item-name { font-size:14px; }
+            .cart-item-attrs { font-size:12px; }
+            .cart-item-price { font-size:16px; }
+            .cart-item-hint { font-size:11px; }
+            .cart-item-qty { height:32px; }
+            .qty-btn { width:32px; height:32px; font-size:18px; }
+            .qty-val { font-size:14px; min-width:24px; }
+            .btn-delete { width:32px; height:32px; }
+            .btn-delete-icon { width:15px; height:15px; }
+
+            /* Пакет */
+            .cart-package { gap:10px; }
+            .cart-package-name { font-size:14px; }
+            .cart-package-price { font-size:15px; }
+            .pkg-what-label { font-size:14px; }
+            .pkg-items { gap:8px; }
+            .pkg-item { padding:10px; gap:8px; border-radius:12px; }
+            .pkg-item-img { width:48px; height:48px; border-radius:8px; }
+            .pkg-item-name { font-size:13px; }
+            .pkg-item-attrs { font-size:11px; }
+            .pkg-item-price { font-size:13px; }
+            .pkg-item-right { gap:4px; }
+            .btn-replace { font-size:11px; padding:4px 8px; }
+
+            /* Послуга */
+            .cart-service { gap:10px; }
+            .cart-service-name { font-size:14px; }
+            .cart-service-price { font-size:15px; white-space:nowrap; }
+            .service-what { font-size:12px; }
+            .service-includes li { font-size:13px; gap:6px; }
+            .svc-check { width:16px; height:16px; }
+            .wishes-cb-label { font-size:13px; }
+            .wishes-textarea { font-size:13px; }
+
+            /* Транспорт */
+            .transport-input { height:44px; font-size:14px; }
+            .tariff-hint { font-size:12px; }
+            .tariff-pill { font-size:12px; height:26px; padding:0 10px; }
+            .tariff-price-val { font-size:14px; }
+
+            /* Доставка */
+            #sectionDelivery { gap:10px; }
+            .delivery-options { gap:8px; }
+            .delivery-opt { padding:12px; gap:10px; border-radius:12px; }
+            .dopt-icon { width:24px; height:24px; }
+            .dopt-name { font-size:14px; }
+            .dopt-desc { font-size:12px; }
+            .dopt-address { font-size:12px; }
+            .dopt-select { height:40px; font-size:13px; padding:0 36px 0 14px; }
+            .btn-map { font-size:12px; padding:6px 12px; }
+
+            /* Оплата */
+            .payment-options { gap:10px; }
+            .popt-name { font-size:14px; }
+            .popt-pay-icon { width:34px; height:22px; }
+            .popt-note { font-size:12px; padding:8px 12px; border-radius:10px; }
+            .popt-subnote { font-size:11px; }
+
+            /* Отримувач */
+            .recipient-grid { grid-template-columns:1fr; gap:12px; }
+            .form-label { font-size:12px; }
+            .form-input { height:42px; font-size:14px; }
+            .form-phone-prefix { height:42px; font-size:14px; }
+            .form-phone-input { height:42px; font-size:14px; }
+
+            /* Підсумок */
+            .cart-summary-block { padding:16px; gap:14px; border-radius:16px; }
+            .summary-block-title { font-size:17px; }
+            .promo-input { height:40px; font-size:13px; }
+            .btn-promo { height:40px; font-size:13px; padding:0 14px; }
+            .summary-row-label { font-size:14px; }
+            .summary-row-val { font-size:14px; }
+            .summary-total-label { font-size:15px; }
+            .summary-total-val { font-size:22px; }
+            .btn-checkout { height:50px; font-size:15px; }
+
+            /* Порожній стан */
+            .cart-empty { padding:48px 16px; gap:12px; }
+            .cart-empty-icon { width:80px; height:80px; background-size:32px 32px; }
+            .cart-empty-title { font-size:22px; }
+            .cart-empty-desc { font-size:14px; }
+            .cart-empty-actions { flex-direction:column; width:100%; }
+            .cart-empty-btn { width:100%; justify-content:center; height:44px; font-size:14px; }
+
+            /* Тост */
+            .cart-toast { bottom:16px; font-size:13px; padding:10px 16px; }
+        }
+
+        /* ─── 480px ─── */
+        @media (max-width:480px) {
+            /* Хедер */
+            .header-inner { width:100%; max-width:none; padding:0 16px; height:60px; position:relative; }
+            .hp-mob-menu-btn { display:flex; }
+            .logo-img { width:64px; height:auto; }
+            .hp-mob-nav { display:flex; }
+            .header-nav, .header-right { display:none !important; }
+            .header-logo { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:1; }
+            .hp-mob-header-icons { display:flex; margin-left:auto; }
+            .hp-help-btn { width:60px; height:60px; border-radius:50%; padding:13px; gap:0; right:12px; bottom:20px; }
+            .hp-help-btn span { display:none; }
+
+            /* Кошик */
+            .cart-page { padding:0 12px 28px; gap:12px; }
+            .cart-title { font-size:32px; text-align:left; }
+            .cart-section { padding:12px; gap:12px; border-radius:14px; }
+            .cart-section-title { font-size:17px; }
+
+            /* Товар */
+            .cart-item { gap:8px; }
+            .cart-item-img { width:64px; height:64px; border-radius:10px; }
+            .cart-item-name { font-size:13px; }
+            .cart-item-price { font-size:15px; }
+
+            /* Пакет — на дуже маленьких права колонка складається */
+            .pkg-item { flex-wrap:wrap; }
+            .pkg-item-right { flex-direction:row; align-items:center; gap:8px; width:100%; justify-content:space-between; }
+            .pkg-item-img { width:40px; height:40px; }
+
+            /* Послуга */
+            .cart-service-header { flex-wrap:wrap; gap:6px; }
+            .cart-service-name { font-size:13px; }
+            .cart-service-price { font-size:14px; }
+
+            /* Тарифна рядок — переносимо */
+            .transport-tariff-row { flex-wrap:wrap; gap:6px; }
+
+            /* Доставка */
+            .dopt-header { flex-wrap:wrap; gap:6px; }
+            .dopt-np-fields { gap:6px; }
+            .dopt-select { font-size:12px; height:38px; }
+
+            /* Підсумок */
+            .summary-total-val { font-size:20px; }
+            .btn-checkout { height:48px; font-size:14px; border-radius:16px; }
+
+            /* Футер */
+            .site-footer { background-color:#2E5B79; }
+            .footer-top-wrapper { padding:32px 0 0; border-bottom:none; width:100%; }
+            .footer-top-container { width:100%; flex-direction:column; align-items:flex-start; gap:42px; padding:0 16px; box-sizing:border-box; }
+            .footer-brand-col { width:100%; gap:24px; }
+            .logo-footer { width:auto; }
+            .logo-footer img { height:90px; width:auto; }
+            .footer-tagline { color:rgba(255,255,255,0.7); font-weight:400; line-height:1.5; }
+            .footer-links-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; width:100%; }
+            .footer-menu-col:last-child { grid-column:1 / -1; }
+            .footer-category-title { font-size:14px; font-weight:600; color:rgba(255,255,255,0.9); }
+            .footer-menu-list { gap:12px; }
+            .footer-menu-list li a { font-size:16px; font-weight:600; color:rgba(255,255,255,0.9); }
+            .footer-bottom-wrapper { background-color:transparent; border-top:1px solid rgba(255,255,255,0.2); padding:24px 16px; width:100%; margin-top:32px; box-sizing:border-box; }
+            .footer-bottom-container { width:100%; flex-direction:column; height:auto; gap:16px; padding:0; align-items:center; }
+            .footer-socials { gap:24px; }
+            .social-icon { background-color:rgba(255,255,255,0.7); width:24px; height:24px; }
+            .footer-bottom-container .copyright { color:rgba(255,255,255,0.5); font-size:14px; text-align:center; order:1; }
+            .footer-socials { order:-1; }
+        }
+
+        /* ─── MOBILE FILTER OVERLAY (for mobile filter, same as products) ─── */
+        .mob-filter-overlay { display:none; }
+    </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+    <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню">
+            <span class="hp-mob-menu-icon"></span>
+        </button>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-item">Головна</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Порядок дій</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Що робити в першу чергу?</a>
+                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="#" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="#" class="nav-dropdown-item">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Послуги</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="products.html" class="nav-item">Товари</a>
+            <a href="#" class="nav-item">Про нас</a>
+        </nav>
+        <a href="home.html" class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
+        </a>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="#" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="#" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="#" class="nav-dropdown-item">Професійні консультації</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon"></a>
+                <a href="register.html" class="icon-placeholder account-icon"></a>
+            </div>
+        </div>
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon"></a>
+            <a href="register.html" class="icon-placeholder account-icon"></a>
+        </div>
+    </div>
+</header>
+
+<!-- ══ FLOATING HELP BUTTON ══ -->
+<a href="tel:+387777777" class="hp-help-btn">
+    <span>Потрібна допомога?</span>
+    <div class="hp-help-icon"></div>
+</a>
+
+<!-- ══ MAIN ══ -->
+<main class="cart-page">
+
+    <div class="cart-title-row">
+        <h1 class="cart-title">Кошик</h1>
+    </div>
+
+    <!-- ── EMPTY STATE ── -->
+    <div class="cart-empty" id="cartEmpty">
+        <div class="cart-empty-icon" aria-hidden="true"></div>
+        <h2 class="cart-empty-title">Ваш кошик порожній</h2>
+        <p class="cart-empty-desc">Додайте товари або послуги, щоб оформити замовлення</p>
+        <div class="cart-empty-actions">
+            <a href="products.html" class="cart-empty-btn cart-empty-btn--primary">До каталогу товарів</a>
+            <a href="services-funeral-arrangements.html" class="cart-empty-btn cart-empty-btn--secondary">Переглянути послуги</a>
+        </div>
+    </div>
+
+    <div class="cart-layout" id="cartLayout" hidden>
+
+        <!-- ══ LEFT COLUMN ══ -->
+        <div class="cart-left">
+
+            <!-- ── PRODUCTS SECTION ── -->
+            <div class="cart-section" id="sectionProducts" hidden>
+                <h2 class="cart-section-title">Товари</h2>
+                <div id="productsList"></div>
+            </div><!-- /sectionProducts -->
+
+            <!-- ── SERVICES SECTION ── -->
+            <div class="cart-section" id="sectionServices" hidden>
+                <h2 class="cart-section-title">Послуги</h2>
+                <div id="servicesList"></div>
+            </div><!-- /sectionServices -->
+
+            <!-- ── DELIVERY SECTION ── -->
+            <div class="cart-section" id="sectionDelivery">
+                <div class="delivery-head">
+                    <h2 class="cart-section-title">Доставка</h2>
+                    <p class="delivery-note" id="deliveryNote" hidden>Доставка стосується лише товарів</p>
+                </div>
+                <div class="delivery-options">
+
+                    <label class="delivery-opt is-selected" id="dopt-branch" onclick="selectDelivery(this)">
+                        <input type="radio" name="delivery" value="branch" checked>
+                        <span class="dopt-radio"></span>
+                        <div class="dopt-content">
+                            <div class="dopt-header">
+                                <img src="icons/Group 1000006976.svg" class="dopt-icon" alt="" aria-hidden="true">
+                                <span class="dopt-name">Нова Пошта — відділення</span>
+                                <span class="dopt-desc">за тарифами перевізника</span>
+                            </div>
+                            <div class="dopt-np-fields" id="deliveryBranchFields">
+                                <div class="dopt-select-wrap">
+                                    <select class="dopt-select" aria-label="Оберіть відділення">
+                                        <option value="">Оберіть відділення</option>
+                                        <option>Відділення №1 — вул. Хрещатик, 1</option>
+                                        <option>Відділення №5 — пр. Перемоги, 12</option>
+                                        <option>Відділення №12 — вул. Велика Васильківська, 55</option>
+                                        <option>Відділення №24 — пр. Науки, 3</option>
+                                    </select>
+                                    <span class="dopt-select-chev" aria-hidden="true"></span>
+                                </div>
+                                <button class="btn-map" type="button">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="#2E5B79" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="#2E5B79" stroke-width="2"/></svg>
+                                    Обрати на мапі
+                                </button>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="delivery-opt" id="dopt-courier" onclick="selectDelivery(this)">
+                        <input type="radio" name="delivery" value="courier">
+                        <span class="dopt-radio"></span>
+                        <div class="dopt-content">
+                            <div class="dopt-header">
+                                <img src="icons/Group 1000006976.svg" class="dopt-icon" alt="" aria-hidden="true">
+                                <span class="dopt-name">Нова Пошта — кур'єр</span>
+                                <span class="dopt-desc">за тарифами перевізника</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="delivery-opt" id="dopt-pickup" onclick="selectDelivery(this)">
+                        <input type="radio" name="delivery" value="pickup">
+                        <span class="dopt-radio"></span>
+                        <div class="dopt-content">
+                            <div class="dopt-header">
+                                <img src="icons/Group 1000006974.svg" class="dopt-icon" alt="" aria-hidden="true">
+                                <span class="dopt-name">Самовивіз з нашого магазину</span>
+                            </div>
+                            <span class="dopt-address">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="#45799B" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="#45799B" stroke-width="2"/></svg>
+                                м. Київ, вул. Арсенальна, 3
+                            </span>
+                        </div>
+                    </label>
+
+                </div>
+            </div><!-- /sectionDelivery -->
+
+            <!-- ── PAYMENT SECTION ── -->
+            <div class="cart-section" id="sectionPayment">
+                <h2 class="cart-section-title">Оплата</h2>
+                <div class="payment-options" id="paymentOptions">
+                    <!-- Populated by JS based on cart contents -->
+                </div>
+            </div><!-- /sectionPayment -->
+
+            <!-- ── RECIPIENT SECTION ── -->
+            <div class="cart-section" id="sectionRecipient">
+                <h2 class="cart-section-title">Отримувач</h2>
+                <div class="recipient-grid">
+
+                    <div class="form-field">
+                        <label class="form-label" for="recipientFirst">Ім'я</label>
+                        <input type="text" id="recipientFirst" class="form-input" placeholder="Іван" autocomplete="given-name">
+                        <p class="form-error-msg" id="errFirst">Введіть ім'я</p>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="form-label" for="recipientLast">Прізвище</label>
+                        <input type="text" id="recipientLast" class="form-input" placeholder="Коваленко" autocomplete="family-name">
+                        <p class="form-error-msg" id="errLast">Введіть прізвище</p>
+                    </div>
+
+                    <div class="form-field form-field--full">
+                        <label class="form-label" for="recipientEmail">Електронна пошта</label>
+                        <div class="form-input-icon-wrap">
+                            <input type="email" id="recipientEmail" class="form-input" placeholder="email@example.com" autocomplete="email">
+                            <span class="form-field-icon" aria-hidden="true"></span>
+                        </div>
+                        <p class="form-error-msg" id="errEmail">Введіть електронну пошту</p>
+                    </div>
+
+                    <div class="form-field form-field--full">
+                        <label class="form-label" for="recipientPhone">Мобільний телефон</label>
+                        <div class="form-phone-wrap" id="phoneWrap">
+                            <span class="form-phone-prefix">+38</span>
+                            <input type="tel" id="recipientPhone" class="form-phone-input"
+                                placeholder="___ ___ __ __" autocomplete="tel-national"
+                                maxlength="13">
+                        </div>
+                        <p class="form-error-msg" id="errPhone">Введіть номер телефону</p>
+                    </div>
+
+                </div>
+            </div><!-- /sectionRecipient -->
+
+        </div><!-- /cart-left -->
+
+        <!-- ══ RIGHT SIDEBAR ══ -->
+        <div class="cart-right">
+
+            <!-- Promo code + Order summary combined card -->
+            <div class="cart-summary-block">
+                <h3 class="summary-block-title">Промокод</h3>
+                <div>
+                    <div class="promo-row">
+                        <div class="promo-input-wrap">
+                            <input type="text" id="promoInput" class="promo-input" placeholder="Введіть промокод" autocomplete="off">
+                        </div>
+                        <button class="btn-promo" type="button" onclick="applyPromo()">Застосувати</button>
+                    </div>
+                    <p class="promo-msg" id="promoMsg"></p>
+                </div>
+
+                <hr class="summary-divider">
+
+                <h3 class="summary-block-title">Підсумок замовлення</h3>
+                <div class="summary-rows" id="summaryRows">
+                    <!-- Populated by JS -->
+                </div>
+                <hr class="summary-divider">
+                <div class="summary-total">
+                    <span class="summary-total-label">Разом до сплати:</span>
+                    <span class="summary-total-val" id="summaryTotal">—</span>
+                </div>
+
+                <button class="btn-checkout" type="button" onclick="submitOrder()">
+                    Оформити замовлення
+                    <span class="btn-checkout-arrow" aria-hidden="true"></span>
+                </button>
+            </div>
+
+        </div><!-- /cart-right -->
+
+    </div><!-- /cart-layout -->
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="#">Готові пакети</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ══ MOBILE NAV ══ -->
+<div class="hp-mob-nav" id="mobNav" aria-modal="true" role="dialog" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link">Головна</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">
+                    Порядок дій
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="#" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="#" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">
+                    Послуги
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link">Товари</a>
+            <a href="cart.html" class="hp-mob-nav-link is-active">Кошик</a>
+            <a href="#" class="hp-mob-nav-link">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ─── CART STATE ─── */
+var cartState = {
+    items: {},
+    hasWishes: false,
+    discount: 0,
+    promoDiscount: 0,
+    transportTariff: 'city'
+};
+
+/* ─── QTY ─── */
+function changeQty(id, delta) {
+    var item = cartState.items[id];
+    if (!item) return;
+    item.qty = Math.max(1, (item.qty || 1) + delta);
+    document.getElementById('qty-' + id).textContent = item.qty;
+    updatePriceDisplay(id);
+    updateSummary();
+}
+
+function updatePriceDisplay(id) {
+    var item = cartState.items[id];
+    if (!item) return;
+    var el = document.getElementById('price-' + id);
+    if (!el) return;
+    var total = item.price * (item.qty || 1);
+    el.textContent = formatPrice(total);
+}
+
+/* ─── REMOVE ITEM ─── */
+function removeItem(id) {
+    var el = document.querySelector('[data-item-id="' + id + '"]');
+    if (el) {
+        var next = el.nextElementSibling;
+        var prev = el.previousElementSibling;
+        if (next && next.classList.contains('cart-divider')) next.remove();
+        else if (prev && prev.classList.contains('cart-divider')) prev.remove();
+        el.remove();
+    }
+    delete cartState.items[id];
+    updateDeliveryVisibility();
+    buildPaymentOptions();
+    updateSummary();
+}
+
+/* ─── PACKAGE ITEM TOGGLE ─── */
+function togglePkgItem(cb, pkgId) {
+    var pkgItem = cb.closest('[data-pkg-item]');
+    if (!pkgItem) return;
+    var itemKey = pkgItem.dataset.pkgItem;
+    var pkg = cartState.items[pkgId];
+    if (!pkg || !pkg.checkedItems[itemKey]) return;
+
+    pkg.checkedItems[itemKey].checked = cb.checked;
+    pkgItem.classList.toggle('is-unchecked', !cb.checked);
+    recalcPackagePrice(pkgId);
+    updateSummary();
+}
+
+function recalcPackagePrice(pkgId) {
+    var pkg = cartState.items[pkgId];
+    if (!pkg) return;
+    var total = 0;
+    for (var k in pkg.checkedItems) {
+        if (pkg.checkedItems[k].checked) total += pkg.checkedItems[k].price;
+    }
+    pkg.currentPrice = total;
+    var el = document.getElementById('price-' + pkgId);
+    if (el) el.textContent = formatPrice(total);
+}
+
+var KEY_TO_CATEGORY = {
+    'coffin': 'coffins', 'floristry': 'floristry', 'textile': 'textile',
+    'cross': 'crosses', 'urn': 'urns', 'accessories': 'accessories'
+};
+
+function replacePkgItem(pkgId, itemKey, pkgIdx) {
+    var cat = KEY_TO_CATEGORY[itemKey] || '';
+    /* Save replace context to sessionStorage so products.html can read it */
+    sessionStorage.setItem('replaceMode', JSON.stringify({ pkgId: pkgId, itemKey: itemKey, pkgIdx: pkgIdx }));
+    window.location.href = 'products.html?replaceMode=1' + (cat ? '&category=' + cat : '');
+}
+
+/* ─── WISHES ─── */
+function toggleWishes(svcId) {
+    var cb = document.getElementById('wishesCheck-' + svcId);
+    var textarea = document.getElementById('wishesText-' + svcId);
+    var warn = document.getElementById('wishesWarn-' + svcId);
+    if (!cb || !textarea) return;
+    if (cb.checked) {
+        textarea.classList.add('is-open');
+    } else {
+        textarea.classList.remove('is-open');
+        if (warn) { warn.classList.remove('is-visible'); }
+        checkWishesState();
+    }
+    buildPaymentOptions();
+}
+
+function onWishesInput(svcId) {
+    var textarea = document.getElementById('wishesText-' + svcId);
+    var warn = document.getElementById('wishesWarn-' + svcId);
+    if (!textarea || !warn) return;
+    if (textarea.value.trim().length > 0) {
+        warn.classList.add('is-visible');
+    } else {
+        warn.classList.remove('is-visible');
+    }
+    checkWishesState();
+    buildPaymentOptions();
+}
+
+function checkWishesState() {
+    var hasWishes = false;
+    document.querySelectorAll('.wishes-textarea').forEach(function(ta) {
+        if (ta.classList.contains('is-open') && ta.value.trim().length > 0) {
+            hasWishes = true;
+        }
+    });
+    cartState.hasWishes = hasWishes;
+}
+
+/* ─── TRANSPORTATION ─── */
+
+var KYIV_KEYWORDS = [
+    'київ', 'kyiv', 'киев',
+    'печерськ', 'поділ', 'оболонь', 'троєщина', 'позняки', 'дарниця',
+    'голосіїво', 'солом\'янка', 'шевченківськ', 'деснянськ', 'святошин',
+    'борщагівк', 'виноградар', 'теремки', 'харківськ', 'лівий берег',
+    'правий берег', 'осокорки', 'березняки', 'мінський масив', 'сирець',
+    'куренівк', 'вишгородська', 'пріорська', 'лук\'янівк', 'татарк',
+    'залізничн', 'либідськ', 'деміїв', 'корчуват', 'кончі-заспа'
+];
+
+function isWithinKyiv(address) {
+    var s = address.toLowerCase();
+    for (var i = 0; i < KYIV_KEYWORDS.length; i++) {
+        if (s.includes(KYIV_KEYWORDS[i])) return true;
+    }
+    return false;
+}
+
+function updateTransport() {
+    var from = document.getElementById('transportFrom').value.trim();
+    var to   = document.getElementById('transportTo').value.trim();
+    var routeEl  = document.getElementById('transportRoute');
+    var tariffRow = document.getElementById('transportTariffRow');
+
+    if (from && to) {
+        routeEl.textContent = 'Маршрут: ' + from + ' — ' + to;
+        routeEl.classList.add('is-visible');
+        tariffRow.classList.add('is-visible');
+        applyTariff(isWithinKyiv(to) ? 'city' : 'out');
+    } else {
+        routeEl.classList.remove('is-visible');
+        tariffRow.classList.remove('is-visible');
+    }
+    updateSummary();
+}
+
+function applyTariff(type) {
+    cartState.transportTariff = type;
+    var transport = cartState.items['svc-transport'];
+    if (!transport) return;
+
+    document.getElementById('tariffCity').classList.toggle('is-active', type === 'city');
+    document.getElementById('tariffOut').classList.toggle('is-active', type === 'out');
+
+    var price = type === 'city' ? transport.priceCity : transport.priceOut;
+    transport.activePrice = price;
+    document.getElementById('tariffPrice').textContent = formatPrice(price);
+    document.getElementById('price-svc-transport').textContent = formatPrice(price);
+    updateSummary();
+}
+
+/* ─── DELIVERY ─── */
+function selectDelivery(label) {
+    document.querySelectorAll('.delivery-opt').forEach(function(opt) {
+        opt.classList.remove('is-selected');
+    });
+    label.classList.add('is-selected');
+    var input = label.querySelector('input[type="radio"]');
+    if (input) input.checked = true;
+
+    var branchFields = document.getElementById('deliveryBranchFields');
+    if (branchFields) {
+        branchFields.style.display = label.id === 'dopt-branch' && label.classList.contains('is-selected') ? '' : 'none';
+    }
+}
+
+function updateDeliveryVisibility() {
+    var hasProducts = false;
+    var hasServices = false;
+    var hasTransport = false;
+
+    for (var id in cartState.items) {
+        var item = cartState.items[id];
+        if (item.type === 'product' || item.type === 'package') hasProducts = true;
+        if (item.type === 'service') hasServices = true;
+        if (item.type === 'transport') hasTransport = true;
+    }
+
+    var section = document.getElementById('sectionDelivery');
+    var note = document.getElementById('deliveryNote');
+
+    if (!hasProducts && !hasTransport) {
+        if (section) section.hidden = true;
+    } else {
+        if (section) section.hidden = false;
+        if (note) {
+            note.hidden = !(hasServices && hasProducts);
+        }
+    }
+}
+
+/* ─── PAYMENT OPTIONS ─── */
+function buildPaymentOptions() {
+    checkWishesState();
+    var hasProducts = false;
+    var hasServices = false;
+
+    for (var id in cartState.items) {
+        var item = cartState.items[id];
+        if (item.type === 'product' || item.type === 'package') hasProducts = true;
+        if (item.type === 'service' || item.type === 'transport') hasServices = true;
+    }
+
+    var hasWishes = cartState.hasWishes;
+    var container = document.getElementById('paymentOptions');
+    if (!container) return;
+
+    var html = '';
+
+    /* Online full — blocked if has wishes */
+    var onlineDisabled = hasWishes && hasServices;
+    html += '<div class="payment-opt' + (onlineDisabled ? ' is-disabled' : '') + '" id="popt-online">';
+    html += '<label class="payment-opt-row">';
+    html += '<input type="radio" name="payment" value="online"' + (onlineDisabled ? ' disabled' : '') + (!onlineDisabled ? ' checked' : '') + '>';
+    html += '<span class="popt-radio"></span>';
+    html += '<span class="popt-text">';
+    html += '<span class="popt-name">Оплатити онлайн усю суму</span>';
+    html += '<span class="popt-icons">';
+    html += '<img src="icons/payment-visa.svg" class="popt-pay-icon" alt="Visa">';
+    html += '<img src="icons/payment-mastercard.svg" class="popt-pay-icon" alt="Mastercard">';
+    html += '<img src="icons/payment-gpay.svg" class="popt-pay-icon" alt="Google Pay">';
+    html += '<img src="icons/payment-applepay.svg" class="popt-pay-icon" alt="Apple Pay">';
+    html += '</span>';
+    html += '</span></label>';
+    if (onlineDisabled) {
+        html += '<div class="popt-note popt-note--warn"><span class="popt-note-icon"></span><span>Недоступно — є додаткові побажання. Менеджер зв\'яжеться для підтвердження суми.</span></div>';
+    }
+    html += '</div>';
+
+    /* Cash on delivery — only for products */
+    if (hasProducts && !hasServices) {
+        html += '<div class="payment-opt" id="popt-receipt">';
+        html += '<label class="payment-opt-row">';
+        html += '<input type="radio" name="payment" value="receipt">';
+        html += '<span class="popt-radio"></span>';
+        html += '<span class="popt-text"><span class="popt-name">Оплата при отриманні товару</span></span>';
+        html += '</label>';
+        html += '<div class="popt-note popt-note--warn"><span class="popt-note-icon"></span><span><strong>Комісія за грошовий переказ на Новій Пошті</strong> складає (20₴ + 2%). Оплачуйте зараз без комісій.</span></div>';
+        html += '</div>';
+    }
+
+    /* Deposit 20% */
+    html += '<div class="payment-opt" id="popt-deposit">';
+    html += '<label class="payment-opt-row">';
+    html += '<input type="radio" name="payment" value="deposit"' + (onlineDisabled ? ' checked' : '') + '>';
+    html += '<span class="popt-radio"></span>';
+    html += '<span class="popt-text"><span class="popt-name">Оплатити депозит 20% від суми</span></span>';
+    html += '</label>';
+    html += '<div class="popt-note popt-note--info"><span class="popt-note-icon"></span><span><strong>Ми гарантуємо наявність товару</strong> — замовлення не може бути скасоване через відсутність товарів.</span></div>';
+    html += '</div>';
+
+    /* Manager */
+    if (hasServices) {
+        html += '<div class="payment-opt" id="popt-manager">';
+        html += '<label class="payment-opt-row">';
+        html += '<input type="radio" name="payment" value="manager">';
+        html += '<span class="popt-radio"></span>';
+        html += '<span class="popt-text"><span class="popt-name">Менеджер зв\'яжеться для узгодження оплати</span></span>';
+        html += '</label>';
+        if (hasProducts) {
+            html += '<p class="popt-subnote">Товари можна оплатити при отриманні, послугу — онлайн або в агенції</p>';
+        }
+        html += '</div>';
+    }
+
+    container.innerHTML = html;
+}
+
+/* ─── SUMMARY ─── */
+function updateSummary() {
+    var productsTotal  = 0;
+    var servicesTotal  = 0;
+    var packagesTotal  = 0;
+    var transportPrice = 0;
+
+    for (var id in cartState.items) {
+        var item = cartState.items[id];
+        if (item.type === 'product') {
+            productsTotal += item.price * (item.qty || 1);
+        } else if (item.type === 'package') {
+            /* Packages from home page have a fixed price */
+            packagesTotal += item.price || 0;
+        } else if (item.type === 'service') {
+            servicesTotal += item.price;
+        } else if (item.type === 'transport') {
+            transportPrice = item.activePrice || item.priceCity;
+            servicesTotal += transportPrice;
+        }
+    }
+
+    var rows = document.getElementById('summaryRows');
+    if (!rows) return;
+
+    var html = '';
+    if (productsTotal > 0) {
+        html += '<div class="summary-row"><span class="summary-row-label">Товари</span><span class="summary-row-val">' + formatPrice(productsTotal) + '</span></div>';
+    }
+    if (packagesTotal > 0) {
+        html += '<div class="summary-row"><span class="summary-row-label">Пакети</span><span class="summary-row-val">' + formatPrice(packagesTotal) + '</span></div>';
+    }
+    if (servicesTotal > 0) {
+        html += '<div class="summary-row"><span class="summary-row-label">Послуги</span><span class="summary-row-val">' + formatPrice(servicesTotal) + '</span></div>';
+    }
+    if (cartState.discount > 0) {
+        html += '<div class="summary-row"><span class="summary-row-label">Знижка</span><span class="summary-row-val summary-row-val--red">−' + formatPrice(cartState.discount) + '</span></div>';
+    }
+    if (cartState.promoDiscount > 0) {
+        html += '<div class="summary-row"><span class="summary-row-label">Промокод</span><span class="summary-row-val summary-row-val--red">−' + formatPrice(cartState.promoDiscount) + '</span></div>';
+    }
+    var hasProductsInCart = productsTotal > 0 || packagesTotal > 0;
+    if (hasProductsInCart) {
+        html += '<div class="summary-row"><span class="summary-row-label">Доставка</span><span class="summary-row-val summary-row-val--muted">за тарифом</span></div>';
+    }
+
+    rows.innerHTML = html;
+
+    var grand = productsTotal + packagesTotal + servicesTotal - cartState.discount - cartState.promoDiscount;
+    document.getElementById('summaryTotal').textContent = grand > 0 ? formatPrice(grand) : '—';
+}
+
+/* ─── PROMO CODE ─── */
+var VALID_PROMOS = { 'ВИРІЙ10': 0.10, 'SPRING': 0.05, 'VYRIY2026': 0.10 };
+
+function applyPromo() {
+    var input = document.getElementById('promoInput');
+    var msg   = document.getElementById('promoMsg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    msg.className = 'promo-msg';
+
+    if (!code) {
+        msg.textContent = 'Введіть промокод';
+        msg.classList.add('is-error');
+        return;
+    }
+
+    if (VALID_PROMOS[code]) {
+        var subtotal = 0;
+        for (var id in cartState.items) {
+            var item = cartState.items[id];
+            if (item.type === 'product') subtotal += item.price * (item.qty || 1);
+            if (item.type === 'package') subtotal += (item.currentPrice || 0);
+            if (item.type === 'service') subtotal += item.price;
+            if (item.type === 'transport') subtotal += (item.activePrice || item.priceCity);
+        }
+        cartState.promoDiscount = Math.round(subtotal * VALID_PROMOS[code]);
+        input.classList.add('is-ok');
+        input.classList.remove('is-error');
+        msg.textContent = 'Промокод застосовано! Знижка ' + (VALID_PROMOS[code] * 100) + '%';
+        msg.classList.add('is-ok');
+        updateSummary();
+    } else {
+        cartState.promoDiscount = 0;
+        input.classList.add('is-error');
+        input.classList.remove('is-ok');
+        msg.textContent = 'Промокод не знайдено або вже недійсний';
+        msg.classList.add('is-error');
+        updateSummary();
+    }
+}
+
+/* ─── CHECKOUT ─── */
+function submitOrder() {
+    var first  = (document.getElementById('recipientFirst')  || {}).value || '';
+    var last   = (document.getElementById('recipientLast')   || {}).value || '';
+    var email  = (document.getElementById('recipientEmail')  || {}).value || '';
+    var phone  = (document.getElementById('recipientPhone')  || {}).value || '';
+
+    var valid = true;
+    function setErr(inputId, wrapId, errId, isEmpty) {
+        var inp = document.getElementById(inputId);
+        var wrap = wrapId ? document.getElementById(wrapId) : null;
+        var err = document.getElementById(errId);
+        if (isEmpty) {
+            if (inp) inp.classList.add('is-invalid');
+            if (wrap) wrap.classList.add('is-invalid');
+            if (err) err.classList.add('is-visible');
+            valid = false;
+        } else {
+            if (inp) inp.classList.remove('is-invalid');
+            if (wrap) wrap.classList.remove('is-invalid');
+            if (err) err.classList.remove('is-visible');
+        }
+    }
+    setErr('recipientFirst', null,      'errFirst', !first.trim());
+    setErr('recipientLast',  null,      'errLast',  !last.trim());
+    setErr('recipientEmail', null,      'errEmail', !email.trim());
+    setErr('recipientPhone', 'phoneWrap','errPhone', !phone.trim());
+    if (!valid) {
+        document.getElementById('sectionRecipient').scrollIntoView({ behavior:'smooth' });
+        return;
+    }
+
+    /* Collect order summary */
+    var products = [], services = [], packagesArr = [], total = 0;
+    for (var id in cartState.items) {
+        var it = cartState.items[id];
+        if (it.type === 'product') {
+            products.push({ name: it.name || id, qty: it.qty || 1 });
+            total += it.price * (it.qty || 1);
+        } else if (it.type === 'package') {
+            packagesArr.push(it.name || id);
+            total += it.price || 0;
+        } else if (it.type === 'service') {
+            services.push(it.name || id);
+            total += it.price || 0;
+        } else if (it.type === 'transport') {
+            services.push(it.name || 'Транспортування тіла');
+            total += it.activePrice || it.priceCity || 0;
+        }
+    }
+    total -= (cartState.discount || 0) + (cartState.promoDiscount || 0);
+
+    var deliveryEl = document.querySelector('.delivery-opt.is-selected .dopt-name');
+    var deliveryName = deliveryEl ? deliveryEl.textContent.trim() : '';
+
+    var orderNum = String(Math.floor(100000 + Math.random() * 900000));
+
+    sessionStorage.setItem('vyriy_order', JSON.stringify({
+        orderNum: orderNum,
+        recipient: first.trim() + ' ' + last.trim(),
+        phone: '+38 ' + phone.trim(),
+        email: email.trim(),
+        products: products,
+        packages: packagesArr,
+        services: services,
+        delivery: deliveryName,
+        total: total
+    }));
+
+    if (window.CartStorage) CartStorage.clear();
+    window.location.href = 'order-success.html';
+}
+
+/* ─── FORMAT ─── */
+function formatPrice(n) {
+    return n.toLocaleString('uk-UA') + ' ₴';
+}
+
+/* ─── INIT ─── */
+/* ─── LOAD FROM STORAGE ─── */
+function renderProductItem(p, idx) {
+    var id = 'stored-' + idx;
+    var html =
+        '<div class="cart-item" data-item-id="' + id + '" data-item-type="product" data-item-price="' + p.price + '">' +
+        '<div class="cart-item-img"><img src="' + (p.img || '') + '" alt="' + p.name + '" loading="lazy"></div>' +
+        '<div class="cart-item-body">' +
+        '<h3 class="cart-item-name">' + p.name + '</h3>' +
+        (p.attrs ? '<div class="cart-item-attrs"><span class="cart-item-attr">' + p.attrs + '</span></div>' : '') +
+        '<p class="cart-item-price" id="price-' + id + '">' + formatPrice(p.price * (p.qty || 1)) + '</p>' +
+        '</div>' +
+        '<div class="cart-item-side">' +
+        '<button class="btn-delete" onclick="removeStoredItem(\'' + id + '\',' + idx + ')"><span class="btn-delete-icon"></span></button>' +
+        '<div class="cart-item-qty">' +
+        '<button class="qty-btn" onclick="changeQty(\'' + id + '\',-1)">−</button>' +
+        '<span class="qty-val" id="qty-' + id + '">' + (p.qty || 1) + '</span>' +
+        '<button class="qty-btn" onclick="changeQty(\'' + id + '\',1)">+</button>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+    return html;
+}
+
+function removeStoredItem(id, idx) {
+    /* Remove from DOM */
+    var el = document.querySelector('[data-item-id="' + id + '"]');
+    if (el) {
+        var next = el.nextElementSibling;
+        var prev = el.previousElementSibling;
+        if (next && next.classList.contains('cart-divider')) next.remove();
+        else if (prev && prev.classList.contains('cart-divider')) prev.remove();
+        el.remove();
+    }
+    /* Remove from cartState */
+    delete cartState.items[id];
+    /* Remove from localStorage */
+    if (window.CartStorage) {
+        var cart = CartStorage.get();
+        cart.splice(idx, 1);
+        /* Re-index remaining items' IDs in cartState */
+        cartState.items = {};
+        cart.filter(function(i){return i.type==='product';}).forEach(function(p, i){
+            cartState.items['stored-' + i] = { type: 'product', price: p.price, qty: p.qty || 1 };
+        });
+        CartStorage.save(cart);
+    }
+    checkCartEmpty();
+    updateDeliveryVisibility();
+    buildPaymentOptions();
+    updateSummary();
+}
+
+function checkCartEmpty() {
+    var layout = document.getElementById('cartLayout');
+    var empty  = document.getElementById('cartEmpty');
+    var hasItems = Object.keys(cartState.items).length > 0;
+    if (layout) layout.hidden = !hasItems;
+    if (empty)  empty.hidden  =  hasItems;
+}
+
+function renderServiceItem(s, idx) {
+    var id = 'svc-stored-' + idx;
+    var priceStr = s.priceLabel ? s.priceLabel : formatPrice(s.price);
+    var includesHtml = (s.includes || []).map(function(item) {
+        return '<li><span class="svc-check" aria-hidden="true"></span>' + item + '</li>';
+    }).join('');
+
+    return '<div class="cart-service" data-item-id="' + id + '" data-item-type="service" data-item-price="' + s.price + '">' +
+        '<div class="cart-service-header">' +
+        '<h3 class="cart-service-name">' + s.name + '</h3>' +
+        '<span class="cart-service-price" id="price-' + id + '">' + priceStr + '</span>' +
+        '<button class="btn-delete" onclick="removeStoredService(\'' + id + '\',' + idx + ')" aria-label="Видалити"><span class="btn-delete-icon"></span></button>' +
+        '</div>' +
+        (includesHtml ? '<p class="service-what">Що входить:</p><ul class="service-includes">' + includesHtml + '</ul>' : '') +
+        '<div>' +
+        '<label class="wishes-label">' +
+        '<input type="checkbox" id="wishesCheck-' + id + '" onchange="toggleWishes(\'' + id + '\')">' +
+        '<span class="wishes-cb"></span>' +
+        '<span class="wishes-cb-label">Додати побажання або особливі запити</span>' +
+        '</label>' +
+        '<div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">' +
+        '<textarea class="wishes-textarea" id="wishesText-' + id + '" placeholder="Опишіть побажання або особливі запити..." oninput="onWishesInput(\'' + id + '\')"></textarea>' +
+        '<div class="wishes-warning" id="wishesWarn-' + id + '">' +
+        '<span class="wishes-warn-icon"></span>' +
+        '<span>Через додаткові побажання фінальна вартість може змінитись. Менеджер зв\'яжеться для підтвердження суми.</span>' +
+        '</div></div></div></div>';
+}
+
+function removeStoredService(id, idx) {
+    var el = document.querySelector('[data-item-id="' + id + '"]');
+    if (el) {
+        var next = el.nextElementSibling;
+        var prev = el.previousElementSibling;
+        if (next && next.classList.contains('cart-divider')) next.remove();
+        else if (prev && prev.classList.contains('cart-divider')) prev.remove();
+        el.remove();
+        var svcSection = document.getElementById('sectionServices');
+        if (svcSection && !document.querySelector('#servicesList [data-item-id]')) svcSection.hidden = true;
+    }
+    delete cartState.items[id];
+    if (window.CartStorage) {
+        var cart = CartStorage.get();
+        var services = cart.filter(function(i) { return i.type === 'service'; });
+        services.splice(idx, 1);
+        var others = cart.filter(function(i) { return i.type !== 'service'; });
+        CartStorage.save(others.concat(services));
+        /* Re-index service keys in cartState */
+        services.forEach(function(s, i) {
+            cartState.items['svc-stored-' + i] = { type: 'service', price: s.price };
+        });
+    }
+    checkCartEmpty();
+    updateDeliveryVisibility();
+    buildPaymentOptions();
+    updateSummary();
+}
+
+function renderPackageItem(pkg, idx) {
+    var id = 'pkg-stored-' + idx;
+    var items = pkg.items || [];
+
+    /* Init per-item checked state in cartState */
+    if (!cartState.items[id]) {
+        cartState.items[id] = { type: 'package', name: pkg.name || '', price: pkg.price, checkedItems: {} };
+    }
+    var stateItems = cartState.items[id].checkedItems;
+    items.forEach(function(item) {
+        if (stateItems[item.key] === undefined) stateItems[item.key] = { price: item.price, checked: true };
+    });
+
+    /* Icon mapping for non-replaceable items */
+    var KEY_ICON = {
+        'support':  '<span style="width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#E2F3FF;border-radius:8px;"><span style="width:16px;height:16px;background-color:#2E5B79;display:block;-webkit-mask-image:url(icons/phone-call.svg);mask-image:url(icons/phone-call.svg);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;"></span></span>',
+        'morgue':   '<span style="width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#E2F3FF;border-radius:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="1" y="3" width="15" height="13" rx="2" stroke="#2E5B79" stroke-width="2"/><path d="M16 8h4l3 3v5h-7V8z" stroke="#2E5B79" stroke-width="2" stroke-linejoin="round"/><circle cx="5.5" cy="18.5" r="2.5" stroke="#2E5B79" stroke-width="2"/><circle cx="18.5" cy="18.5" r="2.5" stroke="#2E5B79" stroke-width="2"/></svg></span>',
+        'prep':     '<span style="width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#E2F3FF;border-radius:8px;"><img src="icons/candle.svg" style="width:16px;height:16px;object-fit:contain;" alt=""></span>',
+        'transfer': '<span style="width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#E2F3FF;border-radius:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="1" y="3" width="15" height="13" rx="2" stroke="#2E5B79" stroke-width="2"/><path d="M16 8h4l3 3v5h-7V8z" stroke="#2E5B79" stroke-width="2" stroke-linejoin="round"/><circle cx="5.5" cy="18.5" r="2.5" stroke="#2E5B79" stroke-width="2"/><circle cx="18.5" cy="18.5" r="2.5" stroke="#2E5B79" stroke-width="2"/></svg></span>',
+        'brigade':  '<span style="width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#E2F3FF;border-radius:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#2E5B79" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#2E5B79" stroke-width="2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#2E5B79" stroke-width="2" stroke-linecap="round"/></svg></span>',
+        'docs':     '<span style="width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#E2F3FF;border-radius:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#2E5B79" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="#2E5B79" stroke-width="2" stroke-linecap="round"/></svg></span>',
+        'cross':    '<span style="width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#E2F3FF;border-radius:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="#2E5B79" stroke-width="2.5" stroke-linecap="round"/></svg></span>',
+        'agent':    '<span style="width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#E2F3FF;border-radius:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#2E5B79" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="#2E5B79" stroke-width="2"/></svg></span>',
+        'coord':    '<span style="width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#E2F3FF;border-radius:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="8" y="2" width="8" height="4" rx="1" stroke="#2E5B79" stroke-width="2"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2" stroke="#2E5B79" stroke-width="2"/><path d="M9 12h6M9 16h4" stroke="#2E5B79" stroke-width="2" stroke-linecap="round"/></svg></span>'
+    };
+
+    var itemsHtml = items.map(function(item) {
+        var cbId = id + '-' + item.key;
+        if (item.replaceable && item.img) {
+            /* Card with image + Замінити */
+            return '<div class="pkg-item" data-pkg-item="' + cbId + '" data-price="' + item.price + '">' +
+                '<label class="pkg-cb-wrap">' +
+                '<input type="checkbox" checked onchange="toggleStoredPkgItem(this,\'' + id + '\',\'' + item.key + '\')">' +
+                '<span class="pkg-cb-box"></span>' +
+                '</label>' +
+                '<div class="pkg-item-img"><img src="' + item.img + '" alt="' + item.name + '" loading="lazy"></div>' +
+                '<div class="pkg-item-body">' +
+                '<p class="pkg-item-name">' + item.name + '</p>' +
+                (item.attrs ? '<p class="pkg-item-attrs">' + item.attrs + '</p>' : '') +
+                '</div>' +
+                '<div class="pkg-item-right">' +
+                '<span class="pkg-item-price">' + formatPrice(item.price) + '</span>' +
+                '<button class="btn-replace" onclick="replacePkgItem(\'' + id + '\',\'' + item.key + '\',' + idx + ')" type="button">' +
+                '<span class="btn-replace-icon" aria-hidden="true"></span>Замінити' +
+                '</button>' +
+                '</div>' +
+                '</div>';
+        } else {
+            /* Simple row with icon — no border */
+            var icon = KEY_ICON[item.key] || KEY_ICON['agent'];
+            return '<div class="pkg-item pkg-item--simple" data-pkg-item="' + cbId + '" data-price="' + item.price + '">' +
+                '<label class="pkg-cb-wrap">' +
+                '<input type="checkbox" checked onchange="toggleStoredPkgItem(this,\'' + id + '\',\'' + item.key + '\')">' +
+                '<span class="pkg-cb-box"></span>' +
+                '</label>' +
+                icon +
+                '<span class="pkg-item-simple-name">' + item.name + '</span>' +
+                '<span class="pkg-item-price">' + formatPrice(item.price) + '</span>' +
+                '</div>';
+        }
+    }).join('');
+
+    return '<div class="cart-package" data-item-id="' + id + '" data-item-type="package" data-item-price="' + pkg.price + '">' +
+        '<div class="cart-package-header">' +
+        '<h3 class="cart-package-name">' + pkg.name + '</h3>' +
+        '<span class="cart-package-price" id="price-' + id + '">' + formatPrice(pkg.price) + '</span>' +
+        '<button class="btn-delete" onclick="removeStoredPackage(\'' + id + '\',' + idx + ')" aria-label="Видалити"><span class="btn-delete-icon"></span></button>' +
+        '</div>' +
+        '<p class="pkg-what-label">Що входить:</p>' +
+        '<div class="pkg-items">' + itemsHtml + '</div>' +
+        '</div>';
+}
+
+function toggleStoredPkgItem(cb, pkgId, itemKey) {
+    var pkg = cartState.items[pkgId];
+    if (!pkg || !pkg.checkedItems) return;
+    pkg.checkedItems[itemKey].checked = cb.checked;
+    var row = cb.closest('[data-pkg-item]');
+    if (row) row.classList.toggle('is-unchecked', !cb.checked);
+    /* Recalc price */
+    var total = 0;
+    for (var k in pkg.checkedItems) {
+        if (pkg.checkedItems[k].checked) total += pkg.checkedItems[k].price;
+    }
+    pkg.price = total;
+    var priceEl = document.getElementById('price-' + pkgId);
+    if (priceEl) priceEl.textContent = formatPrice(total);
+    updateSummary();
+}
+
+function removeStoredPackage(id, idx) {
+    var el = document.querySelector('[data-item-id="' + id + '"]');
+    if (el) {
+        var next = el.nextElementSibling;
+        var prev = el.previousElementSibling;
+        if (next && next.classList.contains('cart-divider')) next.remove();
+        else if (prev && prev.classList.contains('cart-divider')) prev.remove();
+        el.remove();
+        var svcSection = document.getElementById('sectionServices');
+        if (svcSection && !document.querySelector('#servicesList [data-item-id]')) svcSection.hidden = true;
+    }
+    delete cartState.items[id];
+    if (window.CartStorage) {
+        var cart = CartStorage.get();
+        var pkgs = cart.filter(function(i) { return i.type === 'package'; });
+        pkgs.splice(idx, 1);
+        var others = cart.filter(function(i) { return i.type !== 'package'; });
+        CartStorage.save(others.concat(pkgs));
+    }
+    checkCartEmpty();
+    updateDeliveryVisibility();
+    buildPaymentOptions();
+    updateSummary();
+}
+
+function loadFromStorage() {
+    var stored = (window.CartStorage ? window.CartStorage.get() : []);
+    var products = stored.filter(function(i) { return i.type === 'product'; });
+    var packages = stored.filter(function(i) { return i.type === 'package'; });
+    var services = stored.filter(function(i) { return i.type === 'service'; });
+
+    cartState.items = {};
+
+    var layout = document.getElementById('cartLayout');
+    var empty  = document.getElementById('cartEmpty');
+    var prodList = document.getElementById('productsList');
+    var svcList  = document.getElementById('servicesList');
+    var svcSection = document.getElementById('sectionServices');
+    var prodSection = document.getElementById('sectionProducts');
+
+    if (products.length === 0 && packages.length === 0 && services.length === 0) {
+        if (layout) layout.hidden = true;
+        if (empty)  empty.hidden  = false;
+        return;
+    }
+
+    if (layout) layout.hidden = false;
+    if (empty)  empty.hidden  = true;
+
+    /* Render products */
+    if (prodSection) prodSection.hidden = products.length === 0;
+    if (prodList) {
+        var html = '';
+        products.forEach(function(p, idx) {
+            html += renderProductItem(p, idx);
+            cartState.items['stored-' + idx] = { type: 'product', name: p.name || '', price: p.price, qty: p.qty || 1 };
+        });
+        prodList.innerHTML = html;
+    }
+
+    /* Render packages + services */
+    if (svcSection) svcSection.hidden = packages.length === 0 && services.length === 0;
+    if (svcList) {
+        var svcHtml = '';
+        var svcItemCount = 0;
+        packages.forEach(function(pkg, idx) {
+            if (svcItemCount > 0) svcHtml += '<hr class="cart-divider">';
+            svcHtml += renderPackageItem(pkg, idx);
+            svcItemCount++;
+        });
+        services.forEach(function(s, idx) {
+            if (svcItemCount > 0) svcHtml += '<hr class="cart-divider">';
+            svcHtml += renderServiceItem(s, idx);
+            cartState.items['svc-stored-' + idx] = { type: 'service', name: s.name || '', price: s.price };
+            svcItemCount++;
+        });
+        svcList.innerHTML = svcHtml;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    /* Load from localStorage first */
+    loadFromStorage();
+    updateDeliveryVisibility();
+    buildPaymentOptions();
+    updateSummary();
+
+    /* Mobile nav */
+    var menuBtn  = document.getElementById('mobMenuBtn');
+    var nav      = document.getElementById('mobNav');
+    var closeBtn = document.getElementById('mobNavClose');
+
+    function openNav()  { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
+    function closeNav() { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
+
+    if (menuBtn) menuBtn.addEventListener('click', openNav);
+    if (closeBtn) closeBtn.addEventListener('click', closeNav);
+    if (nav) nav.addEventListener('click', function(e) { if (e.target === nav) closeNav(); });
+
+    /* Mobile nav accordion */
+    document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var acc = btn.closest('.hp-mob-acc');
+            var isOpen = acc.classList.contains('is-open');
+            document.querySelectorAll('.hp-mob-acc').forEach(function(a) { a.classList.remove('is-open'); });
+            if (!isOpen) acc.classList.add('is-open');
+            btn.setAttribute('aria-expanded', !isOpen);
+        });
+    });
+
+    /* Header nav dropdowns */
+    document.querySelectorAll('.nav-dropdown-wrap').forEach(function(wrap) {
+        var trigger = wrap.querySelector('.nav-dropdown-trigger');
+        if (!trigger) return;
+        trigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = wrap.classList.contains('is-open');
+            document.querySelectorAll('.nav-dropdown-wrap').forEach(function(w) { w.classList.remove('is-open'); });
+            if (!isOpen) wrap.classList.add('is-open');
+        });
+    });
+    document.addEventListener('click', function() {
+        document.querySelectorAll('.nav-dropdown-wrap').forEach(function(w) { w.classList.remove('is-open'); });
+    });
+
+    /* Delivery initial state */
+    var branchFields = document.getElementById('deliveryBranchFields');
+    if (branchFields) branchFields.style.display = '';
+});
+</script>
+
+<script src="cart-storage.js"></script>
+</body>
+</html>

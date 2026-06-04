@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Замовлення прийнято — Вирій</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior:smooth; background:#fff; min-height:100%; overflow-x:clip; }
+        body { background:#fff; overflow-x:clip; max-width:100vw; }
+        *, *::before, *::after { box-sizing:border-box; min-width:0; }
+        img { max-width:100%; }
+
+        .header-inner { max-width:1303px; width:calc(100% - 80px); }
+        .footer-top-container, .footer-bottom-container { max-width:1280px; width:calc(100% - 80px); }
+
+        /* ─── MOBILE HEADER ─── */
+        .hp-mob-menu-btn { display:none; width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-mob-menu-icon { width:24px; height:24px; background-color:#1B3F57; mask-image:url('icons/align-justify.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/align-justify.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav { display:none; position:fixed; inset:0; z-index:9999; background:#fff; flex-direction:column; transform:translateX(-100%); transition:transform .3s ease; overflow:hidden; }
+        .hp-mob-nav.is-open { transform:translateX(0); }
+        .hp-mob-nav-head { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; flex-shrink:0; border-bottom:1px solid rgba(69,121,155,.12); }
+        .hp-mob-nav-close { width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:background .15s; }
+        .hp-mob-nav-close:hover { background:#F6FBFF; }
+        .hp-mob-nav-close-icon { width:24px; height:24px; background-color:#1B3F57; mask-image:url('icons/close.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/close.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-search-wrap { padding:12px 16px; border-bottom:1px solid rgba(69,121,155,.08); flex-shrink:0; }
+        .hp-mob-nav-search { display:flex; align-items:center; gap:8px; border:1px solid #45799B; border-radius:24px; padding:9px 14px; background:#fff; }
+        .hp-mob-nav-search-input { flex:1; border:none; outline:none; font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57; background:transparent; }
+        .hp-mob-nav-search-input::placeholder { color:#45799B; }
+        .hp-mob-nav-search-icon { width:18px; height:18px; flex-shrink:0; background-color:#45799B; mask-image:url('icons/search.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/search.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-scroll { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+        .hp-mob-nav-items { display:flex; flex-direction:column; }
+        .hp-mob-nav-link { display:block; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.08); transition:color .15s; }
+        .hp-mob-nav-link:hover { color:#45799B; }
+        .hp-mob-acc { border-bottom:1px solid rgba(69,121,155,.08); }
+        .hp-mob-acc-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; background:none; border:none; cursor:pointer; text-align:left; transition:color .15s; }
+        .hp-mob-acc-trigger:hover { color:#45799B; }
+        .hp-mob-acc-chevron { width:20px; height:20px; flex-shrink:0; background-color:currentColor; mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; transition:transform .22s; }
+        .hp-mob-acc.is-open .hp-mob-acc-chevron { transform:rotate(180deg); }
+        .hp-mob-acc-body { display:none; background:#FAFCFF; }
+        .hp-mob-acc.is-open .hp-mob-acc-body { display:block; }
+        .hp-mob-acc-link { display:block; padding:12px 16px 12px 28px; font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#2E5B79; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.06); transition:color .15s; }
+        .hp-mob-acc-link:last-child { border-bottom:none; }
+        .hp-mob-acc-link:hover { color:#1B3F57; }
+        .hp-mob-nav-sep { border:none; height:1px; background:rgba(69,121,155,.1); margin:0; }
+        .hp-mob-nav-footer-section { padding:20px 16px 32px; display:flex; flex-direction:column; gap:0; }
+        .hp-mob-nav-footer-title { font-family:'Raleway',sans-serif; font-size:12px; font-weight:700; color:#6298BD; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+        .hp-mob-nav-footer-link { display:block; padding:8px 0; font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#45799B; text-decoration:none; transition:color .15s; border-bottom:1px solid rgba(69,121,155,.06); }
+        .hp-mob-nav-footer-link:last-child { border-bottom:none; }
+        .hp-mob-nav-footer-link:hover { color:#1B3F57; }
+        .hp-mob-header-icons { display:none; gap:16px; align-items:center; }
+
+        /* ─── SUCCESS PAGE ─── */
+        .success-page {
+            width:100%; padding:32px 32px 48px;
+            display:flex; flex-direction:column; align-items:center;
+        }
+        .success-content {
+            max-width:558px; width:100%;
+            display:flex; flex-direction:column; align-items:stretch; gap:20px;
+        }
+
+        /* Header block */
+        .success-header {
+            display:flex; flex-direction:column; align-items:center; gap:12px;
+        }
+        .success-check-icon {
+            width:66px; height:66px; border-radius:50%; background:#E8F7EE;
+            display:flex; align-items:center; justify-content:center; flex-shrink:0;
+        }
+        .success-check-icon::after {
+            content:''; display:block; width:33px; height:33px;
+            background-color:#3C9264;
+            -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M20 6L9 17L4 12' stroke='%233C9264' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M20 6L9 17L4 12' stroke='%233C9264' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+            -webkit-mask-position:center; mask-position:center;
+            -webkit-mask-size:contain; mask-size:contain;
+        }
+        .success-title {
+            font-family:'Raleway',sans-serif; font-size:36px; font-weight:700;
+            color:#3C9264; margin:0; text-align:center; line-height:1.2;
+            text-transform:none; white-space:nowrap;
+        }
+        .success-order-num {
+            font-family:'Raleway',sans-serif; font-size:22px; font-weight:600;
+            color:#1B3F57; margin:0; text-align:center; line-height:1.2;
+        }
+        .success-desc {
+            font-family:'Raleway',sans-serif; font-size:16px; font-weight:700;
+            color:#1B3F57; margin:0; text-align:center; line-height:1.4; max-width:340px;
+        }
+        .success-desc-sub {
+            font-family:'Raleway',sans-serif; font-size:16px; font-weight:500;
+            color:#45799B; margin:2px 0 0; text-align:center; line-height:1.4; max-width:340px;
+        }
+
+        /* Details block */
+        .success-details {
+            display:flex; flex-direction:column; gap:12px;
+            background:#fff; border:1px solid #F1F1F1; border-radius:20px; padding:18px 20px;
+        }
+        .success-details-title {
+            font-family:'Raleway',sans-serif; font-size:18px; font-weight:700;
+            color:#1B3F57; margin:0; text-transform:uppercase;
+        }
+        .success-rows {
+            display:flex; flex-direction:column; gap:10px;
+        }
+        .success-row {
+            display:flex; justify-content:space-between; align-items:flex-start; gap:16px;
+        }
+        .success-row-label {
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:500;
+            color:#6298BD; white-space:nowrap; flex-shrink:0;
+        }
+        .success-row-val {
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:500;
+            color:#2E5B79; text-align:right; line-height:1.5;
+        }
+        .success-row-val--total {
+            font-family:'Raleway',sans-serif; font-size:18px; font-weight:700;
+            color:#1B3F57; text-align:right;
+        }
+        .success-divider { height:1px; background:#F1F1F1; border:none; }
+
+        /* Button */
+        .btn-home {
+            display:flex; align-items:center; justify-content:center;
+            width:100%; height:60px; border-radius:62px; border:none;
+            background:#1B3F57; cursor:pointer; text-decoration:none;
+            font-family:'Raleway',sans-serif; font-size:20px; font-weight:700;
+            color:#fff; text-transform:uppercase; transition:background .2s;
+        }
+        .btn-home:hover { background:#2E5B79; }
+
+        /* ─── BREAKPOINTS ─── */
+        @media (max-width:768px) {
+            .success-page { padding:36px 20px; }
+            .success-title { font-size:26px; }
+            .success-order-num { font-size:18px; }
+            .success-details-title { font-size:16px; }
+            .success-row-label, .success-row-val { font-size:14px; }
+            .btn-home { height:54px; font-size:17px; }
+        }
+        @media (max-width:480px) {
+            .header-inner { width:100%; max-width:none; padding:0 16px; height:60px; position:relative; }
+            .hp-mob-menu-btn { display:flex; }
+            .logo-img { width:64px; height:auto; }
+            .hp-mob-nav { display:flex; }
+            .header-nav, .header-right { display:none !important; }
+            .header-logo { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:1; }
+            .hp-mob-header-icons { display:flex; margin-left:auto; }
+
+            .success-page { padding:28px 16px; }
+            .success-content { gap:16px; }
+            .success-header { gap:10px; }
+            .success-check-icon { width:56px; height:56px; }
+            .success-check-icon::after { width:28px; height:28px; }
+            .success-title { font-size:22px; }
+            .success-order-num { font-size:16px; }
+            .success-desc, .success-desc-sub { font-size:14px; }
+            .success-details { padding:14px 16px; }
+            .success-details-title { font-size:15px; }
+            .success-row-label, .success-row-val { font-size:13px; }
+            .success-row-val--total { font-size:16px; }
+            .btn-home { height:50px; font-size:15px; border-radius:16px; }
+
+            .site-footer { background-color:#2E5B79; }
+            .footer-top-wrapper { padding:32px 0 0; border-bottom:none; width:100%; }
+            .footer-top-container { width:100%; flex-direction:column; align-items:flex-start; gap:42px; padding:0 16px; box-sizing:border-box; }
+            .footer-brand-col { width:100%; gap:24px; }
+            .logo-footer { width:auto; }
+            .logo-footer img { height:90px; width:auto; }
+            .footer-tagline { color:rgba(255,255,255,0.7); font-weight:400; line-height:1.5; }
+            .footer-links-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; width:100%; }
+            .footer-menu-col:last-child { grid-column:1 / -1; }
+            .footer-category-title { font-size:14px; font-weight:600; color:rgba(255,255,255,0.9); }
+            .footer-menu-list { gap:12px; }
+            .footer-menu-list li a { font-size:16px; font-weight:600; color:rgba(255,255,255,0.9); }
+            .footer-bottom-wrapper { background-color:transparent; border-top:1px solid rgba(255,255,255,0.2); padding:24px 16px; width:100%; margin-top:32px; box-sizing:border-box; }
+            .footer-bottom-container { width:100%; flex-direction:column; height:auto; gap:16px; padding:0; align-items:center; }
+            .footer-socials { gap:24px; }
+            .social-icon { background-color:rgba(255,255,255,0.7); width:24px; height:24px; }
+            .footer-bottom-container .copyright { color:rgba(255,255,255,0.5); font-size:14px; text-align:center; order:1; }
+            .footer-socials { order:-1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+    <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню">
+            <span class="hp-mob-menu-icon"></span>
+        </button>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-item">Головна</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Порядок дій</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Що робити в першу чергу?</a>
+                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="#" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="#" class="nav-dropdown-item">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Послуги</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="products.html" class="nav-item">Товари</a>
+            <a href="#" class="nav-item">Про нас</a>
+        </nav>
+        <a href="home.html" class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
+        </a>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="#" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="#" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="#" class="nav-dropdown-item">Професійні консультації</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon"></a>
+                <a href="account.html" class="icon-placeholder account-icon"></a>
+            </div>
+        </div>
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon"></a>
+            <a href="account.html" class="icon-placeholder account-icon"></a>
+        </div>
+    </div>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main class="success-page">
+    <div class="success-content">
+
+        <!-- Check icon + title + order number + description -->
+        <div class="success-header">
+            <div class="success-check-icon" aria-hidden="true"></div>
+            <h1 class="success-title">Ваше замовлення прийнято!</h1>
+            <p class="success-order-num" id="successOrderNum"></p>
+            <p class="success-desc">Дякуємо за довіру!</p>
+            <p class="success-desc-sub">Наш координатор зателефонує вам протягом 15 хвилин для уточнення деталей.</p>
+        </div>
+
+        <!-- Details -->
+        <div class="success-details" id="successDetails">
+            <h2 class="success-details-title">Деталі</h2>
+            <div class="success-rows" id="successRows"></div>
+        </div>
+
+        <!-- Button -->
+        <a href="home.html" class="btn-home">На головну</a>
+
+    </div>
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="#">Готові пакети</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ══ MOBILE NAV ══ -->
+<div class="hp-mob-nav" id="mobNav" aria-modal="true" role="dialog" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link">Головна</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Порядок дій <span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Послуги <span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link">Товари</a>
+            <a href="cart.html" class="hp-mob-nav-link">Кошик</a>
+            <a href="#" class="hp-mob-nav-link">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<script src="cart-storage.js"></script>
+<script>
+(function() {
+    /* ── Render order data ── */
+    var raw = sessionStorage.getItem('vyriy_order');
+    var order = null;
+    try { order = raw ? JSON.parse(raw) : null; } catch(e) {}
+
+    if (order) {
+        /* Order number */
+        var numEl = document.getElementById('successOrderNum');
+        if (numEl) numEl.textContent = 'Замовлення №' + order.orderNum;
+
+        /* Details rows */
+        var rows = [];
+
+        if (order.products && order.products.length > 0) {
+            var prodLines = order.products.map(function(p) {
+                return p.name + (p.qty > 1 ? ' × ' + p.qty : '');
+            }).join('\n');
+            rows.push({ label: 'Товари:', val: prodLines });
+        }
+        var allServices = (order.packages || []).concat(order.services || []);
+        if (allServices.length > 0) {
+            rows.push({ label: 'Послуги:', val: allServices.join('\n') });
+        }
+        if (order.delivery) {
+            rows.push({ label: 'Доставка:', val: order.delivery });
+        }
+        rows.push({ label: 'Отримувач:', val: order.recipient });
+        rows.push({ label: 'Телефон:', val: order.phone });
+        if (order.total > 0) {
+            rows.push({ label: 'Сума замовлення:', val: order.total, isTotal: true });
+        }
+
+        var container = document.getElementById('successRows');
+        if (container) {
+            var html = '';
+            rows.forEach(function(r, i) {
+                if (i > 0) html += '<hr class="success-divider">';
+                var valText = r.isTotal
+                    ? '<span class="success-row-val--total">' + r.val.toLocaleString('uk-UA') + ' ₴</span>'
+                    : escapeHtml(r.val);
+                html += '<div class="success-row">' +
+                    '<span class="success-row-label">' + escapeHtml(r.label) + '</span>' +
+                    '<span class="success-row-val">' + valText + '</span>' +
+                    '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+    }
+
+    function plural(n, one, few, many) {
+        var mod10 = n % 10, mod100 = n % 100;
+        if (mod10 === 1 && mod100 !== 11) return one;
+        if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+        return many;
+    }
+    function escapeHtml(s) {
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+    }
+
+    /* ── Mobile nav ── */
+    document.addEventListener('DOMContentLoaded', function() {
+        var menuBtn  = document.getElementById('mobMenuBtn');
+        var nav      = document.getElementById('mobNav');
+        var closeBtn = document.getElementById('mobNavClose');
+        function openNav()  { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
+        function closeNav() { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
+        if (menuBtn) menuBtn.addEventListener('click', openNav);
+        if (closeBtn) closeBtn.addEventListener('click', closeNav);
+        if (nav) nav.addEventListener('click', function(e) { if (e.target === nav) closeNav(); });
+
+        document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var acc = btn.closest('.hp-mob-acc');
+                var isOpen = acc.classList.contains('is-open');
+                document.querySelectorAll('.hp-mob-acc').forEach(function(a) { a.classList.remove('is-open'); });
+                if (!isOpen) acc.classList.add('is-open');
+                btn.setAttribute('aria-expanded', !isOpen);
+            });
+        });
+
+        document.querySelectorAll('.nav-dropdown-wrap').forEach(function(wrap) {
+            var trigger = wrap.querySelector('.nav-dropdown-trigger');
+            if (!trigger) return;
+            trigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var isOpen = wrap.classList.contains('is-open');
+                document.querySelectorAll('.nav-dropdown-wrap').forEach(function(w) { w.classList.remove('is-open'); });
+                if (!isOpen) wrap.classList.add('is-open');
+            });
+        });
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.nav-dropdown-wrap').forEach(function(w) { w.classList.remove('is-open'); });
+        });
+    });
+})();
+</script>
+</body>
+</html>

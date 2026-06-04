@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Товар — Вирій</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior:smooth; background:#FFFFFF; min-height:100%; overflow-x:hidden; }
+        body { background:#FFFFFF; background-image:none; overflow-x:hidden; max-width:100vw; }
+        *, *::before, *::after { box-sizing:border-box; min-width:0; }
+        img { max-width:100%; }
+
+        .header-inner { max-width:1303px; width:calc(100% - 80px); }
+        .footer-top-container, .footer-bottom-container { max-width:1280px; width:calc(100% - 80px); }
+
+        @keyframes hp-help-ring {
+            0%   { box-shadow:0 0 0 0   rgba(27,63,87,.38), 0 8px 24px rgba(27,63,87,.22); }
+            60%  { box-shadow:0 0 0 10px rgba(27,63,87,0),  0 8px 24px rgba(27,63,87,.22); }
+            100% { box-shadow:0 0 0 0   rgba(27,63,87,0),   0 8px 24px rgba(27,63,87,.22); }
+        }
+        .hp-help-btn { position:fixed; right:25px; bottom:40px; z-index:9999; display:inline-flex; align-items:center; gap:12px; background:#1B3F57; border-radius:40px; padding:11px 18px; width:236px; cursor:pointer; text-decoration:none; border:none; animation:hp-help-ring 2.8s ease-out infinite; transition:background .2s; }
+        .hp-help-btn:hover { background:#2E5B79; animation-play-state:paused; box-shadow:0 12px 28px rgba(27,63,87,.35); }
+        .hp-help-btn span { font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; color:#fff; line-height:1; flex:1; }
+        .hp-help-icon { width:34px; height:34px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-help-icon::after { content:''; width:17px; height:17px; background-color:#1B3F57; mask-image:url('icons/phone-call.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/phone-call.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+
+        .hp-mob-menu-btn { display:none; width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-mob-menu-icon { width:24px; height:24px; background-color:#1B3F57; mask-image:url('icons/align-justify.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/align-justify.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        /* ─── MOBILE NAV (redesigned) ─── */
+        .hp-mob-nav { display:none; position:fixed; inset:0; z-index:9999; background:#fff; flex-direction:column; transform:translateX(-100%); transition:transform .3s ease; overflow:hidden; }
+        .hp-mob-nav.is-open { transform:translateX(0); }
+        .hp-mob-nav-head { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; flex-shrink:0; border-bottom:1px solid rgba(69,121,155,.12); }
+        .hp-mob-nav-close { width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:background .15s; }
+        .hp-mob-nav-close:hover { background:#F6FBFF; }
+        .hp-mob-nav-close-icon { width:24px; height:24px; background-color:#1B3F57; mask-image:url('icons/close.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/close.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-search-wrap { padding:12px 16px; border-bottom:1px solid rgba(69,121,155,.08); flex-shrink:0; }
+        .hp-mob-nav-search { display:flex; align-items:center; gap:8px; border:1px solid #45799B; border-radius:24px; padding:9px 14px; background:#fff; }
+        .hp-mob-nav-search-input { flex:1; border:none; outline:none; font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57; background:transparent; }
+        .hp-mob-nav-search-input::placeholder { color:#45799B; }
+        .hp-mob-nav-search-icon { width:18px; height:18px; flex-shrink:0; background-color:#45799B; mask-image:url('icons/search.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/search.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-scroll { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+        .hp-mob-nav-items { display:flex; flex-direction:column; }
+        .hp-mob-nav-link { display:block; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.08); transition:color .15s; }
+        .hp-mob-nav-link:hover { color:#45799B; }
+        .hp-mob-nav-link.is-active { color:#45799B; }
+        .hp-mob-acc { border-bottom:1px solid rgba(69,121,155,.08); }
+        .hp-mob-acc-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; background:none; border:none; cursor:pointer; text-align:left; transition:color .15s; }
+        .hp-mob-acc-trigger:hover { color:#45799B; }
+        .hp-mob-acc-trigger.is-active { color:#45799B; }
+        .hp-mob-acc-chevron { width:20px; height:20px; flex-shrink:0; background-color:currentColor; mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; transition:transform .22s; }
+        .hp-mob-acc.is-open .hp-mob-acc-chevron { transform:rotate(180deg); }
+        .hp-mob-acc-body { display:none; background:#FAFCFF; }
+        .hp-mob-acc.is-open .hp-mob-acc-body { display:block; }
+        .hp-mob-acc-link { display:block; padding:12px 16px 12px 28px; font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#2E5B79; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.06); transition:color .15s; }
+        .hp-mob-acc-link:last-child { border-bottom:none; }
+        .hp-mob-acc-link:hover { color:#1B3F57; }
+        .hp-mob-nav-sep { border:none; height:1px; background:rgba(69,121,155,.1); margin:0; }
+        .hp-mob-nav-footer-section { padding:20px 16px 32px; display:flex; flex-direction:column; gap:0; }
+        .hp-mob-nav-footer-title { font-family:'Raleway',sans-serif; font-size:12px; font-weight:700; color:#6298BD; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+        .hp-mob-nav-footer-link { display:block; padding:8px 0; font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#45799B; text-decoration:none; transition:color .15s; border-bottom:1px solid rgba(69,121,155,.06); }
+        .hp-mob-nav-footer-link:last-child { border-bottom:none; }
+        .hp-mob-nav-footer-link:hover { color:#1B3F57; }
+        .hp-mob-header-icons { display:none; gap:16px; align-items:center; }
+
+        .product-page { width:100%; padding:0 80px 80px; display:flex; flex-direction:column; gap:0; }
+
+        .breadcrumb { display:flex; align-items:center; gap:8px; padding:20px 0 28px; }
+        .breadcrumb-link { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; text-decoration:none; transition:color .15s; }
+        .breadcrumb-link:hover { color:#45799B; }
+        .breadcrumb-sep { width:18px; height:18px; flex-shrink:0; background-color:#45799B; mask-image:url('icons/chevron-right.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/chevron-right.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .breadcrumb-current { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#1B3F57; }
+
+        .product-main { display:flex; gap:52px; align-items:flex-start; width:100%; }
+
+        .product-gallery { width:584px; flex-shrink:0; display:flex; flex-direction:column; gap:16px; }
+        .product-main-img-wrap { width:100%; height:564px; background:#F8F6F4; border-radius:24px; overflow:hidden; display:flex; align-items:center; justify-content:center; position:relative; }
+        .product-main-img { width:100%; height:100%; object-fit:contain; object-position:center; }
+        .product-discount-badge { position:absolute; top:15px; left:15px; background:#B43131; border-radius:30px; padding:5px 16px; font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; color:#fff; line-height:1.4; display:none; }
+        .product-thumbs { display:flex; gap:16px; }
+        .product-thumb { width:111px; height:108px; border-radius:16px; background:#F8F6F4; overflow:hidden; cursor:pointer; border:2px solid transparent; transition:border-color .15s; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+        .product-thumb.is-active { border-color:#CEEBFF; }
+        .product-thumb img { width:100%; height:100%; object-fit:contain; padding:8px; }
+
+        .product-info-col { flex:1; min-width:0; display:flex; flex-direction:column; gap:32px; }
+        .product-info-top { display:flex; flex-direction:column; gap:24px; }
+        .product-status-row { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+        .product-availability { font-family:'Raleway',sans-serif; font-size:22px; font-weight:600; line-height:120%; color:#3C9264; }
+        .product-bonus-badge { display:inline-flex; align-items:center; gap:10px; background:#45799B; border-radius:25px; padding:5px 16px 5px 6px; font-family:'Raleway',sans-serif; font-size:18px; font-weight:600; color:#fff; white-space:nowrap; flex-shrink:0; }
+        .product-bonus-icon { width:25px; height:25px; flex-shrink:0; background-image:url('icons/bonus.svg'); background-size:contain; background-repeat:no-repeat; background-position:center; }
+        .product-title { font-family:'Raleway',sans-serif; font-size:36px; font-weight:700; line-height:120%; text-transform:capitalize; color:#1B3F57; margin:0; }
+        .product-price-row { display:flex; align-items:center; gap:20px; }
+        .product-price-old { font-family:'Raleway',sans-serif; font-size:22px; font-weight:600; color:rgba(27,63,87,.6); text-decoration:line-through; }
+        .product-price-new { font-family:'Raleway',sans-serif; font-size:36px; font-weight:700; color:#B43131; line-height:1; }
+        .product-price-regular { font-family:'Raleway',sans-serif; font-size:36px; font-weight:700; color:#1B3F57; line-height:1; }
+
+        .product-options { display:flex; flex-direction:column; gap:16px; }
+        .product-option-group { display:flex; flex-direction:column; gap:12px; }
+        .product-option-label { font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; line-height:120%; color:#1B3F57; }
+        .product-option-pills { display:flex; flex-wrap:wrap; gap:8px; }
+        .product-pill { height:34px; padding:0 18px; border-radius:12px; border:1px solid transparent; font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; background:transparent; cursor:pointer; transition:background .15s, border-color .15s; display:inline-flex; align-items:center; white-space:nowrap; }
+        .product-pill:hover { background:#F6FBFF; border-color:#CEEBFF; }
+        .product-pill.is-active { background:#E2F3FF; border-color:#E2F3FF; font-weight:600; }
+        .product-option-divider { width:100%; height:1px; background:#F1F1F1; border:none; }
+
+        .product-actions-row { display:flex; align-items:center; gap:20px; }
+        .product-qty { display:inline-flex; align-items:center; gap:22px; background:#E2F3FF; border-radius:69px; padding:13px 22px; flex-shrink:0; }
+        .product-qty-btn { width:22px; height:22px; background:none; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; flex-shrink:0; border-radius:50%; transition:background .15s; }
+        .product-qty-btn:hover { background:rgba(46,91,121,.12); }
+        .qty-icon { width:22px; height:22px; background-color:#1B3F57; mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .qty-minus-icon { mask-image:url('icons/minus.svg'); -webkit-mask-image:url('icons/minus.svg'); }
+        .qty-plus-icon  { mask-image:url('icons/plus.svg');  -webkit-mask-image:url('icons/plus.svg');  }
+        .product-qty-val { font-family:'Raleway',sans-serif; font-size:18px; font-weight:500; color:#1B3F57; min-width:18px; text-align:center; }
+        .product-add-btn { background:#1B3F57; border-radius:24px; border:none; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:17px 24px; font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:.04em; transition:background .2s; }
+        .product-add-btn:hover { background:#2E5B79; }
+        .product-cart-icon-lg { width:18px; height:18px; background-color:#fff; flex-shrink:0; mask-image:url('icons/shopping-cart.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/shopping-cart.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+
+        .product-delivery-info { display:flex; flex-direction:column; gap:12px; }
+        .product-delivery-row { display:flex; align-items:center; gap:18px; }
+        .product-delivery-icon { width:32px; height:32px; flex-shrink:0; }
+        .product-delivery-text { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; line-height:140%; }
+        .product-delivery-text strong { font-weight:600; color:#2E5B79; }
+
+        .product-tabs-section { margin-top:48px; display:flex; flex-direction:column; gap:32px; }
+        .product-tabs-nav { display:flex; flex-direction:column; }
+        .product-tabs-list { display:flex; gap:90px; }
+        .product-tab-btn { font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; color:#1B3F57; background:none; border:none; cursor:pointer; padding:0 0 16px; transition:color .15s; white-space:nowrap; }
+        .product-tab-btn:hover { color:#2E5B79; }
+        .product-tabs-underline { position:relative; width:100%; height:1px; background:#F1F1F1; }
+        .product-tabs-indicator { position:absolute; top:-1px; height:3px; background:#2E5B79; border-radius:2px; transition:left .2s ease, width .2s ease; }
+        .product-tab-content { display:none; }
+        .product-tab-content.is-active { display:block; }
+        .product-tab-text { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; line-height:160%; color:#2E5B79; max-width:1094px; }
+
+        .product-chars { display:flex; flex-direction:column; gap:0; max-width:700px; }
+        .product-char-row { display:flex; align-items:baseline; padding:12px 0; border-bottom:1px solid #F1F1F1; }
+        .product-char-row:first-child { border-top:1px solid #F1F1F1; }
+        .product-char-name { font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#45799B; width:240px; flex-shrink:0; }
+        .product-char-val  { font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#1B3F57; }
+
+        .product-related { margin-top:48px; display:flex; flex-direction:column; gap:28px; }
+        .product-related-title { font-family:'Raleway',sans-serif; font-size:18px; font-weight:700; line-height:120%; color:#1B3F57; }
+
+        .products-grid { display:flex; flex-wrap:wrap; gap:20px; }
+        .product-card { width:223px; flex-shrink:0; border:1px solid #F1F1F1; border-radius:24px; overflow:hidden; background:#fff; display:flex; flex-direction:column; text-decoration:none; transition:box-shadow .2s, transform .18s; cursor:pointer; }
+        .product-card:hover { box-shadow:0 8px 24px rgba(15,46,67,.1); transform:translateY(-3px); }
+        .product-img-wrap { width:100%; height:180px; background:#F8F6F4; border-radius:20px; overflow:hidden; display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; }
+        .product-img { width:100%; height:100%; object-fit:contain; object-position:center; }
+        .product-badges { position:absolute; top:9px; left:10px; display:flex; gap:4px; flex-wrap:wrap; pointer-events:none; }
+        .product-badge { display:inline-flex; align-items:center; gap:4px; height:22px; padding:0 8px; border-radius:16px; font-family:'Raleway',sans-serif; font-size:12px; font-weight:600; line-height:1; color:#fff; }
+        .product-badge--bonus { background:#45799B; }
+        .badge-bonus-icon { width:14px; height:14px; flex-shrink:0; background-image:url('icons/bonus.svg'); background-size:contain; background-repeat:no-repeat; background-position:center; }
+        .product-badge--discount { background:#D9272D; }
+        .product-info-card { padding:0 16px 16px; display:flex; flex-direction:column; gap:12px; flex:1; }
+        .product-top-info { display:flex; flex-direction:column; gap:6px; }
+        .product-name { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; line-height:140%; color:#1B3F57; margin:0; text-align:left; min-height:44px; display:flex; align-items:center; }
+        .product-status { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; line-height:140%; color:#3C9264; margin:0; }
+        .product-bottom-info { display:flex; justify-content:space-between; align-items:center; margin-top:auto; }
+        .product-price-block { display:flex; flex-direction:column; gap:1px; }
+        .product-price { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#1B3F57; margin:0; }
+        .product-price--old { font-family:'Raleway',sans-serif; font-size:13px; font-weight:600; color:rgba(27,63,87,.5); text-decoration:line-through; margin:0; }
+        .product-price--sale { font-family:'Raleway',sans-serif; font-size:16px; font-weight:700; color:#D9272D; margin:0; }
+        .product-cart-btn { width:36px; height:36px; border-radius:50%; background:#1B3F57; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .2s; }
+        .product-cart-btn:hover { background:#265879; }
+        .product-cart-icon { width:18px; height:18px; background-color:#fff; mask-image:url('icons/shopping-cart.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/shopping-cart.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+
+        @media (max-width:1280px) { .product-page { padding:0 40px 64px; } }
+
+        @media (max-width:1024px) {
+            .product-main { flex-direction:column; gap:28px; }
+            .product-gallery { width:100%; }
+            .product-main-img-wrap { height:420px; }
+            .product-title { font-size:30px; }
+            .product-price-new, .product-price-regular { font-size:30px; }
+        }
+
+        @media (max-width:768px) {
+            /* page */
+            .product-page { padding:0 16px 48px; }
+
+            /* breadcrumb */
+            .breadcrumb { flex-wrap:wrap; gap:4px 6px; padding:14px 0 18px; }
+            .breadcrumb-link, .breadcrumb-current { font-size:14px; }
+
+            /* gallery */
+            .product-main-img-wrap { height:280px; border-radius:16px; }
+            .product-thumbs { gap:10px; }
+            .product-thumb { width:80px; height:76px; border-radius:12px; }
+            .product-thumb img { padding:6px; }
+            .product-discount-badge { font-size:16px; padding:4px 12px; top:10px; left:10px; }
+
+            /* info column */
+            .product-info-col { gap:20px; }
+            .product-status-row { flex-wrap:wrap; gap:8px 12px; }
+            .product-availability { font-size:18px; }
+            .product-bonus-badge { font-size:14px; padding:4px 12px 4px 4px; gap:6px; }
+            .product-bonus-icon { width:20px; height:20px; }
+            .product-title { font-size:26px; }
+            .product-price-row { gap:12px; align-items:baseline; }
+            .product-price-new, .product-price-regular { font-size:26px; }
+            .product-price-old { font-size:16px; }
+
+            /* options */
+            .product-info-top { gap:16px; }
+            .product-option-label { font-size:17px; }
+            .product-options { gap:12px; }
+            .product-pill { font-size:15px; height:36px; }
+
+            /* actions */
+            .product-actions-row { gap:12px; }
+            .product-qty { padding:11px 18px; gap:18px; }
+            .product-add-btn { padding:14px 20px; font-size:14px; }
+
+            /* delivery */
+            .product-delivery-info { gap:10px; }
+            .product-delivery-icon { width:28px; height:28px; }
+            .product-delivery-text { font-size:15px; }
+
+            /* tabs */
+            .product-tabs-section { margin-top:32px; gap:20px; }
+            .product-tabs-list { gap:28px; overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+            .product-tabs-list::-webkit-scrollbar { display:none; }
+            .product-tab-btn { font-size:16px; padding-bottom:12px; white-space:nowrap; flex-shrink:0; }
+            .product-tab-text { font-size:15px; line-height:1.65; }
+
+            /* chars */
+            .product-chars { max-width:100%; }
+            .product-char-name { width:160px; font-size:14px; }
+            .product-char-val  { font-size:14px; }
+
+            /* related */
+            .product-related { margin-top:32px; gap:16px; }
+            .product-related-title { font-size:16px; }
+            .products-grid { gap:12px; }
+            .product-card { width:calc(50% - 6px); }
+            .product-img-wrap { height:150px; padding:8px 10px; }
+            .product-name { font-size:14px; min-height:38px; }
+            .product-price, .product-price--sale { font-size:14px; }
+            .product-price--old { font-size:12px; }
+            .product-status { font-size:13px; }
+
+            /* mobile header */
+            .hp-mob-menu-btn { display:flex; }
+            .logo-img { width:64px; height:auto; }
+            .hp-mob-nav { display:flex; }
+            .header-nav, .header-right { display:none !important; }
+            .header-logo { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:1; }
+            .hp-mob-header-icons { display:flex; margin-left:auto; }
+            .hp-help-btn { width:60px; height:60px; border-radius:50%; padding:13px; gap:0; right:12px; bottom:20px; }
+            .hp-help-btn span { display:none; }
+        }
+
+        @media (max-width:480px) {
+            .header-inner { width:100%; max-width:none; padding:0 16px; height:60px; position:relative; }
+            .product-page { padding:0 16px 40px; }
+            .product-main-img-wrap { height:240px; }
+            .product-main { gap:20px; }
+            .product-title { font-size:22px; }
+            .product-price-new, .product-price-regular { font-size:24px; }
+            /* bonus badge на маленьких екранах займає весь рядок */
+            .product-status-row { flex-direction:column; align-items:flex-start; gap:8px; }
+            /* qty + кнопка стакуються */
+            .product-actions-row { flex-direction:column; align-items:stretch; gap:10px; }
+            .product-qty { justify-content:center; }
+            .product-add-btn { justify-content:center; width:100%; }
+            /* chars — вертикально */
+            .product-char-row { flex-direction:column; gap:2px; }
+            .product-char-name { width:auto; color:#1B3F57; font-weight:600; }
+            /* related — 2 колонки залишаємо */
+            .product-card { width:calc(50% - 6px); }
+            .product-img-wrap { height:130px; }
+            /* Footer mobile */
+            .site-footer { background-color: #2E5B79; }
+            .footer-top-wrapper { padding: 32px 0 0; border-bottom: none; width: 100%; }
+            .footer-top-container { width: 100%; flex-direction: column; align-items: flex-start; gap: 42px; padding: 0 16px; box-sizing: border-box; }
+            .footer-brand-col { width: 100%; gap: 24px; }
+            .logo-footer { width: auto; }
+            .logo-footer img { height: 90px; width: auto; }
+            .footer-tagline { color: rgba(255,255,255,0.7); font-weight: 400; line-height: 1.5; }
+            .footer-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; width: 100%; }
+            .footer-menu-col:last-child { grid-column: 1 / -1; }
+            .footer-category-title { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); }
+            .footer-menu-list { gap: 12px; }
+            .footer-menu-list li a { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.9); }
+            .footer-bottom-wrapper { background-color: transparent; border-top: 1px solid rgba(255,255,255,0.2); padding: 24px 16px; width: 100%; margin-top: 32px; box-sizing: border-box; }
+            .footer-bottom-container { width: 100%; flex-direction: column; height: auto; gap: 16px; padding: 0; align-items: center; }
+            .footer-socials { gap: 24px; }
+            .social-icon { background-color: rgba(255,255,255,0.7); width: 24px; height: 24px; }
+            .social-icon:hover { background-color: #FFFFFF; }
+            .footer-bottom-container .copyright { color: rgba(255,255,255,0.5); font-size: 14px; text-align: center; order: 1; }
+            .footer-socials { order: -1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+    <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню"><span class="hp-mob-menu-icon"></span></button>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-item">Головна</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Порядок дій</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Що робити в першу чергу?</a>
+                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="#" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="#" class="nav-dropdown-item">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Послуги</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="products.html" class="nav-item nav-active" style="color:#45799B;">Товари</a>
+            <a href="#" class="nav-item">Про нас</a>
+        </nav>
+        <a href="home.html" class="header-logo"><img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img"></a>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="#" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="#" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="#" class="nav-dropdown-item">Професійні консультації</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+                <a href="register.html" class="icon-placeholder account-icon"></a>
+            </div>
+        </div>
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+            <a href="register.html" class="icon-placeholder account-icon"></a>
+        </div>
+    </div>
+</header>
+
+<a href="tel:+387777777" class="hp-help-btn">
+    <span>Потрібна допомога?</span>
+    <div class="hp-help-icon"></div>
+</a>
+
+<!-- ══ MAIN ══ -->
+<main class="product-page">
+
+    <nav class="breadcrumb" aria-label="Хлібні крихти">
+        <a href="products.html" class="breadcrumb-link">Товари</a>
+        <span class="breadcrumb-sep" aria-hidden="true"></span>
+        <span class="breadcrumb-link" id="breadCat" style="cursor:default;"></span>
+        <span class="breadcrumb-sep" aria-hidden="true"></span>
+        <span class="breadcrumb-current" id="breadName"></span>
+    </nav>
+
+    <div class="product-main">
+        <div class="product-gallery">
+            <div class="product-main-img-wrap">
+                <img src="" alt="" class="product-main-img" id="mainImg">
+                <span class="product-discount-badge" id="discountBadge"></span>
+            </div>
+            <div class="product-thumbs" id="thumbsWrap"></div>
+        </div>
+
+        <div class="product-info-col">
+            <div class="product-info-top">
+                <div class="product-status-row">
+                    <span class="product-availability" id="availability"></span>
+                    <span class="product-bonus-badge" id="bonusBadge" style="display:none;">
+                        <span class="product-bonus-icon" aria-hidden="true"></span>
+                        <span id="bonusText"></span>
+                    </span>
+                </div>
+                <h1 class="product-title" id="productTitle"></h1>
+                <div class="product-price-row">
+                    <span class="product-price-old" id="priceOld"></span>
+                    <span class="product-price-new" id="priceNew"></span>
+                    <span class="product-price-regular" id="priceRegular"></span>
+                </div>
+            </div>
+
+            <div class="product-options" id="optionsWrap"></div>
+
+            <div class="product-actions-row">
+                <div class="product-qty" role="group" aria-label="Кількість">
+                    <button class="product-qty-btn" id="qtyMinus" aria-label="Зменшити кількість"><span class="qty-icon qty-minus-icon" aria-hidden="true"></span></button>
+                    <span class="product-qty-val" id="qtyVal" aria-live="polite">1</span>
+                    <button class="product-qty-btn" id="qtyPlus" aria-label="Збільшити кількість"><span class="qty-icon qty-plus-icon" aria-hidden="true"></span></button>
+                </div>
+                <button class="product-add-btn" id="addToCartBtn" onclick="addCurrentToCart()">
+                    <span class="product-cart-icon-lg" aria-hidden="true"></span>
+                    Додати до кошика
+                </button>
+            </div>
+
+            <div class="product-delivery-info">
+                <div class="product-delivery-row">
+                    <img src="icons/icon-delivery.svg" class="product-delivery-icon" width="32" height="32" aria-hidden="true" alt="">
+                    <span class="product-delivery-text">Доставка: <strong>1–2 дні по Україні</strong></span>
+                </div>
+                <div class="product-delivery-row">
+                    <img src="icons/icon-guarantee.svg" class="product-delivery-icon" width="32" height="32" aria-hidden="true" alt="">
+                    <span class="product-delivery-text">Гарантія якості</span>
+                </div>
+                <div class="product-delivery-row">
+                    <img src="icons/icon-consultation.svg" class="product-delivery-icon" width="32" height="32" aria-hidden="true" alt="">
+                    <span class="product-delivery-text">Консультація: +38 (777) 77-77</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="product-tabs-section">
+        <div class="product-tabs-nav">
+            <div class="product-tabs-list" role="tablist">
+                <button class="product-tab-btn is-active" role="tab" aria-selected="true"  data-tab="desc"     onclick="switchTab(this)">Опис</button>
+                <button class="product-tab-btn"           role="tab" aria-selected="false" data-tab="chars"    onclick="switchTab(this)">Характеристики</button>
+                <button class="product-tab-btn"           role="tab" aria-selected="false" data-tab="delivery" onclick="switchTab(this)">Доставка і оплата</button>
+            </div>
+            <div class="product-tabs-underline">
+                <div class="product-tabs-indicator" id="tabIndicator"></div>
+            </div>
+        </div>
+        <div class="product-tab-content is-active" id="tab-desc" role="tabpanel">
+            <p class="product-tab-text" id="tabDesc"></p>
+        </div>
+        <div class="product-tab-content" id="tab-chars" role="tabpanel">
+            <div class="product-chars" id="tabChars"></div>
+        </div>
+        <div class="product-tab-content" id="tab-delivery" role="tabpanel">
+            <p class="product-tab-text">Доставка по всій Україні — 1–2 робочі дні. Безкоштовна доставка при замовленні від 3 000 ₴. Самовивіз доступний у м. Київ, вул. Прикладна 12. Оплата: готівка, картка, оплата при доставці, банківський переказ. Юридичним особам надаємо всі необхідні документи.</p>
+        </div>
+    </section>
+
+    <section class="product-related">
+        <h2 class="product-related-title">Схожі товари</h2>
+        <div class="products-grid" id="relatedGrid"></div>
+    </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer"><img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img"></div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="#">Готові пакети</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ══ MOBILE NAV ══ -->
+<div class="hp-mob-nav" id="mobNav" aria-modal="true" role="dialog" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link" data-mob-page="home">Головна</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="order">
+                    Порядок дій
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="#" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="#" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="services">
+                    Послуги
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link" data-mob-page="products">Товари</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="memory">
+                    Вшанування Пам'яті
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="index.html" class="hp-mob-acc-link">Сторінка пам'яті</a>
+                    <a href="#" class="hp-mob-acc-link">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="support">
+                    Психологічна підтримка
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Як підтримати близьких</a>
+                    <a href="#" class="hp-mob-acc-link">Короткі поради</a>
+                    <a href="#" class="hp-mob-acc-link">Професійні консультації</a>
+                </div>
+            </div>
+            <a href="#" class="hp-mob-nav-link" data-mob-page="about">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ══ PRODUCT DATA ══ */
+var PRODUCTS = {
+  'coffin-pine': {
+    name: 'Труна соснова', cat: 'coffins', catLabel: 'Труни',
+    price: 1490, bonus: 25,
+    img: 'img/products/product-coffin.png',
+    options: [
+      { label:'Розмір', items:['Стандартний','Середній','Великий','Спецрозмір'] },
+      { label:'Матеріал оббивки', items:['Оксамит','Атлас','Без оббивки'] }
+    ],
+    desc: 'Труна соснова — класичний та доступний вибір для гідного прощання. Виготовлена з добре висушеної деревини сосни, яка відрізняється легкістю та природньою красою текстури. М\'яка внутрішня оббивка з оксамиту забезпечує відчуття спокою та гідності.',
+    chars: [['Матеріал','Масив сосни'],['Оббивка','Оксамит'],['Розміри (стандарт)','200 × 60 × 40 см'],['Вага','28 кг'],['Колір','Натуральний'],['Релігійна символіка','Православна, без символіки'],['Країна виробництва','Україна']]
+  },
+  'coffin-oak': {
+    name: 'Дубова труна', cat: 'coffins', catLabel: 'Труни',
+    price: 1500, oldPrice: 1800, discount: '-20%', bonus: 30,
+    img: 'img/products/product-coffin-oak.png',
+    thumbs: ['img/products/product-coffin-oak.png','img/products/product-coffin.png'],
+    options: [
+      { label:'Розмір', items:['Стандартний','Середній','Великий','Спецрозмір'] },
+      { label:'Матеріал оббивки', items:['Оксамит','Атлас','Без оббивки'] }
+    ],
+    desc: 'Дубова труна — виготовлена з масиву дуба преміальної якості. Деревина проходить природне сушіння, що забезпечує міцність і довговічність. Внутрішня оббивка з натурального оксамиту надає вигляду гідності та спокою. Доступна в кількох розмірах та варіантах оббивки.',
+    chars: [['Матеріал','Масив дуба'],['Оббивка','Натуральний оксамит'],['Розміри (стандарт)','200 × 60 × 45 см'],['Вага','42 кг'],['Колір','Темний горіх'],['Релігійна символіка','Православна, католицька, без символіки'],['Країна виробництва','Україна']]
+  },
+  'coffin-sarcophagus': {
+    name: 'Саркофаг оббитий', cat: 'coffins', catLabel: 'Труни',
+    price: 3800,
+    img: 'img/products/product-sarcophagus.png',
+    options: [
+      { label:'Розмір', items:['Стандартний','Великий','Спецрозмір'] },
+      { label:'Оббивка', items:['Оксамит','Парча','Атлас'] }
+    ],
+    desc: 'Саркофаг оббитий — вибір преміального класу для урочистого прощання. Виготовлений з МДФ з оббивкою тканиною зовні та всередині. Масивна конструкція з декоративними різьбленими елементами по периметру. Підходить для православних, католицьких обрядів.',
+    chars: [['Матеріал','МДФ з тканинним покриттям'],['Оббивка','Оксамит (зовні та всередині)'],['Розміри','210 × 70 × 55 см'],['Вага','65 кг'],['Колір','Темний горіх'],['Оздоблення','Різьблені декоративні елементи'],['Країна виробництва','Україна']]
+  },
+  'coffin-walnut': {
+    name: 'Труна горіхова', cat: 'coffins', catLabel: 'Труни',
+    price: 2200,
+    img: 'img/products/product-coffin-walnut.png',
+    options: [
+      { label:'Розмір', items:['Стандартний','Середній','Великий','Спецрозмір'] },
+      { label:'Матеріал оббивки', items:['Атлас','Оксамит','Без оббивки'] }
+    ],
+    desc: 'Труна горіхова — виготовлена з масиву горіха, твердої породи з благородним малюнком деревини. Природній темно-коричневий відтінок та унікальна текстура кожного виробу підкреслюють особливість прощання. Внутрішня оббивка з атласу.',
+    chars: [['Матеріал','Масив горіха'],['Оббивка','Атлас'],['Розміри (стандарт)','200 × 65 × 45 см'],['Вага','48 кг'],['Колір','Темний горіх'],['Релігійна символіка','Православна, католицька, без символіки'],['Країна виробництва','Україна']]
+  },
+  'cross-metal': {
+    name: 'Хрест металевий кований', cat: 'crosses', catLabel: 'Хрести та таблички',
+    price: 1400,
+    img: 'img/products/product-cross-twisted-5cbf23.png',
+    options: [
+      { label:'Висота', items:['До 1 м','1–1,5 м','Понад 1,5 м'] },
+      { label:'Покриття', items:['Матове чорне','З позолотою','Срібне'] }
+    ],
+    desc: 'Хрест кований з чорного металу — міцний і довговічний пам\'ятний знак. Виготовлений методом художнього кування з антикорозійним покриттям. Класична православна форма з ажурними кованими завитками. Стійкий до погодних умов.',
+    chars: [['Матеріал','Метал (ковка)'],['Покриття','Антикорозійне, чорне'],['Висота','до 1,5 м'],['Ширина','45 см'],['Вага','12 кг'],['Установка','В ґрунт або на постамент'],['Країна виробництва','Україна']]
+  },
+  'cross-wood-black': {
+    name: 'Хрест дерев\'яний чорний', cat: 'crosses', catLabel: 'Хрести та таблички',
+    price: 890, bonus: 30,
+    img: 'img/products/product-cross-black-4ce638.png',
+    options: [
+      { label:'Висота', items:['До 1 м','1–1,5 м','Понад 1,5 м'] },
+      { label:'Матеріал', items:['Береза','Сосна','Дуб'] }
+    ],
+    desc: 'Хрест дерев\'яний з чорним покриттям — традиційний православний символ. Виготовлений з берези та покритий чорною стійкою емаллю. Лаконічний та строгий вигляд підходить для будь-якого місця поховання.',
+    chars: [['Матеріал','Береза'],['Покриття','Чорна емаль'],['Висота','1 м'],['Ширина','35 см'],['Вага','4 кг'],['Установка','В ґрунт'],['Країна виробництва','Україна']]
+  },
+  'cross-wood-grey': {
+    name: 'Хрест дерев\'яний сірий', cat: 'crosses', catLabel: 'Хрести та таблички',
+    price: 1500, bonus: 30,
+    img: 'img/products/product-cross-grey-6a56a8.png',
+    options: [
+      { label:'Висота', items:['До 1 м','1–1,5 м','Понад 1,5 м'] },
+      { label:'Матеріал', items:['Береза','Сосна','Дуб'] }
+    ],
+    desc: 'Хрест дерев\'яний у сірому відтінку — сучасна інтерпретація традиційного символу. Натуральна деревина з м\'яким сірим покриттям підкреслює строгість та спокій. Виготовлений з берези, покритий водостійкою фарбою.',
+    chars: [['Матеріал','Береза'],['Покриття','Сіра емаль'],['Висота','1,2 м'],['Ширина','40 см'],['Вага','5 кг'],['Установка','В ґрунт'],['Країна виробництва','Україна']]
+  },
+  'cross-carved': {
+    name: 'Хрест дерев\'яний різьблений', cat: 'crosses', catLabel: 'Хрести та таблички',
+    price: 960, oldPrice: 1200, discount: '-20%',
+    img: 'img/products/product-cross-carved.png',
+    options: [
+      { label:'Висота', items:['До 1 м','1–1,5 м','Понад 1,5 м'] },
+      { label:'Матеріал', items:['Дуб','Горіх','Береза'] }
+    ],
+    desc: 'Хрест різьблений — унікальний виріб ручної роботи. Кожен хрест виготовляється майстром-різьбярем, орнамент вирізається вручну. Підходить для православних та католицьких традицій. Покриття лаком забезпечує довговічність.',
+    chars: [['Матеріал','Дуб'],['Оздоблення','Ручне різьблення'],['Покриття','Лак'],['Висота','1,1 м'],['Ширина','38 см'],['Вага','6 кг'],['Країна виробництва','Україна']]
+  },
+  'wreath-eternal': {
+    name: '"Вічний спокій"', cat: 'floristry', catLabel: 'Флористика',
+    price: 1200,
+    img: 'img/products/product-wreath-eternal.png',
+    options: [
+      { label:'Квіти', items:['Живі','Штучні','Змішані'] },
+      { label:'Розмір', items:['Малий (50 см)','Стандартний (65 см)','Великий (80 см)'] }
+    ],
+    desc: 'Вінок "Вічний спокій" — символ пам\'яті та вічного відпочинку. Складений з живих білих і кремових квітів: хризантем, лілій і гербер. Класична кругла форма, пишне наповнення. Підходить для покладання на труну та надгробок.',
+    chars: [['Тип','Вінок траурний'],['Діаметр','65 см'],['Квіти','Хризантема, лілія, гербера'],['Колір','Біло-кремовий'],['Термін свіжості','5–7 днів'],['Стрічка','В комплекті (з написом)'],['Країна виробництва','Україна']]
+  },
+  'wreath-meadow': {
+    name: '"Луговий вінок"', cat: 'floristry', catLabel: 'Флористика',
+    price: 980, bonus: 30,
+    img: 'img/products/product-wreath-meadow.png',
+    options: [
+      { label:'Квіти', items:['Живі','Штучні','Змішані'] },
+      { label:'Розмір', items:['Малий (50 см)','Стандартний (65 см)','Великий (80 см)'] }
+    ],
+    desc: 'Вінок "Луговий" — ніжна та природня композиція з польових квітів і трав. Поєднання живих ромашок, синьоголовників та злакових стебел нагадує про тепло і красу рідного краю.',
+    chars: [['Тип','Вінок траурний'],['Діаметр','60 см'],['Квіти','Ромашка, синьоголовник, злаки'],['Колір','Жовто-білий мікс'],['Термін свіжості','4–6 днів'],['Стрічка','В комплекті'],['Країна виробництва','Україна']]
+  },
+  'wreath-memory': {
+    name: '"Пам\'ять"', cat: 'floristry', catLabel: 'Флористика',
+    price: 1400,
+    img: 'img/products/product-wreath-memory.png',
+    options: [
+      { label:'Квіти', items:['Живі','Штучні','Змішані'] },
+      { label:'Розмір', items:['Малий (50 см)','Стандартний (65 см)','Великий (80 см)'] }
+    ],
+    desc: 'Вінок "Пам\'ять" — урочиста та велична композиція. Яскраві червоні троянди у поєднанні з білими хризантемами та зеленню символізують вічну любов та незгасну пам\'ять про близьку людину.',
+    chars: [['Тип','Вінок траурний'],['Діаметр','70 см'],['Квіти','Троянда, хризантема'],['Колір','Червоно-білий'],['Термін свіжості','6–8 днів'],['Стрічка','В комплекті (з написом)'],['Країна виробництва','Україна']]
+  },
+  'wreath-sunny': {
+    name: '"Сонячна пам\'ять"', cat: 'floristry', catLabel: 'Флористика',
+    price: 1500,
+    img: 'img/products/product-wreath-sunny.png',
+    options: [
+      { label:'Квіти', items:['Живі','Штучні','Змішані'] },
+      { label:'Розмір', items:['Малий (50 см)','Стандартний (65 см)','Великий (80 см)'] }
+    ],
+    desc: 'Вінок "Сонячна пам\'ять" — тепла та світла композиція. Жовті та помаранчеві квіти символізують світло, тепло та добру пам\'ять. Поєднання соняшників, хризантем і гербер створює радісний та піднесений настрій.',
+    chars: [['Тип','Вінок траурний'],['Діаметр','70 см'],['Квіти','Соняшник, хризантема, гербера'],['Колір','Жовто-помаранчевий'],['Термін свіжості','5–7 днів'],['Стрічка','В комплекті'],['Країна виробництва','Україна']]
+  },
+  'lamp-gold': {
+    name: 'Лампадка "Бронза"', cat: 'accessories', catLabel: 'Аксесуари',
+    price: 320,
+    img: 'img/products/product-lampada-gold.png',
+    options: [
+      { label:'Паливо', items:['Для масла','Для гасу','Для свічки'] },
+      { label:'Розмір', items:['Маленька','Стандартна','Велика'] }
+    ],
+    desc: 'Лампадка "Бронза" — класичний виріб у теплому бронзовому кольорі. Виготовлена з якісного металу зі стійким декоративним покриттям. Підходить для встановлення в церкві, на кладовищі та для домашнього вшанування.',
+    chars: [['Матеріал','Метал'],['Покриття','Бронза'],['Висота','12 см'],['Діаметр','8 см'],['Тип','Для масла / гасу'],['Вага','180 г'],['Країна виробництва','Україна']]
+  },
+  'lamp-dark': {
+    name: 'Лампадка "Нічна"', cat: 'accessories', catLabel: 'Аксесуари',
+    price: 280,
+    img: 'img/products/product-lampada-dark-gold.png',
+    options: [
+      { label:'Паливо', items:['Для масла','Для гасу','Для свічки'] },
+      { label:'Розмір', items:['Маленька','Стандартна','Велика'] }
+    ],
+    desc: 'Лампадка "Нічна" — витончений виріб у темному золотистому кольорі. Матове покриття надає стриманого та благородного вигляду. Ідеально підходить для встановлення на могилі та нічного вшанування.',
+    chars: [['Матеріал','Метал'],['Покриття','Темне золото (матове)'],['Висота','11 см'],['Діаметр','7,5 см'],['Тип','Для масла / гасу'],['Вага','160 г'],['Країна виробництва','Україна']]
+  },
+  'lamp-silver': {
+    name: 'Лампадка "Срібло"', cat: 'accessories', catLabel: 'Аксесуари',
+    price: 350, bonus: 30,
+    img: 'img/products/product-lampada-white.png',
+    options: [
+      { label:'Паливо', items:['Для масла','Для гасу','Для свічки'] },
+      { label:'Розмір', items:['Маленька','Стандартна','Велика'] }
+    ],
+    desc: 'Лампадка "Срібло" — елегантна лампадка зі сріблястим покриттям та тонким карбованим узором. Підходить для православних і католицьких обрядів. Матеріал і покриття забезпечують тривалу експлуатацію.',
+    chars: [['Матеріал','Метал'],['Покриття','Срібло'],['Оздоблення','Карбований узор'],['Висота','13 см'],['Діаметр','8 см'],['Тип','Для масла / гасу'],['Країна виробництва','Україна']]
+  },
+  'lantern': {
+    name: 'Ліхтар підвісний', cat: 'accessories', catLabel: 'Аксесуари',
+    price: 540,
+    img: 'img/products/product-lantern.png',
+    options: [
+      { label:'Колір каркасу', items:['Чорний','Бронзовий','Срібний'] },
+      { label:'Розмір', items:['Малий (22 см)','Стандартний (28 см)','Великий (35 см)'] }
+    ],
+    desc: 'Ліхтар підвісний — функціональне і декоративне доповнення для могили. Виготовлений зі скла та металевого каркасу, стійкий до вітру та опадів. Захищене полум\'я свічки не гасне навіть у вітряну погоду.',
+    chars: [['Матеріал','Метал + скло'],['Висота','28 см'],['Тип','Підвісний'],['Захист','Від вітру та опадів'],['Колір','Чорний'],['Кріплення','Гачок для підвішування'],['Країна виробництва','Україна']]
+  }
+};
+
+/* ── helpers ── */
+function fmt(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' ₴'; }
+
+function cardHTML(id, p) {
+    var badges = '';
+    if (p.bonus)    badges += '<span class="product-badge product-badge--bonus"><span class="badge-bonus-icon"></span>+' + p.bonus + ' бонусів</span>';
+    if (p.discount) badges += '<span class="product-badge product-badge--discount">' + p.discount + '</span>';
+    var priceHTML = p.oldPrice
+        ? '<p class="product-price--old">' + fmt(p.oldPrice) + '</p><p class="product-price--sale">' + fmt(p.price) + '</p>'
+        : '<p class="product-price">' + fmt(p.price) + '</p>';
+    return '<a href="product.html?id=' + id + '" class="product-card">'
+        + '<div class="product-img-wrap"><img src="' + p.img + '" alt="' + p.name + '" class="product-img" loading="lazy">'
+        + (badges ? '<div class="product-badges">' + badges + '</div>' : '')
+        + '</div>'
+        + '<div class="product-info-card"><div class="product-top-info">'
+        + '<h3 class="product-name">' + p.name + '</h3>'
+        + '<span class="product-status">В наявності</span>'
+        + '</div><div class="product-bottom-info"><div class="product-price-block">' + priceHTML + '</div>'
+        + '<button class="product-cart-btn" aria-label="Додати в кошик" onclick="event.stopPropagation();event.preventDefault();"><span class="product-cart-icon"></span></button>'
+        + '</div></div></a>';
+}
+
+/* ── load product ── */
+function loadProduct(id) {
+    var p = PRODUCTS[id] || PRODUCTS['coffin-oak'];
+
+    document.getElementById('pageTitle').textContent = p.name + ' — Вирій';
+    document.getElementById('breadCat').textContent  = p.catLabel;
+    document.getElementById('breadName').textContent = p.name;
+
+    /* main image */
+    var mainImg = document.getElementById('mainImg');
+    mainImg.src = p.img; mainImg.alt = p.name;
+
+    /* discount badge */
+    var badge = document.getElementById('discountBadge');
+    if (p.discount) { badge.textContent = p.discount; badge.style.display = 'inline-block'; }
+    else { badge.style.display = 'none'; }
+
+    /* thumbs */
+    var thumbs = p.thumbs || [p.img];
+    var tw = document.getElementById('thumbsWrap'); tw.innerHTML = '';
+    thumbs.forEach(function(src, i) {
+        var btn = document.createElement('button');
+        btn.className = 'product-thumb' + (i === 0 ? ' is-active' : '');
+        btn.dataset.src = src;
+        btn.setAttribute('aria-label', 'Фото ' + (i + 1));
+        btn.innerHTML = '<img src="' + src + '" alt="' + p.name + ' — фото ' + (i + 1) + '">';
+        btn.addEventListener('click', function() {
+            mainImg.src = this.dataset.src;
+            tw.querySelectorAll('.product-thumb').forEach(function(t) { t.classList.remove('is-active'); });
+            this.classList.add('is-active');
+        });
+        tw.appendChild(btn);
+    });
+
+    /* availability */
+    document.getElementById('availability').textContent = 'В наявності';
+
+    /* bonus */
+    var bb = document.getElementById('bonusBadge');
+    if (p.bonus) { document.getElementById('bonusText').textContent = '+' + p.bonus + ' бонусів'; bb.style.display = 'inline-flex'; }
+    else { bb.style.display = 'none'; }
+
+    /* title */
+    document.getElementById('productTitle').textContent = p.name;
+
+    /* prices */
+    var po = document.getElementById('priceOld');
+    var pn = document.getElementById('priceNew');
+    var pr = document.getElementById('priceRegular');
+    po.style.display = 'none'; pn.style.display = 'none'; pr.style.display = 'none';
+    if (p.oldPrice) {
+        po.textContent = fmt(p.oldPrice); po.style.display = 'inline';
+        pn.textContent = fmt(p.price);    pn.style.display = 'inline';
+    } else {
+        pr.textContent = fmt(p.price); pr.style.display = 'inline';
+    }
+
+    /* options */
+    var ow = document.getElementById('optionsWrap'); ow.innerHTML = '';
+    p.options.forEach(function(grp, gi) {
+        if (gi > 0) { var hr = document.createElement('hr'); hr.className = 'product-option-divider'; ow.appendChild(hr); }
+        var g = document.createElement('div'); g.className = 'product-option-group';
+        var lbl = document.createElement('span'); lbl.className = 'product-option-label'; lbl.textContent = grp.label;
+        var pills = document.createElement('div'); pills.className = 'product-option-pills'; pills.setAttribute('role','group'); pills.setAttribute('aria-label', grp.label);
+        grp.items.forEach(function(item, ii) {
+            var btn = document.createElement('button');
+            btn.className = 'product-pill' + (ii === 0 ? ' is-active' : '');
+            btn.textContent = item;
+            btn.addEventListener('click', function() {
+                pills.querySelectorAll('.product-pill').forEach(function(b) { b.classList.remove('is-active'); });
+                this.classList.add('is-active');
+            });
+            pills.appendChild(btn);
+        });
+        g.appendChild(lbl); g.appendChild(pills); ow.appendChild(g);
+    });
+
+    /* tabs */
+    document.getElementById('tabDesc').textContent = p.desc;
+    var tc = document.getElementById('tabChars'); tc.innerHTML = '';
+    p.chars.forEach(function(row) {
+        var div = document.createElement('div'); div.className = 'product-char-row';
+        div.innerHTML = '<span class="product-char-name">' + row[0] + '</span><span class="product-char-val">' + row[1] + '</span>';
+        tc.appendChild(div);
+    });
+
+    /* related */
+    var rg = document.getElementById('relatedGrid'); rg.innerHTML = '';
+    var related = Object.keys(PRODUCTS).filter(function(k) { return k !== id && PRODUCTS[k].cat === p.cat; }).slice(0, 4);
+    if (related.length < 4) {
+        var others = Object.keys(PRODUCTS).filter(function(k) { return k !== id && PRODUCTS[k].cat !== p.cat; });
+        related = related.concat(others.slice(0, 4 - related.length));
+    }
+    related.forEach(function(k) { rg.innerHTML += cardHTML(k, PRODUCTS[k]); });
+}
+
+/* ── init ── */
+var pid = (new URLSearchParams(window.location.search)).get('id') || 'coffin-oak';
+loadProduct(pid);
+
+/* ── Mobile menu ── */
+(function() {
+    var btn = document.getElementById('mobMenuBtn');
+    var nav = document.getElementById('mobNav');
+    var cls = document.getElementById('mobNavClose');
+    if (!btn) return;
+    function openNav()  { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
+    function closeNav() { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
+    btn.addEventListener('click', openNav);
+    cls.addEventListener('click', closeNav);
+    nav.addEventListener('click', function(e) { if (e.target === nav) closeNav(); });
+})();
+
+/* ── Mobile nav accordion ── */
+document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(trigger) {
+    trigger.addEventListener('click', function() {
+        var acc = this.closest('.hp-mob-acc');
+        var isOpen = acc.classList.contains('is-open');
+        document.querySelectorAll('.hp-mob-acc').forEach(function(a) {
+            a.classList.remove('is-open');
+            a.querySelector('.hp-mob-acc-trigger').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+            acc.classList.add('is-open');
+            this.setAttribute('aria-expanded', 'true');
+        }
+    });
+});
+
+/* ── Mobile nav active page highlight ── */
+(function() {
+    var filename = window.location.pathname.split('/').pop() || 'home.html';
+    var pageMap = {
+        'home.html':     'home',
+        'products.html': 'products',
+        'product.html':  'products'
+    };
+    var servicePages = ['services-legal','services-cemetery','services-funeral','services-cremation','services-exhumation','services-embalmment','services-repatriation','services-storage','services-transportation','services-dinners'];
+
+    var activePage = pageMap[filename];
+    if (!activePage) {
+        for (var i = 0; i < servicePages.length; i++) {
+            if (filename.indexOf(servicePages[i]) !== -1) { activePage = 'services'; break; }
+        }
+    }
+    if (!activePage) return;
+
+    document.querySelectorAll('[data-mob-page="' + activePage + '"]').forEach(function(el) {
+        el.classList.add('is-active');
+    });
+})();
+
+/* ── qty ── */
+(function() {
+    var val = 1, display = document.getElementById('qtyVal');
+    document.getElementById('qtyMinus').addEventListener('click', function() { if (val > 1) { val--; display.textContent = val; } });
+    document.getElementById('qtyPlus').addEventListener('click',  function() { val++; display.textContent = val; });
+})();
+
+/* ── tabs ── */
+(function() {
+    var indicator = document.getElementById('tabIndicator');
+    var tabList   = document.querySelector('.product-tabs-list');
+
+    function moveIndicator(btn) {
+        var listLeft = tabList.getBoundingClientRect().left;
+        var btnRect  = btn.getBoundingClientRect();
+        indicator.style.left  = (btnRect.left - listLeft) + 'px';
+        indicator.style.width = btnRect.width + 'px';
+    }
+
+    requestAnimationFrame(function() {
+        var active = document.querySelector('.product-tab-btn.is-active');
+        if (active) moveIndicator(active);
+    });
+    window.addEventListener('resize', function() {
+        var cur = document.querySelector('.product-tab-btn.is-active');
+        if (cur) moveIndicator(cur);
+    });
+    window._moveTabIndicator = moveIndicator;
+})();
+
+function switchTab(btn) {
+    document.querySelectorAll('.product-tab-btn').forEach(function(b) { b.classList.remove('is-active'); b.setAttribute('aria-selected','false'); });
+    document.querySelectorAll('.product-tab-content').forEach(function(c) { c.classList.remove('is-active'); });
+    btn.classList.add('is-active'); btn.setAttribute('aria-selected','true');
+    var c = document.getElementById('tab-' + btn.dataset.tab);
+    if (c) c.classList.add('is-active');
+    if (window._moveTabIndicator) window._moveTabIndicator(btn);
+}
+</script>
+<script src="cart-storage.js"></script>
+<script>
+var _currentProduct = null;
+var _currentQty = 1;
+
+/* Patch loadProduct to capture current product data */
+(function() {
+    var orig = window.loadProduct;
+    if (!orig) return;
+    window.loadProduct = function(id) {
+        orig(id);
+        var p = window.PRODUCTS ? (PRODUCTS[id] || PRODUCTS['coffin-oak']) : null;
+        if (p) _currentProduct = { id: id, name: p.name, price: p.salePrice || p.price, img: p.img, type: 'product', attrs: '' };
+        _currentQty = 1;
+    };
+})();
+
+/* Listen to qty changes from the existing qty buttons */
+document.addEventListener('DOMContentLoaded', function() {
+    var minus = document.getElementById('qtyMinus');
+    var plus  = document.getElementById('qtyPlus');
+    var val   = document.getElementById('qtyVal');
+    if (minus) minus.addEventListener('click', function() { _currentQty = Math.max(1, parseInt(val ? val.textContent : 1) || 1); });
+    if (plus)  plus.addEventListener('click',  function() { _currentQty = parseInt(val ? val.textContent : 1) || 1; });
+});
+
+function addCurrentToCart() {
+    if (!window.CartStorage) { window.location.href = 'cart.html'; return; }
+    var btn = document.getElementById('addToCartBtn');
+    var p = _currentProduct;
+    if (!p) {
+        /* Fallback: read from DOM */
+        var nameEl  = document.getElementById('breadName');
+        var priceEl = document.getElementById('priceRegular') || document.getElementById('priceNew');
+        var imgEl   = document.getElementById('mainImg');
+        var urlId   = new URLSearchParams(window.location.search).get('id') || 'product';
+        p = {
+            id: urlId,
+            type: 'product',
+            name: nameEl ? nameEl.textContent.trim() : urlId,
+            price: priceEl ? parseFloat(priceEl.textContent.replace(/[^\d]/g,'')) || 0 : 0,
+            img: imgEl ? imgEl.getAttribute('src') : '',
+            attrs: ''
+        };
+    }
+    var item = Object.assign({}, p, { qty: _currentQty });
+    CartStorage.add(item);
+    if (btn) {
+        btn.style.background = '#3C9264';
+        setTimeout(function() { btn.style.background = ''; }, 1500);
+    }
+}
+</script>
+</body>
+</html>

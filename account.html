@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Акаунт — Вирій</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ═══ TOKENS: 25:#F6FBFF 50:#E2F3FF 100:#CEEBFF 600:#45799B 700:#2E5B79 800:#1B3F57 900:#0F2E43 ═══ */
+
+        html { scroll-behavior:smooth; overflow-x:clip; }
+        body { background:linear-gradient(180deg, #A6DBFF 0%, #F7FBFF 48%, #D7E6F4 100%);
+               background-repeat:no-repeat; background-size:100% 100%;
+               overflow-x:clip; max-width:100vw; min-height:100vh; }
+        *, *::before, *::after { box-sizing:border-box; min-width:0; }
+        img { max-width:100%; }
+
+        .header-inner { max-width:1303px; width:calc(100% - 80px); }
+        .footer-top-container, .footer-bottom-container { max-width:1280px; width:calc(100% - 80px); }
+
+        /* ─── FLOATING HELP ─── */
+        @keyframes hp-help-ring {
+            0%   { box-shadow:0 0 0 0   rgba(27,63,87,.38), 0 8px 24px rgba(27,63,87,.22); }
+            60%  { box-shadow:0 0 0 10px rgba(27,63,87,0),  0 8px 24px rgba(27,63,87,.22); }
+            100% { box-shadow:0 0 0 0   rgba(27,63,87,0),   0 8px 24px rgba(27,63,87,.22); }
+        }
+        .hp-help-btn {
+            position:fixed; right:25px; bottom:40px; z-index:9999;
+            display:inline-flex; align-items:center; gap:12px;
+            background:#1B3F57; border-radius:40px; padding:11px 18px; width:236px;
+            cursor:pointer; text-decoration:none; border:none;
+            animation:hp-help-ring 2.8s ease-out infinite; transition:background .2s;
+        }
+        .hp-help-btn:hover { background:#2E5B79; animation-play-state:paused; box-shadow:0 12px 28px rgba(27,63,87,.35); }
+        .hp-help-btn span { font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; color:#fff; line-height:1; flex:1; }
+        .hp-help-icon { width:34px; height:34px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-help-icon::after {
+            content:''; width:17px; height:17px; background-color:#1B3F57;
+            mask-image:url('icons/phone-call.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain;
+            -webkit-mask-image:url('icons/phone-call.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain;
+        }
+
+        /* ─── MOBILE HEADER ─── */
+        .hp-mob-menu-btn { display:none; width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-mob-menu-icon {
+            width:24px; height:24px; background-color:#1B3F57;
+            mask-image:url('icons/align-justify.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain;
+            -webkit-mask-image:url('icons/align-justify.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain;
+        }
+        .hp-mob-nav { display:none; position:fixed; inset:0; z-index:9999; background:#fff; flex-direction:column; transform:translateX(-100%); transition:transform .3s ease; overflow:hidden; }
+        .hp-mob-nav.is-open { transform:translateX(0); }
+        .hp-mob-nav-head { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; flex-shrink:0; border-bottom:1px solid rgba(69,121,155,.12); }
+        .hp-mob-nav-close { width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:background .15s; }
+        .hp-mob-nav-close:hover { background:#F6FBFF; }
+        .hp-mob-nav-close-icon { width:24px; height:24px; background-color:#1B3F57; mask-image:url('icons/close.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/close.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-search-wrap { padding:12px 16px; border-bottom:1px solid rgba(69,121,155,.08); flex-shrink:0; }
+        .hp-mob-nav-search { display:flex; align-items:center; gap:8px; border:1px solid #45799B; border-radius:24px; padding:9px 14px; background:#fff; }
+        .hp-mob-nav-search-input { flex:1; border:none; outline:none; font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57; background:transparent; }
+        .hp-mob-nav-search-input::placeholder { color:#45799B; }
+        .hp-mob-nav-search-icon { width:18px; height:18px; flex-shrink:0; background-color:#45799B; mask-image:url('icons/search.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/search.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-scroll { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+        .hp-mob-nav-items { display:flex; flex-direction:column; }
+        .hp-mob-nav-link { display:block; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.08); transition:color .15s; }
+        .hp-mob-nav-link:hover { color:#45799B; }
+        .hp-mob-nav-link.is-active { color:#45799B; }
+        .hp-mob-acc { border-bottom:1px solid rgba(69,121,155,.08); }
+        .hp-mob-acc-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; background:none; border:none; cursor:pointer; text-align:left; transition:color .15s; }
+        .hp-mob-acc-trigger:hover { color:#45799B; }
+        .hp-mob-acc-chevron { width:20px; height:20px; flex-shrink:0; background-color:currentColor; mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; transition:transform .22s; }
+        .hp-mob-acc.is-open .hp-mob-acc-chevron { transform:rotate(180deg); }
+        .hp-mob-acc-body { display:none; background:#FAFCFF; }
+        .hp-mob-acc.is-open .hp-mob-acc-body { display:block; }
+        .hp-mob-acc-link { display:block; padding:12px 16px 12px 28px; font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#2E5B79; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.06); transition:color .15s; }
+        .hp-mob-acc-link:last-child { border-bottom:none; }
+        .hp-mob-acc-link:hover { color:#1B3F57; }
+        .hp-mob-nav-sep { border:none; height:1px; background:rgba(69,121,155,.1); margin:0; }
+        .hp-mob-nav-footer-section { padding:20px 16px 32px; display:flex; flex-direction:column; gap:0; }
+        .hp-mob-nav-footer-title { font-family:'Raleway',sans-serif; font-size:12px; font-weight:700; color:#6298BD; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+        .hp-mob-nav-footer-link { display:block; padding:8px 0; font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#45799B; text-decoration:none; transition:color .15s; border-bottom:1px solid rgba(69,121,155,.06); }
+        .hp-mob-nav-footer-link:last-child { border-bottom:none; }
+        .hp-mob-nav-footer-link:hover { color:#1B3F57; }
+        .hp-mob-header-icons { display:none; gap:16px; align-items:center; }
+
+        /* ─── ACCOUNT PAGE ─── */
+        .acc-page { width:100%; padding:0 80px 80px; display:flex; flex-direction:column; gap:0; }
+        .acc-title-row { padding-top:32px; padding-bottom:24px; }
+        .acc-title { font-family:'Raleway',sans-serif; font-size:48px; font-weight:600; color:#1B3F57; margin:0; text-transform:none; }
+        .acc-inner { max-width:1017px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:24px; }
+
+        /* ─── CARD ─── */
+        .acc-card { background:#fff; border:1px solid #F1F1F1; border-radius:24px; padding:32px; display:flex; flex-direction:column; gap:20px; }
+        .acc-card-divider { width:100%; height:1px; background:#F1F1F1; border:none; flex-shrink:0; margin:4px 0; }
+
+        /* ─── PROFILE BLOCK ─── */
+        .acc-profile-cover {
+            width:100%; height:128px; border-radius:16px; flex-shrink:0;
+            background:linear-gradient(135deg, #CEEBFF 0%, #E2F3FF 55%, #F6FBFF 100%);
+        }
+        .acc-profile-top { display:flex; align-items:flex-end; gap:16px; margin-top:-44px; }
+
+        /* Avatar group with camera button */
+        .acc-profile-avatar-group { position:relative; flex-shrink:0; }
+        .acc-profile-avatar-wrap {
+            width:88px; height:88px; border-radius:50%; border:3px solid #fff;
+            background:#CEEBFF; overflow:hidden;
+            display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(15,46,67,.12);
+        }
+        .acc-profile-avatar-wrap img { width:100%; height:100%; object-fit:cover; }
+        .acc-profile-avatar-icon {
+            width:38px; height:38px; background-color:#6298BD;
+            -webkit-mask-image:url('icons/user.svg'); mask-image:url('icons/user.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .acc-avatar-btn {
+            position:absolute; bottom:0; right:0;
+            width:28px; height:28px; border-radius:50%; border:2px solid #fff;
+            background:#2E5B79; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            transition:background .15s;
+        }
+        .acc-avatar-btn:hover { background:#1B3F57; }
+        .acc-avatar-btn-icon {
+            width:14px; height:14px; background-color:#fff; flex-shrink:0;
+            -webkit-mask-image:url('icons/camera.svg'); mask-image:url('icons/camera.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+
+        .acc-profile-name-row { flex:1; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-bottom:6px; min-width:0; }
+        .acc-profile-name { font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; color:#1B3F57; margin:0; }
+        .btn-edit-profile {
+            display:inline-flex; align-items:center; height:36px; padding:0 16px; border-radius:62px;
+            background:#CEEBFF; border:none; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#1B3F57;
+            text-decoration:none; transition:background .15s; flex-shrink:0;
+        }
+        .btn-edit-profile:hover { background:#B8DFFF; }
+        .acc-profile-contacts { display:flex; gap:20px; flex-wrap:wrap; }
+        .acc-profile-contact { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:rgba(46,91,121,0.7); }
+        .acc-profile-add-link {
+            display:inline-flex; align-items:center; gap:6px;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#45799B;
+            text-decoration:none; background:none; border:none; cursor:pointer; padding:0;
+            transition:color .15s;
+        }
+        .acc-profile-add-link:hover { color:#2E5B79; }
+        .acc-profile-add-icon {
+            width:16px; height:16px; flex-shrink:0; background-color:#45799B;
+            -webkit-mask-image:url('icons/plus-circle.svg'); mask-image:url('icons/plus-circle.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+
+        /* Address */
+        .acc-address-label { font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; color:#1B3F57; margin:0 0 12px; }
+        .acc-address-rows { display:flex; flex-direction:column; gap:8px; }
+        .acc-address-row { display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+        .acc-address-type { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:rgba(46,91,121,0.7); white-space:nowrap; }
+        .acc-address-val { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#2E5B79; }
+
+        /* ─── BONUS BLOCK ─── */
+        .acc-bonus-main { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+        .acc-bonus-left { display:flex; align-items:center; gap:24px; flex:1; min-width:0; }
+        .acc-bonus-icon {
+            width:64px; height:64px; flex-shrink:0;
+            background-image:url('icons/bonus.svg'); background-repeat:no-repeat; background-position:center; background-size:contain;
+        }
+        .acc-bonus-content { display:flex; flex-direction:column; gap:8px; flex:1; min-width:0; }
+        .acc-bonus-title-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+        .acc-bonus-title { font-family:'Raleway',sans-serif; font-size:22px; font-weight:600; color:#1B3F57; margin:0; }
+        .acc-bonus-badge {
+            display:inline-flex; align-items:center; gap:6px;
+            padding:5px 12px; border-radius:100px;
+            font-family:'Raleway',sans-serif; font-size:11px; font-weight:600; color:#fff;
+            white-space:nowrap;
+        }
+        .acc-bonus-badge::before { content:''; width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.6); flex-shrink:0; }
+        .acc-bonus-badge--yellow { background:#FDB022; }
+        .acc-bonus-badge--green { background:#3C9264; }
+        .acc-bonus-balance-row { display:flex; align-items:center; gap:10px; }
+        .acc-bonus-balance-label { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:rgba(46,91,121,0.7); }
+        .acc-bonus-balance-val { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#1B3F57; }
+        .acc-bonus-link {
+            display:inline-flex; align-items:center; gap:8px;
+            font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#2E5B79;
+            text-decoration:underline; text-underline-offset:3px;
+            background:none; border:none; cursor:pointer; padding:0; flex-shrink:0;
+            transition:color .15s;
+        }
+        .acc-bonus-link:hover { color:#1B3F57; }
+        .acc-bonus-link-icon {
+            width:20px; height:20px; flex-shrink:0; background-color:#2E5B79;
+            -webkit-mask-image:url('icons/alert-circle.svg'); mask-image:url('icons/alert-circle.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+
+        /* Info text (state 0) */
+        .acc-bonus-info-text { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:rgba(46,91,121,0.7); line-height:1.5; margin:0; max-width:640px; }
+
+        /* Progress bar */
+        .acc-bonus-progress-wrap { display:flex; flex-direction:column; gap:10px; }
+        .acc-bonus-bar-track { width:100%; height:8px; background:#F1F1F1; border-radius:8px; overflow:hidden; }
+        .acc-bonus-bar-fill { height:100%; border-radius:8px; transition:width .4s ease; }
+        .acc-bonus-bar-fill--yellow { background:#FDB022; }
+        .acc-bonus-bar-fill--green { background:#3C9264; }
+        .acc-bonus-bar-labels { display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; }
+        .acc-bonus-bar-lbl { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; }
+
+        /* Hint row */
+        .acc-bonus-hint { display:flex; align-items:center; gap:10px; }
+        .acc-bonus-hint-icon {
+            width:20px; height:20px; flex-shrink:0;
+            -webkit-mask-image:url('icons/info.svg'); mask-image:url('icons/info.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .acc-bonus-hint--yellow .acc-bonus-hint-icon { background-color:#FDB022; }
+        .acc-bonus-hint--green .acc-bonus-hint-icon { background-color:#3C9264; }
+        .acc-bonus-hint-text { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; line-height:1.4; }
+        .acc-bonus-hint--yellow .acc-bonus-hint-text { color:#45799B; }
+        .acc-bonus-hint--green .acc-bonus-hint-text { color:#3C9264; }
+
+        /* Green full-pay info block (state 3) */
+        .acc-bonus-full-block {
+            background:#3C9264; border-radius:24px; padding:16px 24px;
+            display:flex; align-items:flex-start; gap:12px;
+        }
+        .acc-bonus-full-block-icon {
+            width:20px; height:20px; flex-shrink:0; background-color:#fff; margin-top:1px;
+            -webkit-mask-image:url('icons/check.svg'); mask-image:url('icons/check.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .acc-bonus-full-block-text { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#fff; line-height:1.5; margin:0; }
+        .acc-bonus-full-block-text strong { font-weight:700; }
+
+        /* Bonus action buttons */
+        .acc-bonus-actions { display:flex; gap:12px; flex-wrap:wrap; }
+        .btn-bonus-primary {
+            display:inline-flex; align-items:center; height:48px; padding:0 24px; border-radius:62px; border:none; cursor:pointer;
+            background:#1B3F57; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#fff;
+            text-decoration:none; transition:background .15s; white-space:nowrap;
+        }
+        .btn-bonus-primary:hover { background:#2E5B79; }
+        .btn-bonus-secondary {
+            display:inline-flex; align-items:center; height:48px; padding:0 24px; border-radius:62px; border:none; cursor:pointer;
+            background:#CEEBFF; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#1B3F57;
+            text-decoration:none; transition:background .15s; white-space:nowrap;
+        }
+        .btn-bonus-secondary:hover { background:#B8DFFF; }
+
+        /* ─── ORDERS BLOCK ─── */
+        .acc-section-header { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+        .acc-section-title { font-family:'Raleway',sans-serif; font-size:22px; font-weight:600; color:#1B3F57; margin:0; }
+        .acc-orders-list { display:flex; flex-direction:column; gap:8px; }
+        .acc-order-row { border:1px solid #F1F1F1; border-radius:12px; overflow:hidden; box-shadow:0 1px 3px rgba(15,46,67,.04); }
+        .acc-order-trigger {
+            width:100%; display:flex; align-items:center; gap:16px; padding:16px 20px;
+            background:#fff; border:none; cursor:pointer; text-align:left; transition:background .15s;
+        }
+        .acc-order-trigger:hover { background:#F6FBFF; }
+        .acc-order-num { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; min-width:90px; flex-shrink:0; }
+        .acc-order-date { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:rgba(46,91,121,0.7); flex:1; min-width:100px; }
+        .acc-order-status { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; flex:2; min-width:160px; }
+        .acc-order-status--green { color:#3C9264; }
+        .acc-order-status--yellow { color:#FDB022; }
+        .acc-order-status--blue { color:#6298BD; }
+        .acc-order-status--red { color:#D64545; }
+        .acc-order-sum { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; white-space:nowrap; }
+        .acc-order-chevron {
+            width:20px; height:20px; flex-shrink:0; background-color:#717680;
+            -webkit-mask-image:url('icons/chevron-down.svg'); mask-image:url('icons/chevron-down.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+            transition:transform .22s;
+        }
+        .acc-order-row.is-open .acc-order-chevron { transform:rotate(180deg); }
+        .acc-order-body { display:none; border-top:1px solid #F1F1F1; background:#FAFCFF; padding:16px 20px 20px; }
+        .acc-order-row.is-open .acc-order-body { display:block; }
+        .acc-order-items { display:flex; flex-direction:column; gap:8px; }
+        .acc-order-item { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:6px 0; }
+        .acc-order-item + .acc-order-item { border-top:1px solid #F1F1F1; }
+        .acc-order-item-name { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#2E5B79; }
+        .acc-order-item-price { font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#1B3F57; white-space:nowrap; }
+
+        /* Empty orders state */
+        .acc-empty { display:flex; flex-direction:column; align-items:center; gap:14px; padding:56px 16px; text-align:center; }
+        .acc-empty-icon {
+            width:80px; height:80px; background:#E2F3FF; border-radius:50%;
+            background-image:url('icons/shopping-cart.svg'); background-repeat:no-repeat; background-position:center; background-size:36px;
+        }
+        .acc-empty-title { font-family:'Raleway',sans-serif; font-size:22px; font-weight:700; color:#1B3F57; margin:0; }
+        .acc-empty-desc { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#45799B; margin:0; max-width:380px; }
+        .acc-empty-btn {
+            display:inline-flex; align-items:center; height:48px; padding:0 28px; border-radius:62px; margin-top:4px;
+            background:#1B3F57; color:#fff; text-decoration:none;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; transition:background .2s;
+        }
+        .acc-empty-btn:hover { background:#2E5B79; }
+
+        /* ─── MEMORIAL BLOCK ─── */
+        .acc-memorial-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+        .btn-create-page {
+            display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 20px;
+            background:#2E5B79; border:none; border-radius:62px; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#fff;
+            text-decoration:none; transition:background .15s;
+        }
+        .btn-create-page:hover { background:#1B3F57; }
+        .btn-create-page-icon {
+            width:16px; height:16px; background-color:#fff; flex-shrink:0;
+            -webkit-mask-image:url('icons/plus.svg'); mask-image:url('icons/plus.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .acc-memorial-section { display:flex; flex-direction:column; gap:12px; }
+        .acc-memorial-section-label { font-family:'Raleway',sans-serif; font-size:22px; font-weight:500; color:#45799B; margin:0; }
+
+        /* Memorial card */
+        .acc-memorial-card { border:1px solid #F1F1F1; border-radius:12px; overflow:hidden; box-shadow:0 1px 3px rgba(15,46,67,.05); }
+        .acc-memorial-card-trigger {
+            width:100%; display:flex; align-items:center; gap:14px; padding:16px 20px;
+            background:#fff; border:none; cursor:pointer; text-align:left; transition:background .15s;
+        }
+        .acc-memorial-card-trigger:hover { background:#F6FBFF; }
+        .acc-memorial-avatar {
+            width:48px; height:48px; border-radius:50%; background:#CEEBFF; flex-shrink:0;
+            overflow:hidden; display:flex; align-items:center; justify-content:center;
+        }
+        .acc-memorial-avatar img { width:100%; height:100%; object-fit:cover; }
+        .acc-memorial-avatar-icon {
+            width:22px; height:22px; background-color:#6298BD;
+            -webkit-mask-image:url('icons/user.svg'); mask-image:url('icons/user.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .acc-memorial-info { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+        .acc-memorial-name { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; }
+        .acc-memorial-years { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:rgba(46,91,121,0.5); }
+        .acc-memorial-badges { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+        .acc-memorial-badge {
+            display:inline-flex; align-items:center; gap:5px; padding:5px 11px; border-radius:43px;
+            font-family:'Raleway',sans-serif; font-size:11px; font-weight:600; color:#fff; white-space:nowrap;
+        }
+        .acc-memorial-badge-icon {
+            width:12px; height:12px; flex-shrink:0; background-color:#fff;
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .acc-memorial-badge-icon--lock { -webkit-mask-image:url('icons/lock-open.svg'); mask-image:url('icons/lock-open.svg'); }
+        .acc-memorial-badge-icon--lock-closed { -webkit-mask-image:url('icons/lock.svg'); mask-image:url('icons/lock.svg'); }
+        .acc-memorial-badge-icon--info { -webkit-mask-image:url('icons/info.svg'); mask-image:url('icons/info.svg'); }
+        .acc-memorial-badge-icon--check { -webkit-mask-image:url('icons/check.svg'); mask-image:url('icons/check.svg'); }
+        .acc-memorial-badge-icon--clock { -webkit-mask-image:url('icons/disc.svg'); mask-image:url('icons/disc.svg'); }
+        .acc-memorial-badge--blue { background:#6298BD; }
+        .acc-memorial-badge--gray-dark { background:#717680; }
+        .acc-memorial-badge--yellow { background:#FDB022; }
+        .acc-memorial-badge--green { background:#3C9264; }
+        .acc-memorial-badge--gray { background:#adb5bd; }
+        .acc-memorial-card-chevron {
+            width:20px; height:20px; flex-shrink:0; background-color:#717680;
+            -webkit-mask-image:url('icons/chevron-down.svg'); mask-image:url('icons/chevron-down.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+            transition:transform .22s;
+        }
+        .acc-memorial-card.is-open .acc-memorial-card-chevron { transform:rotate(180deg); }
+        .acc-memorial-card-body {
+            display:none; border-top:1px solid #F1F1F1; background:#FAFCFF;
+            padding:20px; flex-direction:column; gap:16px;
+        }
+        .acc-memorial-card.is-open .acc-memorial-card-body { display:flex; }
+
+        /* Verification warning */
+        .acc-verif-banner {
+            background:#FEF0C7; border-radius:24px; padding:14px 20px;
+            display:flex; align-items:flex-start; gap:12px;
+        }
+        .acc-verif-banner-icon {
+            width:20px; height:20px; flex-shrink:0; background-color:#FDB022; margin-top:1px;
+            -webkit-mask-image:url('icons/alert-circle.svg'); mask-image:url('icons/alert-circle.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .acc-verif-banner-text { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57; line-height:1.5; margin:0; }
+        .acc-verif-banner-text strong { font-weight:700; }
+
+        /* Memorial buttons */
+        .acc-memorial-actions { display:flex; gap:10px; flex-wrap:wrap; }
+        .btn-mem-edit {
+            display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 18px;
+            background:#CEEBFF; border:none; border-radius:62px; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#1B3F57;
+            text-decoration:none; transition:background .15s;
+        }
+        .btn-mem-edit:hover { background:#B8DFFF; }
+        .btn-mem-edit-icon {
+            width:14px; height:14px; flex-shrink:0; background-color:#1B3F57;
+            -webkit-mask-image:url('icons/edit.svg'); mask-image:url('icons/edit.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .btn-mem-doc {
+            display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 18px;
+            background:#FDB022; border:none; border-radius:62px; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#fff;
+            text-decoration:none; transition:background .15s;
+        }
+        .btn-mem-doc:hover { background:#E09A10; }
+        .btn-mem-doc-icon {
+            width:14px; height:14px; flex-shrink:0; background-color:#fff;
+            -webkit-mask-image:url('icons/plus.svg'); mask-image:url('icons/plus.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+
+        /* Access management */
+        .acc-access-title { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#1B3F57; margin:0; }
+        .acc-access-label { font-family:'Raleway',sans-serif; font-size:13px; font-weight:600; color:#2E5B79; display:block; margin-bottom:6px; }
+        .acc-access-row { display:flex; gap:10px; flex-wrap:wrap; }
+        .acc-access-input-wrap { position:relative; flex:1; min-width:180px; }
+        .acc-access-input {
+            width:100%; height:44px; padding:0 16px 0 42px;
+            border:1px solid #F1F1F1; border-radius:8px; background:#fff;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#1B3F57;
+            box-shadow:0 1px 2px rgba(10,13,18,.05); outline:none; transition:border-color .15s;
+        }
+        .acc-access-input:focus { border-color:#45799B; }
+        .acc-access-input-icon {
+            position:absolute; left:14px; top:50%; transform:translateY(-50%);
+            width:18px; height:18px; background-color:#45799B; pointer-events:none;
+            -webkit-mask-image:url('icons/mail.svg'); mask-image:url('icons/mail.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .acc-access-select-wrap { position:relative; min-width:140px; }
+        .acc-access-select {
+            width:100%; height:44px; padding:0 36px 0 14px;
+            border:1px solid #F1F1F1; border-radius:8px; background:#fff;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57;
+            -webkit-appearance:none; appearance:none; cursor:pointer; outline:none;
+            box-shadow:0 1px 2px rgba(10,13,18,.05);
+        }
+        .acc-access-select-chev {
+            position:absolute; right:12px; top:50%; transform:translateY(-50%);
+            width:16px; height:16px; background-color:#45799B; pointer-events:none;
+            -webkit-mask-image:url('icons/chevron-down.svg'); mask-image:url('icons/chevron-down.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .btn-add-user {
+            height:44px; padding:0 20px; background:#2E5B79; border:none; border-radius:8px; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#fff;
+            transition:background .15s; white-space:nowrap; flex-shrink:0;
+        }
+        .btn-add-user:hover { background:#1B3F57; }
+
+        /* Empty memorial state */
+        .acc-memorial-empty {
+            padding:32px; background:#F6FBFF; border-radius:16px; display:flex; flex-direction:column;
+            align-items:center; text-align:center; gap:12px;
+        }
+        .acc-memorial-empty-title { font-family:'Raleway',sans-serif; font-size:18px; font-weight:700; color:#1B3F57; margin:0; }
+        .acc-memorial-empty-text { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#45799B; margin:0; max-width:440px; line-height:1.6; }
+        .acc-memorial-empty-btn {
+            display:inline-flex; align-items:center; height:44px; padding:0 24px; border-radius:62px;
+            background:#2E5B79; color:#fff; text-decoration:none;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; transition:background .2s;
+        }
+        .acc-memorial-empty-btn:hover { background:#1B3F57; }
+        .acc-memorial-empty-link {
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#45799B;
+            text-decoration:underline; text-underline-offset:3px;
+        }
+
+        /* Shared empty state */
+        .acc-shared-empty { background:#F6FBFF; border-radius:12px; padding:20px 24px; display:flex; flex-direction:column; gap:4px; }
+        .acc-shared-empty-text { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; margin:0; }
+        .acc-shared-empty-sub { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#45799B; margin:0; }
+
+        /* ─── BONUS MODAL ─── */
+        .modal-overlay {
+            display:none; position:fixed; inset:0; z-index:10000;
+            background:rgba(15,46,67,.45); align-items:center; justify-content:center; padding:20px;
+        }
+        .modal-overlay.is-open { display:flex; }
+        .modal-box {
+            background:#fff; border-radius:12px; width:100%; max-width:760px; max-height:90vh;
+            overflow-y:auto; box-shadow:0 8px 8px -4px rgba(10,13,18,.03), 0 20px 24px -4px rgba(10,13,18,.08);
+            display:flex; flex-direction:column; gap:24px; padding:24px;
+        }
+        .modal-header { display:flex; align-items:center; gap:20px; }
+        .modal-header-icon {
+            width:48px; height:48px; flex-shrink:0;
+            background-image:url('icons/bonus.svg'); background-repeat:no-repeat; background-position:center; background-size:contain;
+        }
+        .modal-header-content { flex:1; display:flex; flex-direction:column; gap:4px; }
+        .modal-title { font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; color:#1B3F57; margin:0; }
+        .modal-subtitle { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:rgba(46,91,121,0.7); margin:0; }
+        .modal-close {
+            width:32px; height:32px; border-radius:50%; background:none; border:none; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .15s;
+        }
+        .modal-close:hover { background:#F1F1F1; }
+        .modal-close-icon {
+            width:20px; height:20px; background-color:#0F2E43;
+            -webkit-mask-image:url('icons/close.svg'); mask-image:url('icons/close.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .modal-divider { width:100%; height:1px; background:#F1F1F1; border:none; flex-shrink:0; }
+        .modal-section { display:flex; flex-direction:column; gap:14px; }
+        .modal-section-title { font-family:'Raleway',sans-serif; font-size:16px; font-weight:700; color:#1B3F57; margin:0; }
+        .modal-row { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+        .modal-row-left { display:flex; align-items:center; gap:14px; flex:1; min-width:0; }
+        .modal-row-icon {
+            width:24px; height:24px; flex-shrink:0; background-color:#45799B;
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .modal-row-icon--user { -webkit-mask-image:url('icons/user-plus.svg'); mask-image:url('icons/user-plus.svg'); }
+        .modal-row-icon--check { -webkit-mask-image:url('icons/user-check.svg'); mask-image:url('icons/user-check.svg'); }
+        .modal-row-icon--cart { -webkit-mask-image:url('icons/shopping-cart.svg'); mask-image:url('icons/shopping-cart.svg'); }
+        .modal-row-text { display:flex; flex-direction:column; gap:2px; }
+        .modal-row-label { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; margin:0; }
+        .modal-row-desc { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:rgba(46,91,121,0.5); margin:0; }
+        .modal-badge {
+            padding:6px 11px; border-radius:100px; border:1px solid;
+            font-family:'Raleway',sans-serif; font-size:11px; font-weight:600; color:#1B3F57;
+            white-space:nowrap; flex-shrink:0;
+        }
+        .modal-badge--gray { border-color:#82BADF; }
+        .modal-badge--yellow { border-color:#FDB022; }
+        .modal-badge--green { border-color:#3C9264; }
+        .modal-packages-box { background:#F6FBFF; border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:0; }
+        .modal-pkg-row { padding:10px 0; }
+        .modal-pkg-row + .modal-pkg-row { border-top:1px solid rgba(46,91,121,.1); }
+        .modal-packages-note { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#45799B; margin:0; line-height:1.5; }
+        .modal-footer-green {
+            background:#3C9264; border-radius:24px; padding:16px 24px;
+            display:flex; align-items:flex-start; gap:12px;
+        }
+        .modal-footer-check-icon {
+            width:20px; height:20px; flex-shrink:0; background-color:#fff; margin-top:1px;
+            -webkit-mask-image:url('icons/check.svg'); mask-image:url('icons/check.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .modal-footer-text { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#fff; line-height:1.5; margin:0; }
+        .modal-footer-text strong { font-weight:700; }
+
+        /* ─── EDIT PROFILE MODAL ─── */
+        .edit-modal-box {
+            background:#fff; border-radius:24px; width:100%; max-width:560px;
+            overflow-y:auto; max-height:90vh;
+            box-shadow:0 8px 8px -4px rgba(10,13,18,.03), 0 20px 24px -4px rgba(10,13,18,.08);
+            display:flex; flex-direction:column;
+        }
+        .edit-modal-header {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:24px 28px 20px; border-bottom:1px solid #F1F1F1;
+        }
+        .edit-modal-title { font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; color:#1B3F57; margin:0; }
+        .edit-modal-body { padding:24px 28px; display:flex; flex-direction:column; gap:24px; }
+
+        /* Avatar upload in edit modal */
+        .edit-avatar-row { display:flex; align-items:center; gap:20px; }
+        .edit-avatar-wrap {
+            width:80px; height:80px; border-radius:50%; background:#CEEBFF;
+            border:3px solid #F1F1F1; flex-shrink:0; overflow:hidden; position:relative;
+            display:flex; align-items:center; justify-content:center;
+        }
+        .edit-avatar-wrap img { width:100%; height:100%; object-fit:cover; }
+        .edit-avatar-placeholder {
+            width:34px; height:34px; background-color:#6298BD;
+            -webkit-mask-image:url('icons/user.svg'); mask-image:url('icons/user.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .edit-avatar-actions { display:flex; flex-direction:column; gap:8px; }
+        .btn-upload-photo {
+            display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 18px;
+            background:#CEEBFF; border:none; border-radius:62px; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:14px; font-weight:600; color:#1B3F57;
+            transition:background .15s;
+        }
+        .btn-upload-photo:hover { background:#B8DFFF; }
+        .btn-upload-photo-icon {
+            width:16px; height:16px; background-color:#1B3F57; flex-shrink:0;
+            -webkit-mask-image:url('icons/camera.svg'); mask-image:url('icons/camera.svg');
+            -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; -webkit-mask-size:contain; mask-size:contain;
+        }
+        .edit-avatar-hint { font-family:'Raleway',sans-serif; font-size:13px; font-weight:400; color:#717680; }
+        #editPhotoInput { display:none; }
+
+        /* Form fields */
+        .edit-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        .edit-form-field { display:flex; flex-direction:column; gap:6px; }
+        .edit-form-field--full { grid-column:1 / -1; }
+        .edit-form-label { font-family:'Raleway',sans-serif; font-size:13px; font-weight:600; color:#2E5B79; }
+        .edit-form-input {
+            height:48px; padding:0 16px;
+            border:1px solid #D0D5DD; border-radius:12px; background:#fff;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#1B3F57;
+            outline:none; box-shadow:0 1px 2px rgba(10,13,18,.05); transition:border-color .15s;
+        }
+        .edit-form-input:focus { border-color:#45799B; }
+        .edit-form-input::placeholder { color:#B0BEC5; }
+        .edit-phone-wrap {
+            display:flex; border:1px solid #D0D5DD; border-radius:12px; background:#fff;
+            overflow:hidden; box-shadow:0 1px 2px rgba(10,13,18,.05); transition:border-color .15s; height:48px;
+        }
+        .edit-phone-wrap:focus-within { border-color:#45799B; }
+        .edit-phone-prefix {
+            padding:0 14px; display:flex; align-items:center; flex-shrink:0;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; color:#0F2E43;
+            border-right:1px solid #D0D5DD; background:#F6FBFF;
+        }
+        .edit-phone-input {
+            flex:1; padding:0 12px; border:none; outline:none; background:transparent;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#1B3F57;
+        }
+        .edit-phone-input::placeholder { color:#B0BEC5; }
+
+        /* Address fields */
+        .edit-section-label { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#1B3F57; margin:0; }
+        .edit-address-grid { display:flex; flex-direction:column; gap:12px; }
+
+        /* Modal footer buttons */
+        .edit-modal-footer {
+            display:flex; gap:12px; justify-content:flex-end;
+            padding:20px 28px 24px; border-top:1px solid #F1F1F1;
+        }
+        .btn-edit-cancel {
+            height:48px; padding:0 24px; border-radius:62px;
+            background:#F6FBFF; border:1px solid #E2F3FF; cursor:pointer;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#45799B;
+            transition:background .15s;
+        }
+        .btn-edit-cancel:hover { background:#E2F3FF; }
+        .btn-edit-save {
+            height:48px; padding:0 28px; border-radius:62px; border:none; cursor:pointer;
+            background:#1B3F57; font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#fff;
+            transition:background .15s;
+        }
+        .btn-edit-save:hover { background:#2E5B79; }
+
+        @media (max-width:600px) {
+            .edit-modal-header, .edit-modal-body, .edit-modal-footer { padding-left:16px; padding-right:16px; }
+            .edit-form-grid { grid-template-columns:1fr; }
+            .edit-modal-footer { flex-direction:column-reverse; }
+            .btn-edit-cancel, .btn-edit-save { width:100%; justify-content:center; }
+        }
+
+        /* ─── BREAKPOINTS ─── */
+        @media (max-width:1280px) {
+            .acc-page { padding:0 40px 64px; }
+        }
+        @media (max-width:1024px) {
+            .acc-title { font-size:40px; }
+        }
+        @media (max-width:768px) {
+            .acc-page { padding:0 16px 40px; }
+            .acc-title-row { padding-top:20px; padding-bottom:16px; }
+            .acc-title { font-size:36px; }
+            .acc-card { padding:20px 16px; gap:16px; border-radius:16px; }
+            .acc-profile-cover { height:96px; }
+            .acc-profile-top { margin-top:-28px; flex-wrap:wrap; gap:0; }
+            .acc-profile-avatar-group { margin-bottom:10px; }
+            .acc-profile-avatar-wrap { width:68px; height:68px; }
+            .acc-avatar-btn { width:24px; height:24px; }
+            .acc-avatar-btn-icon { width:12px; height:12px; }
+            /* Name row drops to its own full-width line — always below the cover */
+            .acc-profile-name-row { flex-basis:100%; align-items:flex-start; padding-bottom:0; gap:8px; }
+            .acc-profile-name { font-size:18px; }
+            .acc-profile-contact { font-size:14px; }
+            .acc-address-label { font-size:18px; margin-bottom:8px; }
+            .acc-section-title { font-size:18px; }
+            .acc-bonus-icon { width:48px; height:48px; }
+            .acc-bonus-title { font-size:18px; }
+            .acc-order-trigger { padding:12px 14px; gap:10px; }
+            .acc-order-num { min-width:70px; font-size:14px; }
+            .acc-order-date { font-size:14px; }
+            .acc-order-status { font-size:14px; min-width:120px; }
+            .acc-order-sum { font-size:14px; }
+            .acc-memorial-card-trigger { padding:14px; gap:12px; }
+            .acc-bonus-actions { flex-direction:column; }
+            .btn-bonus-primary, .btn-bonus-secondary { justify-content:center; }
+            .modal-box { padding:16px; gap:16px; }
+        }
+        @media (max-width:480px) {
+            .header-inner { width:100%; max-width:none; padding:0 16px; height:60px; position:relative; }
+            .hp-mob-menu-btn { display:flex; }
+            .logo-img { width:64px; height:auto; }
+            .hp-mob-nav { display:flex; }
+            .header-nav, .header-right { display:none !important; }
+            .header-logo { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:1; }
+            .hp-mob-header-icons { display:flex; margin-left:auto; }
+            .hp-help-btn { width:60px; height:60px; border-radius:50%; padding:13px; gap:0; right:12px; bottom:20px; }
+            .hp-help-btn span { display:none; }
+            .acc-bonus-main { flex-direction:column; align-items:flex-start; }
+            .acc-bonus-link { align-self:flex-start; }
+            .acc-order-trigger { flex-wrap:wrap; }
+            .acc-order-status { flex-basis:100%; }
+        }
+
+        [hidden] { display:none !important; }
+    </style>
+</head>
+<body>
+
+<!-- ══ FLOATING HELP ══ -->
+<a href="tel:+387777777" class="hp-help-btn">
+    <span>Потрібна допомога?</span>
+    <div class="hp-help-icon"></div>
+</a>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+    <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню">
+            <span class="hp-mob-menu-icon"></span>
+        </button>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-item">Головна</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Порядок дій</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Що робити в першу чергу?</a>
+                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="#" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="#" class="nav-dropdown-item">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Послуги</button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="products.html" class="nav-item">Товари</a>
+            <a href="#" class="nav-item">Про нас</a>
+        </nav>
+        <a href="home.html" class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
+        </a>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="#" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="#" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="#" class="nav-dropdown-item">Професійні консультації</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon"></a>
+                <a href="account.html" class="icon-placeholder account-icon"></a>
+            </div>
+        </div>
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon"></a>
+            <a href="account.html" class="icon-placeholder account-icon"></a>
+        </div>
+    </div>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main class="acc-page">
+
+    <div class="acc-title-row">
+        <h1 class="acc-title">Акаунт</h1>
+    </div>
+
+    <div class="acc-inner">
+
+        <!-- ══ PROFILE ══ -->
+        <section class="acc-card" id="sectionProfile" aria-label="Профіль">
+
+            <div class="acc-profile-cover" aria-hidden="true"></div>
+
+            <div class="acc-profile-top">
+                <div class="acc-profile-avatar-group">
+                    <div class="acc-profile-avatar-wrap" aria-hidden="true">
+                        <div class="acc-profile-avatar-icon"></div>
+                    </div>
+                    <button class="acc-avatar-btn" type="button" aria-label="Змінити фото профілю">
+                        <span class="acc-avatar-btn-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="acc-profile-name-row">
+                    <h2 class="acc-profile-name">irynamelnyk@gmail.com</h2>
+                    <button class="btn-edit-profile" type="button" onclick="openEditModal()">Редагувати профіль</button>
+                </div>
+            </div>
+
+            <div class="acc-profile-contacts">
+                <button class="acc-profile-add-link" type="button">
+                    <span class="acc-profile-add-icon" aria-hidden="true"></span>
+                    Додати ім'я та прізвище
+                </button>
+                <button class="acc-profile-add-link" type="button">
+                    <span class="acc-profile-add-icon" aria-hidden="true"></span>
+                    Додати номер телефону
+                </button>
+            </div>
+
+            <hr class="acc-card-divider">
+
+            <div>
+                <h3 class="acc-address-label">Адреса Доставки</h3>
+                <button class="acc-profile-add-link" type="button">
+                    <span class="acc-profile-add-icon" aria-hidden="true"></span>
+                    Додати адресу доставки
+                </button>
+            </div>
+
+        </section><!-- /sectionProfile -->
+
+        <!-- ══ BONUS ══ -->
+        <section class="acc-card" id="sectionBonus" aria-label="Бонуси">
+
+            <!-- ── Header row (always visible) ── -->
+            <div class="acc-bonus-main">
+                <div class="acc-bonus-left">
+                    <div class="acc-bonus-icon" aria-hidden="true"></div>
+                    <div class="acc-bonus-content">
+                        <div class="acc-bonus-title-row">
+                            <h2 class="acc-bonus-title">Бонуси</h2>
+                            <span class="acc-bonus-badge acc-bonus-badge--yellow" id="bonusBadge" hidden>Ще накопичуємо</span>
+                        </div>
+                        <div class="acc-bonus-balance-row">
+                            <span class="acc-bonus-balance-label">Ваш баланс:</span>
+                            <span class="acc-bonus-balance-val" id="bonusBalanceVal">0 бонусів</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="acc-bonus-link" onclick="openBonusModal()" type="button" aria-haspopup="dialog">
+                    За що нараховуються бонуси?
+                    <span class="acc-bonus-link-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <!-- ── STATE 0: zero balance (default) — no extra content, modal explains bonuses ── -->
+
+            <!-- ── STATE 1: accumulating (yellow) ── -->
+            <div id="bonusState1" hidden>
+                <div class="acc-bonus-progress-wrap">
+                    <div class="acc-bonus-bar-track" aria-hidden="true">
+                        <div class="acc-bonus-bar-fill acc-bonus-bar-fill--yellow" id="bonusBarFill" style="width:19%"></div>
+                    </div>
+                    <div class="acc-bonus-bar-labels">
+                        <span class="acc-bonus-bar-lbl" id="bonusBarLeft">120 з 620 бонусів</span>
+                        <span class="acc-bonus-bar-lbl" id="bonusBarRight">ще 500 до оплати флористики</span>
+                    </div>
+                </div>
+                <div class="acc-bonus-hint acc-bonus-hint--yellow" style="margin-top:8px">
+                    <span class="acc-bonus-hint-icon" aria-hidden="true"></span>
+                    <span class="acc-bonus-hint-text">620 бонусів = оплата оновлення флористики на місці поховання</span>
+                </div>
+            </div>
+
+            <!-- ── STATE 2: discount available (green) ── -->
+            <div id="bonusState2" hidden>
+                <div class="acc-bonus-progress-wrap">
+                    <div class="acc-bonus-bar-track" aria-hidden="true">
+                        <div class="acc-bonus-bar-fill acc-bonus-bar-fill--green" style="width:56%"></div>
+                    </div>
+                    <div class="acc-bonus-bar-labels">
+                        <span class="acc-bonus-bar-lbl">350 з 620 бонусів</span>
+                        <span class="acc-bonus-bar-lbl">ще 270 для повної оплати</span>
+                    </div>
+                </div>
+                <div class="acc-bonus-hint acc-bonus-hint--green" style="margin-top:8px">
+                    <span class="acc-bonus-hint-icon" aria-hidden="true"></span>
+                    <span class="acc-bonus-hint-text">Можна застосувати як знижку на флористику на місці поховання</span>
+                </div>
+                <div class="acc-bonus-actions" style="margin-top:8px">
+                    <a href="/services/floristry?apply_bonus=partial" class="btn-bonus-secondary">Замовити зі знижкою</a>
+                </div>
+            </div>
+
+            <!-- ── STATE 3: full payment ── -->
+            <div id="bonusState3" hidden>
+                <div class="acc-bonus-full-block">
+                    <span class="acc-bonus-full-block-icon" aria-hidden="true"></span>
+                    <p class="acc-bonus-full-block-text">У вас достатньо бонусів для <strong>повної оплати</strong> оновлення флористики на місці поховання — без доплати.</p>
+                </div>
+                <div class="acc-bonus-actions" style="margin-top:12px">
+                    <a href="/services/floristry?apply_bonus=full" class="btn-bonus-primary">Оплатити бонусами</a>
+                    <a href="/services/floristry?apply_bonus=partial" class="btn-bonus-secondary">Замовити зі знижкою</a>
+                </div>
+            </div>
+
+        </section><!-- /sectionBonus -->
+
+        <!-- ══ ORDERS ══ -->
+        <section class="acc-card" id="sectionOrders" aria-label="Історія замовлень">
+
+            <div class="acc-section-header">
+                <h2 class="acc-section-title">Історія Замовлень</h2>
+            </div>
+
+            <!-- Has orders (hidden until API returns data) -->
+            <div class="acc-orders-list" id="ordersList" hidden>
+
+                <div class="acc-order-row" id="order1">
+                    <button class="acc-order-trigger" onclick="toggleOrder('order1')" aria-expanded="false" type="button">
+                        <span class="acc-order-num">№776585</span>
+                        <span class="acc-order-date">08.07.2025</span>
+                        <span class="acc-order-status acc-order-status--green">Замовлення отримано</span>
+                        <span class="acc-order-sum">9 000 ₴</span>
+                        <span class="acc-order-chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="acc-order-body" aria-hidden="true">
+                        <div class="acc-order-items">
+                            <div class="acc-order-item">
+                                <span class="acc-order-item-name">Вінок з живих квітів</span>
+                                <span class="acc-order-item-price">4 500 ₴</span>
+                            </div>
+                            <div class="acc-order-item">
+                                <span class="acc-order-item-name">Труна дубова «Класик»</span>
+                                <span class="acc-order-item-price">4 500 ₴</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="acc-order-row" id="order2">
+                    <button class="acc-order-trigger" onclick="toggleOrder('order2')" aria-expanded="false" type="button">
+                        <span class="acc-order-num">№776421</span>
+                        <span class="acc-order-date">12.05.2025</span>
+                        <span class="acc-order-status acc-order-status--yellow">В обробці</span>
+                        <span class="acc-order-sum">18 500 ₴</span>
+                        <span class="acc-order-chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="acc-order-body" aria-hidden="true">
+                        <div class="acc-order-items">
+                            <div class="acc-order-item">
+                                <span class="acc-order-item-name">Пакет «Турбота»</span>
+                                <span class="acc-order-item-price">18 500 ₴</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="acc-order-row" id="order3">
+                    <button class="acc-order-trigger" onclick="toggleOrder('order3')" aria-expanded="false" type="button">
+                        <span class="acc-order-num">№776103</span>
+                        <span class="acc-order-date">03.03.2025</span>
+                        <span class="acc-order-status acc-order-status--red">Скасовано</span>
+                        <span class="acc-order-sum">3 200 ₴</span>
+                        <span class="acc-order-chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="acc-order-body" aria-hidden="true">
+                        <div class="acc-order-items">
+                            <div class="acc-order-item">
+                                <span class="acc-order-item-name">Освітлення поминального столу</span>
+                                <span class="acc-order-item-price">3 200 ₴</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /ordersList -->
+
+            <!-- Empty state (default for new user) -->
+            <div class="acc-empty" id="ordersEmpty">
+                <div class="acc-empty-icon" aria-hidden="true"></div>
+                <h3 class="acc-empty-title">Замовлень ще немає</h3>
+                <p class="acc-empty-desc">Тут з'являться ваші замовлення після першої покупки.</p>
+                <a href="products.html" class="acc-empty-btn">Перейти до товарів</a>
+            </div>
+
+        </section><!-- /sectionOrders -->
+
+        <!-- ══ MEMORIAL PAGES ══ -->
+        <section class="acc-card" id="sectionMemorial" aria-label="Сторінка пам'яті">
+
+            <div class="acc-memorial-header">
+                <h2 class="acc-section-title">Сторінка Пам'яті</h2>
+                <a href="/memorial/new" class="btn-create-page">
+                    <span class="btn-create-page-icon" aria-hidden="true"></span>
+                    Створити сторінку
+                </a>
+            </div>
+
+            <!-- ── My pages ── -->
+            <div class="acc-memorial-section">
+                <h3 class="acc-memorial-section-label">Мої сторінки</h3>
+
+                <!-- Memorial card: shown when API returns pages -->
+                <div class="acc-memorial-card is-open" id="memorial1" hidden>
+                    <button class="acc-memorial-card-trigger" onclick="toggleMemorial('memorial1')" aria-expanded="true" type="button">
+                        <div class="acc-memorial-avatar" aria-hidden="true">
+                            <div class="acc-memorial-avatar-icon"></div>
+                        </div>
+                        <div class="acc-memorial-info">
+                            <span class="acc-memorial-name">Олександр Мельник</span>
+                            <span class="acc-memorial-years">(1990 – 2024)</span>
+                        </div>
+                        <div class="acc-memorial-badges">
+                            <span class="acc-memorial-badge acc-memorial-badge--blue">
+                                <span class="acc-memorial-badge-icon acc-memorial-badge-icon--lock" aria-hidden="true"></span>
+                                Публічна
+                            </span>
+                            <span class="acc-memorial-badge acc-memorial-badge--yellow">
+                                <span class="acc-memorial-badge-icon acc-memorial-badge-icon--info" aria-hidden="true"></span>
+                                Не верифікована
+                            </span>
+                        </div>
+                        <span class="acc-memorial-card-chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="acc-memorial-card-body">
+
+                        <!-- Warning banner -->
+                        <div class="acc-verif-banner" role="alert">
+                            <span class="acc-verif-banner-icon" aria-hidden="true"></span>
+                            <p class="acc-verif-banner-text">Сторінка <strong>не верифікована.</strong> Щоб підтвердити автентичність та отримати позначку пам'яті, <strong>додайте документ.</strong></p>
+                        </div>
+
+                        <!-- Action buttons -->
+                        <div class="acc-memorial-actions">
+                            <a href="#" class="btn-mem-edit">
+                                <span class="btn-mem-edit-icon" aria-hidden="true"></span>
+                                Редагувати сторінку
+                            </a>
+                            <button class="btn-mem-doc" type="button">
+                                <span class="btn-mem-doc-icon" aria-hidden="true"></span>
+                                Додати документ
+                            </button>
+                        </div>
+
+                        <hr class="acc-card-divider">
+
+                        <!-- Access management -->
+                        <h4 class="acc-access-title">Керування доступом</h4>
+                        <div>
+                            <label class="acc-access-label" for="accessEmail1">Додати користувача за email</label>
+                            <div class="acc-access-row">
+                                <div class="acc-access-input-wrap">
+                                    <input type="email" id="accessEmail1" class="acc-access-input" placeholder="email@example.com" autocomplete="email">
+                                    <span class="acc-access-input-icon" aria-hidden="true"></span>
+                                </div>
+                                <div class="acc-access-select-wrap">
+                                    <select class="acc-access-select" aria-label="Рівень доступу">
+                                        <option value="view">Перегляд</option>
+                                        <option value="edit">Редагування</option>
+                                    </select>
+                                    <span class="acc-access-select-chev" aria-hidden="true"></span>
+                                </div>
+                                <button class="btn-add-user" type="button">Додати</button>
+                            </div>
+                        </div>
+
+                    </div><!-- /card-body -->
+                </div><!-- /memorial1 -->
+
+                <!-- Empty state for "Мої сторінки" — default for new user -->
+                <div class="acc-memorial-empty" id="myMemorialsEmpty">
+                    <h3 class="acc-memorial-empty-title">Ви ще не створили жодної сторінки пам'яті</h3>
+                    <p class="acc-memorial-empty-text">Сторінка пам'яті — цифровий простір для збереження спогадів про близьку людину. Тут можна розмістити фотографії, розповіді, додати документи та поділитися доступом із рідними.</p>
+                    <a href="/memorial/new" class="acc-memorial-empty-btn">Створити сторінку пам'яті</a>
+                    <a href="/about-memorial" class="acc-memorial-empty-link">Дізнатися більше</a>
+                </div>
+
+            </div><!-- /my pages -->
+
+            <hr class="acc-card-divider">
+
+            <!-- ── Available to me ── -->
+            <div class="acc-memorial-section">
+                <h3 class="acc-memorial-section-label">Доступні мені</h3>
+                <div class="acc-shared-empty">
+                    <p class="acc-shared-empty-text">Тут з'являться сторінки, до яких вас додали як користувача.</p>
+                    <p class="acc-shared-empty-sub">Власник сторінки може надати вам доступ для перегляду або редагування.</p>
+                </div>
+            </div>
+
+        </section><!-- /sectionMemorial -->
+
+    </div><!-- /acc-inner -->
+
+</main><!-- /acc-page -->
+
+<!-- ══ EDIT PROFILE MODAL ══ -->
+<div class="modal-overlay" id="editProfileOverlay" onclick="closeEditModalOutside(event)" role="presentation">
+    <div class="edit-modal-box" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+
+        <div class="edit-modal-header">
+            <h2 class="edit-modal-title" id="editModalTitle">Редагувати профіль</h2>
+            <button class="modal-close" onclick="closeEditModal()" aria-label="Закрити" type="button">
+                <span class="modal-close-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+
+        <div class="edit-modal-body">
+
+            <!-- Cover image -->
+            <div>
+                <p class="edit-section-label" style="margin-bottom:10px">Обкладинка</p>
+                <div style="position:relative; border-radius:16px; overflow:hidden; height:100px; cursor:pointer;" onclick="document.getElementById('editCoverInput').click()" title="Змінити обкладинку">
+                    <div id="editCoverPreview" style="width:100%; height:100%; background:linear-gradient(135deg,#CEEBFF 0%,#E2F3FF 55%,#F6FBFF 100%); background-size:cover; background-position:center;"></div>
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(15,46,67,.18); border-radius:16px; gap:8px;">
+                        <span style="width:20px;height:20px;background-color:#fff;display:block;flex-shrink:0;
+                            -webkit-mask-image:url('icons/camera.svg');mask-image:url('icons/camera.svg');
+                            -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain;" aria-hidden="true"></span>
+                        <span style="font-family:'Raleway',sans-serif;font-size:14px;font-weight:600;color:#fff;">Змінити обкладинку</span>
+                    </div>
+                </div>
+                <input type="file" id="editCoverInput" accept="image/*" style="display:none" onchange="handleCoverUpload(this)">
+                <button type="button" id="editCoverResetBtn" onclick="resetCover()" style="display:none; margin-top:8px; background:none; border:none; cursor:pointer; font-family:'Raleway',sans-serif; font-size:13px; font-weight:500; color:#D64545; padding:0;">Видалити обкладинку</button>
+            </div>
+
+            <!-- Avatar -->
+            <div class="edit-avatar-row">
+                <div class="edit-avatar-wrap">
+                    <div class="edit-avatar-placeholder" id="editAvatarPlaceholder"></div>
+                    <img id="editAvatarPreview" src="" alt="" style="display:none; position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="edit-avatar-actions">
+                    <button type="button" class="btn-upload-photo" onclick="document.getElementById('editPhotoInput').click()">
+                        <span class="btn-upload-photo-icon" aria-hidden="true"></span>
+                        Завантажити фото
+                    </button>
+                    <span class="edit-avatar-hint">JPG або PNG, до 5 МБ</span>
+                    <input type="file" id="editPhotoInput" accept="image/*" onchange="handlePhotoUpload(this)">
+                </div>
+            </div>
+
+            <!-- Name fields -->
+            <div class="edit-form-grid">
+                <div class="edit-form-field">
+                    <label class="edit-form-label" for="editFirstName">Ім'я</label>
+                    <input type="text" id="editFirstName" class="edit-form-input" placeholder="Ірина" autocomplete="given-name">
+                </div>
+                <div class="edit-form-field">
+                    <label class="edit-form-label" for="editLastName">Прізвище</label>
+                    <input type="text" id="editLastName" class="edit-form-input" placeholder="Мельник" autocomplete="family-name">
+                </div>
+                <div class="edit-form-field edit-form-field--full">
+                    <label class="edit-form-label" for="editPhone">Номер телефону</label>
+                    <div class="edit-phone-wrap">
+                        <span class="edit-phone-prefix">+38</span>
+                        <input type="tel" id="editPhone" class="edit-phone-input" placeholder="067 123 45 67" autocomplete="tel-national" maxlength="13">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div>
+                <p class="edit-section-label" style="margin-bottom:12px">Адреса Доставки</p>
+                <div class="edit-address-grid">
+                    <div class="edit-form-field">
+                        <label class="edit-form-label" for="editNPBranch">Відділення Нової Пошти</label>
+                        <input type="text" id="editNPBranch" class="edit-form-input" placeholder="Відділення №1 — вул. Хрещатик, 1">
+                    </div>
+                    <div class="edit-form-field">
+                        <label class="edit-form-label" for="editAddress">Адресна доставка</label>
+                        <input type="text" id="editAddress" class="edit-form-input" placeholder="вул. Назва, 54-1">
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /edit-modal-body -->
+
+        <div class="edit-modal-footer">
+            <button type="button" class="btn-edit-cancel" onclick="closeEditModal()">Скасувати</button>
+            <button type="button" class="btn-edit-save" onclick="saveProfile()">Зберегти</button>
+        </div>
+
+    </div>
+</div><!-- /editProfileOverlay -->
+
+<!-- ══ BONUS MODAL ══ -->
+<div class="modal-overlay" id="bonusModalOverlay" onclick="closeBonusModalOutside(event)" role="presentation">
+    <div class="modal-box" id="bonusModal" role="dialog" aria-modal="true" aria-labelledby="bonusModalTitle">
+
+        <!-- Header -->
+        <div class="modal-header">
+            <div class="modal-header-icon" aria-hidden="true"></div>
+            <div class="modal-header-content">
+                <h2 class="modal-title" id="bonusModalTitle">Як нараховуються бонуси?</h2>
+                <p class="modal-subtitle">Використовуйте для оплати або знижки на оновлення флористики</p>
+            </div>
+            <button class="modal-close" onclick="closeBonusModal()" aria-label="Закрити вікно" type="button">
+                <span class="modal-close-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+
+        <hr class="modal-divider">
+
+        <!-- Section 1: Одноразові нарахування -->
+        <div class="modal-section">
+            <h3 class="modal-section-title">Одноразові нарахування</h3>
+            <div class="modal-row">
+                <div class="modal-row-left">
+                    <span class="modal-row-icon modal-row-icon--user" aria-hidden="true"></span>
+                    <div class="modal-row-text">
+                        <p class="modal-row-label">Реєстрація</p>
+                        <p class="modal-row-desc">Одноразово після підтвердження email</p>
+                    </div>
+                </div>
+                <span class="modal-badge modal-badge--gray">+150 бонусів</span>
+            </div>
+            <div class="modal-row">
+                <div class="modal-row-left">
+                    <span class="modal-row-icon modal-row-icon--check" aria-hidden="true"></span>
+                    <div class="modal-row-text">
+                        <p class="modal-row-label">Верифікація сторінки пам'яті</p>
+                        <p class="modal-row-desc">Одноразово на кожну сторінку</p>
+                    </div>
+                </div>
+                <span class="modal-badge modal-badge--gray">+200 бонусів</span>
+            </div>
+        </div>
+
+        <hr class="modal-divider">
+
+        <!-- Section 2: Готові пакети послуг -->
+        <div class="modal-section">
+            <h3 class="modal-section-title">Готові пакети послуг</h3>
+            <p class="modal-packages-note">Бонуси нараховуються відповідно до вартості обраного пакету. Якщо зі складу пакету прибрати окремі послуги — бонусів нараховується менше.</p>
+            <div class="modal-packages-box">
+                <div class="modal-pkg-row">
+                    <div class="modal-row">
+                        <div class="modal-row-left">
+                            <div class="modal-row-text">
+                                <p class="modal-row-label">Пакет «Турбота»</p>
+                                <p class="modal-row-desc">18 500 ₴</p>
+                            </div>
+                        </div>
+                        <span class="modal-badge modal-badge--gray">до +200 бонусів</span>
+                    </div>
+                </div>
+                <div class="modal-pkg-row">
+                    <div class="modal-row">
+                        <div class="modal-row-left">
+                            <div class="modal-row-text">
+                                <p class="modal-row-label">Пакет «Гідність»</p>
+                                <p class="modal-row-desc">25 000 ₴</p>
+                            </div>
+                        </div>
+                        <span class="modal-badge modal-badge--yellow">до +400 бонусів</span>
+                    </div>
+                </div>
+                <div class="modal-pkg-row">
+                    <div class="modal-row">
+                        <div class="modal-row-left">
+                            <div class="modal-row-text">
+                                <p class="modal-row-label">Пакет «Шана»</p>
+                                <p class="modal-row-desc">36 000 ₴</p>
+                            </div>
+                        </div>
+                        <span class="modal-badge modal-badge--green">до +620 бонусів</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="modal-divider">
+
+        <!-- Section 3: Окремі товари та послуги -->
+        <div class="modal-section">
+            <h3 class="modal-section-title">Окремі товари та послуги</h3>
+            <div class="modal-row">
+                <div class="modal-row-left">
+                    <span class="modal-row-icon modal-row-icon--cart" aria-hidden="true"></span>
+                    <div class="modal-row-text">
+                        <p class="modal-row-label">Позначені товари та послуги</p>
+                        <p class="modal-row-desc">Кількість бонусів вказана на картці товару</p>
+                    </div>
+                </div>
+                <span class="modal-badge modal-badge--gray">+ вказано в картці</span>
+            </div>
+        </div>
+
+        <!-- Green footer -->
+        <div class="modal-footer-green">
+            <span class="modal-footer-check-icon" aria-hidden="true"></span>
+            <p class="modal-footer-text"><strong>Накопичені бонуси</strong> можна використати для <strong>повної або часткової оплати</strong> оновлення флористики на місці поховання.</p>
+        </div>
+
+    </div><!-- /modal-box -->
+</div><!-- /bonusModalOverlay -->
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="#">Готові пакети</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ══ MOBILE NAV ══ -->
+<div class="hp-mob-nav" id="mobNav" aria-modal="true" role="dialog" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link">Головна</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">
+                    Порядок дій
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="#" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="#" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">
+                    Послуги
+                    <span class="hp-mob-acc-chevron" aria-hidden="true"></span>
+                </button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link">Товари</a>
+            <a href="cart.html" class="hp-mob-nav-link">Кошик</a>
+            <a href="account.html" class="hp-mob-nav-link is-active">Акаунт</a>
+            <a href="#" class="hp-mob-nav-link">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ─── PROFILE STATE ─── */
+var profileState = {
+    email: localStorage.getItem('vyriy_email') || 'irynamelnyk@gmail.com',
+    firstName: '', lastName: '', phone: '',
+    npBranch: '', address: '',
+    photoSrc: null, coverSrc: null
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    /* Show email as the profile identifier on first visit */
+    var nameEl = document.querySelector('.acc-profile-name');
+    if (nameEl) nameEl.textContent = profileState.email;
+});
+
+/* ─── MOBILE MENU ─── */
+(function() {
+    var btn = document.getElementById('mobMenuBtn');
+    var nav = document.getElementById('mobNav');
+    var close = document.getElementById('mobNavClose');
+    if (btn && nav) {
+        btn.addEventListener('click', function() { nav.classList.add('is-open'); document.body.style.overflow = 'hidden'; });
+    }
+    if (close && nav) {
+        close.addEventListener('click', function() { nav.classList.remove('is-open'); document.body.style.overflow = ''; });
+    }
+    document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+            var acc = this.closest('.hp-mob-acc');
+            if (acc) {
+                acc.classList.toggle('is-open');
+                this.setAttribute('aria-expanded', acc.classList.contains('is-open'));
+            }
+        });
+    });
+    document.querySelectorAll('.nav-dropdown-wrap').forEach(function(wrap) {
+        var trigger = wrap.querySelector('.nav-dropdown-trigger');
+        var menu = wrap.querySelector('.nav-dropdown-menu');
+        if (!trigger || !menu) return;
+        trigger.addEventListener('click', function(e) { e.stopPropagation(); wrap.classList.toggle('is-open'); });
+        document.addEventListener('click', function() { wrap.classList.remove('is-open'); });
+    });
+})();
+
+/* ─── ORDER ACCORDION ─── */
+function toggleOrder(id) {
+    var row = document.getElementById(id);
+    if (!row) return;
+    var open = row.classList.toggle('is-open');
+    var trigger = row.querySelector('.acc-order-trigger');
+    var body = row.querySelector('.acc-order-body');
+    if (trigger) trigger.setAttribute('aria-expanded', open);
+    if (body) body.setAttribute('aria-hidden', !open);
+}
+
+/* ─── MEMORIAL ACCORDION ─── */
+function toggleMemorial(id) {
+    var card = document.getElementById(id);
+    if (!card) return;
+    var open = card.classList.toggle('is-open');
+    var trigger = card.querySelector('.acc-memorial-card-trigger');
+    if (trigger) trigger.setAttribute('aria-expanded', open);
+}
+
+/* ─── EDIT PROFILE MODAL ─── */
+
+function openEditModal() {
+    var overlay = document.getElementById('editProfileOverlay');
+    if (!overlay) return;
+    /* Pre-fill fields from current state */
+    document.getElementById('editFirstName').value = profileState.firstName;
+    document.getElementById('editLastName').value = profileState.lastName;
+    document.getElementById('editPhone').value = profileState.phone;
+    document.getElementById('editNPBranch').value = profileState.npBranch;
+    document.getElementById('editAddress').value = profileState.address;
+    /* Avatar preview */
+    var prev = document.getElementById('editAvatarPreview');
+    var ph   = document.getElementById('editAvatarPlaceholder');
+    if (profileState.photoSrc) {
+        prev.src = profileState.photoSrc; prev.style.display = 'block'; ph.style.display = 'none';
+    } else {
+        prev.style.display = 'none'; ph.style.display = 'block';
+    }
+    /* Cover preview */
+    var coverEl = document.getElementById('editCoverPreview');
+    var resetBtn = document.getElementById('editCoverResetBtn');
+    if (profileState.coverSrc) {
+        coverEl.style.backgroundImage = 'url(' + profileState.coverSrc + ')';
+        resetBtn.style.display = 'block';
+    } else {
+        coverEl.style.backgroundImage = 'none';
+        coverEl.style.background = 'linear-gradient(135deg,#CEEBFF 0%,#E2F3FF 55%,#F6FBFF 100%)';
+        resetBtn.style.display = 'none';
+    }
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeEditModal() {
+    var overlay = document.getElementById('editProfileOverlay');
+    if (overlay) { overlay.classList.remove('is-open'); document.body.style.overflow = ''; }
+}
+
+function closeEditModalOutside(e) {
+    if (e.target === document.getElementById('editProfileOverlay')) closeEditModal();
+}
+
+function handlePhotoUpload(input) {
+    if (!input.files || !input.files[0]) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var src = e.target.result;
+        document.getElementById('editAvatarPreview').src = src;
+        document.getElementById('editAvatarPreview').style.display = 'block';
+        document.getElementById('editAvatarPlaceholder').style.display = 'none';
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+
+function handleCoverUpload(input) {
+    if (!input.files || !input.files[0]) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var src = e.target.result;
+        var coverEl = document.getElementById('editCoverPreview');
+        coverEl.style.background = 'none';
+        coverEl.style.backgroundImage = 'url(' + src + ')';
+        coverEl.style.backgroundSize = 'cover';
+        coverEl.style.backgroundPosition = 'center';
+        document.getElementById('editCoverResetBtn').style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+
+function resetCover() {
+    var coverEl = document.getElementById('editCoverPreview');
+    coverEl.style.backgroundImage = 'none';
+    coverEl.style.background = 'linear-gradient(135deg,#CEEBFF 0%,#E2F3FF 55%,#F6FBFF 100%)';
+    document.getElementById('editCoverResetBtn').style.display = 'none';
+    document.getElementById('editCoverInput').value = '';
+}
+
+function saveProfile() {
+    var firstName = document.getElementById('editFirstName').value.trim();
+    var lastName  = document.getElementById('editLastName').value.trim();
+    var phone     = document.getElementById('editPhone').value.trim();
+    var npBranch  = document.getElementById('editNPBranch').value.trim();
+    var address   = document.getElementById('editAddress').value.trim();
+
+    /* Update state */
+    profileState.firstName = firstName;
+    profileState.lastName  = lastName;
+    profileState.phone     = phone;
+    profileState.npBranch  = npBranch;
+    profileState.address   = address;
+
+    /* Update avatar in profile */
+    var prevImg = document.getElementById('editAvatarPreview');
+    if (prevImg && prevImg.style.display !== 'none' && prevImg.src) {
+        profileState.photoSrc = prevImg.src;
+        updateProfileAvatar(prevImg.src);
+    }
+
+    /* Update cover */
+    var coverEl = document.getElementById('editCoverPreview');
+    var bgImg = coverEl.style.backgroundImage;
+    if (bgImg && bgImg !== 'none' && bgImg.indexOf('url(') === 0) {
+        profileState.coverSrc = bgImg.slice(4, -1).replace(/['"]/g, '');
+    } else {
+        profileState.coverSrc = null;
+    }
+    updateProfileCover();
+
+    /* Update displayed name */
+    var fullName = [firstName, lastName].filter(Boolean).join(' ');
+    var nameEl = document.querySelector('.acc-profile-name');
+    if (nameEl) {
+        nameEl.textContent = fullName || 'irynamelnyk@gmail.com';
+    }
+
+    /* Update contacts row */
+    updateContactsDisplay(phone);
+
+    /* Update address section */
+    updateAddressDisplay(npBranch, address);
+
+    closeEditModal();
+}
+
+function updateProfileAvatar(src) {
+    var wrap = document.querySelector('.acc-profile-avatar-wrap');
+    if (!wrap) return;
+    var existing = wrap.querySelector('img');
+    if (!existing) {
+        existing = document.createElement('img');
+        existing.alt = 'Фото профілю';
+        wrap.appendChild(existing);
+    }
+    existing.src = src;
+    existing.style.display = 'block';
+    var ph = wrap.querySelector('.acc-profile-avatar-icon');
+    if (ph) ph.style.display = 'none';
+}
+
+function updateProfileCover() {
+    var cover = document.querySelector('.acc-profile-cover');
+    if (!cover) return;
+    if (profileState.coverSrc) {
+        cover.style.background = 'url(' + profileState.coverSrc + ') center/cover no-repeat';
+    } else {
+        cover.style.background = 'linear-gradient(135deg,#CEEBFF 0%,#E2F3FF 55%,#F6FBFF 100%)';
+    }
+}
+
+function updateContactsDisplay(phone) {
+    var contacts = document.querySelector('.acc-profile-contacts');
+    if (!contacts) return;
+    contacts.innerHTML = '';
+
+    if (phone) {
+        var span = document.createElement('span');
+        span.className = 'acc-profile-contact';
+        span.textContent = '+38 ' + phone;
+        contacts.appendChild(span);
+    } else {
+        contacts.innerHTML = '<button class="acc-profile-add-link" type="button" onclick="openEditModal()">' +
+            '<span class="acc-profile-add-icon" aria-hidden="true"></span>Додати ім\'я та прізвище</button>' +
+            '<button class="acc-profile-add-link" type="button" onclick="openEditModal()">' +
+            '<span class="acc-profile-add-icon" aria-hidden="true"></span>Додати номер телефону</button>';
+    }
+}
+
+function updateAddressDisplay(npBranch, address) {
+    var container = document.querySelector('#sectionProfile .acc-card-divider + div');
+    if (!container) return;
+    var label = container.querySelector('.acc-address-label');
+    if (!label) return;
+
+    /* Remove old content after label */
+    while (label.nextSibling) label.nextSibling.remove();
+
+    if (!npBranch && !address) {
+        var btn = document.createElement('button');
+        btn.className = 'acc-profile-add-link';
+        btn.type = 'button';
+        btn.onclick = openEditModal;
+        btn.innerHTML = '<span class="acc-profile-add-icon" aria-hidden="true"></span>Додати адресу доставки';
+        container.appendChild(btn);
+        return;
+    }
+
+    var rows = document.createElement('div');
+    rows.className = 'acc-address-rows';
+    if (npBranch) {
+        rows.innerHTML += '<div class="acc-address-row"><span class="acc-address-type">Відділення</span><span class="acc-address-val">' + escHtml(npBranch) + '</span></div>';
+    }
+    if (address) {
+        rows.innerHTML += '<div class="acc-address-row"><span class="acc-address-type">Адресна доставка</span><span class="acc-address-val">' + escHtml(address) + '</span></div>';
+    }
+    container.appendChild(rows);
+}
+
+function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ─── BONUS MODAL ─── */
+function openBonusModal() {
+    var overlay = document.getElementById('bonusModalOverlay');
+    if (overlay) {
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        var modal = document.getElementById('bonusModal');
+        if (modal) modal.focus();
+    }
+}
+function closeBonusModal() {
+    var overlay = document.getElementById('bonusModalOverlay');
+    if (overlay) {
+        overlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+}
+function closeBonusModalOutside(e) {
+    if (e.target === document.getElementById('bonusModalOverlay')) closeBonusModal();
+}
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeBonusModal(); closeEditModal(); }
+});
+
+/* ─── BONUS STATE (called from API layer) ─── */
+/* States: 0=zero, 1=accumulating, 2=discount, 3=full-pay */
+var BONUS_STATES = {
+    0: { badge: null,         balance: '0 бонусів' },
+    1: { badge: { cls: 'acc-bonus-badge--yellow', text: 'Ще накопичуємо' }, balance: '' },
+    2: { badge: { cls: 'acc-bonus-badge--green',  text: 'Знижка доступна' }, balance: '' },
+    3: { badge: { cls: 'acc-bonus-badge--green',  text: 'Вистачає на оплату' }, balance: '' }
+};
+
+function setBonusState(state, balance) {
+    for (var i = 0; i <= 3; i++) {
+        var el = document.getElementById('bonusState' + i);
+        if (el) el.hidden = (i !== state);
+    }
+    var badge = document.getElementById('bonusBadge');
+    var cfg = BONUS_STATES[state];
+    if (badge) {
+        if (cfg.badge) {
+            badge.className = 'acc-bonus-badge ' + cfg.badge.cls;
+            badge.textContent = cfg.badge.text;
+            badge.hidden = false;
+        } else {
+            badge.hidden = true;
+        }
+    }
+    var balanceEl = document.getElementById('bonusBalanceVal');
+    if (balanceEl) balanceEl.textContent = balance !== undefined ? balance + ' бонусів' : cfg.balance;
+}
+</script>
+
+</body>
+</html>

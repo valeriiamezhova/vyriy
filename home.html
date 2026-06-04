@@ -24,12 +24,12 @@
                 #F1F8FF 84%,
                 #82BADF 100%);
             min-height: 100%;
-            overflow-x: hidden;
+            overflow-x: clip;
         }
         body {
             background: transparent;
             background-image: none;
-            overflow-x: hidden;
+            overflow-x: clip;
             max-width: 100vw;
         }
         *, *::before, *::after { box-sizing: border-box; min-width: 0; }
@@ -1070,64 +1070,41 @@
             -webkit-mask-image: url('icons/align-justify.svg');
             -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
         }
-        .hp-mob-nav {
-            display: none;
-            position: fixed; inset: 0;
-            z-index: 9999;
-            background: #FFFFFF;
-            overflow-y: auto;
-            flex-direction: column;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-        .hp-mob-nav.is-open { transform: translateX(0); }
-        .hp-mob-nav-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            height: 60px;
-            border-bottom: 1px solid #E2F3FF;
-            flex-shrink: 0;
-        }
-        .hp-mob-nav-close {
-            width: 40px; height: 40px;
-            background: none; border: none;
-            cursor: pointer; padding: 0;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .hp-mob-nav-close-icon {
-            width: 24px; height: 24px;
-            background-color: #1B3F57;
-            mask-image: url('icons/x.svg');
-            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
-            -webkit-mask-image: url('icons/x.svg');
-            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
-        }
-        .hp-mob-nav-body { padding-bottom: 32px; }
-        .hp-mob-nav-list { list-style: none; padding: 0; margin: 0; }
-        .hp-mob-nav-item { border-bottom: 1px solid #E2F3FF; }
-        .hp-mob-nav-link {
-            display: block; padding: 16px;
-            font-family: 'Raleway', sans-serif;
-            font-size: 16px; font-weight: 700; color: #1B3F57;
-            text-decoration: none;
-        }
-        .hp-mob-nav-link:hover { color: #45799B; }
-        .hp-mob-nav-section-title {
-            display: block; padding: 14px 16px 4px;
-            font-family: 'Raleway', sans-serif;
-            font-size: 12px; font-weight: 700; color: #6298BD;
-            text-transform: uppercase; letter-spacing: 0.06em;
-        }
-        .hp-mob-nav-sublink {
-            display: block; padding: 11px 16px 11px 28px;
-            font-family: 'Raleway', sans-serif;
-            font-size: 15px; font-weight: 600; color: #265879;
-            text-decoration: none; border-bottom: 1px solid #F1F8FF;
-        }
-        .hp-mob-nav-sublink:last-child { border-bottom: none; }
-        .hp-mob-nav-sublink:hover { color: #1B3F57; }
+        /* ─── MOBILE HEADER + NAV ─── */
+        .hp-mob-menu-btn { display:none; width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-mob-menu-icon { width:24px; height:24px; background-color:#1B3F57; mask-image:url('icons/align-justify.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/align-justify.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-header-icons { display:none; gap:16px; align-items:center; }
+        .hp-mob-nav { display:none; position:fixed; inset:0; z-index:9999; background:#fff; flex-direction:column; transform:translateX(-100%); transition:transform .3s ease; overflow:hidden; }
+        .hp-mob-nav.is-open { transform:translateX(0); }
+        .hp-mob-nav-head { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; flex-shrink:0; border-bottom:1px solid rgba(69,121,155,.12); }
+        .hp-mob-nav-close { width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:background .15s; }
+        .hp-mob-nav-close:hover { background:#F6FBFF; }
+        .hp-mob-nav-close-icon { width:24px; height:24px; background-color:#1B3F57; mask-image:url('icons/close.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/close.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-search-wrap { padding:12px 16px; border-bottom:1px solid rgba(69,121,155,.08); flex-shrink:0; }
+        .hp-mob-nav-search { display:flex; align-items:center; gap:8px; border:1px solid #45799B; border-radius:24px; padding:9px 14px; background:#fff; }
+        .hp-mob-nav-search-input { flex:1; border:none; outline:none; font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; color:#1B3F57; background:transparent; }
+        .hp-mob-nav-search-input::placeholder { color:#45799B; }
+        .hp-mob-nav-search-icon { width:18px; height:18px; flex-shrink:0; background-color:#45799B; mask-image:url('icons/search.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/search.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-nav-scroll { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+        .hp-mob-nav-items { display:flex; flex-direction:column; }
+        .hp-mob-nav-link { display:block; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.08); transition:color .15s; }
+        .hp-mob-nav-link:hover, .hp-mob-nav-link.is-active { color:#45799B; }
+        .hp-mob-acc { border-bottom:1px solid rgba(69,121,155,.08); }
+        .hp-mob-acc-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:16px; font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; color:#0F2E43; background:none; border:none; cursor:pointer; text-align:left; transition:color .15s; }
+        .hp-mob-acc-trigger:hover, .hp-mob-acc-trigger.is-active { color:#45799B; }
+        .hp-mob-acc-chevron { width:20px; height:20px; flex-shrink:0; background-color:currentColor; mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; transition:transform .22s; }
+        .hp-mob-acc.is-open .hp-mob-acc-chevron { transform:rotate(180deg); }
+        .hp-mob-acc-body { display:none; background:#FAFCFF; }
+        .hp-mob-acc.is-open .hp-mob-acc-body { display:block; }
+        .hp-mob-acc-link { display:block; padding:12px 16px 12px 28px; font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#2E5B79; text-decoration:none; border-bottom:1px solid rgba(69,121,155,.06); transition:color .15s; }
+        .hp-mob-acc-link:last-child { border-bottom:none; }
+        .hp-mob-acc-link:hover { color:#1B3F57; }
+        .hp-mob-nav-sep { border:none; height:1px; background:rgba(69,121,155,.1); margin:0; }
+        .hp-mob-nav-footer-section { padding:20px 16px 32px; display:flex; flex-direction:column; gap:0; }
+        .hp-mob-nav-footer-title { font-family:'Raleway',sans-serif; font-size:12px; font-weight:700; color:#6298BD; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+        .hp-mob-nav-footer-link { display:block; padding:8px 0; font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#45799B; text-decoration:none; transition:color .15s; border-bottom:1px solid rgba(69,121,155,.06); }
+        .hp-mob-nav-footer-link:last-child { border-bottom:none; }
+        .hp-mob-nav-footer-link:hover { color:#1B3F57; }
         /* Mobile header icons (cart + user) */
         .hp-mob-header-icons {
             display: none;
@@ -1451,6 +1428,37 @@
             .footer-socials { order: -1; }
         }
 
+        /* ─── PACKAGE REPLACE DIALOG ─── */
+        .pkg-replace-overlay {
+            position:fixed; inset:0; z-index:10001;
+            background:rgba(15,46,67,.48); backdrop-filter:blur(2px);
+            display:flex; align-items:center; justify-content:center; padding:16px;
+            opacity:0; pointer-events:none; transition:opacity .2s;
+        }
+        .pkg-replace-overlay.is-open { opacity:1; pointer-events:auto; }
+        .pkg-replace-dialog {
+            background:#fff; border-radius:24px; padding:28px 24px;
+            max-width:400px; width:100%; display:flex; flex-direction:column; gap:16px;
+            box-shadow:0 16px 48px rgba(15,46,67,.18);
+            transform:translateY(8px); transition:transform .2s;
+        }
+        .pkg-replace-overlay.is-open .pkg-replace-dialog { transform:translateY(0); }
+        .pkg-replace-title { font-family:'Raleway',sans-serif; font-size:20px; font-weight:700; color:#1B3F57; margin:0; }
+        .pkg-replace-body  { font-family:'Raleway',sans-serif; font-size:15px; font-weight:500; color:#2E5B79; line-height:1.5; margin:0; }
+        .pkg-replace-actions { display:flex; gap:10px; }
+        .pkg-replace-cancel {
+            flex:1; height:46px; border-radius:62px; border:1.5px solid #D0D5DD; background:#fff;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:600; color:#2E5B79;
+            cursor:pointer; transition:background .15s;
+        }
+        .pkg-replace-cancel:hover { background:#F6FBFF; }
+        .pkg-replace-confirm {
+            flex:1; height:46px; border-radius:62px; border:none; background:#1B3F57;
+            font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; color:#fff;
+            cursor:pointer; transition:background .2s;
+        }
+        .pkg-replace-confirm:hover { background:#2E5B79; }
+
     </style>
 </head>
 <body>
@@ -1477,17 +1485,6 @@
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
-                <button class="nav-dropdown-trigger">Товари</button>
-                <div class="nav-dropdown-menu">
-                    <a href="#" class="nav-dropdown-item">Усі товари</a>
-                    <a href="#" class="nav-dropdown-item">Флористика</a>
-                    <a href="#" class="nav-dropdown-item">Хрести та таблички</a>
-                    <a href="#" class="nav-dropdown-item">Урни для праху</a>
-                    <a href="#" class="nav-dropdown-item">Текстиль</a>
-                    <a href="#" class="nav-dropdown-item">Аксесуари</a>
-                </div>
-            </div>
-            <div class="nav-dropdown-wrap">
                 <button class="nav-dropdown-trigger">Послуги</button>
                 <div class="nav-dropdown-menu">
                     <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
@@ -1503,6 +1500,7 @@
                     <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
                 </div>
             </div>
+            <a href="products.html" class="nav-item">Товари</a>
             <a href="#" class="nav-item">Про нас</a>
         </nav>
         <a href="home.html" class="header-logo">
@@ -1526,14 +1524,14 @@
             </div>
             <div class="header-icons">
                 <div class="icon-placeholder search-icon"></div>
-                <div class="icon-placeholder cart-icon"></div>
-                <div class="icon-placeholder account-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+                <a href="register.html" class="icon-placeholder account-icon"></a>
             </div>
         </div>
         <!-- Mobile cart + user icons (hidden on desktop) -->
         <div class="hp-mob-header-icons">
-            <div class="icon-placeholder cart-icon"></div>
-            <div class="icon-placeholder account-icon"></div>
+            <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+            <a href="register.html" class="icon-placeholder account-icon"></a>
         </div>
     </div>
 </header>
@@ -1663,7 +1661,7 @@
                 </div>
             </div>
             <div class="hp-tier-footer">
-                <button class="hp-tier-btn">Додати в кошик</button>
+                <button class="hp-tier-btn" onclick="addPackageToCart(this)">Додати в кошик</button>
             </div>
         </div>
 
@@ -1721,7 +1719,7 @@
                 </div>
             </div>
             <div class="hp-tier-footer">
-                <button class="hp-tier-btn">Додати в кошик</button>
+                <button class="hp-tier-btn" onclick="addPackageToCart(this)">Додати в кошик</button>
             </div>
         </div>
 
@@ -1787,7 +1785,7 @@
                 </div>
             </div>
             <div class="hp-tier-footer">
-                <button class="hp-tier-btn">Додати в кошик</button>
+                <button class="hp-tier-btn" onclick="addPackageToCart(this)">Додати в кошик</button>
             </div>
         </div>
 
@@ -2253,64 +2251,75 @@
     </div>
 </footer>
 
-<!-- ══════════════════════════════════════
-     MOBILE NAV OVERLAY
-══════════════════════════════════════ -->
-<div class="hp-mob-nav" id="mobNav">
+<!-- ══ MOBILE NAV ══ -->
+<div class="hp-mob-nav" id="mobNav" role="dialog" aria-modal="true" aria-label="Меню">
     <div class="hp-mob-nav-head">
-        <img src="icons/logo.svg" alt="ВИРІЙ" style="height:28px;">
-        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити">
-            <span class="hp-mob-nav-close-icon"></span>
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
         </button>
     </div>
-    <div class="hp-mob-nav-body">
-        <ul class="hp-mob-nav-list">
-            <li class="hp-mob-nav-item">
-                <a href="home.html" class="hp-mob-nav-link">Головна</a>
-            </li>
-            <li class="hp-mob-nav-item">
-                <span class="hp-mob-nav-section-title">Порядок дій</span>
-                <a href="#" class="hp-mob-nav-sublink">Що робити в першу чергу?</a>
-                <a href="#" class="hp-mob-nav-sublink">Підготовка до церемонії</a>
-                <a href="#" class="hp-mob-nav-sublink">Організація та процес поховання</a>
-                <a href="#" class="hp-mob-nav-sublink">Документи та пільги</a>
-                <a href="#" class="hp-mob-nav-sublink">Традиції, обряди та етикет</a>
-            </li>
-            <li class="hp-mob-nav-item">
-                <span class="hp-mob-nav-section-title">Послуги</span>
-                <a href="services-funeral-arrangements.html" class="hp-mob-nav-sublink">Організація поховання</a>
-                <a href="services-сremation.html" class="hp-mob-nav-sublink">Кремація тіла</a>
-                <a href="services-repatriation.html" class="hp-mob-nav-sublink">Вантаж 200 та репатріація</a>
-                <a href="services-legal.html" class="hp-mob-nav-sublink">Юридичний супровід</a>
-                <a href="services-dinners.html" class="hp-mob-nav-sublink">Поминальні обіди</a>
-                <a href="services-cemetery.html" class="hp-mob-nav-sublink">Місце на кладовищі</a>
-                <a href="services-embalmment.html" class="hp-mob-nav-sublink">Бальзамування</a>
-                <a href="services-exhumation.html" class="hp-mob-nav-sublink">Ексгумація та перепоховання</a>
-                <a href="services-storage.html" class="hp-mob-nav-sublink">Зберігання тіла</a>
-                <a href="services-transportation.html" class="hp-mob-nav-sublink">Транспортування тіла</a>
-            </li>
-            <li class="hp-mob-nav-item">
-                <span class="hp-mob-nav-section-title">Товари</span>
-                <a href="#" class="hp-mob-nav-sublink">Усі товари</a>
-                <a href="#" class="hp-mob-nav-sublink">Флористика</a>
-                <a href="#" class="hp-mob-nav-sublink">Хрести та таблички</a>
-                <a href="#" class="hp-mob-nav-sublink">Урни для праху</a>
-            </li>
-            <li class="hp-mob-nav-item">
-                <span class="hp-mob-nav-section-title">Вшанування пам'яті</span>
-                <a href="index.html" class="hp-mob-nav-sublink">Сторінка пам'яті</a>
-                <a href="#" class="hp-mob-nav-sublink">Висадка рослин</a>
-            </li>
-            <li class="hp-mob-nav-item">
-                <span class="hp-mob-nav-section-title">Психологічна підтримка</span>
-                <a href="#" class="hp-mob-nav-sublink">Як підтримати близьких</a>
-                <a href="#" class="hp-mob-nav-sublink">Короткі поради</a>
-                <a href="#" class="hp-mob-nav-sublink">Професійні консультації</a>
-            </li>
-            <li class="hp-mob-nav-item">
-                <a href="#" class="hp-mob-nav-link">Про нас</a>
-            </li>
-        </ul>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link" data-mob-page="home">Головна</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="order">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="#" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="#" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="services">Послуги<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link" data-mob-page="products">Товари</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="memory">Вшанування Пам'яті<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="index.html" class="hp-mob-acc-link">Сторінка пам'яті</a>
+                    <a href="#" class="hp-mob-acc-link">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="support">Психологічна підтримка<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="#" class="hp-mob-acc-link">Як підтримати близьких</a>
+                    <a href="#" class="hp-mob-acc-link">Короткі поради</a>
+                    <a href="#" class="hp-mob-acc-link">Професійні консультації</a>
+                </div>
+            </div>
+            <a href="#" class="hp-mob-nav-link" data-mob-page="about">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
     </div>
 </div>
 
@@ -2443,16 +2452,36 @@
 
     /* ── Mobile menu ── */
     (function() {
-        const btn   = document.getElementById('mobMenuBtn');
-        const nav   = document.getElementById('mobNav');
-        const close = document.getElementById('mobNavClose');
-        if (!btn || !nav || !close) return;
-
+        var btn = document.getElementById('mobMenuBtn');
+        var nav = document.getElementById('mobNav');
+        var cls = document.getElementById('mobNavClose');
+        if (!btn) return;
         function openNav()  { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
         function closeNav() { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
-
         btn.addEventListener('click', openNav);
-        close.addEventListener('click', closeNav);
+        cls.addEventListener('click', closeNav);
+        nav.addEventListener('click', function(e) { if (e.target === nav) closeNav(); });
+    })();
+    /* ── Mobile nav accordion ── */
+    document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+            var acc = this.closest('.hp-mob-acc');
+            var isOpen = acc.classList.contains('is-open');
+            document.querySelectorAll('.hp-mob-acc').forEach(function(a) {
+                a.classList.remove('is-open');
+                a.querySelector('.hp-mob-acc-trigger').setAttribute('aria-expanded','false');
+            });
+            if (!isOpen) { acc.classList.add('is-open'); this.setAttribute('aria-expanded','true'); }
+        });
+    });
+    /* ── Mobile nav active page ── */
+    (function() {
+        var f = window.location.pathname.split('/').pop() || 'home.html';
+        var m = { 'home.html':'home','products.html':'products','product.html':'products','index.html':'memory' };
+        var p = m[f];
+        if (!p) { var s=['services-legal','services-cemetery','services-funeral','services-cremation','services-exhumation','services-embalmment','services-repatriation','services-storage','services-transportation','services-dinners']; for(var i=0;i<s.length;i++){ if(f.indexOf(s[i])!==-1){p='services';break;} } }
+        if (!p) return;
+        document.querySelectorAll('[data-mob-page="'+p+'"]').forEach(function(el){el.classList.add('is-active');});
     })();
 
     /* ── Services mobile carousel ── */
@@ -2531,5 +2560,139 @@
     })();
 </script>
 
+<script src="cart-storage.js"></script>
+<script>
+var HOME_PACKAGES = {
+    'Турбота': {
+        id: 'pkg-turbot', name: 'Пакет "Турбота"', label: 'Базовий пакет', price: 18500,
+        items: [
+            { key:'coffin',    name:'Труна',                           attrs:'Розмір: Стандартний • Оббивка: Оксамит', price:6000,  img:'img/products/product-coffin.png',         replaceable:true },
+            { key:'floristry', name:'Флористична композиція',          attrs:'Розмір: Стандартний',                   price:1800,  img:'img/products/product-wreath-eternal.png', replaceable:true },
+            { key:'textile',   name:'Текстиль',                        attrs:'Розмір: Стандартний • Матеріал: Атлас', price:900,   img:'img/products/product-coffin.png',         replaceable:true },
+            { key:'support',   name:'Цілодобова підтримка телефоном',  price:1200, replaceable:false },
+            { key:'morgue',    name:'Перевезення тіла в морг',         price:1400, replaceable:false },
+            { key:'prep',      name:'Підготовка померлого до похорону',price:1600, replaceable:false },
+            { key:'transfer',  name:'Трансфер для труни та гостей (18 місць)', price:2800, replaceable:false },
+            { key:'brigade',   name:'Професійна плечова бригада',      price:1800, replaceable:false }
+        ]
+    },
+    'Гідність': {
+        id: 'pkg-dignity', name: 'Пакет "Гідність"', label: 'Стандартний пакет', price: 25000,
+        items: [
+            { key:'coffin',    name:'Труна',                           attrs:'Розмір: Стандартний • Оббивка: Оксамит', price:7000,  img:'img/products/product-coffin-oak.png',     replaceable:true },
+            { key:'floristry', name:'Флористика: траурний вінок',      attrs:'Розмір: Стандартний',                   price:2500,  img:'img/products/product-wreath-memory.png',  replaceable:true },
+            { key:'textile',   name:'Текстиль',                        attrs:'Розмір: Стандартний • Матеріал: Атлас', price:900,   img:'img/products/product-coffin.png',         replaceable:true },
+            { key:'support',   name:'Цілодобова підтримка телефоном',  price:1200, replaceable:false },
+            { key:'morgue',    name:'Перевезення тіла в морг',         price:1400, replaceable:false },
+            { key:'prep',      name:'Підготовка померлого до похорону',price:1600, replaceable:false },
+            { key:'transfer',  name:'Трансфер для труни та гостей (18 місць)', price:2800, replaceable:false },
+            { key:'brigade',   name:'Професійна плечова бригада',      price:1800, replaceable:false },
+            { key:'docs',      name:'Оформлення документів (РАЦС)',    price:1500, replaceable:false },
+            { key:'cross',     name:'Атрибутика: хрест та релігійний набір', price:800, replaceable:false },
+            { key:'agent',     name:'Виїзд ритуального агента',        price:500,  replaceable:false }
+        ]
+    },
+    'Шана': {
+        id: 'pkg-honor', name: 'Пакет "Шана"', label: 'Розширений пакет', price: 36000,
+        items: [
+            { key:'coffin',    name:'Труна',                           attrs:'Розмір: Стандартний • Оббивка: Оксамит', price:9000,  img:'img/products/product-coffin-walnut.png',  replaceable:true },
+            { key:'floristry', name:'Преміальна флористика',           attrs:'Авторська композиція',                  price:4000,  img:'img/products/product-wreath-sunny.png',   replaceable:true },
+            { key:'textile',   name:'Текстиль',                        attrs:'Розмір: Стандартний • Матеріал: Атлас', price:900,   img:'img/products/product-coffin.png',         replaceable:true },
+            { key:'support',   name:'Цілодобова підтримка телефоном',  price:1200, replaceable:false },
+            { key:'morgue',    name:'Перевезення тіла в морг',         price:1400, replaceable:false },
+            { key:'prep',      name:'Підготовка померлого до похорону',price:1600, replaceable:false },
+            { key:'transfer',  name:'Трансфер для труни та гостей (18 місць)', price:2800, replaceable:false },
+            { key:'brigade',   name:'Професійна плечова бригада',      price:1800, replaceable:false },
+            { key:'docs',      name:'Оформлення документів (РАЦС)',    price:1500, replaceable:false },
+            { key:'cross',     name:'Атрибутика: хрест та релігійний набір', price:800, replaceable:false },
+            { key:'agent',     name:'Виїзд ритуального агента',        price:500,  replaceable:false },
+            { key:'coord',     name:'Координатор церемонії',           price:3500, replaceable:false }
+        ]
+    }
+};
+
+var _pkgReplaceCallback = null;
+
+function _closePkgDialog() {
+    document.getElementById('pkgReplaceOverlay').classList.remove('is-open');
+    _pkgReplaceCallback = null;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('pkgReplaceConfirm').addEventListener('click', function() {
+        if (_pkgReplaceCallback) _pkgReplaceCallback();
+        _closePkgDialog();
+    });
+    document.getElementById('pkgReplaceCancel').addEventListener('click', _closePkgDialog);
+    document.getElementById('pkgReplaceOverlay').addEventListener('click', function(e) {
+        if (e.target === this) _closePkgDialog();
+    });
+});
+
+function addPackageToCart(btn) {
+    if (!window.CartStorage) return;
+    var card = btn.closest('.hp-tier-card');
+    if (!card) return;
+    var nameEl = card.querySelector('.hp-tier-name');
+    var pkgName = nameEl ? nameEl.textContent.trim() : '';
+    var pkg = HOME_PACKAGES[pkgName];
+    if (!pkg) return;
+
+    var origHTML = btn.innerHTML;
+    var cart = CartStorage.get();
+    var CHECK = '<span style="display:inline-block;width:14px;height:13px;vertical-align:middle;background-color:#fff;margin-right:6px;-webkit-mask-image:url(icons/check.svg);mask-image:url(icons/check.svg);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;"></span>';
+
+    /* Same package already in cart */
+    var sameExists = cart.some(function(i) { return i.id === pkg.id; });
+    if (sameExists) {
+        btn.style.cssText += 'background:#B3CDD9!important;color:#1B3F57!important;';
+        btn.innerHTML = 'Вже в кошику';
+        CartStorage.toast('Пакет вже є в кошику');
+        setTimeout(function() { btn.style.background = ''; btn.style.color = ''; btn.innerHTML = origHTML; }, 2000);
+        return;
+    }
+
+    /* Different package already in cart — ask to replace */
+    var existingPkg = null;
+    for (var i = 0; i < cart.length; i++) {
+        if (cart[i].type === 'package') { existingPkg = cart[i]; break; }
+    }
+    if (existingPkg) {
+        document.getElementById('pkgReplaceBody').textContent =
+            'У кошику вже є «' + existingPkg.name + '». Замінити його на «' + pkg.name + '»?';
+        _pkgReplaceCallback = function() {
+            CartStorage.remove(existingPkg.id, 'package');
+            CartStorage.add({ id: pkg.id, type: 'package', name: pkg.name, label: pkg.label, price: pkg.price, items: pkg.items, qty: 1 });
+            CartStorage.toast(pkg.name);
+            btn.disabled = true;
+            btn.style.cssText += 'background:#3C9264!important;color:#fff!important;';
+            btn.innerHTML = CHECK + 'Додано в кошик';
+            setTimeout(function() { btn.disabled = false; btn.style.background = ''; btn.style.color = ''; btn.innerHTML = origHTML; }, 2000);
+        };
+        document.getElementById('pkgReplaceOverlay').classList.add('is-open');
+        return;
+    }
+
+    /* No package in cart — add directly */
+    CartStorage.add({ id: pkg.id, type: 'package', name: pkg.name, label: pkg.label, price: pkg.price, items: pkg.items, qty: 1 });
+    CartStorage.toast(pkg.name);
+    btn.disabled = true;
+    btn.style.cssText += 'background:#3C9264!important;color:#fff!important;';
+    btn.innerHTML = CHECK + 'Додано в кошик';
+    setTimeout(function() { btn.disabled = false; btn.style.background = ''; btn.style.color = ''; btn.innerHTML = origHTML; }, 2000);
+}
+</script>
+
+<!-- ══ PACKAGE REPLACE DIALOG ══ -->
+<div class="pkg-replace-overlay" id="pkgReplaceOverlay" role="dialog" aria-modal="true" aria-labelledby="pkgReplaceTitle">
+    <div class="pkg-replace-dialog">
+        <p class="pkg-replace-title" id="pkgReplaceTitle">Замінити пакет?</p>
+        <p class="pkg-replace-body"  id="pkgReplaceBody"></p>
+        <div class="pkg-replace-actions">
+            <button class="pkg-replace-cancel"  id="pkgReplaceCancel">Скасувати</button>
+            <button class="pkg-replace-confirm" id="pkgReplaceConfirm">Замінити</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
