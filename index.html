@@ -138,17 +138,17 @@
             <div class="nav-dropdown-wrap">
                 <button class="nav-dropdown-trigger">Порядок дій</button>
                 <div class="nav-dropdown-menu">
-                    <a href="#" class="nav-dropdown-item">Що робити в першу чергу?</a>
+                    <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
                     <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
-                    <a href="#" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
                     <a href="#" class="nav-dropdown-item">Документи та пільги</a>
-                    <a href="#" class="nav-dropdown-item">Традиції, обряди та етикет</a>
+                    <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
                 <button class="nav-dropdown-trigger">Послуги</button>
                 <div class="nav-dropdown-menu">
-                    <a href="#" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
                     <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
@@ -162,7 +162,7 @@
                 </div>
             </div>
             <a href="products.html" class="nav-item">Товари</a>
-            <a href="#" class="nav-item">Про нас</a>
+            <a href="about.html" class="nav-item">Про нас</a>
         </nav>
         <a href="home.html" class="header-logo">
             <img src="icons/logo.svg" alt="ВИРИЙ" class="logo-img">
@@ -178,9 +178,9 @@
             <div class="nav-dropdown-wrap">
                 <button class="nav-dropdown-trigger">Психологічна підтримка</button>
                 <div class="nav-dropdown-menu nav-dropdown-menu--right">
-                    <a href="#" class="nav-dropdown-item">Як підтримати близьких</a>
-                    <a href="#" class="nav-dropdown-item">Короткі поради</a>
-                    <a href="#" class="nav-dropdown-item">Професійні консультації</a>
+                    <a href="how-to-support.html" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="nav-dropdown-item">Професійні консультації</a>
                 </div>
             </div>
             <div class="header-icons">
@@ -189,18 +189,79 @@
                 <a href="register.html" class="icon-placeholder account-icon"></a>
             </div>
         </div>
+    
+        <!-- Mobile cart + user icons (hidden on desktop) -->
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+            <a href="register.html" class="icon-placeholder account-icon"></a>
+        </div>
     </div>
-        <div class="hp-mob-header-icons"><a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a><a href="register.html" class="icon-placeholder account-icon"></a></div>
 </header>
+
+<!-- МОБІЛЬНА ВЕРХНЯ ПАНЕЛЬ РЕДАКТОРА -->
+<div class="mob-editor-topbar" id="mob-editor-topbar">
+    <button class="mob-topbar-btn mob-topbar-back" onclick="window.location.href='home.html'" aria-label="Назад">
+        <span class="btn-icon arrow-left-icon"></span>
+    </button>
+    <div class="save-cloud mob-save-cloud" id="mob-save-cloud">
+        <span class="btn-icon cloud-icon" style="width:18px;height:18px;background-color:#265879;"></span>
+    </div>
+    <div class="mob-topbar-spacer"></div>
+    <div class="mob-topbar-right">
+        <button class="mob-topbar-btn" onclick="enterPreviewMode()" aria-label="Попередній перегляд">
+            <span class="btn-icon eye-icon" style="width:20px;height:20px;background-color:#265879;"></span>
+        </button>
+        <button class="mob-topbar-share-btn" onclick="openShare()">
+            <span class="btn-icon users-icon mob-share-btn-icon"></span>Поділитися
+        </button>
+        <button class="mob-topbar-publish-btn" onclick="openPublishModal()">Опублікувати</button>
+    </div>
+</div>
+
+<!-- DEMO PREVIEW CLOSE BUTTON -->
+<div class="demo-preview-overlay" id="demo-preview-overlay" style="display:none">
+    <span class="demo-preview-label">Демо-сторінка • лише перегляд</span>
+    <button class="demo-preview-close" id="demo-exit-btn" title="Закрити">
+        <span class="btn-icon close-icon"></span>
+    </button>
+</div>
+
+<!-- ВІТАЛЬНИЙ ЕКРАН -->
+<div class="welcome-screen" id="welcome-screen" style="display:none">
+    <div class="welcome-card">
+        <!-- Основний стан -->
+        <div class="welcome-content" id="welcome-main">
+            <h1 class="welcome-title">Сторінка пам'яті</h1>
+            <p class="welcome-desc">Це місце, де можна розповісти історію близької людини — зберегти фотографії, спогади, слова рідних — і поділитися цим з усіма, кому це важливо.</p>
+            <button class="welcome-create-btn" id="welcome-create-btn">Створити сторінку пам'яті</button>
+            <button class="welcome-demo-btn" id="welcome-demo-btn">Подивитись приклад готової сторінки</button>
+        </div>
+        <!-- Стан: потрібен акаунт -->
+        <div class="welcome-content" id="welcome-login" style="display:none">
+            <h1 class="welcome-title">Потрібен акаунт</h1>
+            <p class="welcome-desc">Сторінка пам'яті прив'язується до вашого акаунту — це потрібно, щоб ви могли редагувати її та керувати доступом інших людей у майбутньому.</p>
+            <a href="register.html?from=memory" class="welcome-create-btn welcome-create-btn--link">Зареєструватись</a>
+            <a href="register.html?from=memory" class="welcome-auth-link">Вже є акаунт? Увійти</a>
+            <button class="welcome-back-btn" id="welcome-back-btn">← Назад</button>
+        </div>
+        <!-- Стан: ліміт сторінок -->
+        <div class="welcome-content" id="welcome-limit" style="display:none">
+            <h1 class="welcome-title">Досягнуто ліміт</h1>
+            <p class="welcome-desc">На одному акаунті можна безкоштовно зберігати до 5 сторінок пам'яті. Перейдіть до акаунту, щоб переглянути свої сторінки або видалити непотрібні.</p>
+            <a href="account.html" class="welcome-create-btn welcome-create-btn--link">Мій акаунт</a>
+            <button class="welcome-back-btn" id="welcome-limit-back-btn">← Назад</button>
+        </div>
+    </div>
+</div>
 
 <div class="editor-toolbar" id="editor-toolbar">
     <div class="toolbar-left">
-        <button class="toolbar-btn has-dropdown" onclick="toggleMenu('blocks')">Блоки</button>
+        <button class="toolbar-btn has-dropdown" onclick="toggleMenu('blocks')" data-tour="blocks">Блоки</button>
         <button class="toolbar-btn has-dropdown" onclick="toggleMenu('media')">Медіа</button>
         <button class="toolbar-btn has-dropdown" onclick="toggleMenu('bg')">Фон</button>
-        <button class="toolbar-btn has-dropdown" onclick="toggleMenu('decor')">Декор</button>
+        <button class="toolbar-btn has-dropdown" onclick="toggleMenu('decor')" data-tour="decor">Декор</button>
         <div class="toolbar-divider"></div>
-        <button class="toolbar-btn toolbar-btn-icon-left" onclick="toggleLayers()">
+        <button class="toolbar-btn toolbar-btn-icon-left" onclick="toggleLayers()" data-tour="layers">
             <span class="btn-icon layers-icon"></span>
             Шари
         </button>
@@ -226,9 +287,11 @@
         <div class="save-cloud" id="save-cloud">
             <span class="btn-icon cloud-icon"></span>
         </div>
-        <div class="toolbar-divider"></div>
     </div>
     <div class="toolbar-right">
+        <div class="toolbar-divider"></div>
+        <button class="toolbar-icon-btn" id="tour-help-btn" title="Повторити навчання"><span class="btn-icon help-circle-icon"></span></button>
+        <div class="toolbar-divider"></div>
         <button class="btn-preview">Попередній перегляд</button>
         <button class="btn-publish">Опублікувати</button>
         <button class="btn-share" onclick="openShare()">
@@ -369,7 +432,6 @@
     </div>
 </div>
             <div class="hero-right">
-                <img src="img/sticker_building.png" alt="Будівля" class="hero-building-sticker">
                 <div class="hero-info">
                     <h1>Олександр Мельник</h1>
                     <p class="dates">15.05.1950 – 24.04.2024</p>
@@ -399,65 +461,65 @@
                 <h2 class="section-title">СВІТ ЛЮДИНИ</h2>
                 <div class="world-grid">
                     <div class="world-card">
-        <div class="sticker-frame">
-            <div class="sticker-frame-placeholder">
-                <button class="frame-add-photo-btn">Фото</button>
-                <button class="frame-add-sticker-btn">Стікер</button>
-            </div>
-        </div>
-        <div class="card-body">
-            <h3>ДЕВІЗ:</h3>
-            <p>«Будувати не стіни, а мости».</p>
-        </div>
-    </div>
-    <div class="world-card">
-        <div class="sticker-frame">
-            <div class="sticker-frame-placeholder">
-                <button class="frame-add-photo-btn">Фото</button>
-                <button class="frame-add-sticker-btn">Стікер</button>
-            </div>
-        </div>
-        <div class="card-body">
-            <h3>ХОБІ:</h3>
-            <p>Реставрація старих меблів та гра на скрипці вечорами.</p>
-        </div>
-    </div>
-    <div class="world-card">
-        <div class="sticker-frame">
-            <div class="sticker-frame-placeholder">
-                <button class="frame-add-photo-btn">Фото</button>
-                <button class="frame-add-sticker-btn">Стікер</button>
-            </div>
-        </div>
-        <div class="card-body">
-            <h3>МРІЯ:</h3>
-            <p>Побачити, як посаджені ним каштани стануть вищими за дахи міста.</p>
-        </div>
-    </div>
-    <div class="world-card">
-        <div class="sticker-frame">
-            <div class="sticker-frame-placeholder">
-                <button class="frame-add-photo-btn">Фото</button>
-                <button class="frame-add-sticker-btn">Стікер</button>
-            </div>
-        </div>
-        <div class="card-body">
-            <h3>УЛЮБЛЕНА ЇЖА</h3>
-            <p>Яблучний штрудель з корицею</p>
-        </div>
-    </div>
-    <div class="world-card">
-        <div class="sticker-frame">
-            <div class="sticker-frame-placeholder">
-                <button class="frame-add-photo-btn">Фото</button>
-                <button class="frame-add-sticker-btn">Стікер</button>
-            </div>
-        </div>
-        <div class="card-body">
-            <h3>УЛЮБЛЕНІ ПІСНІ:</h3>
-            <p>Мирослав Скорик — «Мелодія»</p>
-        </div>
-    </div>
+                        <div class="sticker-frame">
+                            <div class="sticker-frame-placeholder">
+                                <button class="frame-add-photo-btn">Фото</button>
+                                <button class="frame-add-sticker-btn">Стікер</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>ДЕВІЗ:</h3>
+                            <p>«Будувати не стіни, а мости».</p>
+                        </div>
+                    </div>
+                    <div class="world-card">
+                        <div class="sticker-frame">
+                            <div class="sticker-frame-placeholder">
+                                <button class="frame-add-photo-btn">Фото</button>
+                                <button class="frame-add-sticker-btn">Стікер</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>ХОБІ:</h3>
+                            <p>Реставрація старих меблів та гра на скрипці вечорами.</p>
+                        </div>
+                    </div>
+                    <div class="world-card">
+                        <div class="sticker-frame">
+                            <div class="sticker-frame-placeholder">
+                                <button class="frame-add-photo-btn">Фото</button>
+                                <button class="frame-add-sticker-btn">Стікер</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>МРІЯ:</h3>
+                            <p>Побачити, як посаджені ним каштани стануть вищими за дахи міста.</p>
+                        </div>
+                    </div>
+                    <div class="world-card">
+                        <div class="sticker-frame">
+                            <div class="sticker-frame-placeholder">
+                                <button class="frame-add-photo-btn">Фото</button>
+                                <button class="frame-add-sticker-btn">Стікер</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>УЛЮБЛЕНА ЇЖА</h3>
+                            <p>Яблучний штрудель з корицею</p>
+                        </div>
+                    </div>
+                    <div class="world-card">
+                        <div class="sticker-frame">
+                            <div class="sticker-frame-placeholder">
+                                <button class="frame-add-photo-btn">Фото</button>
+                                <button class="frame-add-sticker-btn">Стікер</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>УЛЮБЛЕНІ ПІСНІ:</h3>
+                            <p>Мирослав Скорик — «Мелодія»</p>
+                        </div>
+                    </div>
 </div>
 <button class="world-add-card-btn">
     <span class="btn-icon plus-circle-icon"></span>
@@ -479,17 +541,16 @@
         </div>
 
         <div class="memory-section-block page-editable-block">
+            <div class="memory-content">
+                <h2>СПОГАДИ</h2>
+                <p>Олександр мав унікальну здатність бачити красу в деталях, які інші часто не помічали.</p>
+            </div>
             <div class="memory-photo">
     <img src="img/memory2.jpg" alt="Спогад" class="photo-img">
     <div class="photo-placeholder">
         <button class="placeholder-add-btn placeholder-add-photo-btn">Додати фото</button>
     </div>
 </div>
-            <img src="img/sticker_tree.png" alt="Дерево" class="memory-tree-sticker">
-            <div class="memory-content">
-                <h2>СПОГАДИ</h2>
-                <p>Олександр мав унікальну здатність бачити красу в деталях, які інші часто не помічали.</p>
-            </div>
         </div>
 
         <section class="video-block page-editable-block">
@@ -540,7 +601,11 @@
     </section>
 
     <section class="family-tribute-section page-editable-block">
-        <img src="img/clouds_bg.svg" alt="Вшанування пам'яті — Хмари та птахи" class="bg-clouds-layer">
+        <img src="img/clouds_bg.png" alt="" class="bg-clouds-layer">
+        <div class="family-tribute-birds-clip">
+            <img src="icons/desktop_birds.svg" alt="" class="family-tribute-birds-desk">
+        </div>
+        <img src="icons/footer_mobile_birds.svg" alt="" class="family-tribute-birds-mob">
         <div class="family-tribute-container">
             <div class="family-memory-card">
                 <h1>ВІД РОДИНИ</h1>
@@ -605,7 +670,7 @@
                     <ul class="footer-menu-list">
                         <li><a href="#">Головна</a></li>
                         <li><a href="#">Порядок дій</a></li>
-                        <li><a href="#">Готові пакети</a></li>
+                        <li><a href="services-packages.html">Готові пакети</a></li>
                         <li><a href="products.html">Товари</a></li>
                         <li><a href="#">Послуги</a></li>
                         <li><a href="#">Підтримка</a></li>
@@ -659,8 +724,6 @@
         <span class="btn-icon close-icon"></span>
     </button>
 </div>
-<a href="tel:+387777777" class="floating-help-btn"><span class="floating-help-btn__text">Потрібна допомога?</span><span class="floating-help-btn__icon"></span></a>
-
 <!-- ══ MOBILE NAV ══ -->
 <div class="hp-mob-nav" id="mobNav" role="dialog" aria-modal="true" aria-label="Меню">
     <div class="hp-mob-nav-head">
@@ -681,16 +744,17 @@
             <div class="hp-mob-acc">
                 <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="order">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
                 <div class="hp-mob-acc-body">
-                    <a href="#" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
                     <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
-                    <a href="#" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
                     <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
-                    <a href="#" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                    <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
                 </div>
             </div>
             <div class="hp-mob-acc">
                 <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="services">Послуги<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
                 <div class="hp-mob-acc-body">
+                    <a href="services-packages.html" class="hp-mob-acc-link">Готові пакети послуг</a>
                     <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
                     <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
                     <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
@@ -714,12 +778,12 @@
             <div class="hp-mob-acc">
                 <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="support">Психологічна підтримка<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
                 <div class="hp-mob-acc-body">
-                    <a href="#" class="hp-mob-acc-link">Як підтримати близьких</a>
-                    <a href="#" class="hp-mob-acc-link">Короткі поради</a>
-                    <a href="#" class="hp-mob-acc-link">Професійні консультації</a>
+                    <a href="how-to-support.html" class="hp-mob-acc-link">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="hp-mob-acc-link">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="hp-mob-acc-link">Професійні консультації</a>
                 </div>
             </div>
-            <a href="#" class="hp-mob-nav-link" data-mob-page="about">Про нас</a>
+            <a href="about.html" class="hp-mob-nav-link" data-mob-page="about">Про нас</a>
         </div>
         <hr class="hp-mob-nav-sep">
         <div class="hp-mob-nav-footer-section">
@@ -770,5 +834,90 @@
     })();
 </script>
 <script src="cart-storage.js"></script>
+
+<!-- ТУР: МОДАЛЬНЕ ВІКНО ПОЧАТКУ НАВЧАННЯ -->
+<div class="tour-modal-overlay" id="tour-modal-overlay" style="display:none">
+    <div class="tour-modal-box">
+        <div class="tour-modal-icon">✦</div>
+        <h2 class="tour-modal-title">Швидке знайомство з конструктором</h2>
+        <p class="tour-modal-desc">Покажемо за хвилину, як додавати блоки, міняти фото, колір і шари сторінки.</p>
+        <div class="tour-modal-actions">
+            <button class="tour-start-btn" id="tour-start-btn">Почати навчання</button>
+            <button class="tour-skip-btn" id="tour-skip-btn">Пропустити</button>
+        </div>
+    </div>
+</div>
+
+<!-- ТУР: ТУЛТІП-ПІДКАЗКА -->
+<div class="tour-tooltip" id="tour-tooltip" style="display:none">
+    <div class="tour-tooltip-header">
+        <span class="tour-step-counter" id="tour-step-counter">Крок 1 / 8</span>
+        <button class="tour-close-btn" id="tour-close-btn" title="Закрити">
+            <span class="btn-icon close-icon" style="width:14px;height:14px;background-color:#82BADF;"></span>
+        </button>
+    </div>
+    <p class="tour-tooltip-text" id="tour-tooltip-text"></p>
+    <div class="tour-tooltip-actions">
+        <button class="tour-prev-btn" id="tour-prev-btn">← Назад</button>
+        <button class="tour-next-btn" id="tour-next-btn">Далі →</button>
+    </div>
+</div>
+
+<!-- ТУР: ТОСТ ЗАВЕРШЕННЯ -->
+<div class="tour-completion-toast" id="tour-completion-toast" style="display:none">
+    <p class="tour-completion-title">Готово!</p>
+    <p class="tour-completion-desc">Якщо знадобиться підказка ще раз — натисніть «?» у нижній панелі.</p>
+</div>
+
+<!-- МОБІЛЬНИЙ ОВЕРЛЕЙ ДЛЯ ШТОРОК -->
+<div class="mob-sheet-overlay" id="mob-sheet-overlay" onclick="closeMobSheet()"></div>
+
+<!-- МОБІЛЬНА НИЖНЯ ПАНЕЛЬ ВКЛАДОК -->
+<div class="mob-editor-bottomtabs" id="mob-editor-bottomtabs">
+    <!-- Рядок дій: скасувати / повторити / тема / масштаб / довідка -->
+    <div class="mob-bottombar-actions">
+        <button class="mob-action-btn" onclick="undoAction()" aria-label="Скасувати">
+            <span class="btn-icon undo-icon mob-action-icon"></span>
+        </button>
+        <button class="mob-action-btn" onclick="redoAction()" aria-label="Повторити">
+            <span class="btn-icon redo-icon mob-action-icon"></span>
+        </button>
+        <button class="mob-action-btn" id="mob-theme-toggle" onclick="toggleTheme()" aria-label="Тема">
+            <span class="btn-icon sun-icon theme-icon-active mob-action-icon"></span>
+        </button>
+        <button class="mob-action-btn" onclick="toggleZoom()" aria-label="Масштаб">
+            <span class="btn-icon zoom-in-icon mob-action-icon" id="mob-zoom-icon"></span>
+            <span class="mob-zoom-label" id="mob-zoom-label">100%</span>
+        </button>
+        <button class="mob-action-btn" onclick="document.getElementById('tour-help-btn').click()" aria-label="Довідка">
+            <span class="btn-icon help-circle-icon mob-action-icon"></span>
+        </button>
+    </div>
+    <div class="mob-bottombar-sep"></div>
+    <!-- 5 вкладок -->
+    <div class="mob-bottombar-tabs">
+        <button class="mob-tab-btn" id="mob-tab-blocks" onclick="toggleMenu('blocks')" aria-label="Блоки">
+            <span class="btn-icon mob-tab-icon mob-blocks-icon"></span>
+            <span class="mob-tab-label">Блоки</span>
+        </button>
+        <button class="mob-tab-btn" id="mob-tab-media" onclick="toggleMenu('media')" aria-label="Медіа">
+            <span class="btn-icon mob-tab-icon mob-media-icon"></span>
+            <span class="mob-tab-label">Медіа</span>
+        </button>
+        <button class="mob-tab-btn" id="mob-tab-bg" onclick="toggleMenu('bg')" aria-label="Фон">
+            <span class="btn-icon mob-tab-icon mob-bg-icon"></span>
+            <span class="mob-tab-label">Фон</span>
+        </button>
+        <button class="mob-tab-btn" id="mob-tab-decor" onclick="toggleMenu('decor')" aria-label="Декор">
+            <span class="btn-icon mob-tab-icon mob-decor-icon"></span>
+            <span class="mob-tab-label">Декор</span>
+        </button>
+        <button class="mob-tab-btn" id="mob-tab-layers" onclick="toggleLayers()" aria-label="Шари">
+            <span class="btn-icon mob-tab-icon mob-layers-icon"></span>
+            <span class="mob-tab-label">Шари</span>
+        </button>
+    </div>
+</div>
+
 </body>
 </html>

@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вирій — Традиції, обряди та етикет</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+
+        /* ════════════════════════════════════════
+           DESIGN TOKENS
+           25: #F6FBFF | 50: #E2F3FF
+           500: #6298BD | 600: #45799B | 700: #2E5B79
+           800: #1B3F57 | 900: #0F2E43
+        ════════════════════════════════════════ */
+
+        html {
+            scroll-behavior: smooth;
+            background: linear-gradient(179.967deg, #DAF0FF 0.12%, #BAE3FF 63.91%, #F4FAFF 95.27%);
+            min-height: 100%;
+            overflow-x: clip;
+        }
+        body { background: transparent; overflow-x: clip; max-width: 100vw; }
+        *, *::before, *::after { box-sizing: border-box; min-width: 0; }
+        img { max-width: 100%; }
+
+        @media (min-width: 481px) {
+            .footer-top-container, .footer-bottom-container { max-width: 1280px; width: calc(100% - 80px); }
+        }
+
+        /* ── Scroll reveal ── */
+        .te-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .te-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* Mobile title line break — hidden on desktop */
+        .te-title-br { display: none; }
+
+        /* Mobile blobs — hidden on desktop */
+        .te-mob-blob, .te-sec2-mob-blob {
+            display: none;
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: auto;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Floating help button ── */
+        @keyframes hp-help-ring {
+            0%   { box-shadow: 0 0 0 0   rgba(27,63,87,.38), 0px 8px 24px rgba(27,63,87,.22); }
+            60%  { box-shadow: 0 0 0 10px rgba(27,63,87,0),  0px 8px 24px rgba(27,63,87,.22); }
+            100% { box-shadow: 0 0 0 0   rgba(27,63,87,0),   0px 8px 24px rgba(27,63,87,.22); }
+        }
+        .hp-help-btn {
+            position: fixed; right: 25px; bottom: 40px; z-index: 9999;
+            display: inline-flex; align-items: center; gap: 12px;
+            background: #1B3F57; border-radius: 40px; padding: 12px 18px;
+            width: 236px; cursor: pointer; text-decoration: none; border: none;
+            animation: hp-help-ring 2.8s ease-out infinite; transition: background .2s;
+        }
+        .hp-help-btn:hover { background: #2E5B79; animation-play-state: paused; box-shadow: 0px 12px 28px rgba(27,63,87,.35); }
+        .hp-help-btn span { font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; line-height: 1; flex: 1; }
+        .hp-help-icon { width: 34px; height: 34px; background-color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .hp-help-icon::after { content: ''; width: 17px; height: 17px; background-color: #1B3F57; mask-image: url('icons/phone-call.svg'); mask-repeat: no-repeat; mask-position: center; mask-size: contain; -webkit-mask-image: url('icons/phone-call.svg'); -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain; }
+
+        /* ════════════════════════════════════════
+           BREADCRUMBS — dark variant
+        ════════════════════════════════════════ */
+        .te-breadcrumbs {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 0 0 100px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-sizing: border-box;
+        }
+        .te-bc-link {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #1B3F57; text-decoration: none;
+        }
+        .te-bc-link:hover { text-decoration: underline; }
+        .te-bc-sep {
+            width: 18px; height: 18px; flex-shrink: 0;
+            background-color: #1B3F57;
+            mask-image: url('icons/chevron-right.svg');
+            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/chevron-right.svg');
+            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+        }
+        .te-bc-current {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 600; line-height: 1.4;
+            color: #1B3F57;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 1 — TRADITION RELIGIONS
+        ════════════════════════════════════════ */
+        .te-sec1 {
+            padding: 0 80px 64px;
+            position: relative;
+            z-index: 1;
+        }
+        .te-white-card {
+            background: #FFFFFF;
+            border-radius: 34px;
+            box-shadow: 0px 4px 6px -2px rgba(56,90,116,.03),
+                        0px 12px 16px -4px rgba(47,82,107,.08);
+            padding: 64px 115px;
+            width: 1017px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .te-card-inner {
+            width: 720px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* ── Title block ── */
+        .te-title-block {
+            position: relative;
+            height: 58px;
+            overflow: visible;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-bottom: 34px;
+        }
+        .te-title-wave {
+            position: absolute;
+            left: -4.5px;
+            top: -13px;
+            width: 716px;
+            height: 83px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .te-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            text-align: center; position: absolute; z-index: 1;
+            left: 50%; transform: translateX(-50%);
+            top: -2px; width: 806px;
+        }
+
+        /* ── Intro subtitle ── */
+        .te-intro-subtitle {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #2E5B79; text-align: center; margin: 0 0 44px;
+            width: 100%;
+        }
+
+        /* ── Religion block ── */
+        .te-religion-block {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .te-relig-header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .te-relig-name {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; line-height: 1.2;
+            text-transform: uppercase; color: #2E5B79; margin: 0;
+        }
+        .te-relig-desc {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+
+        /* ── Tradition cards ── */
+        .te-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .te-card {
+            border-radius: 24px;
+            padding: 16px 24px;
+            box-shadow: 0px 12px 16px 0px rgba(47,82,107,.08),
+                        0px 4px 6px 0px rgba(56,90,116,.03);
+            display: flex;
+            flex-direction: column;
+        }
+        .te-card--gap8  { gap: 8px; }
+        .te-card--gap16 { gap: 16px; }
+        .te-card-1 { background: #6298BD; }
+        .te-card-2 { background: #45799B; }
+        .te-card-3 { background: #2E5B79; }
+        .te-card-4 { background: #1B3F57; }
+        .te-card-head {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #F6FBFF; margin: 0;
+        }
+        .te-card-body {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #F6FBFF; margin: 0;
+        }
+        .te-card-body strong { font-weight: 600; }
+
+        /* ── Alert block ── */
+        .te-alert {
+            background: #E2F3FF;
+            border-radius: 24px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .te-alert-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px; font-weight: 500; line-height: 1.4;
+            color: #0F2E43; margin: 0; max-width: 589px;
+        }
+        .te-alert-text strong { font-weight: 700; }
+        .te-alert-icon {
+            width: 24px; height: 24px; flex-shrink: 0;
+            background-color: #1B3F57;
+            mask-image: url('icons/alert-circle.svg');
+            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/alert-circle.svg');
+            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+        }
+
+        /* ── Religion divider ── */
+        .te-relig-divider {
+            border: none;
+            border-top: 2px solid #F1F1F1;
+            margin: 44px 0;
+            width: 100%;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 2 — ETIQUETTE TIMELINE
+        ════════════════════════════════════════ */
+        .te-sec2 {
+            background: #FFFFFF;
+            padding: 64px 80px;
+            position: relative;
+            z-index: 2;
+        }
+        .te-sec2-card {
+            border-radius: 34px;
+            padding: 64px 115px;
+            width: 100%;
+        }
+        .te-sec2-inner {
+            width: 720px;
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Section 2 title */
+        .te-sec2-title-block {
+            position: relative;
+            height: 66px;
+            overflow: visible;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-bottom: 34px;
+        }
+        .te-sec2-title-wave {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -23px;
+            width: 920px;
+            height: 83px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .te-sec2-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            text-align: center; position: absolute; z-index: 1;
+            left: 50%; transform: translateX(-50%);
+            top: -12px; white-space: nowrap;
+        }
+
+        /* Section 2 subtitle */
+        .te-sec2-subtitle {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #2E5B79; text-align: center; margin: 0 0 44px;
+            white-space: pre-wrap; width: 100%;
+        }
+
+        /* Timeline */
+        .te-tl-row {
+            display: flex;
+            gap: 38px;
+            align-items: flex-start;
+        }
+        .te-tl-left {
+            width: 54px;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .te-tl-line {
+            position: absolute;
+            left: 25px;
+            top: 54px;
+            width: 2px;
+            background: #1B3F57;
+            z-index: 0;
+        }
+        .te-tl-circles {
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+            position: relative;
+            z-index: 1;
+        }
+        .te-tl-circle-wrap {
+            display: flex;
+            align-items: flex-start;
+        }
+        .te-tl-circle {
+            width: 54px; height: 54px;
+            border: 2px solid #1B3F57;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 500; line-height: 1.15;
+            color: #1B3F57;
+            background: #FFFFFF;
+            flex-shrink: 0;
+        }
+        .te-tl-items {
+            width: 628px;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+        .te-tl-item {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .te-tl-item-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #1B3F57; margin: 0;
+        }
+        .te-tl-paras {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .te-tl-para {
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0 0 16px;
+        }
+        .te-tl-para:last-child { margin-bottom: 0; }
+        .te-tl-para strong { font-weight: 700; }
+
+        /* ════════════════════════════════════════
+           SECTION 3 — ЩО ДАЛІ? (shadow, dark text)
+        ════════════════════════════════════════ */
+        .te-sec3 {
+            padding: 0 80px;
+            position: relative;
+            z-index: 3;
+        }
+        .te-next-wrap {
+            border-radius: 34px;
+            padding: 64px 115px;
+            background: transparent;
+        }
+        .te-next-head {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 34px;
+        }
+        .te-next-h2 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            text-align: center;
+        }
+        .te-next-subtitle {
+            font-family: 'Raleway', sans-serif;
+            font-size: 22px; font-weight: 500; line-height: 1.2;
+            color: #2E5B79; margin: 0; text-align: center;
+            max-width: 696px;
+        }
+        .te-next-links {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+        }
+        .te-next-link-card {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0px 4px 6px 0px rgba(56,90,116,.03),
+                        0px 12px 16px 0px rgba(47,82,107,.08);
+            width: 336px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 16px;
+            text-decoration: none;
+            align-self: stretch;
+            transition: box-shadow .2s, transform .2s;
+        }
+        .te-next-link-card:hover {
+            box-shadow: 0px 8px 16px -4px rgba(56,90,116,.08),
+                        0px 20px 28px -8px rgba(47,82,107,.12);
+            transform: translateY(-2px);
+        }
+        .te-next-card-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+            height: 100%;
+        }
+        .te-next-card-texts {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-self: stretch;
+        }
+        .te-next-card-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+        }
+        .te-next-card-title--narrow { max-width: 217px; }
+        .te-next-card-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+        .te-arrow-icon {
+            width: 54px; height: 54px;
+            background: #E2F3FF;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: background .2s, transform .2s;
+        }
+        .te-next-link-card:hover .te-arrow-icon { background: #CEEBFF; transform: scale(1.08); }
+        .te-arrow-icon::after {
+            content: '';
+            width: 26px; height: 26px;
+            background-color: #1B3F57;
+            mask-image: url('icons/arrow-right.svg');
+            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/arrow-right.svg');
+            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+        }
+
+        /* ════════════════════════════════════════
+           FINAL SECTION
+        ════════════════════════════════════════ */
+        .te-final {
+            position: relative;
+            height: 691px;
+            overflow: visible;
+            margin-top: 64px;
+            z-index: 1;
+        }
+        .te-final-bg {
+            position: absolute;
+            left: 0; right: 0;
+            top: -240px;
+            height: calc(100% + 240px);
+            background-image: url('img/clouds_bg.png');
+            background-size: 110% auto;
+            background-position: center top;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+        @keyframes te-birds-spin-desk {
+            0%   { transform: translate(-50%, -50%) rotate(0deg);    }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+        @keyframes te-birds-spin-mob {
+            0%   { transform: translateX(-50%) rotate(0deg);    }
+            100% { transform: translateX(-50%) rotate(-360deg); }
+        }
+        .te-final-birds-desk {
+            position: absolute;
+            left: 50%; top: calc(50% + 180px);
+            transform: translate(-50%, -50%);
+            transform-origin: center center;
+            width: 110%; max-width: 1200px; height: auto;
+            z-index: 1; pointer-events: none;
+            animation: te-birds-spin-desk 70s linear infinite;
+        }
+        .te-final-birds-mob {
+            display: none;
+            position: absolute;
+            left: 50%; top: -56px;
+            transform: translateX(-50%);
+            transform-origin: center center;
+            width: 160vw; height: auto;
+            z-index: 2; pointer-events: none;
+        }
+        .te-birds-clip {
+            position: absolute; inset: 0;
+            overflow: hidden; pointer-events: none; z-index: 1;
+        }
+        .te-final-content {
+            position: relative; z-index: 2;
+            height: 100%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 48px; padding: 0 80px;
+        }
+        .te-final-texts {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 24px;
+        }
+        .te-final-h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 64px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            text-align: center; max-width: 788px;
+        }
+        .te-final-sub {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 0;
+        }
+        .te-final-p {
+            font-family: 'Raleway', sans-serif;
+            font-size: 22px; font-weight: 500; line-height: 1.2;
+            color: #2E5B79; margin: 0; text-align: center;
+        }
+        .te-final-p--bold { font-weight: 600; }
+        .te-final-btn {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 700; line-height: 1;
+            text-transform: uppercase; color: #FFFFFF;
+            background: #1B3F57; border-radius: 32px;
+            padding: 24px 34px;
+            display: inline-flex; align-items: center; justify-content: center;
+            text-decoration: none; cursor: pointer; border: none;
+            transition: background .2s;
+        }
+        .te-final-btn:hover { background: #45799B; }
+
+        .site-footer { position: relative; z-index: 2; }
+
+        /* ════════════════════════════════════════
+           MOBILE NAV
+        ════════════════════════════════════════ */
+
+        /* ════════════════════════════════════════
+           MOBILE RESPONSIVE
+        ════════════════════════════════════════ */
+        @media (max-width: 1100px) {
+            .te-white-card { width: auto; padding: 48px 60px; }
+            .te-card-inner { width: 100%; }
+            .te-title { font-size: 36px; width: auto; white-space: normal; }
+            .te-sec2-card { padding: 48px 60px; }
+            .te-sec2-inner { width: 100%; }
+            .te-sec2-title { font-size: 36px; white-space: normal; }
+            .te-next-links { flex-wrap: wrap; }
+            .te-next-link-card { flex: 1; min-width: 280px; }
+            .te-tl-items { width: auto; flex: 1; }
+        }
+        @media (max-width: 900px) {
+            .te-sec1, .te-sec3 { padding-left: 20px; padding-right: 20px; }
+            .te-sec2 { padding: 48px 20px; }
+            .te-white-card { padding: 40px 32px; }
+            .te-breadcrumbs { padding-left: 20px; }
+            .te-final-h1 { font-size: 40px; }
+        }
+        @media (max-width: 768px) {
+
+            .te-breadcrumbs { padding-left: 16px; height: 54px; }
+            .te-sec1 { padding-left: 16px; padding-right: 16px; }
+            .te-sec2 { padding: 32px 16px; }
+            .te-sec3 { padding: 32px 16px; }
+            .te-white-card { padding: 32px 20px; border-radius: 20px; }
+            .te-sec2-card { padding: 32px 20px; border-radius: 20px; }
+            .te-title-block { height: auto; width: 100%; margin-left: 0; margin-bottom: 20px; }
+            .te-title { font-size: 36px; white-space: normal; text-align: center; position: static; transform: none; width: auto; }
+            .te-title-wave { display: none; }
+            .te-sec2-title-block { height: auto; width: 100%; margin-left: 0; margin-bottom: 20px; }
+            .te-sec2-title { font-size: 36px; white-space: normal; text-align: center; position: static; transform: none; }
+            .te-sec2-title-wave { display: none; }
+            .te-intro-subtitle { font-size: 16px; margin-bottom: 28px; }
+            .te-relig-name { font-size: 18px; }
+            .te-card-head { font-size: 17px; }
+
+            .te-tl-row { flex-direction: column; gap: 0; }
+            .te-tl-left { display: none; }
+            .te-tl-items { width: 100%; gap: 28px; }
+
+            .te-next-wrap { padding: 32px 20px; border-radius: 20px; }
+            .te-next-h2 { font-size: 28px; }
+            .te-next-subtitle { font-size: 16px; }
+            .te-next-links { flex-direction: column; align-items: center; }
+            .te-next-link-card { width: 100%; max-width: 400px; }
+            .te-next-card-title { font-size: 18px; }
+            .te-next-card-title--narrow { max-width: 100%; }
+
+            .te-final { height: auto; padding: 64px 16px; margin-top: 32px; overflow: hidden; }
+            .te-final-bg { top: 0; height: 100%; background-size: auto; }
+            .te-final-content { position: static; padding: 0; height: auto; }
+            .te-final-h1 { font-size: 28px; }
+            .te-final-p { font-size: 16px; }
+            .te-final-birds-desk { display: none; }
+            .te-final-birds-mob { display: block; animation: te-birds-spin-mob 70s linear infinite; }
+
+            .footer-top-container, .footer-bottom-container { width: calc(100% - 32px); }
+        }
+        @media (max-width: 480px) {
+            /* Floating help button → round */
+            .hp-help-btn { width: 60px; height: 60px; border-radius: 50%; padding: 13px; gap: 0; right: 12px; bottom: 20px; }
+            .hp-help-btn span { display: none; }
+
+            /* Breadcrumbs */
+            .te-breadcrumbs { height: 44px; }
+            .te-bc-link, .te-bc-current { font-size: 13px; }
+            .te-bc-sep { width: 14px; height: 14px; }
+
+            /* Section paddings */
+            .te-sec1 { padding-bottom: 32px; }
+
+            /* Cards */
+            .te-white-card { padding: 24px 16px; }
+            .te-sec2-card { padding: 24px 16px; }
+            .te-next-wrap { padding: 24px 16px; }
+
+            /* Religion block spacing */
+            .te-relig-divider { margin: 24px 0; }
+            .te-relig-name { font-size: 20px; }
+
+            /* Title blobs */
+            .te-title-br { display: inline; }
+            .te-mob-blob { display: block; }
+            .te-sec2-mob-blob { display: block; }
+
+            /* Titles */
+            .te-title { font-size: 36px; text-align: center; }
+            .te-sec2-title { font-size: 36px; text-align: center; }
+            .te-intro-subtitle { font-size: 16px; margin-bottom: 24px; }
+            .te-sec2-subtitle { font-size: 16px; margin-bottom: 28px; }
+            .te-tl-item-title { font-size: 18px; }
+
+            /* Timeline circles restored */
+            .te-tl-left { display: block; width: 45px; }
+            .te-tl-row { flex-direction: row; gap: 16px; }
+            .te-tl-items { gap: 26px; }
+            .te-tl-circle-wrap { height: 45px; }
+            .te-tl-circle { width: 45px; height: 45px; font-size: 20px; }
+            .te-tl-line { left: 22px; top: 45px; }
+
+            /* "Що далі?" */
+            .te-next-h2 { font-size: 36px; }
+            .te-next-link-card { max-width: 100%; }
+            .te-next-card-title { font-size: 20px; }
+
+            /* Final section */
+            .te-final { padding: 32px 16px; min-height: 503px; display: flex; align-items: center; justify-content: center; }
+            .te-final-bg { background-image: url('img/clouds_mobile.png'); background-position: center; background-size: auto; }
+            .te-final-content { position: relative; z-index: 3; gap: 24px; width: 100%; }
+            .te-final-texts { gap: 16px; }
+            .te-final-h1 { font-size: 36px; }
+            .te-final-btn { font-size: 16px; padding: 16px 22px; align-self: stretch; justify-content: center; }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     HEADER
+════════════════════════════════════ -->
+<header class="site-header">
+    <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню">
+            <span class="hp-mob-menu-icon"></span>
+        </button>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-item">Головна</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger nav-active" style="color:#45799B;">Порядок дій</button>
+                <div class="nav-dropdown-menu">
+                    <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="traditions-rites-etiquette.html" class="nav-dropdown-item nav-dropdown-active">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Послуги</button>
+                <div class="nav-dropdown-menu">
+                    <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="products.html" class="nav-item">Товари</a>
+            <a href="about.html" class="nav-item">Про нас</a>
+        </nav>
+        <a href="home.html" class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
+        </a>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="how-to-support.html" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="nav-dropdown-item">Професійні консультації</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+                <a href="register.html" class="icon-placeholder account-icon"></a>
+            </div>
+        </div>
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+            <a href="register.html" class="icon-placeholder account-icon"></a>
+        </div>
+    </div>
+</header>
+
+<!-- ════════════════════════════════════
+     BREADCRUMBS — dark
+════════════════════════════════════ -->
+<div class="te-breadcrumbs">
+    <a href="what-to-do-first.html" class="te-bc-link">Порядок дій</a>
+    <span class="te-bc-sep" aria-hidden="true"></span>
+    <span class="te-bc-current">Традиції, обряди та етикет</span>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 1 — ТРАДИЦІЇ, ОБРЯДИ ТА ЕТИКЕТ
+════════════════════════════════════ -->
+<section class="te-sec1">
+    <div class="te-white-card te-reveal">
+        <div class="te-card-inner">
+
+            <!-- Title -->
+            <div class="te-title-block">
+                <img src="icons/union_wave_light.svg" alt="" class="te-title-wave" aria-hidden="true">
+                <img src="icons/blob_procedure_mobile_large.svg" alt="" class="te-mob-blob" aria-hidden="true">
+                <h1 class="te-title">Традиції, обряди<br class="te-title-br"> та етикет</h1>
+            </div>
+
+            <!-- Subtitle -->
+            <p class="te-intro-subtitle">Розуміння релігійних канонів та правил поведінки допомагає родині організувати все духовно правильно, щоб гідно й без зайвих непорозумінь провести близьку людину в останню путь.</p>
+
+            <!-- ══ ПРАВОСЛАВНІ ТРАДИЦІЇ ══ -->
+            <div class="te-religion-block">
+                <div class="te-relig-header">
+                    <p class="te-relig-name">Православні традиції</p>
+                    <p class="te-relig-desc">Найбільш поширена обрядовість в Україні, де кожен етап символізує майбутнє воскресіння душі.</p>
+                </div>
+                <div class="te-cards">
+
+                    <div class="te-card te-card-1 te-card--gap8">
+                        <p class="te-card-head">Підготовка тіла та одяг:</p>
+                        <p class="te-card-body">Померлого ховають у цивільному одязі (бажано новому, світлих або стриманих тонів). На людину обов'язково вдягають <strong>натільний хрестик</strong>. Руки складають на грудях хрестоподібно (права поверх лівої), вкладаючи в них невеликий хрест або іконку (чоловікам — Ісуса Христа, жінкам — Богородиці).</p>
+                    </div>
+
+                    <div class="te-card te-card-2 te-card--gap8">
+                        <p class="te-card-head">Атрибутика в труні:</p>
+                        <p class="te-card-body">На лоб померлого покладають паперовий вінець із зображенням святих та текстом молитви — це символ віри та духовної перемоги. Поверх одягу тіло повністю (зазвичай по груди або шию) накривають спеціальним білим ритуальним покривалом. Перед закриттям труни обличчя закривають цим покривалом повністю.</p>
+                    </div>
+
+                    <div class="te-card te-card-3 te-card--gap8">
+                        <p class="te-card-head">Чин відспівування:</p>
+                        <p class="te-card-body">Заупокійна служба триває від 30 до 50 хвилин. Вона може проходити в храмі, капличці, залі прощання або на цвинтарі. Під час молитви присутні стоять із запаленими свічками.</p>
+                    </div>
+
+                    <div class="te-card te-card-4 te-card--gap8">
+                        <p class="te-card-head">Поховання:</p>
+                        <p class="te-card-body">Труну ховають обличчям до Сходу (звідки за віруванням прийде Христос під час Другого пришестя). Тимчасовий дерев'яний чи металевий хрест встановлюють у ногах померлого. Під час опускання труни кожен присутній кидає в могилу жменю землі.</p>
+                    </div>
+
+                </div>
+
+                <!-- Alert block — Orthodox only -->
+                <div class="te-alert">
+                    <p class="te-alert-text"><strong>Важливо знати:</strong> Православна церква суворо <strong>забороняє класти</strong> в труну <strong>сторонні побутові речі</strong> (гроші, окуляри, прикраси, телефони) — це вважається марновірством. Також історично <strong>не заохочується кремація</strong> (бажано ховати в землю), хоча у великих містах церква ставиться до неї поблажливо.</p>
+                    <span class="te-alert-icon" aria-hidden="true"></span>
+                </div>
+            </div>
+
+            <hr class="te-relig-divider">
+
+            <!-- ══ КАТОЛИЦИЗМ ТА ГРЕКО-КАТОЛИЦИЗМ ══ -->
+            <div class="te-religion-block">
+                <div class="te-relig-header">
+                    <p class="te-relig-name">Католицизм та Греко-католицизм</p>
+                    <p class="te-relig-desc">Західний та греко-католицький обряди відрізняються більшою стриманістю, строгістю форм та акцентом на тиху спільну молитву громади.</p>
+                </div>
+                <div class="te-cards">
+
+                    <div class="te-card te-card-1 te-card--gap16">
+                        <p class="te-card-head">Підготовка тіла та одяг:</p>
+                        <p class="te-card-body">Померлого вмивають та вдягають у чистий, охайний світлий або темний цивільний одяг класичного крою. Обличчя та руки залишають відкритими. Паперовий вінець на лоб не покладається, а тіло не накривають релігійними простирадлами з малюнками.</p>
+                    </div>
+
+                    <div class="te-card te-card-2 te-card--gap16">
+                        <p class="te-card-head">Атрибутика в руках:</p>
+                        <p class="te-card-body">Руки покійного складають на грудях. Замість іконок у них традиційно вкладають <strong>розп'яття (хрест) </strong>або <strong>вервицю (розарій)</strong> — молитовне намисто, за яким родина молиться напередодні похорону.</p>
+                    </div>
+
+                    <div class="te-card te-card-3 te-card--gap16">
+                        <p class="te-card-head">Заупокійна Меса (Літургія):</p>
+                        <p class="te-card-body">Прощання складається з читання Розарію (часто ввечері напередодні похорону в домі чи капличці) та Святої Меси в костелі чи храмі безпосередньо в день погребіння. Атмосфера богослужіння дуже строга, зазвичай супроводжується грою на органі або хоровим співом. Великі свічки горять лише навколо самої труни, гостям їх роздають рідко.</p>
+                    </div>
+
+                    <div class="te-card te-card-4 te-card--gap16">
+                        <p class="te-card-head">Поховання та кремація:</p>
+                        <p class="te-card-body">Католицька церква <strong>офіційно дозволяє кремацію,</strong> якщо вона обрана не з антирелігійних міркувань. Проте прах обов'язково має бути похований у землю чи в колумбарій (розвіювати його або зберігати урну вдома заборонено). На кладовищі хрест може встановлюватися як у ногах, так і в голові (залежно від місцевих парафіяльних традицій).</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <hr class="te-relig-divider">
+
+            <!-- ══ ТРАДИЦІЇ ІУДАЇЗМУ ══ -->
+            <div class="te-religion-block">
+                <div class="te-relig-header">
+                    <p class="te-relig-name">Традиції Іудаїзму</p>
+                    <p class="te-relig-desc">Одна з найбільш строгих ритуальних традицій. Головний принцип — максимальна скромність, повна рівність усіх людей перед Богом після смерті та швидкість процесу.</p>
+                </div>
+                <div class="te-cards">
+
+                    <div class="te-card te-card-1 te-card--gap16">
+                        <p class="te-card-head">Терміни та підготовка тіла:</p>
+                        <p class="te-card-body">Поховання має відбутися якомога швидше, в ідеалі — в день смерті (ховати в суботу чи великі релігійні свята заборонено). Тіло категорично заборонено бальзамувати, робити посмертний макіяж чи будь-які косметичні процедури. Обмивання проводить виключно єврейське ритуальне братство.</p>
+                    </div>
+
+                    <div class="te-card te-card-2 te-card--gap16">
+                        <p class="te-card-head">Одяг та труна:</p>
+                        <p class="te-card-body">Померлого вдягають у простий білий тканинний одяг без кишень, щоб підкреслити: людина приходить у світ ні з чим і нічого матеріального з собою не забирає. Труна має бути максимально простою, з необробленого дерева, без жодних прикрас, оббивки тканин чи металевих цвяхів.</p>
+                    </div>
+
+                    <div class="te-card te-card-3 te-card--gap16">
+                        <p class="te-card-head">Процес прощання:</p>
+                        <p class="te-card-body">Церемонія триває дуже коротко. Відкривати труну для публічного огляду суворо заборонено, оскільки це вважається приниженням гідності того, хто вже не може відповісти на погляд. Живі чи штучні квіти, вінки, свічки та траурна музика на іудейському похороні <strong>заборонені.</strong></p>
+                    </div>
+
+                    <div class="te-card te-card-4 te-card--gap16">
+                        <p class="te-card-head">Обряди близьких:</p>
+                        <p class="te-card-body">Перед початком процесії найближчі родичі роблять надріз на своєму одязі (обряд Кріа) на знак глибокої розпачі. На іудейські могили ніколи не приносять квіти — замість них на надгробок кладуть невеликі камінці як символ пам'яті.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div><!-- /te-card-inner -->
+    </div><!-- /te-white-card -->
+</section>
+
+<!-- ════════════════════════════════════
+     SECTION 2 — ЗАГАЛЬНИЙ ТРАУРНИЙ ЕТИКЕТ
+════════════════════════════════════ -->
+<section class="te-sec2">
+    <div class="te-sec2-card te-reveal">
+        <div class="te-sec2-inner">
+
+            <!-- Title -->
+            <div class="te-sec2-title-block">
+                <img src="icons/union_wave_light.svg" alt="" class="te-sec2-title-wave" aria-hidden="true">
+                <img src="icons/blob_procedure_mobile_large.svg" alt="" class="te-sec2-mob-blob" aria-hidden="true">
+                <h2 class="te-sec2-title">Загальний траурний етикет</h2>
+            </div>
+
+            <!-- Subtitle -->
+            <p class="te-sec2-subtitle">Незалежно від релігійних поглядів чи формату церемонії, існують універсальні правила поваги та етикету, яких варто дотримуватися&#10;всім відвідувачам.</p>
+
+            <!-- Timeline -->
+            <div class="te-tl-row">
+
+                <!-- Left: circles + line -->
+                <div class="te-tl-left" aria-hidden="true">
+                    <div class="te-tl-line" id="teTlLine"></div>
+                    <div class="te-tl-circles">
+                        <div class="te-tl-circle-wrap" id="teTlCircle1"><div class="te-tl-circle">1</div></div>
+                        <div class="te-tl-circle-wrap" id="teTlCircle2"><div class="te-tl-circle">2</div></div>
+                    </div>
+                </div>
+
+                <!-- Right: items -->
+                <div class="te-tl-items">
+
+                    <!-- Item 1 -->
+                    <div class="te-tl-item" id="teTlItem1">
+                        <p class="te-tl-item-title">Правила поведінки та дрес-код</p>
+                        <div class="te-tl-paras">
+                            <p class="te-tl-para"><strong>Одяг:</strong> Має бути стриманим, закритим і в темних тонах (чорний, темно-сірий, глибокий синій). Чоловіки знімають головні убори перед тим, як зайти до храму чи залу прощання. Для жінок у православних храмах хустка є обов'язковою, у костелах — бажаною, але загалом достатньо просто охайного вигляду без яскравих акцентів.</p>
+                            <p class="te-tl-para"><strong>Атмосфера:</strong> Голосні розмови, сміх або активне обговорення сторонніх побутових тем неприпустимі. Мобільні телефони слід обов'язково перевести в беззвучний режим або вимкнути до початку процесії.</p>
+                            <p class="te-tl-para"><strong>Живі квіти:</strong> Якщо ви приносите квіти, їхня кількість в Україні традиційно має бути парною. Намагайтеся уникати занадто яскравих, обгорткових паперів чи різнокольорових стрічок — флористика має бути лаконічною.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="te-tl-item" id="teTlItem2">
+                        <p class="te-tl-item-title">Як висловити співчуття та підтримати</p>
+                        <div class="te-tl-paras">
+                            <p class="te-tl-para"><strong>Слова підтримки:</strong> Коротка і щира фраза («Розділяю ваше горе», «Прийміть мої глибокі співчуття», «Світла пам'ять») є набагато кращою за довгі промови. Якщо ви не є близьким родичем, намагайтеся не втомлювати сім'ю розпитуваннями.</p>
+                            <p class="te-tl-para"><strong>Конкретна допомога:</strong> Замість стандартного «якщо щось треба — дзвони», людям у стані шоку краще пропонувати конкретні дії: «я можу взяти на себе логістику для гостей», «я допоможу зустріти родичів», «я побуду з дітьми». Якщо родина закрилася і хоче побути в тиші — просто будьте поруч, ваша фізична присутність та мовчазна підтримка часто є найціннішими.</p>
+                        </div>
+                    </div>
+
+                </div><!-- /te-tl-items -->
+            </div><!-- /te-tl-row -->
+
+        </div><!-- /te-sec2-inner -->
+    </div><!-- /te-sec2-card -->
+</section>
+
+<!-- ════════════════════════════════════
+     SECTION 3 — ЩО ДАЛІ?
+════════════════════════════════════ -->
+<section class="te-sec3">
+    <div class="te-next-wrap te-reveal">
+        <div class="te-next-head">
+            <h2 class="te-next-h2">Що далі?</h2>
+            <p class="te-next-subtitle">Ми підготували детальні матеріали, які допоможуть вам зорієнтуватися в подальших організаційних питаннях. Оберіть розділ, який вас цікавить зараз:</p>
+        </div>
+        <div class="te-next-links">
+
+            <!-- Card 1 -->
+            <a href="funeral-process.html" class="te-next-link-card">
+                <div class="te-next-card-inner">
+                    <div class="te-next-card-texts">
+                        <h3 class="te-next-card-title">Організація та процес поховання</h3>
+                        <p class="te-next-card-text"><strong style="font-weight:600;">Повний цикл організації.</strong> Від вибору місця на кладовищі до організації поминального обіду. Як все відбувається крок за кроком.</p>
+                    </div>
+                    <div class="te-arrow-icon" aria-hidden="true"></div>
+                </div>
+            </a>
+
+            <!-- Card 2 -->
+            <a href="ceremony-preparation.html" class="te-next-link-card">
+                <div class="te-next-card-inner">
+                    <div class="te-next-card-texts">
+                        <h3 class="te-next-card-title te-next-card-title--narrow">Підготовка до церемонії</h3>
+                        <p class="te-next-card-text"><strong style="font-weight:600;">Турбота про гідний вигляд.</strong> Все про підготовку тіла, вибір атрибутики, одягу та замовлення релігійного обряду.</p>
+                    </div>
+                    <div class="te-arrow-icon" aria-hidden="true"></div>
+                </div>
+            </a>
+
+            <!-- Card 3 -->
+            <a href="documents-benefits.html" class="te-next-link-card">
+                <div class="te-next-card-inner">
+                    <div class="te-next-card-texts">
+                        <h3 class="te-next-card-title te-next-card-title--narrow">Документи та пільги</h3>
+                        <p class="te-next-card-text"><strong style="font-weight:600;">Де і як оформити папери?</strong> Повний перелік документів для державної реєстрації смерті та отримання соціальних виплат.</p>
+                    </div>
+                    <div class="te-arrow-icon" aria-hidden="true"></div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FINAL SECTION — ПОТРІБНА ДОПОМОГА?
+════════════════════════════════════ -->
+<section class="te-final">
+    <div class="te-final-bg"></div>
+    <div class="te-birds-clip">
+        <img src="icons/desktop_birds.svg" alt="" class="te-final-birds-desk">
+        <img src="icons/footer_mobile_birds.svg" alt="" class="te-final-birds-mob">
+    </div>
+    <div class="te-final-content">
+        <div class="te-final-texts">
+            <h2 class="te-final-h1">Потрібна допомога прямо зараз?</h2>
+            <div class="te-final-sub">
+                <p class="te-final-p">Телефонуйте на гарячу лінію.</p>
+                <p class="te-final-p te-final-p--bold">Консультація безкоштовна.</p>
+            </div>
+        </div>
+        <a href="tel:+387777777" class="te-final-btn">Консультація</a>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
+                        <li><a href="services-packages.html">Готові пакети</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ════════════════════════════════════
+     FLOATING HELP BUTTON
+════════════════════════════════════ -->
+<a href="tel:+387777777" class="hp-help-btn">
+    <span>Потрібна допомога?</span>
+    <div class="hp-help-icon"></div>
+</a>
+
+<!-- ════════════════════════════════════
+     MOBILE NAV
+════════════════════════════════════ -->
+<div class="hp-mob-nav" id="mobNav" role="dialog" aria-modal="true" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link">Головна</a>
+            <div class="hp-mob-acc is-open">
+                <button class="hp-mob-acc-trigger" aria-expanded="true">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link" style="color:#1B3F57;font-weight:600;">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Послуги<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-packages.html" class="hp-mob-acc-link">Готові пакети послуг</a>
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link">Товари</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Вшанування Пам'яті<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="index.html" class="hp-mob-acc-link">Сторінка пам'яті</a>
+                    <a href="#" class="hp-mob-acc-link">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Психологічна підтримка<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="how-to-support.html" class="hp-mob-acc-link">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="hp-mob-acc-link">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="hp-mob-acc-link">Професійні консультації</a>
+                </div>
+            </div>
+            <a href="about.html" class="hp-mob-nav-link">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* ── Mobile menu ── */
+    (function() {
+        var btn = document.getElementById('mobMenuBtn');
+        var nav = document.getElementById('mobNav');
+        var cls = document.getElementById('mobNavClose');
+        if (!btn) return;
+        function openNav()  { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
+        function closeNav() { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
+        btn.addEventListener('click', openNav);
+        cls.addEventListener('click', closeNav);
+        nav.addEventListener('click', function(e) { if (e.target === nav) closeNav(); });
+    })();
+
+    /* ── Mobile nav accordion ── */
+    document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+            var acc = this.closest('.hp-mob-acc');
+            var isOpen = acc.classList.contains('is-open');
+            document.querySelectorAll('.hp-mob-acc').forEach(function(a) {
+                a.classList.remove('is-open');
+                a.querySelector('.hp-mob-acc-trigger').setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) { acc.classList.add('is-open'); this.setAttribute('aria-expanded', 'true'); }
+        });
+    });
+
+    /* ── Scroll reveal ── */
+    (function() {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -24px 0px' });
+
+        document.querySelectorAll('.te-reveal').forEach(function(el, i) {
+            el.style.transitionDelay = (i * 120) + 'ms';
+            observer.observe(el);
+        });
+    })();
+
+    /* ── Sync timeline circle heights with item heights ── */
+    (function() {
+        function syncTimeline() {
+            var item1   = document.getElementById('teTlItem1');
+            var item2   = document.getElementById('teTlItem2');
+            var circle1 = document.getElementById('teTlCircle1');
+            var circle2 = document.getElementById('teTlCircle2');
+            var line    = document.getElementById('teTlLine');
+            if (!item1 || !item2 || !circle1 || !circle2 || !line) return;
+
+            var itemGap = 26;
+            circle1.style.height = item1.offsetHeight + 'px';
+            circle2.style.height = item2.offsetHeight + 'px';
+
+            /* Line: from bottom of circle1 (top=54) to top of circle2 (top=item1.offsetHeight + itemGap) */
+            line.style.height = Math.max(0, item1.offsetHeight + itemGap - 54) + 'px';
+        }
+        syncTimeline();
+        window.addEventListener('resize', syncTimeline);
+    })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вирій — Професійні консультації</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+    <style>
+
+        /* ════════════════════════════════════════
+           BASE
+        ════════════════════════════════════════ */
+        html { background: linear-gradient(180deg, #FFFFFF 0%, #E2F3FF 6%, #F5FBFF 13%, #EDF8FF 22%, #F5FBFF 36%, #FEFFFF 51%, #DBF0FF 77%, #82BADF 100%); min-height: 100%; overflow-x: clip; }
+        body { background: transparent; overflow-x: clip; max-width: 100vw; }
+        *, *::before, *::after { box-sizing: border-box; min-width: 0; }
+        img { max-width: 100%; }
+
+        @media (min-width: 481px) {
+            .footer-top-container, .footer-bottom-container { max-width: 1280px; width: calc(100% - 80px); }
+        }
+
+        /* Mobile blob under section titles — hidden on desktop, shown ≤480px */
+        .pc-mob-blob {
+            display: none;
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 298px; height: 92px;
+            background-color: #E2F3FF;
+            -webkit-mask-image: url('icons/blob_procedure_mobile.svg');
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+            mask-image: url('icons/blob_procedure_mobile.svg');
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* blob_2 for Pricing title — hidden on desktop */
+        .pc-mob-blob-2 {
+            display: none;
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 330px; height: auto;
+            max-width: none;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* ── Scroll reveal ── */
+        .pc-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .5s ease, transform .5s ease;
+        }
+        .pc-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* ════════════════════════════════════════
+           BREADCRUMBS
+        ════════════════════════════════════════ */
+        .pc-breadcrumbs {
+            width: 100%; max-width: 1440px; margin: 0 auto;
+            padding: 0 0 0 100px; height: 80px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .pc-bc-link {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #1B3F57; text-decoration: none;
+        }
+        .pc-bc-link:hover { text-decoration: underline; }
+        .pc-bc-sep {
+            width: 18px; height: 18px; flex-shrink: 0;
+            background-color: #1B3F57;
+            mask-image: url('icons/chevron-right.svg');
+            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/chevron-right.svg');
+            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+        }
+        .pc-bc-current {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 600; line-height: 1.4;
+            color: #1B3F57;
+        }
+
+        /* ════════════════════════════════════════
+           HERO
+        ════════════════════════════════════════ */
+        .pc-hero {
+            position: relative;
+            min-height: 518px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: visible;
+            padding: 90px 80px 70px;
+            background: transparent;
+        }
+        .pc-hero-decor {
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 1261px; max-width: none; height: auto;
+            pointer-events: none; z-index: 0;
+        }
+        /* Mobile hero birds — hidden on desktop */
+        .pc-hero-decor-mob {
+            display: none;
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 430px; height: auto;
+            pointer-events: none; z-index: 0;
+            filter: saturate(0) brightness(2);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, transparent 100%);
+            mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, transparent 100%);
+        }
+        .pc-hero-content {
+            position: relative; z-index: 1;
+            display: flex; flex-direction: column; align-items: center; gap: 24px;
+            text-align: center;
+        }
+        .pc-hero-h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 64px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            max-width: 988px;
+        }
+        .pc-hero-desc {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0; max-width: 516px;
+        }
+
+        /* ════════════════════════════════════════
+           FIXED FLOATING HELP BUTTON
+        ════════════════════════════════════════ */
+        @keyframes ps-ring {
+            0%   { box-shadow: 0 0 0 0   rgba(27,63,87,.38), 0 8px 24px rgba(27,63,87,.22); }
+            60%  { box-shadow: 0 0 0 10px rgba(27,63,87,0),  0 8px 24px rgba(27,63,87,.22); }
+            100% { box-shadow: 0 0 0 0   rgba(27,63,87,0),   0 8px 24px rgba(27,63,87,.22); }
+        }
+        .ps-help-btn {
+            position: fixed; right: 25px; bottom: 40px; z-index: 9999;
+            display: inline-flex; align-items: center; gap: 12px;
+            background: #1B3F57; border-radius: 40px;
+            padding: 11px 18px; width: 236px;
+            cursor: pointer; text-decoration: none; border: none;
+            animation: ps-ring 2.8s ease-out infinite;
+            transition: background .2s;
+        }
+        .ps-help-btn:hover { background: #2E5B79; animation-play-state: paused; box-shadow: 0 12px 28px rgba(27,63,87,.35); }
+        .ps-help-btn-text { font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; line-height: 1; flex: 1; }
+        .ps-help-icon { width: 34px; height: 34px; background-color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .ps-help-icon::after { content: ''; width: 17px; height: 17px; background-color: #1B3F57;
+            mask-image: url('icons/phone-call.svg'); mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/phone-call.svg'); -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain; }
+
+        /* ════════════════════════════════════════
+           SHARED SECTION STYLES
+        ════════════════════════════════════════ */
+        .pc-section {
+            padding: 96px 80px;
+            background: transparent;
+        }
+        .pc-section-inner {
+            max-width: 1280px; margin: 0 auto;
+        }
+        .pc-h2 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+        }
+        .pc-h2-center { text-align: center; }
+        .pc-title-with-wave {
+            position: relative; display: inline-flex;
+            flex-direction: column; align-items: center;
+        }
+        .pc-title-wave-img {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 560px; pointer-events: none; z-index: 0;
+        }
+        .pc-title-with-wave .pc-h2 {
+            position: relative; z-index: 1;
+        }
+        .pc-body16 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 4: STATES
+        ════════════════════════════════════════ */
+        .pc-states {
+            padding: 96px 80px;
+            background: transparent;
+        }
+        .pc-states-inner {
+            max-width: 1310px; margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center; gap: 48px;
+        }
+        .pc-states-cards-row {
+            display: flex; gap: 32px; justify-content: center;
+        }
+        .pc-state-card {
+            width: 405px; flex-shrink: 0;
+            background: #FFFFFF; border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -2px rgba(56,90,116,.03),
+                        0 12px 16px -4px rgba(47,82,107,.08);
+            display: flex; flex-direction: column; gap: 24px;
+        }
+        .pc-state-card-body {
+            display: flex; flex-direction: column; gap: 16px;
+        }
+        .pc-state-card-icon {
+            width: 54px; height: 54px; flex-shrink: 0;
+        }
+        .pc-state-card-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+        }
+        .pc-state-card-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 5: PARTNERS
+        ════════════════════════════════════════ */
+        .pc-partners {
+            padding: 64px 0;
+            background: transparent;
+        }
+        .pc-partners-inner {
+            max-width: 1017px; margin: 0 auto; padding: 0 32px;
+            display: flex; flex-direction: column; align-items: center; gap: 34px;
+        }
+        .pc-partners-text-block {
+            display: flex; flex-direction: column; align-items: center; gap: 24px;
+            text-align: center;
+        }
+        .pc-partners-h2 { max-width: 634px; text-align: center; }
+        .pc-partners-desc { max-width: 804px; }
+        .pc-partners-logos-wrap {
+            width: 100%;
+            display: flex; flex-direction: column; align-items: center; gap: 32px;
+        }
+        .pc-partners-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; text-align: center;
+        }
+        .pc-partners-logos {
+            width: 100%;
+            overflow: hidden;
+        }
+        .pc-partners-logos-track {
+            display: flex; align-items: center; justify-content: space-between;
+            width: 100%;
+        }
+        @keyframes pc-logo-glow {
+            0%, 60%, 100% { opacity: .5; filter: grayscale(30%); }
+            30%            { opacity: 1;  filter: grayscale(0%);  }
+        }
+        @keyframes pc-marquee {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .pc-partner-logo {
+            max-height: 80px; width: auto;
+            opacity: .5; filter: grayscale(30%);
+            transition: transform .35s ease, opacity .35s ease, filter .35s ease;
+            cursor: default;
+        }
+        .pc-partner-logo:hover {
+            opacity: 1; filter: grayscale(0%); transform: scale(1.07);
+        }
+        .pc-partner-logo-dup { display: none; }
+        .pc-partners-logos-track .pc-partner-logo:nth-child(1) { animation: pc-logo-glow 6s ease-in-out infinite 0s; }
+        .pc-partners-logos-track .pc-partner-logo:nth-child(2) { animation: pc-logo-glow 6s ease-in-out infinite 2s; }
+        .pc-partners-logos-track .pc-partner-logo:nth-child(3) { animation: pc-logo-glow 6s ease-in-out infinite 4s; }
+
+        /* ════════════════════════════════════════
+           SECTION 6: LEAD SPECIALIST
+        ════════════════════════════════════════ */
+        .pc-specialist {
+            padding: 96px 80px;
+            background: transparent;
+        }
+        .pc-specialist .pc-h2 { white-space: nowrap; }
+        .pc-specialist-inner {
+            max-width: 1018px; margin: 0 auto;
+            display: flex; align-items: center; gap: 80px;
+        }
+        .pc-specialist-left {
+            flex: 1; display: flex; flex-direction: column; gap: 32px;
+            padding-left: 18px;
+        }
+        .pc-specialist-name-block {
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .pc-specialist-h3 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+        }
+        .pc-specialist-badges {
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .pc-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #E2F3FF; border-radius: 62px;
+            padding: 8px 16px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79;
+        }
+        .pc-badge-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #2E5B79; flex-shrink: 0;
+        }
+        .pc-blockquote {
+            display: flex; gap: 16px; align-items: stretch;
+            margin-left: -18px;
+        }
+        .pc-blockquote-line {
+            width: 2px; background: #82BADF; flex-shrink: 0; border-radius: 1px;
+        }
+        .pc-blockquote-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; font-style: italic; line-height: 1.2;
+            color: #1B3F57; margin: 0;
+        }
+        .pc-specialist-photo-wrap {
+            flex-shrink: 0;
+        }
+        .pc-specialist-photo {
+            width: 354px; height: 354px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center top;
+            transform: rotate(-3.3deg);
+            display: block;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 7: TEAM
+        ════════════════════════════════════════ */
+        .pc-team {
+            padding: 96px 80px;
+            background: transparent;
+        }
+        .pc-team-inner {
+            max-width: 1280px; margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center; gap: 64px;
+        }
+        .pc-team-cards {
+            display: flex; gap: 80px; justify-content: center;
+        }
+        .pc-team-card {
+            flex: 1; max-width: 340px;
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+        }
+        .pc-team-avatar {
+            width: 140px; height: 140px; border-radius: 50%;
+            object-fit: cover; object-position: center top;
+        }
+        .pc-team-text {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            text-align: center;
+        }
+        .pc-team-name {
+            font-family: 'Raleway', sans-serif;
+            font-size: 22px; font-weight: 600; line-height: 1.2;
+            color: #181D27; margin: 0;
+        }
+        .pc-team-role {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #45799B; margin: 0;
+        }
+
+        /* ════════════════════════════════════════
+           LIGHT-BG WRAPPER (sections 8-9)
+        ════════════════════════════════════════ */
+        .pc-light-wrap {
+            background: transparent;
+            border-radius: 48px 48px 0 0;
+            overflow: hidden;
+            margin-top: 32px;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 8: PRICING
+        ════════════════════════════════════════ */
+        .pc-pricing {
+            padding: 96px 80px;
+        }
+        .pc-pricing-card {
+            background: #FFFFFF;
+            border-radius: 34px;
+            box-shadow: 0 4px 6px -2px rgba(56,90,116,.03),
+                        0 12px 16px -4px rgba(47,82,107,.08);
+            padding: 64px 115px;
+            width: 1017px; max-width: 100%;
+            margin: 0 auto;
+            display: flex; flex-direction: column; gap: 32px;
+        }
+        .pc-pricing-title-wrap {
+            display: flex; justify-content: center;
+        }
+        .pc-pricing-cards-row {
+            display: flex; gap: 24px; justify-content: center;
+        }
+        .pc-price-card {
+            width: 348px; flex-shrink: 0;
+            border-radius: 24px; padding: 24px;
+            display: flex; flex-direction: column; gap: 16px;
+        }
+        .pc-price-card--free {
+            background: #E2F3FF;
+        }
+        .pc-price-card--paid {
+            background: #FFFFFF;
+            border: 2px solid #E2F3FF;
+        }
+        .pc-price-card-inner {
+            display: flex; flex-direction: column; gap: 16px;
+        }
+        .pc-price-card-icon { width: 54px; height: 54px; }
+        .pc-price-card-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #1B3F57; margin: 0;
+        }
+        .pc-price-card-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 9: CTA FORM
+        ════════════════════════════════════════ */
+        .pc-cta {
+            position: relative;
+            background-image: url('img/psych-consultations/cta-bg.png');
+            background-size: 140%;
+            background-position: center bottom;
+            padding: 0;
+            overflow: hidden;
+        }
+        @keyframes hp-birds-spin { 0% { transform: translateX(-50%) rotate(0deg); } 100% { transform: translateX(-50%) rotate(-360deg); } }
+        @keyframes hp-birds-spin-desk { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(-360deg); } }
+        .pc-cta-birds-desk { position: absolute; left: 50%; top: calc(50% + 80px); transform: translate(-50%, -50%); width: 80%; max-width: 800px; height: auto; z-index: 1; pointer-events: none; animation: hp-birds-spin-desk 70s linear infinite; }
+        .pc-cta-birds-mob { display: none; position: absolute; left: 50%; top: -56px; transform: translateX(-50%); width: 160vw; height: auto; z-index: 2; pointer-events: none; }
+        .pc-cta-inner {
+            position: relative; z-index: 1;
+            max-width: 1280px; width: calc(100% - 160px);
+            margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 48px;
+            padding: 120px 0;
+        }
+        .pc-cta-title-block {
+            display: flex; flex-direction: column; align-items: center; gap: 24px;
+            text-align: center;
+        }
+        .pc-cta-h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 64px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+        }
+        .pc-cta-desc {
+            font-family: 'Raleway', sans-serif;
+            font-size: 22px; font-weight: 500; line-height: 1.2;
+            color: #2E5B79; margin: 0; max-width: 788px;
+        }
+        .pc-form {
+            width: 480px; max-width: 100%;
+            display: flex; flex-direction: column; gap: 24px;
+        }
+        .pc-field {
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .pc-field-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px; font-weight: 700; line-height: 1.4;
+            color: #2E5B79;
+        }
+        .pc-field-input {
+            width: 100%; height: 44px;
+            background: #FFFFFF; border: 1px solid #F1F1F1; border-radius: 8px;
+            padding: 0 14px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px; font-weight: 500; line-height: 1.4;
+            color: #1B3F57;
+            box-shadow: 0 1px 2px rgba(10,13,18,.05);
+            outline: none;
+            transition: border-color .2s;
+        }
+        .pc-field-input::placeholder { color: #717680; }
+        .pc-field-input:focus { border-color: #82BADF; }
+        .pc-btn-submit {
+            width: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: #1B3F57; color: #FFFFFF;
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 700; line-height: 1;
+            text-transform: uppercase; text-decoration: none;
+            border-radius: 32px; padding: 16px 24px;
+            border: none; cursor: pointer;
+            transition: background .2s;
+        }
+        .pc-btn-submit:hover { background: #2E5B79; }
+
+        /* ════════════════════════════════════════
+           MOBILE NAV
+        ════════════════════════════════════════ */
+
+        /* ════════════════════════════════════════
+           RESPONSIVE
+        ════════════════════════════════════════ */
+        @media (max-width: 1200px) {
+            .pc-hero-h1 { font-size: 48px; }
+            .pc-state-card { width: 340px; }
+            .pc-pricing-card { padding: 48px 60px; }
+        }
+        @media (max-width: 1024px) {
+            .pc-states { padding: 80px 40px; }
+            .pc-specialist-inner { flex-direction: column; gap: 48px; align-items: flex-start; }
+            .pc-specialist-photo-wrap { align-self: center; }
+            .pc-partners { padding: 64px 40px; }
+            .pc-team { padding: 80px 40px; }
+            .pc-pricing { padding: 80px 40px; }
+            .pc-pricing-card { width: auto; padding: 48px 40px; }
+            .pc-pricing-cards-row { flex-direction: column; align-items: center; }
+            .pc-price-card { width: 100%; max-width: 480px; }
+        }
+        @media (max-width: 900px) {
+            .pc-states-cards-row { flex-wrap: wrap; }
+            .pc-state-card { width: 100%; max-width: 400px; }
+            .pc-team-cards { flex-wrap: wrap; }
+            .pc-cta-inner { width: calc(100% - 48px); padding: 80px 0; }
+            .pc-cta-h1 { font-size: 44px; }
+        }
+        @media (max-width: 768px) {
+
+            .pc-breadcrumbs { padding-left: 16px; height: 60px; }
+            .pc-hero { padding: 48px 16px 40px; min-height: auto; }
+            .pc-hero-h1 { font-size: 32px; }
+            .pc-hero-desc { font-size: 14px; }
+
+            .pc-states { padding: 48px 16px 40px; }
+            .pc-states-inner { gap: 28px; }
+            .pc-h2 { font-size: 30px; }
+            .pc-state-card { width: 100%; max-width: 100%; padding: 20px; }
+            .pc-state-card-title { font-size: 18px; }
+
+            .pc-partners { padding: 40px 16px; }
+            .pc-partners-inner { padding: 0 8px; gap: 20px; }
+            .pc-partners-logos-track { flex-wrap: wrap; gap: 24px; justify-content: center; }
+            .pc-partner-logo { max-height: 48px; }
+
+            .pc-specialist { padding: 40px 16px; }
+            .pc-specialist-inner { gap: 24px; }
+            .pc-specialist-photo { width: 220px; height: 220px; transform: none; }
+            .pc-blockquote-text { font-size: 18px; }
+
+            .pc-team { padding: 40px 16px; }
+            .pc-team-inner { gap: 32px; }
+            .pc-team-cards { flex-direction: column; align-items: center; gap: 24px; }
+            .pc-team-card { max-width: 100%; }
+
+            .pc-light-wrap { border-radius: 24px 24px 0 0; margin-top: 16px; }
+            .pc-pricing { padding: 48px 16px; }
+            .pc-pricing-card { padding: 32px 20px; border-radius: 20px; }
+            .pc-pricing-cards-row { gap: 16px; }
+            .pc-price-card { width: 100%; }
+            .pc-price-card-title { font-size: 17px; }
+
+            .pc-cta { }
+            .pc-cta-inner { padding: 64px 0; gap: 32px; z-index: 3; }
+            .pc-cta-h1 { font-size: 32px; }
+            .pc-cta-desc { font-size: 16px; }
+            .pc-form { width: 100%; }
+            .pc-btn-submit { font-size: 15px; padding: 14px 20px; }
+            .pc-cta-birds-desk { display: none; }
+            .pc-cta-birds-mob { display: block; animation: hp-birds-spin 70s linear infinite; }
+            .ps-help-btn { width: auto; right: 12px; bottom: 24px; }
+            .ps-help-btn-text { display: none; }
+
+            .footer-top-container, .footer-bottom-container { width: calc(100% - 32px); }
+        }
+        @media (max-width: 480px) {
+
+            /* ── Breadcrumbs ── */
+            .pc-breadcrumbs { height: 44px; }
+            .pc-bc-link, .pc-bc-current { font-size: 13px; }
+            .pc-bc-sep { width: 14px; height: 14px; }
+
+            /* ── Hero: mobile birds ── */
+            .pc-hero-decor { display: none; }
+            .pc-hero-decor-mob { display: block; }
+            .pc-hero { padding: 40px 16px 32px; }
+            .pc-hero-h1 { font-size: 36px; }
+            .pc-hero-desc { font-size: 15px; }
+
+            /* ── Section title sizes (all headings) ── */
+            .pc-h2 { font-size: 32px; }
+
+            /* ── Title: hide desktop wave, show mobile blob ── */
+            .pc-title-wave-img { display: none; }
+            .pc-title-with-wave { display: block; position: relative; text-align: center; }
+            .pc-mob-blob { display: block; }
+            .pc-mob-blob-2 { display: block; }
+
+            /* ── Section padding ── */
+            .pc-states { padding: 36px 16px 28px; }
+            .pc-states-inner { gap: 20px; }
+            .pc-state-card { padding: 18px; }
+            .pc-state-card-icon { width: 38px; height: 38px; }
+            .pc-state-card-title { font-size: 17px; }
+            .pc-partners { padding: 28px 16px; }
+            .pc-partners-inner { gap: 16px; }
+            .pc-specialist { padding: 28px 16px; }
+            .pc-team { padding: 28px 16px; }
+            .pc-team-inner { gap: 24px; }
+            .pc-team-cards { gap: 16px; }
+            .pc-team-avatar { width: 100px; height: 100px; }
+            .pc-team-name { font-size: 18px; }
+            .pc-pricing { padding: 28px 16px; }
+            .pc-pricing-card { padding: 24px 16px; }
+            .pc-pricing-cards-row { gap: 12px; }
+            .pc-price-card-icon { width: 42px; height: 42px; }
+
+            /* ── Specialist: row layout (name+photo side-by-side) ── */
+            .pc-specialist-inner {
+                display: grid;
+                grid-template-columns: 1fr 124px;
+                grid-template-areas:
+                    "title title"
+                    "info  photo"
+                    "quote quote";
+                gap: 20px 12px;
+                align-items: start;
+            }
+            .pc-specialist-left { display: contents; }
+            .pc-specialist-left > .pc-h2 { grid-area: title; }
+            .pc-specialist-name-block {
+                grid-area: info;
+                text-align: left;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .pc-specialist-h3 { text-align: left; font-size: 20px; }
+            .pc-specialist-badges { justify-content: flex-start; flex-wrap: wrap; gap: 6px; }
+            .pc-badge { font-size: 13px; padding: 5px 10px; gap: 6px; }
+            .pc-badge-dot { width: 6px; height: 6px; }
+            .pc-specialist-photo-wrap { grid-area: photo; align-self: start; }
+            .pc-specialist-photo { width: 124px; height: 124px; transform: none; }
+            /* Restore desktop blockquote: vertical line + text */
+            .pc-blockquote {
+                grid-area: quote;
+                flex-direction: row;
+                margin-left: 0;
+                margin-top: -8px;
+                gap: 14px;
+                align-items: stretch;
+            }
+            .pc-blockquote-line { width: 3px; height: auto; flex-shrink: 0; border-radius: 2px; }
+            .pc-blockquote-text { font-size: 16px; text-align: left; }
+            /* Allow specialist title to wrap on mobile */
+            .pc-specialist .pc-h2 { white-space: normal; }
+
+            /* ── Partners: horizontal marquee ── */
+            .pc-partners-logos { overflow: hidden; width: 100%; }
+            .pc-partners-logos-track {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                width: max-content;
+                gap: 48px;
+                animation: pc-marquee 22s linear infinite;
+            }
+            .pc-partners-logos:hover .pc-partners-logos-track { animation-play-state: paused; }
+            .pc-partner-logo { max-height: 32px; opacity: 1; filter: none; animation: none !important; }
+            .pc-partner-logo-dup { display: block; }
+
+            /* ── CTA section — mobile clouds background ── */
+            .pc-cta {
+                background-image: url('img/clouds_mobile.png');
+                background-size: cover;
+                background-position: center;
+                min-height: 503px;
+            }
+            .pc-cta-h1 { font-size: 36px; }
+            .pc-cta-inner { gap: 16px; }
+
+            /* ── Floating help button → circle only ── */
+            .ps-help-btn {
+                width: 60px; height: 60px;
+                border-radius: 50%; padding: 13px; gap: 0;
+                right: 12px; bottom: 20px;
+            }
+        }
+
+        /* ── Mobile titles center (481–768px only) ── */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .pc-h2 { text-align: center; }
+            .pc-specialist-left { align-items: center; text-align: center; }
+            .pc-specialist-badges { justify-content: center; }
+            .pc-blockquote { flex-direction: column; gap: 12px; }
+            .pc-blockquote-line { width: 100%; height: 2px; }
+        }
+        /* ── Mobile ≤480px: center h2 (separate from specialist overrides above) ── */
+        @media (max-width: 480px) {
+            .pc-h2 { text-align: center; }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     HEADER
+════════════════════════════════════ -->
+<header class="site-header">
+    <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню">
+            <span class="hp-mob-menu-icon"></span>
+        </button>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-item">Головна</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Порядок дій</button>
+                <div class="nav-dropdown-menu">
+                    <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Послуги</button>
+                <div class="nav-dropdown-menu">
+                    <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="products.html" class="nav-item">Товари</a>
+            <a href="about.html" class="nav-item">Про нас</a>
+        </nav>
+        <a href="home.html" class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
+        </a>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger nav-active" style="color:#1B3F57;font-weight:600;">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="how-to-support.html" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="nav-dropdown-item nav-dropdown-active">Професійні консультації</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+                <a href="register.html" class="icon-placeholder account-icon"></a>
+            </div>
+        </div>
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+            <a href="register.html" class="icon-placeholder account-icon"></a>
+        </div>
+    </div>
+</header>
+
+<!-- ════════════════════════════════════
+     BREADCRUMBS
+════════════════════════════════════ -->
+<div class="pc-breadcrumbs">
+    <a href="#" class="pc-bc-link">Психологічна підтримка</a>
+    <span class="pc-bc-sep" aria-hidden="true"></span>
+    <span class="pc-bc-current">Професійні консультації</span>
+</div>
+
+<!-- ════════════════════════════════════
+     HERO
+════════════════════════════════════ -->
+<section class="pc-hero">
+    <img src="icons/psych_consult_hero.svg" alt="" class="pc-hero-decor" aria-hidden="true">
+    <img src="icons/home_hero_section.svg" alt="" class="pc-hero-decor-mob" aria-hidden="true">
+    <div class="pc-hero-content">
+        <h1 class="pc-hero-h1">Професійний супровід у проживанні втрати</h1>
+        <p class="pc-hero-desc">Біль від втрати близької людини — це довгий шлях, і його не обов'язково проходити наодинці. Кризовий психолог не «вилікує» відгоря за один сеанс, але допоможе знайти безпечний простір, де можна бути собою, не вдавати стійкість і поступово адаптуватися до життя.</p>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SECTION 4: З ЯКИМИ СТАНАМИ?
+════════════════════════════════════ -->
+<section class="pc-states pc-reveal">
+    <div class="pc-states-inner">
+
+        <!-- Title with wave decoration -->
+        <div class="pc-title-with-wave">
+            <img src="img/psych-consultations/section4-union.svg" alt="" class="pc-title-wave-img" aria-hidden="true">
+            <div class="pc-mob-blob" aria-hidden="true"></div>
+            <h2 class="pc-h2 pc-h2-center">З якими станами<br>варто звернутися?</h2>
+        </div>
+
+        <!-- Row 1: 3 cards -->
+        <div class="pc-states-cards-row">
+            <div class="pc-state-card">
+                <img src="img/psych-consultations/icon-card1.svg" alt="" class="pc-state-card-icon" aria-hidden="true">
+                <div class="pc-state-card-body">
+                    <h3 class="pc-state-card-title">Гострий шок та тривога</h3>
+                    <p class="pc-state-card-text">Ви відчуваєте постійне заніміння, панічні атаки, хронічне безсоння або застрягли в стані, коли «немає жодних емоцій».</p>
+                </div>
+            </div>
+            <div class="pc-state-card">
+                <img src="img/psych-consultations/icon-card2.svg" alt="" class="pc-state-card-icon" aria-hidden="true">
+                <div class="pc-state-card-body">
+                    <h3 class="pc-state-card-title">Нав'язлива провина</h3>
+                    <p class="pc-state-card-text">Голова безперервно прокручує сценарії минулого: «якби я тоді подзвонив», «якби ми встигли до лікаря», викликаючи тяжке відчуття безпорадності.</p>
+                </div>
+            </div>
+            <div class="pc-state-card">
+                <img src="img/psych-consultations/icon-card3.svg" alt="" class="pc-state-card-icon" aria-hidden="true">
+                <div class="pc-state-card-body">
+                    <h3 class="pc-state-card-title">Страх за майбутнє</h3>
+                    <p class="pc-state-card-text">З'явився нав'язливий, сильний страх за життя інших близьких людей або відчуття, що ви абсолютно не знаєте, як жити далі й будувати побут самотужки.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: 2 cards centered -->
+        <div class="pc-states-cards-row">
+            <div class="pc-state-card">
+                <img src="img/psych-consultations/icon-card4.svg" alt="" class="pc-state-card-icon" aria-hidden="true">
+                <div class="pc-state-card-body">
+                    <h3 class="pc-state-card-title">Втрата сенсів</h3>
+                    <p class="pc-state-card-text">Організаційні клопоти завершилися, і вас накрила порожнеча. Колишні цілі, робота та щоденні справи повністю втратили будь-яке значення.</p>
+                </div>
+            </div>
+            <div class="pc-state-card">
+                <img src="img/psych-consultations/icon-card5.svg" alt="" class="pc-state-card-icon" aria-hidden="true">
+                <div class="pc-state-card-body">
+                    <h3 class="pc-state-card-title">Труднощі у дітей</h3>
+                    <p class="pc-state-card-text">Ви бачите, що дитина чи підліток після втрати повністю закрилися в собі, стали агресивними або навпаки — вдають, ніби нічого не сталося.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SECTION 5: PARTNERS
+════════════════════════════════════ -->
+<section class="pc-partners pc-reveal">
+    <div class="pc-partners-inner">
+        <div class="pc-partners-text-block">
+            <h2 class="pc-h2 pc-partners-h2">Професійна допомога від партнерів</h2>
+            <p class="pc-body16 pc-partners-desc" style="text-align:center;">Ми віримо, що лікуванням душі мають займатися виключно профільні фахівці. Тому «Вирій» співпрацює із незалежними кризовими психологами та сервісами ментального здоров'я. Ми допомагаємо вам швидко знайти перевіреного терапевта, який спеціалізується саме на темі втрати.</p>
+        </div>
+        <div class="pc-partners-logos-wrap">
+            <p class="pc-partners-label">Наші партнери</p>
+            <div class="pc-partners-logos">
+                <div class="pc-partners-logos-track">
+                    <img src="img/psych-consultations/partner-logo-1.svg" alt="Партнер 1" class="pc-partner-logo">
+                    <img src="img/psych-consultations/partner-logo-2.svg" alt="Партнер 2" class="pc-partner-logo">
+                    <img src="img/psych-consultations/partner-logo-3.svg" alt="Партнер 3" class="pc-partner-logo">
+                    <!-- Duplicates for seamless marquee loop — hidden on desktop -->
+                    <img src="img/psych-consultations/partner-logo-1.svg" alt="" class="pc-partner-logo pc-partner-logo-dup" aria-hidden="true">
+                    <img src="img/psych-consultations/partner-logo-2.svg" alt="" class="pc-partner-logo pc-partner-logo-dup" aria-hidden="true">
+                    <img src="img/psych-consultations/partner-logo-3.svg" alt="" class="pc-partner-logo pc-partner-logo-dup" aria-hidden="true">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SECTION 6: LEAD SPECIALIST
+════════════════════════════════════ -->
+<section class="pc-specialist pc-reveal">
+    <div class="pc-specialist-inner">
+        <!-- Left column: text -->
+        <div class="pc-specialist-left">
+            <h2 class="pc-h2">Провідний спеціаліст</h2>
+            <div class="pc-specialist-name-block">
+                <h3 class="pc-specialist-h3">Олена Коваль</h3>
+                <div class="pc-specialist-badges">
+                    <span class="pc-badge">
+                        <span class="pc-badge-dot" aria-hidden="true"></span>
+                        Кризова психологиня
+                    </span>
+                    <span class="pc-badge">
+                        <span class="pc-badge-dot" aria-hidden="true"></span>
+                        Партнерка сервісу «Вирій»
+                    </span>
+                </div>
+            </div>
+            <blockquote class="pc-blockquote">
+                <div class="pc-blockquote-line" aria-hidden="true"></div>
+                <p class="pc-blockquote-text">«Моє завдання — допомогти вам знайти внутрішні опори, коли старий світ зруйнувався, а новий ще не побудований. Я супроводжую на кожному кроці адаптації».</p>
+            </blockquote>
+        </div>
+        <!-- Right column: photo -->
+        <div class="pc-specialist-photo-wrap">
+            <img
+                src="img/psych-consultations/psychologist-main-4e2e1e.png"
+                alt="Олена Коваль — кризова психологиня"
+                class="pc-specialist-photo"
+            >
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SECTION 7: TEAM
+════════════════════════════════════ -->
+<section class="pc-team pc-reveal">
+    <div class="pc-team-inner">
+        <h2 class="pc-h2 pc-h2-center">Наша партнерська<br>мережа фахівців</h2>
+        <div class="pc-team-cards">
+            <div class="pc-team-card">
+                <img
+                    src="img/psych-consultations/team-ihor-30820d.png"
+                    alt="Ігор Радченко"
+                    class="pc-team-avatar"
+                >
+                <div class="pc-team-text">
+                    <p class="pc-team-name">Ігор Радченко</p>
+                    <p class="pc-team-role">Дитячий та підлітковий психолог</p>
+                </div>
+            </div>
+            <div class="pc-team-card">
+                <img
+                    src="img/psych-consultations/team-mariia.png"
+                    alt="Марія Левицька"
+                    class="pc-team-avatar"
+                >
+                <div class="pc-team-text">
+                    <p class="pc-team-name">Марія Левицька</p>
+                    <p class="pc-team-role">Сімейна терапія</p>
+                </div>
+            </div>
+            <div class="pc-team-card">
+                <img
+                    src="img/psych-consultations/team-olena-v.png"
+                    alt="Олена Вандибур"
+                    class="pc-team-avatar"
+                >
+                <div class="pc-team-text">
+                    <p class="pc-team-name">Олена Вандибур</p>
+                    <p class="pc-team-role">Кризова терапія</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     LIGHT-BG WRAPPER (sections 8 & 9)
+════════════════════════════════════ -->
+<div class="pc-light-wrap">
+
+    <!-- ════════════════════════════════════
+         SECTION 8: УМОВИ ТА ВАРТІСТЬ
+    ════════════════════════════════════ -->
+    <section class="pc-pricing">
+        <div class="pc-pricing-card pc-reveal">
+
+            <!-- Title with wave -->
+            <div class="pc-pricing-title-wrap">
+                <div class="pc-title-with-wave">
+                    <img src="img/psych-consultations/section8-union.svg" alt="" class="pc-title-wave-img" aria-hidden="true">
+                    <img src="icons/blob_2.svg" alt="" class="pc-mob-blob-2" aria-hidden="true">
+                    <h2 class="pc-h2 pc-h2-center">Умови та вартість</h2>
+                </div>
+            </div>
+
+            <!-- Pricing cards -->
+            <div class="pc-pricing-cards-row">
+                <!-- Card 1: Free session -->
+                <div class="pc-price-card pc-price-card--free">
+                    <div class="pc-price-card-inner">
+                        <img src="img/psych-consultations/icon-free-session.svg" alt="" class="pc-price-card-icon" aria-hidden="true">
+                        <h3 class="pc-price-card-title">Перша зустріч — безкоштовна</h3>
+                        <p class="pc-price-card-text">Для клієнтів «Вирію» перша ознайомча консультація (або кризова розмова з координатором партнерського сервісу для підбору спеціаліста) є повністю безкоштовною, щоб ви могли зорієнтуватися та зрозуміти, чи підходить вам фахівець.</p>
+                    </div>
+                </div>
+                <!-- Card 2: Paid therapy -->
+                <div class="pc-price-card pc-price-card--paid">
+                    <div class="pc-price-card-inner">
+                        <img src="img/psych-consultations/icon-therapy.svg" alt="" class="pc-price-card-icon" aria-hidden="true">
+                        <h3 class="pc-price-card-title">Подальша терапія</h3>
+                        <p class="pc-price-card-text">Якщо ви вирішите продовжити роботу, наступні сесії оплачуються напряму психологічному сервісу або приватному спеціалісту за їхнім базовим тарифом. «Вирій» лише координує цей процес і не бере жодних націнок чи комісій.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION 9: ТИХИЙ ЗВ'ЯЗОК
+    ════════════════════════════════════ -->
+    <section class="pc-cta">
+        <img src="icons/desktop_birds.svg" alt="" class="pc-cta-birds-desk" aria-hidden="true">
+        <img src="icons/footer_mobile_birds.svg" alt="" class="pc-cta-birds-mob" aria-hidden="true">
+        <div class="pc-cta-inner">
+            <div class="pc-cta-title-block">
+                <h2 class="pc-cta-h1">Тихий зв'язок</h2>
+                <p class="pc-cta-desc">Ми знаємо, як важко зробити перший крок і попросити про допомогу. Наш координатор делікатно прийме ваш запит і підбере фахівця.</p>
+            </div>
+            <form class="pc-form" action="#" method="post" novalidate>
+                <div class="pc-field">
+                    <label class="pc-field-label" for="pc-name">Ваше ім'я</label>
+                    <input
+                        type="text"
+                        id="pc-name"
+                        name="name"
+                        class="pc-field-input"
+                        placeholder="Введіть ваше ім'я"
+                        autocomplete="given-name"
+                    >
+                </div>
+                <div class="pc-field">
+                    <label class="pc-field-label" for="pc-contact-method">Як краще зв'язатися з вами?</label>
+                    <input
+                        type="text"
+                        id="pc-contact-method"
+                        name="contact_method"
+                        class="pc-field-input"
+                        placeholder="Telegram / Viber / Телефонний дзвінок"
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="pc-field">
+                    <label class="pc-field-label" for="pc-contact">Номер телефону / Нікнейм в месенджері</label>
+                    <input
+                        type="text"
+                        id="pc-contact"
+                        name="contact"
+                        class="pc-field-input"
+                        placeholder="+38 (055) 566 66"
+                        autocomplete="tel"
+                    >
+                </div>
+                <button type="submit" class="pc-btn-submit">Надіслати запит на підтримку</button>
+            </form>
+        </div>
+    </section>
+
+</div><!-- /pc-light-wrap -->
+
+<!-- ════════════════════════════════════
+     FIXED FLOATING HELP BUTTON
+════════════════════════════════════ -->
+<a href="tel:+387777777" class="ps-help-btn">
+    <span class="ps-help-btn-text">Потрібна допомога?</span>
+    <div class="ps-help-icon" aria-hidden="true"></div>
+</a>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
+                        <li><a href="services-packages.html">Готові пакети</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ════════════════════════════════════
+     MOBILE NAV
+════════════════════════════════════ -->
+<div class="hp-mob-nav" id="mobNav" role="dialog" aria-modal="true" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link">Головна</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Послуги<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-packages.html" class="hp-mob-acc-link">Готові пакети послуг</a>
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link">Товари</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Вшанування Пам'яті<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="index.html" class="hp-mob-acc-link">Сторінка пам'яті</a>
+                    <a href="#" class="hp-mob-acc-link">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc is-open">
+                <button class="hp-mob-acc-trigger" aria-expanded="true">Психологічна підтримка<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="how-to-support.html" class="hp-mob-acc-link">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="hp-mob-acc-link">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="hp-mob-acc-link" style="color:#1B3F57;font-weight:600;">Професійні консультації</a>
+                </div>
+            </div>
+            <a href="about.html" class="hp-mob-nav-link">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* ── Mobile menu ── */
+    (function() {
+        var btn = document.getElementById('mobMenuBtn');
+        var nav = document.getElementById('mobNav');
+        var cls = document.getElementById('mobNavClose');
+        if (!btn) return;
+        function openNav()  { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
+        function closeNav() { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
+        btn.addEventListener('click', openNav);
+        cls.addEventListener('click', closeNav);
+        nav.addEventListener('click', function(e) { if (e.target === nav) closeNav(); });
+    })();
+
+    /* ── Mobile nav accordion ── */
+    document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+            var acc = this.closest('.hp-mob-acc');
+            var isOpen = acc.classList.contains('is-open');
+            document.querySelectorAll('.hp-mob-acc').forEach(function(a) {
+                a.classList.remove('is-open');
+                a.querySelector('.hp-mob-acc-trigger').setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) { acc.classList.add('is-open'); this.setAttribute('aria-expanded', 'true'); }
+        });
+    });
+
+    /* ── Scroll reveal ── */
+    (function() {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+        document.querySelectorAll('.pc-reveal').forEach(function(el, i) {
+            el.style.transitionDelay = (i * 100) + 'ms';
+            observer.observe(el);
+        });
+    })();
+
+    /* ── Form submit ── */
+    document.querySelector('.pc-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = this.querySelector('.pc-btn-submit');
+        btn.textContent = 'Запит надіслано!';
+        btn.disabled = true;
+        btn.style.background = '#45799B';
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вирій — Що робити в першу чергу?</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+
+        /* ════════════════════════════════════════
+           DESIGN TOKENS
+           25: #F6FBFF | 50: #E2F3FF | 600: #45799B
+           700: #2E5B79 | 800: #1B3F57 | 900: #0F2E43
+        ════════════════════════════════════════ */
+
+        html {
+            scroll-behavior: smooth;
+            background: linear-gradient(180deg,
+                rgba(166,219,255,1) 4%,
+                rgba(217,230,241,1) 27%,
+                rgba(255,255,255,1) 42%,
+                rgba(215,230,244,1) 70%,
+                rgba(255,255,255,1) 100%);
+            min-height: 100%;
+            overflow-x: clip;
+        }
+        body {
+            background: transparent;
+            background-image: none;
+            overflow-x: clip;
+            max-width: 100vw;
+        }
+        /* Second gradient layer */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg,
+                rgba(98,152,189,0.45) 4%,
+                rgba(206,235,255,0.35) 56%,
+                rgba(246,251,255,0.2) 69%,
+                rgba(186,227,255,0.3) 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        *, *::before, *::after { box-sizing: border-box; min-width: 0; }
+        img { max-width: 100%; }
+
+        /* Mobile blob under titles — hidden on desktop */
+        .wf-mob-blob {
+            display: none;
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: auto;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Dark section blob — brand 700 via mask (hidden on desktop) */
+        .wf-mob-blob--dark {
+            display: none;
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 298px; height: 92px;
+            background-color: #2E5B79;
+            -webkit-mask-image: url('icons/blob_procedure_mobile.svg');
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+            mask-image: url('icons/blob_procedure_mobile.svg');
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @media (min-width: 481px) {
+            .footer-top-container, .footer-bottom-container { max-width: 1280px; width: calc(100% - 80px); }
+        }
+
+        /* ── Scroll reveal ── */
+        .wf-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .wf-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* ── Floating help button ── */
+        @keyframes hp-help-ring {
+            0%   { box-shadow: 0 0 0 0   rgba(27,63,87,.38), 0px 8px 24px rgba(27,63,87,.22); }
+            60%  { box-shadow: 0 0 0 10px rgba(27,63,87,0),  0px 8px 24px rgba(27,63,87,.22); }
+            100% { box-shadow: 0 0 0 0   rgba(27,63,87,0),   0px 8px 24px rgba(27,63,87,.22); }
+        }
+        .hp-help-btn {
+            position: fixed; right: 25px; bottom: 40px; z-index: 9999;
+            display: inline-flex; align-items: center; gap: 12px;
+            background: #1B3F57; border-radius: 40px; padding: 11px 18px;
+            width: 236px; cursor: pointer; text-decoration: none; border: none;
+            animation: hp-help-ring 2.8s ease-out infinite; transition: background .2s;
+        }
+        .hp-help-btn:hover { background: #2E5B79; animation-play-state: paused; box-shadow: 0px 12px 28px rgba(27,63,87,.35); }
+        .hp-help-btn span { font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; line-height: 1; flex: 1; }
+        .hp-help-icon { width: 34px; height: 34px; background-color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .hp-help-icon::after { content: ''; width: 17px; height: 17px; background-color: #1B3F57; mask-image: url('icons/phone-call.svg'); mask-repeat: no-repeat; mask-position: center; mask-size: contain; -webkit-mask-image: url('icons/phone-call.svg'); -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain; }
+
+        /* ════════════════════════════════════════
+           BREADCRUMBS
+        ════════════════════════════════════════ */
+        .wf-breadcrumbs {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 0 0 100px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-sizing: border-box;
+        }
+        .wf-bc-link {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #FFFFFF; text-decoration: none;
+        }
+        .wf-bc-link:hover { text-decoration: underline; }
+        .wf-bc-sep {
+            width: 18px; height: 18px; flex-shrink: 0;
+            background-color: #FFFFFF;
+            mask-image: url('icons/chevron-right.svg');
+            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/chevron-right.svg');
+            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+        }
+        .wf-bc-current {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 600; line-height: 1.4;
+            color: #FFFFFF;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 1 — WHITE CARD
+        ════════════════════════════════════════ */
+        .wf-sec1 {
+            padding: 0 80px 64px;
+            position: relative;
+            z-index: 1;
+        }
+        .wf-white-card {
+            background: #FFFFFF;
+            border-radius: 34px;
+            box-shadow: 0px 4px 6px -2px rgba(56,90,116,.03),
+                        0px 12px 16px -4px rgba(47,82,107,.08);
+            padding: 64px 115px;
+            width: 1017px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .wf-card-inner {
+            width: 720px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Title block */
+        .wf-title-block {
+            position: relative;
+            height: 58px;
+            margin-bottom: 54px;
+            overflow: visible;
+        }
+        .wf-title-wave {
+            position: absolute;
+            left: -4.5px;
+            top: -13px;
+            width: 716px;
+            height: 83px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .wf-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            position: relative; z-index: 1;
+            white-space: nowrap;
+        }
+
+        /* Timeline */
+        .wf-timeline-row {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+        }
+        /* Left: vertical line + circles */
+        .wf-timeline-left {
+            width: 54px;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .wf-timeline-line {
+            position: absolute;
+            left: 25px;
+            top: 54px;
+            bottom: 27px;
+            width: 2px;
+            background: #1B3F57;
+            z-index: 0;
+        }
+        .wf-circles {
+            display: flex;
+            flex-direction: column;
+            gap: 46px;
+            position: relative;
+            z-index: 1;
+        }
+        .wf-circle-wrap {
+            height: 54px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .wf-circle {
+            width: 54px; height: 54px;
+            border: 2px solid #1B3F57;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 500; line-height: 1.15;
+            color: #1B3F57;
+            background: #FFFFFF;
+            flex-shrink: 0;
+        }
+        .wf-circle--alt { background: #FBFBFB; }
+
+        /* Right: stage content */
+        .wf-stages {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 46px;
+        }
+        .wf-stage {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            width: 632px;
+            max-width: 100%;
+        }
+
+        /* Stage header */
+        .wf-stage-head { display: flex; flex-direction: column; gap: 0; }
+        .wf-stage-num-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+        }
+        .wf-stage-name {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #45799B; margin: 0;
+        }
+
+        /* Sub-blocks inside a stage */
+        .wf-sub-blocks { display: flex; flex-direction: column; gap: 16px; }
+        .wf-sub-block  { display: flex; flex-direction: column; gap: 8px; }
+
+        /* Headings */
+        .wf-h5 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #1B3F57; margin: 0;
+        }
+        .wf-intro {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 600; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+
+        /* Lists */
+        .wf-list {
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0; padding-left: 20px;
+        }
+        .wf-list li { margin-bottom: 6px; }
+        .wf-list li:last-child { margin-bottom: 0; }
+
+        /* Alert box */
+        .wf-alert {
+            background: #E2F3FF;
+            border-radius: 24px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .wf-alert-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px; font-weight: 500; line-height: 1.4;
+            color: #0F2E43; margin: 0; max-width: 468px;
+        }
+        .wf-alert-text strong { font-weight: 700; }
+        .wf-alert-icon {
+            width: 24px; height: 24px; flex-shrink: 0;
+            background-color: #1B3F57;
+            mask-image: url('icons/alert-circle.svg');
+            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/alert-circle.svg');
+            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+        }
+
+        /* Contact button (stage 2) */
+        .wf-contact-btn {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 700; line-height: 1;
+            text-transform: uppercase; color: #FFFFFF;
+            background: #1B3F57; border-radius: 32px;
+            padding: 16px 36px;
+            display: inline-flex; align-items: center; justify-content: center;
+            text-decoration: none; cursor: pointer; border: none;
+            align-self: flex-start; transition: background .2s;
+        }
+        .wf-contact-btn:hover { background: #45799B; }
+
+        /* Steps (stage 3 numbered docs) */
+        .wf-steps { display: flex; flex-direction: column; gap: 12px; }
+        .wf-step { display: flex; flex-direction: column; gap: 8px; }
+        .wf-step-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #1B3F57; margin: 0;
+            padding-left: 30px; text-indent: -30px;
+        }
+        .wf-step-desc {
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+        .wf-step-with-alert { display: flex; flex-direction: column; gap: 12px; }
+
+        /* ════════════════════════════════════════
+           SECTION 2 — DARK CARD
+        ════════════════════════════════════════ */
+        .wf-sec2 {
+            padding: 64px 80px;
+            position: relative;
+            z-index: 2;
+        }
+        .wf-dark-card {
+            background: #1B3F57;
+            border-radius: 34px;
+            box-shadow: 0px 4px 6px -2px rgba(56,90,116,.03),
+                        0px 12px 16px -4px rgba(47,82,107,.08);
+            padding: 64px 115px;
+            width: 1017px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .wf-dark-inner {
+            width: 720px;
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 61px;
+        }
+
+        /* Dark title block */
+        .wf-dark-title-block {
+            position: relative;
+            height: 58px;
+            overflow: visible;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .wf-dark-title-wave {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -13px;
+            width: 716px;
+            height: 83px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .wf-dark-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #FFFFFF; margin: 0;
+            text-align: center; position: relative; z-index: 1;
+            white-space: nowrap;
+        }
+
+        /* Rule cards */
+        .wf-rules { display: flex; flex-direction: column; gap: 24px; }
+        .wf-rule-card {
+            border: 2px solid #FFFFFF;
+            border-radius: 24px;
+            padding: 16px 24px;
+            box-shadow: 0px 4px 6px 0px rgba(56,90,116,.03),
+                        0px 12px 16px 0px rgba(47,82,107,.08);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .wf-rule-num {
+            width: 39px; height: 39px;
+            background: #FFFFFF;
+            border: 2px solid #FFFFFF;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            font-family: 'Raleway', sans-serif;
+            font-size: 17px; font-weight: 500; line-height: 1.15;
+            color: #1B3F57;
+        }
+        .wf-rule-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #F6FBFF; margin: 0;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 3 — ЩО ДАЛІ?
+        ════════════════════════════════════════ */
+        .wf-sec3 {
+            padding: 0 80px;
+            position: relative;
+            z-index: 3;
+        }
+        .wf-next-card {
+            border-radius: 34px;
+            padding: 64px 115px;
+            background: transparent;
+        }
+        .wf-next-head {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 34px;
+        }
+        .wf-next-h2 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            text-align: center;
+        }
+        .wf-next-subtitle {
+            font-family: 'Raleway', sans-serif;
+            font-size: 22px; font-weight: 500; line-height: 1.2;
+            color: #2E5B79; margin: 0; text-align: center;
+            max-width: 696px;
+        }
+        .wf-next-links {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+        }
+        .wf-next-link-card {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0px 4px 6px -2px rgba(56,90,116,.03),
+                        0px 12px 16px -4px rgba(47,82,107,.08);
+            width: 336px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 16px;
+            text-decoration: none;
+            transition: box-shadow .2s, transform .2s;
+        }
+        .wf-next-link-card:hover {
+            box-shadow: 0px 8px 16px -4px rgba(56,90,116,.08),
+                        0px 20px 28px -8px rgba(47,82,107,.12);
+            transform: translateY(-2px);
+        }
+        .wf-next-card-body { display: flex; flex-direction: column; gap: 8px; }
+        .wf-next-card-body-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+            height: 100%;
+        }
+        .wf-next-card-texts { display: flex; flex-direction: column; gap: 8px; align-self: stretch; }
+        .wf-next-card-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            max-width: 217px;
+        }
+        .wf-next-card-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+        .wf-arrow-icon {
+            width: 54px; height: 54px;
+            background: #E2F3FF;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: background .2s, transform .2s;
+        }
+        .wf-next-link-card:hover .wf-arrow-icon {
+            background: #CEEBFF;
+            transform: scale(1.08);
+        }
+        .wf-arrow-icon::after {
+            content: '';
+            width: 26px; height: 26px;
+            background-color: #1B3F57;
+            mask-image: url('icons/arrow-right.svg');
+            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/arrow-right.svg');
+            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+        }
+
+        /* ════════════════════════════════════════
+           FINAL SECTION
+        ════════════════════════════════════════ */
+        .wf-final {
+            position: relative;
+            height: 691px;
+            overflow: hidden;
+            margin-top: 64px;
+            z-index: 1;
+        }
+        .wf-final-bg {
+            position: absolute;
+            left: 0; right: 0;
+            top: -240px;
+            height: calc(100% + 240px);
+            background-image: url('img/clouds_bg.png');
+            background-size: 110% auto;
+            background-position: center top;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+        @keyframes wf-birds-spin {
+            0%   { transform: translateX(-50%) rotate(0deg);    }
+            100% { transform: translateX(-50%) rotate(-360deg); }
+        }
+        @keyframes wf-birds-spin-desk {
+            0%   { transform: translate(-50%, -50%) rotate(0deg);    }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+        .wf-final-birds-desk {
+            position: absolute;
+            left: 50%;
+            top: calc(50% + 180px);
+            transform: translate(-50%, -50%);
+            transform-origin: center center;
+            width: 110%;
+            max-width: 1200px;
+            height: auto;
+            z-index: 1;
+            pointer-events: none;
+            animation: wf-birds-spin-desk 70s linear infinite;
+        }
+        .wf-final-birds-mob {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: -56px;
+            transform: translateX(-50%);
+            transform-origin: center center;
+            width: 160vw;
+            height: auto;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .wf-final-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            padding: 0 80px;
+        }
+        .wf-final-texts {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+        .wf-final-h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 64px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            text-align: center; max-width: 788px;
+        }
+        .wf-final-sub {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            max-width: 788px;
+        }
+        .wf-final-p {
+            font-family: 'Raleway', sans-serif;
+            font-size: 22px; font-weight: 500; line-height: 1.2;
+            color: #2E5B79; margin: 0; text-align: center;
+        }
+        .wf-final-p--bold { font-weight: 600; }
+        .wf-final-btn {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 700; line-height: 1;
+            text-transform: uppercase; color: #FFFFFF;
+            background: #1B3F57; border-radius: 32px;
+            padding: 24px 34px;
+            display: inline-flex; align-items: center; justify-content: center;
+            text-decoration: none; cursor: pointer; border: none;
+            transition: background .2s;
+        }
+        .wf-final-btn:hover { background: #45799B; }
+
+        /* Footer sits above the birds overflow */
+        .site-footer { position: relative; z-index: 2; }
+
+        /* ════════════════════════════════════════
+           MOBILE NAV (same as home.html)
+        ════════════════════════════════════════ */
+
+        /* ════════════════════════════════════════
+           MOBILE RESPONSIVE
+        ════════════════════════════════════════ */
+        @media (max-width: 1100px) {
+            .wf-white-card, .wf-dark-card { width: auto; padding: 48px 60px; }
+            .wf-card-inner, .wf-dark-inner { width: 100%; }
+            .wf-stage { width: 100%; }
+            .wf-title { font-size: 36px; white-space: normal; }
+            .wf-dark-title { font-size: 36px; white-space: normal; }
+            .wf-title-wave, .wf-dark-title-wave { width: 100%; max-width: 716px; }
+            .wf-next-links { flex-wrap: wrap; }
+            .wf-next-link-card { flex: 1; min-width: 280px; }
+        }
+        @media (max-width: 900px) {
+            .wf-sec1, .wf-sec2 { padding-left: 20px; padding-right: 20px; }
+            .wf-sec3 { padding: 0 20px; }
+            .wf-white-card, .wf-dark-card { padding: 40px 32px; }
+            .wf-breadcrumbs { padding-left: 20px; }
+            .wf-final-h1 { font-size: 40px; }
+        }
+        @media (max-width: 768px) {
+
+            .wf-breadcrumbs { padding-left: 16px; height: 54px; }
+            .wf-sec1, .wf-sec2 { padding-left: 16px; padding-right: 16px; }
+            .wf-sec3 { padding: 0 16px; }
+            .wf-white-card, .wf-dark-card { padding: 32px 20px; border-radius: 20px; }
+            .wf-dark-inner { gap: 32px; }
+            .wf-title { font-size: 28px; }
+            .wf-dark-title { font-size: 28px; }
+            .wf-title-block { height: auto; margin-bottom: 32px; }
+            .wf-dark-title-block { height: auto; }
+            .wf-title-wave, .wf-dark-title-wave { top: 0; }
+
+            .wf-timeline-row { flex-direction: column; gap: 0; }
+            .wf-timeline-left { display: none; }
+            .wf-stages { gap: 32px; }
+            .wf-stage { width: 100%; }
+            .wf-h5 { font-size: 17px; }
+            .wf-stage-num-label { font-size: 18px; }
+            .wf-stage-name { font-size: 16px; }
+
+            .wf-next-card { padding: 32px 20px; border-radius: 20px; }
+            .wf-next-h2 { font-size: 28px; }
+            .wf-next-subtitle { font-size: 16px; }
+            .wf-next-links { flex-direction: column; align-items: center; }
+            .wf-next-link-card { width: 100%; max-width: 400px; }
+            .wf-next-card-title { font-size: 22px; max-width: 100%; }
+
+            .wf-final { height: auto; padding: 64px 16px; margin-top: 32px; overflow: hidden; }
+            .wf-final-bg { top: 0; height: 100%; background-size: auto; }
+            .wf-final-content { position: static; padding: 0; height: auto; }
+            .wf-final-h1 { font-size: 28px; }
+            .wf-final-p { font-size: 16px; }
+            .wf-final-birds-desk { display: none; }
+            .wf-final-birds-mob {
+                display: block;
+                animation: wf-birds-spin 70s linear infinite;
+            }
+
+            .footer-top-container, .footer-bottom-container { width: calc(100% - 32px); }
+        }
+        @media (max-width: 480px) {
+
+            /* ── Floating help button → circle only (як home.html) ── */
+            .hp-help-btn {
+                width: 60px; height: 60px;
+                border-radius: 50%; padding: 13px; gap: 0;
+                right: 12px; bottom: 20px;
+            }
+            .hp-help-btn span { display: none; }
+
+            /* ── Breadcrumbs ── */
+            .wf-breadcrumbs { height: 44px; }
+            .wf-bc-link, .wf-bc-current { font-size: 13px; }
+            .wf-bc-sep { width: 14px; height: 14px; }
+
+            /* ── Sections ── */
+            .wf-sec1 { padding-bottom: 32px; }
+            .wf-sec2 { padding-top: 32px; padding-bottom: 32px; }
+            .wf-sec3 { padding-top: 32px !important; }
+
+            /* ── Cards ── */
+            .wf-white-card, .wf-dark-card { padding: 24px 16px; }
+            .wf-next-card { padding: 24px 16px; }
+
+            /* ── Title blobs: ховаємо desktop-хвилі, показуємо mobile-blob ── */
+            .wf-title-wave, .wf-dark-title-wave { display: none; }
+            .wf-mob-blob { display: block; }
+            .wf-mob-blob--dark { display: block; }
+
+            /* ── Заголовки секцій — 36px CENTER ── */
+            .wf-title { font-size: 36px; text-align: center; }
+            .wf-dark-title { font-size: 36px; text-align: center; }
+            .wf-next-h2 { font-size: 36px; text-align: center; }
+            .wf-final-h1 { font-size: 36px; }
+
+            /* ── Dark section ── */
+            .wf-dark-inner { gap: 24px; }
+            .wf-rule-card { padding: 12px 16px; }
+            .wf-rule-num { background: #FFFFFF; border-color: #FFFFFF; color: #1B3F57; }
+
+            /* ── Timeline: повертаємо кружечки на mobile ── */
+            .wf-timeline-left { display: block; }
+            .wf-timeline-row { flex-direction: row; gap: 16px; }
+            .wf-stages { gap: 46px; } /* 46px = відповідає JS syncCircles() gap */
+            .wf-circle { width: 45px; height: 45px; font-size: 20px; }
+            .wf-circle-wrap { height: 45px; }
+            .wf-timeline-line { left: 22px; top: 45px; } /* top = висота кружечка */
+
+            /* ── Stage: Етап N → H2 (22px), назва → body accent 16 ── */
+            .wf-stage-num-label { font-size: 22px; }
+            .wf-stage-name { font-size: 16px; }
+            .wf-h5 { font-size: 16px; }
+            .wf-step-title { font-size: 16px; padding-left: 22px; text-indent: -22px; }
+
+            /* ── Alert box ── */
+            .wf-alert { padding: 12px; gap: 10px; }
+            .wf-alert-text { max-width: 100%; }
+
+            /* ── Contact button — full width ── */
+            .wf-contact-btn {
+                font-size: 16px;
+                padding: 16px 26px;
+                align-self: stretch;
+                justify-content: center;
+            }
+
+            /* ── "Що далі?" ── */
+            .wf-next-link-card { max-width: 100%; }
+
+            /* ── Final section — mobile clouds + birds ── */
+            /* z-index: bg(-1) → birds(1,2) → content(3) — птахи над хмарами, текст над птахами */
+            .wf-final { padding: 32px 16px; min-height: 503px; display: flex; align-items: center; justify-content: center; }
+            .wf-final-bg {
+                background-image: url('img/clouds_mobile.png');
+                background-position: center;
+                background-size: auto;
+            }
+            .wf-final-content { position: relative; z-index: 3; gap: 24px; width: 100%; }
+            .wf-final-texts { gap: 16px; }
+            .wf-final-btn {
+                font-size: 16px;
+                padding: 16px 22px;
+                align-self: stretch;
+                justify-content: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     HEADER
+════════════════════════════════════ -->
+<header class="site-header">
+    <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню">
+            <span class="hp-mob-menu-icon"></span>
+        </button>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-item">Головна</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger nav-active" style="color:#45799B;">Порядок дій</button>
+                <div class="nav-dropdown-menu">
+                    <a href="what-to-do-first.html" class="nav-dropdown-item nav-dropdown-active">Що робити в першу чергу?</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Послуги</button>
+                <div class="nav-dropdown-menu">
+                    <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="products.html" class="nav-item">Товари</a>
+            <a href="about.html" class="nav-item">Про нас</a>
+        </nav>
+        <a href="home.html" class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
+        </a>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="how-to-support.html" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="nav-dropdown-item">Професійні консультації</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+                <a href="register.html" class="icon-placeholder account-icon"></a>
+            </div>
+        </div>
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+            <a href="register.html" class="icon-placeholder account-icon"></a>
+        </div>
+    </div>
+</header>
+
+<!-- ════════════════════════════════════
+     BREADCRUMBS
+════════════════════════════════════ -->
+<div class="wf-breadcrumbs">
+    <a href="#" class="wf-bc-link">Порядок дій</a>
+    <span class="wf-bc-sep" aria-hidden="true"></span>
+    <span class="wf-bc-current">Що робити в першу чергу</span>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 1 — ЩО РОБИТИ В ПЕРШУ ЧЕРГУ?
+════════════════════════════════════ -->
+<section class="wf-sec1">
+    <div class="wf-white-card wf-reveal">
+        <div class="wf-card-inner">
+
+            <!-- Title -->
+            <div class="wf-title-block">
+                <img src="icons/union_wave_light.svg" alt="" class="wf-title-wave" aria-hidden="true">
+                <img src="icons/blob_procedure_mobile.svg" alt="" class="wf-mob-blob" aria-hidden="true">
+                <h1 class="wf-title">Що робити в першу чергу?</h1>
+            </div>
+
+            <!-- Timeline row -->
+            <div class="wf-timeline-row">
+
+                <!-- Left: circles + vertical line -->
+                <div class="wf-timeline-left" aria-hidden="true">
+                    <div class="wf-timeline-line"></div>
+                    <div class="wf-circles">
+                        <div class="wf-circle-wrap"><div class="wf-circle">1</div></div>
+                        <div class="wf-circle-wrap"><div class="wf-circle wf-circle--alt">2</div></div>
+                        <div class="wf-circle-wrap"><div class="wf-circle wf-circle--alt">3</div></div>
+                        <div class="wf-circle-wrap"><div class="wf-circle wf-circle--alt">4</div></div>
+                    </div>
+                </div>
+
+                <!-- Right: stage content -->
+                <div class="wf-stages">
+
+                    <!-- ── ЕТАП 1 ── -->
+                    <div class="wf-stage">
+                        <div class="wf-stage-head">
+                            <p class="wf-stage-num-label">Етап 1:</p>
+                            <p class="wf-stage-name">Першочергові дії</p>
+                        </div>
+                        <div class="wf-sub-blocks">
+                            <div class="wf-sub-block">
+                                <p class="wf-h5">Якщо людина померла вдома (вдень):</p>
+                                <ol class="wf-list">
+                                    <li>Зателефонуйте сімейному лікарю, з яким було підписано декларацію. Він має прийти та констатувати факт смерті.</li>
+                                    <li>Викличте поліцію (102). Поліція повинна оглянути тіло на предмет відсутності ознак насильницької смерті.</li>
+                                </ol>
+                            </div>
+                            <div class="wf-sub-block">
+                                <p class="wf-h5">Якщо людина померла вдома (вночі, у вихідні або свята):</p>
+                                <ol class="wf-list">
+                                    <li>Телефонуйте 103 (Швидка допомога). Медики констатують смерть.</li>
+                                    <li>Телефонуйте 102 (Поліція). Поліція обов'язково приїжджає на виклики щодо смерті в неробочий час лікарів.</li>
+                                </ol>
+                            </div>
+                            <div class="wf-sub-block">
+                                <p class="wf-h5">Якщо людина померла в лікарні:</p>
+                                <ul class="wf-list">
+                                    <li>Лікуючий лікар або черговий персонал самостійно повідомляють родичів та передають тіло до патологоанатомічного відділення (моргу). Вам необхідно з'явитися до лікарні з документами померлого та паспортом заявника.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── ЕТАП 2 ── -->
+                    <div class="wf-stage">
+                        <div class="wf-stage-head">
+                            <p class="wf-stage-num-label">Етап 2:</p>
+                            <p class="wf-stage-name">Виклик ритуальної служби</p>
+                        </div>
+                        <div class="wf-sub-blocks">
+                            <p class="wf-intro">Після того, як факт смерті зафіксовано медиками та поліцією, зв'яжіться з нами:</p>
+                            <a href="tel:+387777777" class="wf-contact-btn">Зв'язатися</a>
+                            <div class="wf-sub-block">
+                                <p class="wf-h5">Ми беремо на себе:</p>
+                                <ul class="wf-list">
+                                    <li>Транспортування тіла до холодильної камери (моргу).</li>
+                                    <li>Консультацію щодо подальших кроків.</li>
+                                    <li>Організацію зберігання та підготовки тіла до поховання.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── ЕТАП 3 ── -->
+                    <div class="wf-stage">
+                        <div class="wf-stage-head">
+                            <p class="wf-stage-num-label">Етап 3:</p>
+                            <p class="wf-stage-name">Оформлення документів</p>
+                        </div>
+                        <div class="wf-sub-blocks">
+                            <p class="wf-intro">Це найскладніший юридичний етап, який складається з трьох кроків:</p>
+                            <div class="wf-steps">
+                                <div class="wf-step-with-alert">
+                                    <p class="wf-step-title"><strong style="font-weight:600;">1.&nbsp;Медичне свідоцтво про смерть (форма №106/о):</strong><br>
+                                    <span class="wf-step-desc">Його видає сімейний лікар або патологоанатом у морзі.</span></p>
+                                    <div class="wf-alert">
+                                        <p class="wf-alert-text"><strong>Важливо:</strong>&nbsp;Якщо людина хворіла тривалий час і була під наглядом лікаря, розтин може не проводитися. В інших випадках поліція направляє тіло на судово-медичну експертизу.</p>
+                                        <span class="wf-alert-icon" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="wf-step-with-alert">
+                                    <p class="wf-step-title"><strong style="font-weight:600;">2.&nbsp;Свідоцтво про смерть державного зразка:</strong><br>
+                                    <span class="wf-step-desc">Оформлюється в органах РАЦС (ДРАЦС).</span></p>
+                                    <div class="wf-alert">
+                                        <p class="wf-alert-text"><strong>Необхідні документи:</strong>&nbsp;Паспорт померлого, ваш паспорт та медичне свідоцтво.</p>
+                                        <span class="wf-alert-icon" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="wf-step">
+                                    <p class="wf-step-title"><strong style="font-weight:600;">3.&nbsp;Витяг з реєстру (для отримання допомоги на поховання):</strong><br>
+                                    <span class="wf-step-desc">Видається разом із свідоцтвом у РАЦСі.</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── ЕТАП 4 ── -->
+                    <div class="wf-stage">
+                        <div class="wf-stage-head">
+                            <p class="wf-stage-num-label">Етап 4:</p>
+                            <p class="wf-stage-name">Організаційні питання</p>
+                        </div>
+                        <div class="wf-sub-blocks">
+                            <p class="wf-intro">На цьому етапі ви приймаєте рішення щодо:</p>
+                            <div class="wf-sub-blocks" style="gap:24px;">
+                                <div class="wf-sub-block">
+                                    <p class="wf-h5">Виду поховання:</p>
+                                    <p class="wf-list" style="padding-left:0; list-style:none;">Традиційне поховання на цвинтарі чи кремація.</p>
+                                </div>
+                                <div class="wf-sub-block">
+                                    <p class="wf-h5">Релігійного обряду:</p>
+                                    <p class="wf-list" style="padding-left:0; list-style:none;">Замовлення відспівування, вибір священника.</p>
+                                </div>
+                                <div class="wf-sub-block">
+                                    <p class="wf-h5">Прощання:</p>
+                                    <p class="wf-list" style="padding-left:0; list-style:none;">Вибір місця (траурна зала, церква, вдома) та час.</p>
+                                </div>
+                                <div class="wf-sub-block">
+                                    <p class="wf-h5">Поминального обіду:</p>
+                                    <p class="wf-list" style="padding-left:0; list-style:none;">Вибір кафе та меню.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /wf-stages -->
+            </div><!-- /wf-timeline-row -->
+        </div><!-- /wf-card-inner -->
+    </div><!-- /wf-white-card -->
+</section>
+
+<!-- ════════════════════════════════════
+     SECTION 2 — ЩО ВАЖЛИВО ЗНАТИ
+════════════════════════════════════ -->
+<section class="wf-sec2">
+    <div class="wf-dark-card wf-reveal">
+        <div class="wf-dark-inner">
+
+            <!-- Title -->
+            <div class="wf-dark-title-block">
+                <img src="icons/union_wave_dark.svg" alt="" class="wf-dark-title-wave" aria-hidden="true">
+                <div class="wf-mob-blob--dark" aria-hidden="true"></div>
+                <h2 class="wf-dark-title">Що важливо знати:</h2>
+            </div>
+
+            <!-- Rules -->
+            <div class="wf-rules">
+                <div class="wf-rule-card">
+                    <div class="wf-rule-num">1</div>
+                    <p class="wf-rule-text">Не віддавайте документи померлого стороннім особам, які можуть прийти без вашого виклику (незаконні «агенти», що приїжджають раніше поліції).</p>
+                </div>
+                <div class="wf-rule-card">
+                    <div class="wf-rule-num">2</div>
+                    <p class="wf-rule-text">Зберігайте чеки на всі витрати — вони знадобляться для отримання компенсації на поховання.</p>
+                </div>
+                <div class="wf-rule-card">
+                    <div class="wf-rule-num">3</div>
+                    <p class="wf-rule-text">Перевезення тіла має здійснюватися спеціалізованим транспортом (катафалком).</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SECTION 3 — ЩО ДАЛІ?
+════════════════════════════════════ -->
+<section class="wf-sec3" style="padding-top: 64px;">
+    <div class="wf-next-card wf-reveal">
+        <div class="wf-next-head">
+            <h2 class="wf-next-h2">Що далі?</h2>
+            <p class="wf-next-subtitle">Ми підготували детальні матеріали, які допоможуть вам зорієнтуватися в подальших організаційних питаннях. Оберіть розділ, який вас цікавить зараз:</p>
+        </div>
+        <div class="wf-next-links">
+
+            <!-- Card 1 -->
+            <a href="documents-benefits.html" class="wf-next-link-card">
+                <div class="wf-next-card-body-inner">
+                    <div class="wf-next-card-texts">
+                        <h3 class="wf-next-card-title">Документи та пільги</h3>
+                        <p class="wf-next-card-text"><strong style="font-weight:600;">Де і як оформити папери?</strong> Повний перелік документів для РАЦСу, отримання допомоги на поховання та юридичні тонкощі оформлення спадщини.</p>
+                    </div>
+                    <div class="wf-arrow-icon" aria-hidden="true"></div>
+                </div>
+            </a>
+
+            <!-- Card 2 -->
+            <a href="ceremony-preparation.html" class="wf-next-link-card">
+                <div class="wf-next-card-body-inner">
+                    <div class="wf-next-card-texts">
+                        <h3 class="wf-next-card-title">Підготовка до церемонії</h3>
+                        <p class="wf-next-card-text"><strong style="font-weight:600;">Турбота про гідний вигляд.</strong> Все про підготовку тіла (санітарно-косметичні послуги), вибір атрибутики, одягу та замовлення релігійного обряду.</p>
+                    </div>
+                    <div class="wf-arrow-icon" aria-hidden="true"></div>
+                </div>
+            </a>
+
+            <!-- Card 3 -->
+            <a href="documents-benefits.html" class="wf-next-link-card">
+                <div class="wf-next-card-body-inner">
+                    <div class="wf-next-card-texts">
+                        <h3 class="wf-next-card-title">Організація та процес поховання</h3>
+                        <p class="wf-next-card-text"><strong style="font-weight:600;">Повний цикл організації.</strong> Від вибору місця на кладовищі або кремації до організації поминального обіду. Як все відбувається крок за кроком.</p>
+                    </div>
+                    <div class="wf-arrow-icon" aria-hidden="true"></div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FINAL SECTION — ПОТРІБНА ДОПОМОГА?
+════════════════════════════════════ -->
+<section class="wf-final">
+    <div class="wf-final-bg"></div>
+    <img src="icons/desktop_birds.svg" alt="" class="wf-final-birds-desk">
+    <img src="icons/footer_mobile_birds.svg" alt="" class="wf-final-birds-mob">
+    <div class="wf-final-content">
+        <div class="wf-final-texts">
+            <h2 class="wf-final-h1">Потрібна допомога прямо зараз?</h2>
+            <div class="wf-final-sub">
+                <p class="wf-final-p">Телефонуйте на гарячу лінію.</p>
+                <p class="wf-final-p wf-final-p--bold">Консультація безкоштовна.</p>
+            </div>
+        </div>
+        <a href="tel:+387777777" class="wf-final-btn">Консультація</a>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
+                        <li><a href="services-packages.html">Готові пакети</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ════════════════════════════════════
+     FLOATING HELP BUTTON
+════════════════════════════════════ -->
+<a href="tel:+387777777" class="hp-help-btn">
+    <span>Потрібна допомога?</span>
+    <div class="hp-help-icon"></div>
+</a>
+
+<!-- ════════════════════════════════════
+     MOBILE NAV
+════════════════════════════════════ -->
+<div class="hp-mob-nav" id="mobNav" role="dialog" aria-modal="true" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link">Головна</a>
+            <div class="hp-mob-acc is-open">
+                <button class="hp-mob-acc-trigger" aria-expanded="true">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="what-to-do-first.html" class="hp-mob-acc-link" style="color:#1B3F57;font-weight:600;">Що робити в першу чергу?</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Послуги<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-packages.html" class="hp-mob-acc-link">Готові пакети послуг</a>
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link">Товари</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Вшанування Пам'яті<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="index.html" class="hp-mob-acc-link">Сторінка пам'яті</a>
+                    <a href="#" class="hp-mob-acc-link">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Психологічна підтримка<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="how-to-support.html" class="hp-mob-acc-link">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="hp-mob-acc-link">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="hp-mob-acc-link">Професійні консультації</a>
+                </div>
+            </div>
+            <a href="about.html" class="hp-mob-nav-link">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* ── Mobile menu ── */
+    (function() {
+        var btn = document.getElementById('mobMenuBtn');
+        var nav = document.getElementById('mobNav');
+        var cls = document.getElementById('mobNavClose');
+        if (!btn) return;
+        function openNav()  { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
+        function closeNav() { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
+        btn.addEventListener('click', openNav);
+        cls.addEventListener('click', closeNav);
+        nav.addEventListener('click', function(e) { if (e.target === nav) closeNav(); });
+    })();
+
+    /* ── Mobile nav accordion ── */
+    document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+            var acc = this.closest('.hp-mob-acc');
+            var isOpen = acc.classList.contains('is-open');
+            document.querySelectorAll('.hp-mob-acc').forEach(function(a) {
+                a.classList.remove('is-open');
+                a.querySelector('.hp-mob-acc-trigger').setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) { acc.classList.add('is-open'); this.setAttribute('aria-expanded', 'true'); }
+        });
+    });
+
+    /* ── Scroll reveal ── */
+    (function() {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+
+        document.querySelectorAll('.wf-reveal').forEach(function(el, i) {
+            el.style.transitionDelay = (i * 120) + 'ms';
+            observer.observe(el);
+        });
+    })();
+
+    /* ── Sync timeline circle heights with stage heights ── */
+    (function() {
+        function syncCircles() {
+            var stages  = document.querySelectorAll('.wf-stage');
+            var circles = document.querySelectorAll('.wf-circle-wrap');
+            var line    = document.querySelector('.wf-timeline-line');
+            if (!stages.length || !circles.length) return;
+            circles.forEach(function(c, i) {
+                if (stages[i]) c.style.height = stages[i].offsetHeight + 'px';
+            });
+            if (line) {
+                /* Line top: 54px (bottom of circle 1).
+                   Line bottom: center of circle 4 = sum(wrap[0..2].height + gap) + 27px */
+                var gap = 46;
+                var end = 0;
+                for (var i = 0; i < circles.length - 1; i++) {
+                    end += circles[i].offsetHeight + gap;
+                }
+                end += 27; /* center of last circle */
+                line.style.bottom = 'auto';
+                line.style.height = (end - 54) + 'px';
+            }
+        }
+        syncCircles();
+        window.addEventListener('resize', syncCircles);
+    })();
+</script>
+
+</body>
+</html>

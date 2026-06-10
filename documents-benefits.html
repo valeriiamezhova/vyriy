@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вирій — Документи та пільги</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+
+        /* ════════════════════════════════════════
+           DESIGN TOKENS
+           25: #F6FBFF | 50: #E2F3FF | 600: #45799B
+           700: #2E5B79 | 800: #1B3F57 | 900: #0F2E43
+        ════════════════════════════════════════ */
+
+        html {
+            scroll-behavior: smooth;
+            background: linear-gradient(179.972deg, #6298BD 6.73%, #BAE3FF 50.67%, #E2F3FF 78.47%);
+            min-height: 100%;
+            overflow-x: clip;
+        }
+        body { background: transparent; overflow-x: clip; max-width: 100vw; }
+        *, *::before, *::after { box-sizing: border-box; min-width: 0; }
+        img { max-width: 100%; }
+
+        @media (min-width: 481px) {
+            .footer-top-container, .footer-bottom-container { max-width: 1280px; width: calc(100% - 80px); }
+        }
+
+        /* ── Scroll reveal ── */
+        .db-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .db-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* Mobile blob under title — hidden on desktop */
+        .db-mob-blob {
+            display: none;
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: auto;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Dark section mobile blob — hidden on desktop */
+        .db-mob-blob--dark {
+            display: none;
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 173px;
+            background-color: #2E5B79;
+            -webkit-mask-image: url('icons/blob_procedure_mobile_large.svg');
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+            mask-image: url('icons/blob_procedure_mobile_large.svg');
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Floating help button ── */
+        @keyframes hp-help-ring {
+            0%   { box-shadow: 0 0 0 0   rgba(27,63,87,.38), 0px 8px 24px rgba(27,63,87,.22); }
+            60%  { box-shadow: 0 0 0 10px rgba(27,63,87,0),  0px 8px 24px rgba(27,63,87,.22); }
+            100% { box-shadow: 0 0 0 0   rgba(27,63,87,0),   0px 8px 24px rgba(27,63,87,.22); }
+        }
+        .hp-help-btn {
+            position: fixed; right: 25px; bottom: 40px; z-index: 9999;
+            display: inline-flex; align-items: center; gap: 12px;
+            background: #1B3F57; border-radius: 40px; padding: 11px 18px;
+            width: 236px; cursor: pointer; text-decoration: none; border: none;
+            animation: hp-help-ring 2.8s ease-out infinite; transition: background .2s;
+        }
+        .hp-help-btn:hover { background: #2E5B79; animation-play-state: paused; box-shadow: 0px 12px 28px rgba(27,63,87,.35); }
+        .hp-help-btn span { font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; line-height: 1; flex: 1; }
+        .hp-help-icon { width: 34px; height: 34px; background-color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .hp-help-icon::after { content: ''; width: 17px; height: 17px; background-color: #1B3F57; mask-image: url('icons/phone-call.svg'); mask-repeat: no-repeat; mask-position: center; mask-size: contain; -webkit-mask-image: url('icons/phone-call.svg'); -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain; }
+
+        /* ════════════════════════════════════════
+           BREADCRUMBS
+        ════════════════════════════════════════ */
+        .db-breadcrumbs {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 0 0 100px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-sizing: border-box;
+        }
+        .db-bc-link {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #FFFFFF; text-decoration: none;
+        }
+        .db-bc-link:hover { text-decoration: underline; }
+        .db-bc-sep {
+            width: 18px; height: 18px; flex-shrink: 0;
+            background-color: #FFFFFF;
+            mask-image: url('icons/chevron-right.svg');
+            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/chevron-right.svg');
+            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+        }
+        .db-bc-current {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 600; line-height: 1.4;
+            color: #FFFFFF;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 1 — WHITE CARD
+        ════════════════════════════════════════ */
+        .db-sec1 {
+            padding: 0 80px 64px;
+            position: relative;
+            z-index: 1;
+        }
+        .db-white-card {
+            background: #FFFFFF;
+            border-radius: 34px;
+            box-shadow: 0px 4px 6px -2px rgba(56,90,116,.03),
+                        0px 12px 16px -4px rgba(47,82,107,.08);
+            padding: 64px 115px;
+            width: 1017px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .db-card-inner {
+            width: 720px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* ── Title block ── */
+        .db-title-block {
+            position: relative;
+            height: 58px;
+            overflow: visible;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-bottom: 34px;
+        }
+        .db-title-wave {
+            position: absolute;
+            left: -4.5px;
+            top: -13px;
+            width: 716px;
+            height: 83px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .db-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            text-align: center; position: relative; z-index: 1;
+            white-space: nowrap;
+        }
+
+        /* ── Intro subtitle ── */
+        .db-intro-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #2E5B79; text-align: center; margin: 0 0 44px;
+        }
+
+        /* ── Vyriy legal block ── */
+        .db-vyriy-block {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 44px;
+        }
+        .db-block-subtitle {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; line-height: 1.2;
+            text-transform: uppercase; color: #2E5B79; margin: 0;
+        }
+        .db-body-16 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+        .db-services-btn {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 700; line-height: 1;
+            text-transform: uppercase; color: #FFFFFF;
+            background: #1B3F57; border-radius: 32px;
+            padding: 16px 36px;
+            display: inline-flex; align-items: center; justify-content: center;
+            text-decoration: none; cursor: pointer; border: none;
+            align-self: flex-start; transition: background .2s;
+        }
+        .db-services-btn:hover { background: #45799B; }
+
+        /* ── Divider ── */
+        .db-divider {
+            width: 100%;
+            height: 0;
+            border: none;
+            border-top: 2px solid #F1F1F1;
+            margin: 0 0 34px;
+        }
+
+        /* ── Self-service subtitle ── */
+        .db-self-subtitle {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; line-height: 1.2;
+            text-transform: uppercase; color: #2E5B79; margin: 0 0 34px;
+        }
+
+        /* ── Timeline ── */
+        .db-timeline-row {
+            display: flex;
+            gap: 34px;
+            align-items: flex-start;
+        }
+        .db-timeline-left {
+            width: 54px;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .db-timeline-line {
+            position: absolute;
+            left: 25px;
+            top: 54px;
+            bottom: 27px;
+            width: 2px;
+            background: #1B3F57;
+            z-index: 0;
+        }
+        .db-circles {
+            display: flex;
+            flex-direction: column;
+            gap: 46px;
+            position: relative;
+            z-index: 1;
+        }
+        .db-circle-wrap {
+            height: 54px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .db-circle {
+            width: 54px; height: 54px;
+            border: 2px solid #1B3F57;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 500; line-height: 1.15;
+            color: #1B3F57;
+            background: #FFFFFF;
+            flex-shrink: 0;
+        }
+
+        /* ── Stages ── */
+        .db-stages {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 46px;
+        }
+        .db-stage {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            width: 632px;
+            max-width: 100%;
+        }
+        .db-stage-head { display: flex; flex-direction: column; gap: 0; }
+        .db-stage-num-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+        }
+        .db-stage-name-accent {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #45799B; margin: 0;
+        }
+        .db-stage-name-note {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #2E5B79; margin: 0;
+        }
+        .db-sub-blocks { display: flex; flex-direction: column; gap: 16px; }
+        .db-sub-block  { display: flex; flex-direction: column; gap: 8px; }
+        .db-h5 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #1B3F57; margin: 0;
+        }
+        .db-body-14 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+        .db-body-14 strong { font-weight: 700; }
+
+        /* ── Alert box ── */
+        .db-alert {
+            background: #E2F3FF;
+            border-radius: 24px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .db-alert-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px; font-weight: 500; line-height: 1.4;
+            color: #0F2E43; margin: 0; max-width: 468px;
+        }
+        .db-alert-text strong { font-weight: 700; }
+        .db-alert-icon {
+            width: 24px; height: 24px; flex-shrink: 0;
+            background-color: #1B3F57;
+            mask-image: url('icons/alert-circle.svg');
+            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/alert-circle.svg');
+            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+        }
+
+        /* ════════════════════════════════════════
+           SECTION 2 — MILITARY BENEFITS (full-width)
+        ════════════════════════════════════════ */
+        .db-sec2 {
+            padding: 64px 0;
+            position: relative;
+            z-index: 2;
+        }
+        .db-dark-section {
+            background: #1B3F57;
+            box-shadow: 0px 4px 6px -2px rgba(56,90,116,.03),
+                        0px 12px 16px -4px rgba(47,82,107,.08);
+            padding: 64px 115px;
+            width: 100%;
+        }
+        .db-dark-inner {
+            width: 720px;
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 34px;
+        }
+
+        /* Dark title block */
+        .db-dark-title-block {
+            position: relative;
+            overflow: visible;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 115px;
+            width: calc(100% + 63px);
+            margin-left: -32px;
+        }
+        .db-dark-title-blob {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50%;
+            margin-top: -77px; /* half of 155px blob height */
+            width: 796px;
+            height: 155px;
+            pointer-events: none;
+            z-index: 0;
+            background-color: #2E5B79;
+            mask-image: url('icons/blob_large.svg');
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            -webkit-mask-image: url('icons/blob_large.svg');
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+        }
+        .db-dark-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #FFFFFF; margin: 0;
+            text-align: center; position: relative; z-index: 1;
+            padding: 16px 0;
+        }
+
+        /* Dark subtitle */
+        .db-dark-subtitle {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #F6FBFF; text-align: center; margin: 0;
+        }
+
+        /* Info cards */
+        .db-info-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .db-info-card {
+            border: 2px solid #FFFFFF;
+            border-radius: 24px;
+            padding: 16px 24px;
+            box-shadow: 0px 4px 6px 0px rgba(56,90,116,.03),
+                        0px 12px 16px 0px rgba(47,82,107,.08);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .db-info-card-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 600; line-height: 1.2;
+            color: #FFFFFF; margin: 0;
+        }
+        .db-info-card-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #F6FBFF; margin: 0;
+        }
+        .db-info-card-list {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #F6FBFF; margin: 0; padding-left: 24px;
+        }
+        .db-info-card-list li { margin-bottom: 6px; }
+        .db-info-card-list li:last-child { margin-bottom: 0; }
+
+        /* ════════════════════════════════════════
+           SECTION 3 — ЩО ДАЛІ? (with shadow, dark text)
+        ════════════════════════════════════════ */
+        .db-sec3 {
+            padding: 64px 80px;
+            position: relative;
+            z-index: 3;
+        }
+        .db-next-card {
+            border-radius: 34px;
+            padding: 64px 115px;
+            background: transparent;
+        }
+        .db-next-head {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 34px;
+        }
+        .db-next-h2 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 48px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            text-align: center;
+        }
+        .db-next-subtitle {
+            font-family: 'Raleway', sans-serif;
+            font-size: 22px; font-weight: 500; line-height: 1.2;
+            color: #2E5B79; margin: 0; text-align: center;
+            max-width: 696px;
+        }
+        .db-next-links {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+        }
+        .db-next-link-card {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0px 4px 6px 0px rgba(56,90,116,.03),
+                        0px 12px 16px 0px rgba(47,82,107,.08);
+            width: 336px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 16px;
+            text-decoration: none;
+            transition: box-shadow .2s, transform .2s;
+        }
+        .db-next-link-card:hover {
+            box-shadow: 0px 8px 16px -4px rgba(56,90,116,.08),
+                        0px 20px 28px -8px rgba(47,82,107,.12);
+            transform: translateY(-2px);
+        }
+        .db-next-card-body-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+            height: 100%;
+        }
+        .db-next-card-texts {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-self: stretch;
+        }
+        .db-next-card-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 24px; font-weight: 600; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+        }
+        .db-next-card-title--narrow { max-width: 217px; }
+        .db-next-card-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px; font-weight: 500; line-height: 1.4;
+            color: #2E5B79; margin: 0;
+        }
+        .db-arrow-icon {
+            width: 54px; height: 54px;
+            background: #E2F3FF;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: background .2s, transform .2s;
+        }
+        .db-next-link-card:hover .db-arrow-icon { background: #CEEBFF; transform: scale(1.08); }
+        .db-arrow-icon::after {
+            content: '';
+            width: 26px; height: 26px;
+            background-color: #1B3F57;
+            mask-image: url('icons/arrow-right.svg');
+            mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+            -webkit-mask-image: url('icons/arrow-right.svg');
+            -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
+        }
+
+        /* ════════════════════════════════════════
+           FINAL SECTION
+        ════════════════════════════════════════ */
+        .db-final {
+            position: relative;
+            height: 691px;
+            overflow: visible;
+            margin-top: 64px;
+            z-index: 1;
+        }
+        .db-final-bg {
+            position: absolute;
+            left: 0; right: 0;
+            top: -240px;
+            height: calc(100% + 240px);
+            background-image: url('img/clouds_bg.png');
+            background-size: 110% auto;
+            background-position: center top;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+        @keyframes db-birds-spin {
+            0%   { transform: translateX(-50%) rotate(0deg);    }
+            100% { transform: translateX(-50%) rotate(-360deg); }
+        }
+        @keyframes db-birds-spin-desk {
+            0%   { transform: translate(-50%, -50%) rotate(0deg);    }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+        .db-final-birds-desk {
+            position: absolute;
+            left: 50%;
+            top: calc(50% + 180px);
+            transform: translate(-50%, -50%);
+            transform-origin: center center;
+            width: 110%;
+            max-width: 1200px;
+            height: auto;
+            z-index: 1;
+            pointer-events: none;
+            animation: db-birds-spin-desk 70s linear infinite;
+        }
+        .db-final-birds-mob {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: -56px;
+            transform: translateX(-50%);
+            transform-origin: center center;
+            width: 160vw;
+            height: auto;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .db-birds-clip {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .db-final-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            padding: 0 80px;
+        }
+        .db-final-texts {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+        .db-final-h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 64px; font-weight: 700; line-height: 1.2;
+            text-transform: uppercase; color: #1B3F57; margin: 0;
+            text-align: center; max-width: 788px;
+        }
+        .db-final-sub {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+        .db-final-p {
+            font-family: 'Raleway', sans-serif;
+            font-size: 22px; font-weight: 500; line-height: 1.2;
+            color: #2E5B79; margin: 0; text-align: center;
+        }
+        .db-final-p--bold { font-weight: 600; }
+        .db-final-btn {
+            font-family: 'Raleway', sans-serif;
+            font-size: 20px; font-weight: 700; line-height: 1;
+            text-transform: uppercase; color: #FFFFFF;
+            background: #1B3F57; border-radius: 32px;
+            padding: 24px 34px;
+            display: inline-flex; align-items: center; justify-content: center;
+            text-decoration: none; cursor: pointer; border: none;
+            transition: background .2s;
+        }
+        .db-final-btn:hover { background: #45799B; }
+
+        .site-footer { position: relative; z-index: 2; }
+
+        /* ════════════════════════════════════════
+           MOBILE NAV
+        ════════════════════════════════════════ */
+
+        /* ════════════════════════════════════════
+           MOBILE RESPONSIVE
+        ════════════════════════════════════════ */
+        @media (max-width: 1100px) {
+            .db-white-card { width: auto; padding: 48px 60px; }
+            .db-card-inner { width: 100%; }
+            .db-stage { width: 100%; }
+            .db-title { font-size: 36px; white-space: normal; }
+            .db-dark-section { padding: 48px 60px; }
+            .db-dark-inner { width: 100%; }
+            .db-dark-title { font-size: 36px; }
+            .db-dark-title-block { width: 100%; margin-left: 0; }
+            .db-next-links { flex-wrap: wrap; }
+            .db-next-link-card { flex: 1; min-width: 280px; }
+        }
+        @media (max-width: 900px) {
+            .db-sec1, .db-sec2, .db-sec3 { padding-left: 20px; padding-right: 20px; }
+            .db-sec2 { padding-left: 0; padding-right: 0; }
+            .db-white-card { padding: 40px 32px; }
+            .db-breadcrumbs { padding-left: 20px; }
+            .db-final-h1 { font-size: 40px; }
+        }
+        @media (max-width: 768px) {
+
+            .db-breadcrumbs { padding-left: 16px; height: 54px; }
+            .db-sec1 { padding-left: 16px; padding-right: 16px; }
+            .db-sec3 { padding: 32px 16px; }
+            .db-white-card { padding: 32px 20px; border-radius: 20px; }
+            .db-title { font-size: 36px; white-space: normal; text-align: center; }
+            .db-title-block { height: auto; width: 100%; margin-left: 0; margin-bottom: 24px; }
+            .db-title-wave { top: 0; }
+            .db-intro-text { font-size: 16px; margin-bottom: 32px; }
+            .db-block-subtitle { font-size: 18px; }
+            .db-self-subtitle { font-size: 18px; }
+
+            .db-timeline-row { flex-direction: column; gap: 0; }
+            .db-timeline-left { display: none; }
+            .db-stages { gap: 32px; }
+            .db-stage { width: 100%; }
+            .db-stage-num-label { font-size: 18px; }
+            .db-stage-name-accent, .db-stage-name-note { font-size: 16px; }
+            .db-h5 { font-size: 17px; }
+
+            .db-dark-section { padding: 40px 20px; }
+            .db-dark-title { font-size: 36px; white-space: normal; text-align: center; }
+            .db-dark-title-block { width: 100%; margin-left: 0; }
+            .db-dark-subtitle { font-size: 16px; }
+            .db-info-card-text { font-size: 14px; }
+            .db-info-card-list { font-size: 14px; }
+
+            .db-next-card { padding: 32px 20px; border-radius: 20px; }
+            .db-next-h2 { font-size: 28px; }
+            .db-next-subtitle { font-size: 16px; }
+            .db-next-links { flex-direction: column; align-items: center; }
+            .db-next-link-card { width: 100%; max-width: 400px; }
+            .db-next-card-title { font-size: 18px; }
+            .db-next-card-title--narrow { max-width: 100%; }
+
+            .db-final { height: auto; padding: 64px 16px; margin-top: 32px; overflow: hidden; }
+            .db-final-bg { top: 0; height: 100%; background-size: auto; }
+            .db-final-content { position: static; padding: 0; height: auto; }
+            .db-final-h1 { font-size: 28px; }
+            .db-final-p { font-size: 16px; }
+            .db-final-birds-desk { display: none; }
+            .db-final-birds-mob { display: block; animation: db-birds-spin 70s linear infinite; }
+
+            .footer-top-container, .footer-bottom-container { width: calc(100% - 32px); }
+        }
+        @media (max-width: 480px) {
+            /* Floating help button → round */
+            .hp-help-btn { width: 60px; height: 60px; border-radius: 50%; padding: 13px; gap: 0; right: 12px; bottom: 20px; }
+            .hp-help-btn span { display: none; }
+
+            /* Breadcrumbs */
+            .db-breadcrumbs { height: 44px; }
+            .db-bc-link, .db-bc-current { font-size: 13px; }
+            .db-bc-sep { width: 14px; height: 14px; }
+
+            /* Section paddings */
+            .db-sec1 { padding-bottom: 32px; }
+            .db-sec2 { padding-top: 32px; padding-bottom: 32px; }
+
+            /* Cards */
+            .db-white-card { padding: 24px 16px; }
+
+            /* Title blobs */
+            .db-title-wave { display: none; }
+            .db-mob-blob { display: block; }
+
+            /* Titles */
+            .db-title { font-size: 36px; text-align: center; }
+            .db-block-subtitle, .db-self-subtitle { font-size: 20px; }
+
+            /* Services button: full width */
+            .db-services-btn { font-size: 16px; padding: 16px 22px; align-self: stretch; justify-content: center; width: 100%; }
+
+            /* Timeline circles restored */
+            .db-timeline-left { display: block; width: 45px; }
+            .db-timeline-row { flex-direction: row; gap: 16px; }
+            .db-stages { gap: 46px; }
+            .db-circle { width: 45px; height: 45px; font-size: 20px; }
+            .db-circle-wrap { height: 45px; }
+            .db-timeline-line { left: 22px; top: 45px; bottom: 22px; }
+            .db-stage-num-label { font-size: 22px; }
+            .db-h5 { font-size: 16px; }
+
+            /* Dark section */
+            .db-dark-section { padding: 32px 16px; }
+            .db-dark-inner { gap: 16px; }
+            .db-dark-title-blob { display: none; }
+            .db-mob-blob--dark { display: block; }
+            .db-dark-title { font-size: 36px; text-align: center; }
+            .db-dark-subtitle { font-size: 16px; }
+
+            /* "Що далі?" */
+            .db-next-card { padding: 24px 16px; }
+            .db-next-h2 { font-size: 36px; }
+            .db-next-link-card { max-width: 100%; }
+            .db-next-card-title { font-size: 20px; }
+
+            /* Final section */
+            .db-final { padding: 32px 16px; min-height: 503px; display: flex; align-items: center; justify-content: center; }
+            .db-final-bg { background-image: url('img/clouds_mobile.png'); background-position: center; background-size: auto; }
+            .db-final-content { position: relative; z-index: 3; gap: 24px; width: 100%; }
+            .db-final-texts { gap: 16px; }
+            .db-final-h1 { font-size: 36px; }
+            .db-final-btn { font-size: 16px; padding: 16px 22px; align-self: stretch; justify-content: center; }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     HEADER
+════════════════════════════════════ -->
+<header class="site-header">
+    <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню">
+            <span class="hp-mob-menu-icon"></span>
+        </button>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-item">Головна</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger nav-active" style="color:#45799B;">Порядок дій</button>
+                <div class="nav-dropdown-menu">
+                    <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item nav-dropdown-active">Документи та пільги</a>
+                    <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Послуги</button>
+                <div class="nav-dropdown-menu">
+                    <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="products.html" class="nav-item">Товари</a>
+            <a href="about.html" class="nav-item">Про нас</a>
+        </nav>
+        <a href="home.html" class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРІЙ" class="logo-img">
+        </a>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="how-to-support.html" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="nav-dropdown-item">Професійні консультації</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+                <a href="register.html" class="icon-placeholder account-icon"></a>
+            </div>
+        </div>
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+            <a href="register.html" class="icon-placeholder account-icon"></a>
+        </div>
+    </div>
+</header>
+
+<!-- ════════════════════════════════════
+     BREADCRUMBS
+════════════════════════════════════ -->
+<div class="db-breadcrumbs">
+    <a href="what-to-do-first.html" class="db-bc-link">Порядок дій</a>
+    <span class="db-bc-sep" aria-hidden="true"></span>
+    <span class="db-bc-current">Документи та пільги</span>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 1 — ДОКУМЕНТИ ТА ПІЛЬГИ
+════════════════════════════════════ -->
+<section class="db-sec1">
+    <div class="db-white-card db-reveal">
+        <div class="db-card-inner">
+
+            <!-- Title -->
+            <div class="db-title-block">
+                <img src="icons/union_wave_light.svg" alt="" class="db-title-wave" aria-hidden="true">
+                <img src="icons/blob_procedure_mobile.svg" alt="" class="db-mob-blob" aria-hidden="true">
+                <h1 class="db-title">Документи та пільги</h1>
+            </div>
+
+            <!-- Subtitle -->
+            <p class="db-intro-text">Державна реєстрація смерті — обов'язковий юридичний крок. Без нього неможливо отримати дозвіл на поховання чи кремацію.</p>
+
+            <!-- Vyriy legal block -->
+            <div class="db-vyriy-block">
+                <p class="db-block-subtitle">Юридичний супровід «Вирій»</p>
+                <p class="db-body-16">Оформлення паперів у державних органах під час втрати — це додатковий емоційний та часовий тиск. Ритуальне агентство «Вирій» надає повний юридичний супровід: наш агент за довіреністю самостійно відвідає морг, РАЦС та органи соціального захисту, зібравши весь пакет документів під ключ.</p>
+                <p class="db-body-16">Детальніше дізнатися про вартість та умови юридичного супроводу ви можете на сторінці наших послуг.</p>
+                <a href="services-legal.html" class="db-services-btn">Послуги</a>
+            </div>
+
+            <!-- Divider -->
+            <hr class="db-divider">
+
+            <!-- Self-service subtitle -->
+            <p class="db-self-subtitle">Якщо ви оформлюєте документи самостійно</p>
+
+            <!-- Timeline: 2 steps -->
+            <div class="db-timeline-row">
+
+                <!-- Left: circles + vertical line -->
+                <div class="db-timeline-left" aria-hidden="true">
+                    <div class="db-timeline-line"></div>
+                    <div class="db-circles">
+                        <div class="db-circle-wrap"><div class="db-circle">1</div></div>
+                        <div class="db-circle-wrap"><div class="db-circle">2</div></div>
+                    </div>
+                </div>
+
+                <!-- Right: stages -->
+                <div class="db-stages">
+
+                    <!-- ── КРОК 1 ── -->
+                    <div class="db-stage">
+                        <div class="db-stage-head">
+                            <p class="db-stage-num-label">Крок 1.</p>
+                            <p class="db-stage-name-accent">Отримання медичного свідоцтва про смерть</p>
+                            <p class="db-stage-name-note">(Форма №106/о)</p>
+                        </div>
+                        <div class="db-sub-blocks">
+                            <div class="db-sub-block">
+                                <p class="db-h5">Де отримати:</p>
+                                <p class="db-body-14">У сімейного лікаря (якщо людина хворіла і померла вдома вдень) або в патологоанатома чи судового експерта в морзі.</p>
+                            </div>
+                            <div class="db-sub-block">
+                                <p class="db-h5">Що мати з собою:</p>
+                                <p class="db-body-14">Паспорт покійного, ваш паспорт, амбулаторну картку (за наявності).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── КРОК 2 ── -->
+                    <div class="db-stage">
+                        <div class="db-stage-head">
+                            <p class="db-stage-num-label">Крок 2.</p>
+                            <p class="db-stage-name-accent">Отримання державного Свідоцтва про смерть та Витягу з реєстру</p>
+                        </div>
+                        <div class="db-sub-blocks">
+                            <div class="db-sub-block">
+                                <p class="db-h5">Де отримати:</p>
+                                <p class="db-body-14">У будь-якому відділенні РАЦС (ДРАЦС).</p>
+                            </div>
+                            <div class="db-alert">
+                                <p class="db-alert-text"><strong>Важливо:</strong> звернутися потрібно не пізніше 3-х днів з дня смерті.</p>
+                                <span class="db-alert-icon" aria-hidden="true"></span>
+                            </div>
+                            <div class="db-sub-block">
+                                <p class="db-h5">Що мати з собою:</p>
+                                <p class="db-body-14">Медичне свідоцтво (форма №106/о), паспорт покійного (його забирає держава), ваш паспорт.</p>
+                            </div>
+                            <div class="db-sub-block">
+                                <p class="db-h5">Результат:</p>
+                                <p class="db-body-14">Вам видадуть <strong>Гербове свідоцтво про смерть та Витяг з Реєстру</strong> (необхідний для отримання допомоги).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /db-stages -->
+            </div><!-- /db-timeline-row -->
+
+        </div><!-- /db-card-inner -->
+    </div><!-- /db-white-card -->
+</section>
+
+<!-- ════════════════════════════════════
+     SECTION 2 — ОСОБЛИВІ УМОВИ ТА ПІЛЬГИ ДЛЯ ВІЙСЬКОВОСЛУЖБОВЦІВ
+════════════════════════════════════ -->
+<section class="db-sec2">
+    <div class="db-dark-section db-reveal">
+        <div class="db-dark-inner">
+
+            <!-- Title -->
+            <div class="db-dark-title-block">
+                <div class="db-dark-title-blob" aria-hidden="true"></div>
+                <div class="db-mob-blob--dark" aria-hidden="true"></div>
+                <h2 class="db-dark-title">Особливі умови та пільги для військовослуж&shy;бовців</h2>
+            </div>
+
+            <!-- Subtitle -->
+            <p class="db-dark-subtitle">Держава гарантує особливу підтримку та повне або часткове грошове відшкодування витрат на поховання захисників України.</p>
+
+            <!-- 3 info cards -->
+            <div class="db-info-cards">
+
+                <div class="db-info-card">
+                    <p class="db-info-card-title">Розмір допомоги:</p>
+                    <p class="db-info-card-text">Залежить від відомства (ЗСУ, НГУ, СБУ тощо), але зазвичай це грошова допомога у розмірі річного грошового забезпечення військового або фіксована виплата на поховання та спорудження пам'ятника.</p>
+                </div>
+
+                <div class="db-info-card">
+                    <p class="db-info-card-title">Куди звертатися:</p>
+                    <p class="db-info-card-text">До Територіального центру комплектування та соціальної підтримки (ТЦК та СП), де військовий перебував на обліку, або до військової частини.</p>
+                </div>
+
+                <div class="db-info-card">
+                    <p class="db-info-card-title">Основні документи для ТЦК:</p>
+                    <ol class="db-info-card-list">
+                        <li>Сповіщення про смерть (видає військова частина).</li>
+                        <li>Витяг з наказу про виключення зі списків особового складу частини.</li>
+                        <li>Державне свідоцтво про смерть.</li>
+                        <li>Документи, що підтверджують родинний зв'язок (свідоцтво про шлюб чи народження).</li>
+                    </ol>
+                </div>
+
+            </div><!-- /db-info-cards -->
+
+        </div><!-- /db-dark-inner -->
+    </div><!-- /db-dark-section -->
+</section>
+
+<!-- ════════════════════════════════════
+     SECTION 3 — ЩО ДАЛІ?
+════════════════════════════════════ -->
+<section class="db-sec3">
+    <div class="db-next-card db-reveal">
+        <div class="db-next-head">
+            <h2 class="db-next-h2">Що далі?</h2>
+            <p class="db-next-subtitle">Ми підготували детальні матеріали, які допоможуть вам зорієнтуватися в подальших організаційних питаннях. Оберіть розділ, який вас цікавить зараз:</p>
+        </div>
+        <div class="db-next-links">
+
+            <!-- Card 1 -->
+            <a href="funeral-process.html" class="db-next-link-card">
+                <div class="db-next-card-body-inner">
+                    <div class="db-next-card-texts">
+                        <h3 class="db-next-card-title">Організація та процес поховання</h3>
+                        <p class="db-next-card-text"><strong style="font-weight:600;">Повний цикл організації.</strong> Від вибору місця на кладовищі або кремації до організації поминального обіду. Як все відбувається крок за кроком.</p>
+                    </div>
+                    <div class="db-arrow-icon" aria-hidden="true"></div>
+                </div>
+            </a>
+
+            <!-- Card 2 -->
+            <a href="ceremony-preparation.html" class="db-next-link-card">
+                <div class="db-next-card-body-inner">
+                    <div class="db-next-card-texts">
+                        <h3 class="db-next-card-title db-next-card-title--narrow">Підготовка до церемонії</h3>
+                        <p class="db-next-card-text"><strong style="font-weight:600;">Турбота про гідний вигляд.</strong> Все про підготовку тіла (санітарно-косметичні послуги), вибір атрибутики, одягу та замовлення релігійного обряду.</p>
+                    </div>
+                    <div class="db-arrow-icon" aria-hidden="true"></div>
+                </div>
+            </a>
+
+            <!-- Card 3 -->
+            <a href="#" class="db-next-link-card">
+                <div class="db-next-card-body-inner">
+                    <div class="db-next-card-texts">
+                        <h3 class="db-next-card-title">Традиції, обряди та етикет</h3>
+                        <p class="db-next-card-text">Як поводитися на церемонії, що означає чин відспівування та як правильно висловити співчуття рідним.</p>
+                    </div>
+                    <div class="db-arrow-icon" aria-hidden="true"></div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FINAL SECTION — ПОТРІБНА ДОПОМОГА?
+════════════════════════════════════ -->
+<section class="db-final">
+    <div class="db-final-bg"></div>
+    <div class="db-birds-clip">
+        <img src="icons/desktop_birds.svg" alt="" class="db-final-birds-desk">
+        <img src="icons/footer_mobile_birds.svg" alt="" class="db-final-birds-mob">
+    </div>
+    <div class="db-final-content">
+        <div class="db-final-texts">
+            <h2 class="db-final-h1">Потрібна допомога прямо зараз?</h2>
+            <div class="db-final-sub">
+                <p class="db-final-p">Телефонуйте на гарячу лінію.</p>
+                <p class="db-final-p db-final-p--bold">Консультація безкоштовна.</p>
+            </div>
+        </div>
+        <a href="tel:+387777777" class="db-final-btn">Консультація</a>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
+                        <li><a href="services-packages.html">Готові пакети</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="#">Послуги</a></li>
+                        <li><a href="#">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ════════════════════════════════════
+     FLOATING HELP BUTTON
+════════════════════════════════════ -->
+<a href="tel:+387777777" class="hp-help-btn">
+    <span>Потрібна допомога?</span>
+    <div class="hp-help-icon"></div>
+</a>
+
+<!-- ════════════════════════════════════
+     MOBILE NAV
+════════════════════════════════════ -->
+<div class="hp-mob-nav" id="mobNav" role="dialog" aria-modal="true" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link">Головна</a>
+            <div class="hp-mob-acc is-open">
+                <button class="hp-mob-acc-trigger" aria-expanded="true">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link" style="color:#1B3F57;font-weight:600;">Документи та пільги</a>
+                    <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Послуги<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-packages.html" class="hp-mob-acc-link">Готові пакети послуг</a>
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link">Товари</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Вшанування Пам'яті<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="index.html" class="hp-mob-acc-link">Сторінка пам'яті</a>
+                    <a href="#" class="hp-mob-acc-link">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Психологічна підтримка<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="how-to-support.html" class="hp-mob-acc-link">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="hp-mob-acc-link">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="hp-mob-acc-link">Професійні консультації</a>
+                </div>
+            </div>
+            <a href="about.html" class="hp-mob-nav-link">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* ── Mobile menu ── */
+    (function() {
+        var btn = document.getElementById('mobMenuBtn');
+        var nav = document.getElementById('mobNav');
+        var cls = document.getElementById('mobNavClose');
+        if (!btn) return;
+        function openNav()  { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
+        function closeNav() { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
+        btn.addEventListener('click', openNav);
+        cls.addEventListener('click', closeNav);
+        nav.addEventListener('click', function(e) { if (e.target === nav) closeNav(); });
+    })();
+
+    /* ── Mobile nav accordion ── */
+    document.querySelectorAll('.hp-mob-acc-trigger').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+            var acc = this.closest('.hp-mob-acc');
+            var isOpen = acc.classList.contains('is-open');
+            document.querySelectorAll('.hp-mob-acc').forEach(function(a) {
+                a.classList.remove('is-open');
+                a.querySelector('.hp-mob-acc-trigger').setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) { acc.classList.add('is-open'); this.setAttribute('aria-expanded', 'true'); }
+        });
+    });
+
+    /* ── Scroll reveal ── */
+    (function() {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+
+        document.querySelectorAll('.db-reveal').forEach(function(el, i) {
+            el.style.transitionDelay = (i * 120) + 'ms';
+            observer.observe(el);
+        });
+    })();
+
+    /* ── Sync timeline circle heights with stage heights ── */
+    (function() {
+        function syncCircles() {
+            var stages  = document.querySelectorAll('.db-stage');
+            var circles = document.querySelectorAll('.db-circle-wrap');
+            var line    = document.querySelector('.db-timeline-line');
+            if (!stages.length || !circles.length) return;
+            circles.forEach(function(c, i) {
+                if (stages[i]) c.style.height = stages[i].offsetHeight + 'px';
+            });
+            if (line) {
+                var gap = 46;
+                var end = 0;
+                for (var i = 0; i < circles.length - 1; i++) {
+                    end += circles[i].offsetHeight + gap;
+                }
+                end += 27;
+                line.style.bottom = 'auto';
+                line.style.height = (end - 54) + 'px';
+            }
+        }
+        syncCircles();
+        window.addEventListener('resize', syncCircles);
+    })();
+</script>
+
+</body>
+</html>

@@ -1,4 +1,20 @@
 // ==========================================
+// AUTH-AWARE HEADER ICONS (runs on every page)
+// ==========================================
+document.addEventListener('DOMContentLoaded', function () {
+    var loggedIn = !!localStorage.getItem('vyriy_logged_in');
+    document.querySelectorAll('a.account-icon').forEach(function (el) {
+        el.href = loggedIn ? 'account.html' : 'register.html';
+        el.title = loggedIn ? 'Мій акаунт' : 'Увійти / Зареєструватись';
+    });
+});
+
+// ==========================================
+// MOBILE HELPER
+// ==========================================
+function isMobile() { return window.innerWidth <= 480; }
+
+// ==========================================
 // 1. УПРАВЛІННЯ ВІКНАМИ ТА МЕНЮ (TOOLBAR)
 // ==========================================
 
@@ -58,18 +74,26 @@ function toggleMenu(menuId) {
 let isDarkTheme = false;
 function toggleTheme() {
     isDarkTheme = !isDarkTheme;
-    const icon = document.querySelector('.theme-icon-active');
+    const icons = document.querySelectorAll('.theme-icon-active');
+    const desktopToggle = document.getElementById('theme-toggle');
+    const mobToggle = document.getElementById('mob-theme-toggle');
     if (isDarkTheme) {
-        icon.classList.remove('sun-icon');
-        icon.classList.add('moon-icon');
-        document.getElementById('theme-toggle').style.backgroundColor = '#163F5A';
-        icon.style.backgroundColor = '#F6FBFF';
+        icons.forEach(function(icon) {
+            icon.classList.remove('sun-icon');
+            icon.classList.add('moon-icon');
+            icon.style.backgroundColor = '#F6FBFF';
+        });
+        if (desktopToggle) desktopToggle.style.backgroundColor = '#163F5A';
+        if (mobToggle) mobToggle.style.backgroundColor = '#163F5A';
         document.body.classList.add('light-text-mode');
     } else {
-        icon.classList.remove('moon-icon');
-        icon.classList.add('sun-icon');
-        document.getElementById('theme-toggle').style.backgroundColor = '#F6FBFF';
-        icon.style.backgroundColor = '#163F5A';
+        icons.forEach(function(icon) {
+            icon.classList.remove('moon-icon');
+            icon.classList.add('sun-icon');
+            icon.style.backgroundColor = '#163F5A';
+        });
+        if (desktopToggle) desktopToggle.style.backgroundColor = '#F6FBFF';
+        if (mobToggle) mobToggle.style.backgroundColor = '';
         document.body.classList.remove('light-text-mode');
     }
 }
@@ -77,19 +101,25 @@ function toggleTheme() {
 let isZoomed = false;
 function toggleZoom() {
     isZoomed = !isZoomed;
+    const canvas = document.getElementById('page-canvas');
+    // Desktop zoom controls
     const icon = document.getElementById('zoom-icon');
     const label = document.getElementById('zoom-label');
-    const canvas = document.getElementById('page-canvas');
+    // Mobile zoom controls
+    const mobIcon = document.getElementById('mob-zoom-icon');
+    const mobLabel = document.getElementById('mob-zoom-label');
     if (isZoomed) {
-        label.innerText = '50%';
-        icon.classList.remove('zoom-out-icon');
-        icon.classList.add('zoom-in-icon');
+        if (label) label.innerText = '50%';
+        if (mobLabel) mobLabel.innerText = '50%';
+        if (icon) { icon.classList.remove('zoom-out-icon'); icon.classList.add('zoom-in-icon'); }
+        if (mobIcon) { mobIcon.classList.remove('zoom-out-icon'); mobIcon.classList.add('zoom-in-icon'); }
         canvas.style.transform = 'scale(0.5)';
         canvas.style.transformOrigin = 'top center';
     } else {
-        label.innerText = '100%';
-        icon.classList.remove('zoom-in-icon');
-        icon.classList.add('zoom-out-icon');
+        if (label) label.innerText = '100%';
+        if (mobLabel) mobLabel.innerText = '100%';
+        if (icon) { icon.classList.remove('zoom-in-icon'); icon.classList.add('zoom-out-icon'); }
+        if (mobIcon) { mobIcon.classList.remove('zoom-in-icon'); mobIcon.classList.add('zoom-out-icon'); }
         canvas.style.transform = 'scale(1)';
     }
 }
@@ -118,6 +148,11 @@ function exitPreviewMode() {
 // ==========================================
 
 function openPublishModal() {
+    if (typeof _savePage === 'function' && _currentPageId) {
+        _savePage(true);
+        var urlEl = document.getElementById('publish-url-text');
+        if (urlEl) urlEl.textContent = 'viriy.ua/memory/' + _currentPageId;
+    }
     document.getElementById('publish-modal').style.display = 'flex';
 }
 
@@ -1157,6 +1192,40 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
                 <img src="${src}" class="layers-thumb">
                 <span class="layers-item-name">${name}</span>
             `;
+            // Мобільні кнопки «вище / нижче»
+            if (isMobile()) {
+                const upBtn = document.createElement('button');
+                upBtn.className = 'layers-mob-up';
+                upBtn.title = 'Вище';
+                upBtn.innerHTML = '<span class="btn-icon arrow-up-icon" style="width:16px;height:16px;background-color:#265879;"></span>';
+                const downBtn = document.createElement('button');
+                downBtn.className = 'layers-mob-down';
+                downBtn.title = 'Нижче';
+                downBtn.innerHTML = '<span class="btn-icon arrow-down-icon" style="width:16px;height:16px;background-color:#265879;"></span>';
+                item.appendChild(upBtn);
+                item.appendChild(downBtn);
+
+                upBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const prev = item.previousElementSibling;
+                    if (prev) {
+                        layersList.insertBefore(item, prev);
+                        reassignZIndices();
+                        refreshLayersPanel();
+                    }
+                });
+                downBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const next = item.nextElementSibling;
+                    if (next) {
+                        const afterNext = next.nextSibling;
+                        if (afterNext) layersList.insertBefore(item, afterNext);
+                        else layersList.appendChild(item);
+                        reassignZIndices();
+                        refreshLayersPanel();
+                    }
+                });
+            }
             item.addEventListener('click', function(e) {
                 e.stopPropagation();
                 deselectAllStickers();
@@ -1270,6 +1339,70 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
             reassignZIndices();
             refreshLayersPanel();
         });
+
+        // Touch drag для мобільних
+        let touchLayerDrag = null;
+        let touchLayerMoved = false;
+
+        layersList.querySelectorAll('.layers-item').forEach(function(it) {
+            const handle = it.querySelector('.layers-drag-icon');
+            if (!handle) return;
+            handle.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+                touchLayerDrag = it;
+                touchLayerMoved = false;
+                it.classList.add('layers-touch-dragging');
+            }, { passive: true });
+        });
+
+        layersList.addEventListener('touchmove', function(e) {
+            if (!touchLayerDrag) return;
+            touchLayerMoved = true;
+            e.preventDefault();
+            const touch = e.touches[0];
+            const items = Array.from(layersList.querySelectorAll('.layers-item'));
+            items.forEach(function(i) { i.style.borderTop = ''; });
+            divider.style.outline = '';
+            for (const i of items) {
+                if (i === touchLayerDrag) continue;
+                const r = i.getBoundingClientRect();
+                if (touch.clientY >= r.top && touch.clientY <= r.bottom) { i.style.borderTop = '2px solid #82BADF'; break; }
+            }
+            const dr = divider.getBoundingClientRect();
+            if (touch.clientY >= dr.top && touch.clientY <= dr.bottom) divider.style.outline = '2px solid #82BADF';
+        }, { passive: false });
+
+        layersList.addEventListener('touchend', function(e) {
+            if (!touchLayerDrag) return;
+            const touch = e.changedTouches[0];
+            const items = Array.from(layersList.querySelectorAll('.layers-item'));
+            items.forEach(function(i) { i.style.borderTop = ''; });
+            divider.style.outline = '';
+            if (touchLayerMoved) {
+                let dropped = false;
+                for (const i of items) {
+                    if (i === touchLayerDrag) continue;
+                    const r = i.getBoundingClientRect();
+                    if (touch.clientY >= r.top && touch.clientY <= r.bottom) {
+                        layersList.insertBefore(touchLayerDrag, i);
+                        reassignZIndices();
+                        dropped = true;
+                        break;
+                    }
+                }
+                if (!dropped) {
+                    const dr = divider.getBoundingClientRect();
+                    if (touch.clientY >= dr.top && touch.clientY <= dr.bottom) {
+                        layersList.insertBefore(touchLayerDrag, divider.nextSibling);
+                        reassignZIndices();
+                    }
+                }
+            }
+            touchLayerDrag.classList.remove('layers-touch-dragging');
+            touchLayerDrag = null;
+            touchLayerMoved = false;
+            refreshLayersPanel();
+        }, { passive: true });
     }
 
     window.refreshLayersPanel = refreshLayersPanel;
@@ -1403,10 +1536,12 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
     // ==========================================
 
     function getStickyBottom() {
-        const headerEl = document.querySelector('.site-header');
+        const headerEl  = document.querySelector('.site-header');
         const toolbarEl = document.getElementById('editor-toolbar');
-        return (headerEl ? headerEl.offsetHeight : 0) +
-               (toolbarEl && toolbarEl.classList.contains('visible') ? toolbarEl.offsetHeight : 0);
+        const mobTopbar = document.getElementById('mob-editor-topbar');
+        return (headerEl  ? headerEl.offsetHeight  : 0) +
+               (toolbarEl && toolbarEl.classList.contains('visible') ? toolbarEl.offsetHeight : 0) +
+               (mobTopbar ? mobTopbar.offsetHeight : 0);
     }
 
     function updateStickerToolbarPosition(sticker) {
@@ -2032,8 +2167,10 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
     document.querySelectorAll('.page-editable-block h1, .page-editable-block h2, .page-editable-block h3, .page-editable-block p, .page-editable-block .dates').forEach(el => {
         el.addEventListener('click', function (e) {
             if (!document.body.classList.contains('editing-mode')) return;
-            if (this.contentEditable === 'true') return;
             e.stopPropagation();
+            var parentBlock = this.closest('.page-editable-block');
+            if (parentBlock) selectBlock(parentBlock);
+            if (this.contentEditable === 'true') return;
             saveState();
             this.contentEditable = 'true';
             this.style.whiteSpace = 'normal';
@@ -2142,7 +2279,8 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
             const left = Math.max(0, Math.min(canvasRect.width - 120, canvasRect.width / 2 - 60));
             const top  = Math.max(0, Math.min(canvas.offsetHeight - 120, visibleCenterY - canvasRect.top - 60));
             addStickerToCanvasAt(this.src, left, top);
-            document.getElementById('menu-decor').style.display = 'none';
+            if (isMobile()) closeMobSheet();
+            else document.getElementById('menu-decor').style.display = 'none';
         });
         if (item) {
             item.setAttribute('draggable', 'true');
@@ -2467,6 +2605,7 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
             if (!isVideo) insertPhotoIntoPlaceholder(url, activePlaceholder);
             else insertVideoIntoPlaceholder(url, activePlaceholder);
             activePlaceholder = null;
+            if (isMobile()) closeMobSheet();
         });
         item.addEventListener('dragstart', function (e) {
             dragMediaSrc = url;
@@ -2812,8 +2951,9 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
         block.querySelectorAll('h1, h2, h3, p, .dates').forEach(el => {
             el.addEventListener('click', function (e) {
                 if (!document.body.classList.contains('editing-mode')) return;
-                if (this.contentEditable === 'true') return;
                 e.stopPropagation();
+                selectBlock(block);
+                if (this.contentEditable === 'true') return;
                 saveState();
                 this.contentEditable = 'true';
                 this.style.whiteSpace = 'normal';
@@ -3017,6 +3157,7 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
             }
             initNewBlock(newBlock);
             newBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (isMobile()) closeMobSheet();
         });
         item.addEventListener('dragstart', function (e) {
             if (!document.body.classList.contains('editing-mode')) return;
@@ -3147,3 +3288,562 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
     window.removeAllHandles = removeAllHandles;
 
 });
+
+// ==========================================
+// ОНБОРДИНГ ТА ТУР
+// ==========================================
+
+const _MEMORY_CREATED_KEY = 'vyriy_memory_created';
+const _TOUR_DONE_KEY      = 'vyriy_memory_tour_done';
+const _PAGES_KEY          = 'vyriy_pages';
+const _CURRENT_PAGE_KEY   = 'vyriy_current_page_id';
+
+var _currentPageId  = null;
+var _autoSaveTimer  = null;
+
+function _getPages() {
+    try { return JSON.parse(localStorage.getItem(_PAGES_KEY)) || []; } catch(e) { return []; }
+}
+
+function _savePage(published) {
+    if (!_currentPageId) return;
+    var container = document.querySelector('#page-canvas .container');
+    if (!container) return;
+    var h1El    = container.querySelector('.hero-block h1');
+    var datesEl = container.querySelector('.hero-block .dates');
+    var title   = (h1El && h1El.textContent.trim())    || 'Без назви';
+    var dates   = (datesEl && datesEl.textContent.trim()) || '';
+    var now     = new Date().toISOString();
+    var pages   = _getPages();
+    var idx     = pages.findIndex(function(p) { return p.id === _currentPageId; });
+    if (idx >= 0) {
+        pages[idx].canvasHtml = container.innerHTML;
+        pages[idx].title      = title;
+        pages[idx].dates      = dates;
+        pages[idx].updated    = now;
+        if (published !== undefined) pages[idx].published = published;
+    } else {
+        pages.push({ id: _currentPageId, title: title, dates: dates,
+            created: now, updated: now, published: !!published, canvasHtml: container.innerHTML });
+    }
+    localStorage.setItem(_PAGES_KEY, JSON.stringify(pages));
+    localStorage.setItem(_CURRENT_PAGE_KEY, _currentPageId);
+}
+
+function _showSaveIndicator() {
+    var clouds = document.querySelectorAll('.save-cloud');
+    clouds.forEach(function(cloud) { cloud.classList.add('is-saving'); });
+    setTimeout(function() {
+        clouds.forEach(function(cloud) {
+            cloud.classList.remove('is-saving');
+            cloud.classList.add('is-saved');
+            setTimeout(function() { cloud.classList.remove('is-saved'); }, 2000);
+        });
+    }, 700);
+}
+
+function _scheduleAutoSave() {
+    clearTimeout(_autoSaveTimer);
+    _autoSaveTimer = setTimeout(function() { _savePage(); _showSaveIndicator(); }, 2500);
+}
+
+function _initAutoSave() {
+    var canvas = document.getElementById('page-canvas');
+    if (!canvas || canvas._autoSaveInit) return;
+    canvas._autoSaveInit = true;
+    setTimeout(function() {
+        new MutationObserver(_scheduleAutoSave)
+            .observe(canvas, { childList: true, subtree: true, characterData: true });
+    }, 800);
+}
+
+function _restoreSavedCanvas() {
+    var savedId = localStorage.getItem(_CURRENT_PAGE_KEY);
+    if (!savedId) return false;
+    var page = _getPages().find(function(p) { return p.id === savedId; });
+    if (!page || !page.canvasHtml) return false;
+    var container = document.querySelector('#page-canvas .container');
+    if (!container) return false;
+    _currentPageId = savedId;
+    container.innerHTML = page.canvasHtml;
+    container.querySelectorAll('.page-editable-block').forEach(function(b) {
+        b._blockInit = false;
+        if (window.initNewBlock) window.initNewBlock(b);
+    });
+    container.querySelectorAll('.sticker-frame').forEach(function(f) {
+        f._frameDropInit = false;
+        if (window.initFrameDrop) window.initFrameDrop(f);
+    });
+    container.querySelectorAll('.hero-photo, .memory-photo').forEach(function(f) {
+        f._photoDropInit = false;
+        if (window.initPhotoFrameDrop) window.initPhotoFrameDrop(f, false);
+    });
+    if (window.refreshLayersPanel) window.refreshLayersPanel();
+    return true;
+}
+
+const _STARTER_BLOCKS_HTML = `
+<section class="hero-block page-editable-block">
+    <div class="hero-photo">
+        <div class="photo-placeholder">
+            <button class="placeholder-add-btn placeholder-add-photo-btn">Додати фото</button>
+        </div>
+    </div>
+    <div class="hero-right">
+        <div class="hero-info">
+            <h1>Ім'я Прізвище</h1>
+            <p class="dates">дд.мм.рррр – дд.мм.рррр</p>
+        </div>
+        <div class="quote-wrapper">
+            <p class="quote-text">«Улюблений вислів або цитата»</p>
+            <p class="quote-author">Ініціали</p>
+        </div>
+    </div>
+</section>
+<section class="bio-block page-editable-block">
+    <h2 class="section-title">БІОГРАФІЯ</h2>
+    <div class="bio-content">
+        <div class="bio-column">
+            <p>Розкажіть історію цієї людини: де народилась, чим займалась, що любила…</p>
+        </div>
+        <div class="bio-column">
+            <p>Яким був характер, захоплення, найяскравіші спогади про неї…</p>
+        </div>
+    </div>
+</section>
+<section class="human-world-section page-editable-block">
+    <div class="human-world-container">
+        <h2 class="section-title">СВІТ ЛЮДИНИ</h2>
+        <div class="world-grid">
+            <div class="world-card">
+                <div class="sticker-frame">
+                    <div class="sticker-frame-placeholder">
+                        <button class="frame-add-photo-btn">Фото</button>
+                        <button class="frame-add-sticker-btn">Стікер</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>ДЕВІЗ:</h3>
+                    <p>Улюблена фраза чи девіз…</p>
+                </div>
+            </div>
+            <div class="world-card">
+                <div class="sticker-frame">
+                    <div class="sticker-frame-placeholder">
+                        <button class="frame-add-photo-btn">Фото</button>
+                        <button class="frame-add-sticker-btn">Стікер</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>ХОБІ:</h3>
+                    <p>Захоплення та інтереси…</p>
+                </div>
+            </div>
+        </div>
+        <button class="world-add-card-btn">
+            <span class="btn-icon plus-circle-icon"></span>
+            Додати картку
+        </button>
+    </div>
+</section>
+<div class="memory-section-block page-editable-block">
+    <div class="memory-content">
+        <h2>СПОГАДИ</h2>
+        <p>Поділіться першим спогадом — словами, почуттями, моментом, який хочеться зберегти…</p>
+    </div>
+    <div class="memory-photo">
+        <div class="photo-placeholder">
+            <button class="placeholder-add-btn placeholder-add-photo-btn">Додати фото</button>
+        </div>
+    </div>
+</div>
+`;
+
+const _TOUR_STEPS = [
+    { selector: '[data-tour="blocks"]', text: 'Тут усі доступні блоки — біографія, спогади, цитати, відео тощо. Натисніть на потрібний, щоб додати його на сторінку.', position: 'bottom' },
+    { selector: null, text: 'Натисніть на будь-яку частину блоку — з\'являться кнопки переміщення і видалення. Щоб змінити порядок блоків, просто перетягніть блок мишкою за будь-яку його частину.', position: 'right' },
+    { selector: '.hero-photo', text: 'Натисніть на будь-яке зображення на сторінці, щоб замінити його своїм.', position: 'right' },
+    { selector: '[data-tour="decor"]', text: 'Стікери можна перетягувати на сторінку мишкою або просто натискати на них — вони одразу з\'являться на полотні. Потім їх можна вільно переміщати.', position: 'bottom' },
+    { selector: '#theme-toggle', html: '<span class="btn-icon sun-icon" style="display:inline-block;vertical-align:middle;width:13px;height:13px;margin-right:3px;background-color:#265879"></span> Сонце — текст темний, для світлого фону. <span class="btn-icon moon-icon" style="display:inline-block;vertical-align:middle;width:13px;height:13px;margin-right:3px;background-color:#265879"></span> Місяць — текст стає білим автоматично: обирайте цей режим, якщо фон сторінки темний, щоб текст залишався читабельним.', position: 'bottom' },
+    { selector: '.world-add-card-btn', text: 'У блоці «Світ людини» можна додавати або прибирати картки (девіз, хобі, мрія, улюблена їжа тощо) — підлаштуйте їх кількість під те, скільки хочете розповісти.', position: 'top' },
+    { selector: '[data-tour="layers"]', text: 'Тут можна переставляти елементи вище або нижче — це визначає, що буде зверху, а що під низом (наприклад, стікер поверх фотографії).', position: 'bottom' },
+    { selector: '.btn-publish', text: 'Коли сторінка готова — опублікуйте і поділіться посиланням із рідними.', position: 'bottom' }
+];
+
+const _TOUR_STEPS_MOB = [
+    { selector: '#mob-tab-blocks', text: 'Тут усі доступні блоки — біографія, спогади, цитати, відео тощо. Торкніться потрібного, щоб додати його на сторінку.', position: 'top' },
+    { selector: null, html: 'Торкніться будь-якої частини блоку — з\'являться кнопки переміщення і видалення. Щоб змінити порядок, натисніть <span class="btn-icon arrow-up-icon" style="display:inline-block;vertical-align:middle;width:14px;height:14px;background-color:#265879;flex-shrink:0"></span><span class="btn-icon arrow-down-icon" style="display:inline-block;vertical-align:middle;width:14px;height:14px;background-color:#265879;flex-shrink:0;margin-right:2px"></span> що з\'являться при виборі блоку.', position: 'right' },
+    { selector: '.hero-photo', text: 'Торкніться будь-якого зображення на сторінці, щоб замінити його своїм.', position: 'right' },
+    { selector: '#mob-tab-decor', text: 'Стікери одразу з\'являться на сторінці — потім їх можна вільно переміщати.', position: 'top' },
+    { selector: '#mob-theme-toggle', html: '<span class="btn-icon sun-icon" style="display:inline-block;vertical-align:middle;width:13px;height:13px;margin-right:3px;background-color:#265879"></span> Сонце — текст темний, для світлого фону. <span class="btn-icon moon-icon" style="display:inline-block;vertical-align:middle;width:13px;height:13px;margin-right:3px;background-color:#265879"></span> Місяць — текст стає білим автоматично: обирайте, якщо фон сторінки темний.', position: 'top' },
+    { selector: '.world-add-card-btn', text: 'У блоці «Світ людини» можна додавати або прибирати картки (девіз, хобі, мрія, улюблена їжа тощо) — підлаштуйте їх кількість під те, скільки хочете розповісти.', position: 'top' },
+    { selector: '#mob-tab-layers', text: 'Тут можна переставляти елементи вище або нижче — це визначає, що буде зверху, а що під низом (наприклад, стікер поверх фотографії).', position: 'top' },
+    { selector: '.mob-topbar-publish-btn', text: 'Коли сторінка готова — опублікуйте і поділіться посиланням із рідними.', position: 'bottom' }
+];
+
+function _getSteps() {
+    return window.innerWidth <= 480 ? _TOUR_STEPS_MOB : _TOUR_STEPS;
+}
+
+let _tourCurrentStep = 0;
+
+document.addEventListener('DOMContentLoaded', function () {
+    var ws = document.getElementById('welcome-screen');
+    if (!ws) return;
+
+    var _params    = new URLSearchParams(window.location.search);
+    var _autostart = _params.get('autostart') === '1';
+    var _pageParam = _params.get('page');
+
+    if (_pageParam && localStorage.getItem('vyriy_logged_in')) {
+        // Open specific saved page from account.html
+        localStorage.setItem(_CURRENT_PAGE_KEY, _pageParam);
+        localStorage.setItem(_MEMORY_CREATED_KEY, '1');
+        history.replaceState(null, '', window.location.pathname);
+        ws.style.display = 'none';
+        document.body.classList.remove('welcome-mode');
+        _restoreSavedCanvas();
+        _enterEditorMode();
+        setTimeout(_initAutoSave, 500);
+    } else if (localStorage.getItem(_MEMORY_CREATED_KEY)) {
+        ws.style.display = 'none';
+        document.body.classList.remove('welcome-mode');
+        _restoreSavedCanvas();
+        _enterEditorMode();
+        setTimeout(_initAutoSave, 500);
+    } else if (_autostart && localStorage.getItem('vyriy_logged_in')) {
+        ws.style.display = 'none';
+        document.body.classList.remove('welcome-mode');
+        history.replaceState(null, '', window.location.pathname);
+        setTimeout(_startCreating, 100);
+    } else {
+        ws.style.display = 'flex';
+        document.body.classList.add('welcome-mode');
+        var tb = document.getElementById('editor-toolbar');
+        if (tb) tb.classList.remove('visible');
+        document.body.classList.remove('editing-mode');
+    }
+
+    var createBtn     = document.getElementById('welcome-create-btn');
+    var backBtn       = document.getElementById('welcome-back-btn');
+    var limitBackBtn  = document.getElementById('welcome-limit-back-btn');
+    var demoBtn       = document.getElementById('welcome-demo-btn');
+    var demoExitBtn   = document.getElementById('demo-exit-btn');
+    var tourHelpBtn   = document.getElementById('tour-help-btn');
+    var tourStart     = document.getElementById('tour-start-btn');
+    var tourSkip      = document.getElementById('tour-skip-btn');
+    var tourClose     = document.getElementById('tour-close-btn');
+    var tourPrev      = document.getElementById('tour-prev-btn');
+    var tourNext      = document.getElementById('tour-next-btn');
+
+    if (createBtn)    createBtn.addEventListener('click', _startCreating);
+    if (backBtn)      backBtn.addEventListener('click', function () {
+        document.getElementById('welcome-login').style.display = 'none';
+        document.getElementById('welcome-main').style.display  = 'flex';
+    });
+    if (limitBackBtn) limitBackBtn.addEventListener('click', function () {
+        document.getElementById('welcome-limit').style.display = 'none';
+        document.getElementById('welcome-main').style.display  = 'flex';
+    });
+    if (demoBtn)      demoBtn.addEventListener('click', _showDemoPreview);
+    if (demoExitBtn)  demoExitBtn.addEventListener('click', _exitDemoPreview);
+    if (tourHelpBtn)  tourHelpBtn.addEventListener('click', _showTourModal);
+    var mobTourHelpBtn = document.getElementById('mob-tour-help-btn');
+    if (mobTourHelpBtn) mobTourHelpBtn.addEventListener('click', _showTourModal);
+    if (tourStart)    tourStart.addEventListener('click', _startTour);
+    if (tourSkip)     tourSkip.addEventListener('click',  _skipTour);
+    if (tourClose)    tourClose.addEventListener('click', _closeTour);
+    if (tourPrev)     tourPrev.addEventListener('click',  _prevTourStep);
+    if (tourNext)     tourNext.addEventListener('click',  _nextTourStep);
+});
+
+function _showDemoPreview() {
+    var ws = document.getElementById('welcome-screen');
+    if (ws) ws.style.display = 'none';
+    document.body.classList.remove('welcome-mode');
+    document.body.classList.remove('editing-mode');
+    document.body.classList.add('demo-preview-mode');
+    var overlay = document.getElementById('demo-preview-overlay');
+    if (overlay) overlay.style.display = 'flex';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function _exitDemoPreview() {
+    document.body.classList.remove('demo-preview-mode');
+    var overlay = document.getElementById('demo-preview-overlay');
+    if (overlay) overlay.style.display = 'none';
+    var ws = document.getElementById('welcome-screen');
+    if (ws) { ws.style.opacity = '1'; ws.style.display = 'flex'; }
+    document.body.classList.add('welcome-mode');
+    var loginEl = document.getElementById('welcome-login');
+    var limitEl = document.getElementById('welcome-limit');
+    var mainEl  = document.getElementById('welcome-main');
+    if (loginEl) loginEl.style.display = 'none';
+    if (limitEl) limitEl.style.display = 'none';
+    if (mainEl)  mainEl.style.display  = 'flex';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function _enterEditorMode() {
+    var tb = document.getElementById('editor-toolbar');
+    if (tb) tb.classList.add('visible');
+    document.body.classList.add('editing-mode');
+    if (window.clipStickersToCanvas) window.clipStickersToCanvas();
+    if (window.refreshLayersPanel)   window.refreshLayersPanel();
+    _updateUndoRedoBtns();
+}
+
+function _startCreating() {
+    if (!localStorage.getItem('vyriy_logged_in')) {
+        var mainEl  = document.getElementById('welcome-main');
+        var loginEl = document.getElementById('welcome-login');
+        if (mainEl)  mainEl.style.display  = 'none';
+        if (loginEl) loginEl.style.display = 'flex';
+        return;
+    }
+    _currentPageId = 'page_' + Date.now();
+    _setupStarterCanvas();
+    var ws = document.getElementById('welcome-screen');
+    if (ws) {
+        ws.style.opacity = '0';
+        ws.style.transition = 'opacity 0.35s ease';
+        setTimeout(function () { ws.style.display = 'none'; }, 350);
+    }
+    document.body.classList.remove('welcome-mode');
+    setTimeout(function () {
+        _enterEditorMode();
+        localStorage.setItem(_MEMORY_CREATED_KEY, '1');
+        _savePage(false);
+        setTimeout(_initAutoSave, 300);
+        if (!localStorage.getItem(_TOUR_DONE_KEY)) setTimeout(_showTourModal, 500);
+    }, 180);
+}
+
+function _setupStarterCanvas() {
+    var container = document.querySelector('#page-canvas .container');
+    if (!container) return;
+    container.querySelectorAll('.page-editable-block').forEach(function (b) { b.remove(); });
+    var canvas = document.getElementById('page-canvas');
+    if (canvas) canvas.querySelectorAll('.quote-cloud-section, .family-tribute-section').forEach(function (s) { s.remove(); });
+    container.insertAdjacentHTML('beforeend', _STARTER_BLOCKS_HTML);
+    container.querySelectorAll('.page-editable-block').forEach(function (block) {
+        block._blockInit = false;
+        if (window.initNewBlock) window.initNewBlock(block);
+    });
+    container.querySelectorAll('.sticker-frame').forEach(function (f) {
+        f._frameDropInit = false;
+        if (window.initFrameDrop) window.initFrameDrop(f);
+    });
+    container.querySelectorAll('.hero-photo, .memory-photo').forEach(function (f) {
+        f._photoDropInit = false;
+        if (window.initPhotoFrameDrop) window.initPhotoFrameDrop(f, false);
+    });
+    if (window.refreshLayersPanel)   window.refreshLayersPanel();
+    if (window.clipStickersToCanvas) window.clipStickersToCanvas();
+    _updateUndoRedoBtns();
+}
+
+function _showTourModal() {
+    var m = document.getElementById('tour-modal-overlay');
+    if (m) m.style.display = 'flex';
+}
+
+function _startTour() {
+    var m = document.getElementById('tour-modal-overlay');
+    if (m) m.style.display = 'none';
+    _tourCurrentStep = 0;
+    _showTourStep(0);
+}
+
+function _skipTour()      { var m = document.getElementById('tour-modal-overlay'); if (m) m.style.display = 'none'; localStorage.setItem(_TOUR_DONE_KEY, '1'); }
+
+function _nextTourStep()  { _showTourStep(_tourCurrentStep + 1); }
+function _prevTourStep()  { if (_tourCurrentStep > 0) _showTourStep(_tourCurrentStep - 1); }
+function _closeTour()     { _endTour(); }
+
+function _showTourStep(index) {
+    var steps = _getSteps();
+    if (index >= steps.length) { _endTour(); return; }
+    var step = steps[index];
+    document.querySelectorAll('.tour-highlighted').forEach(function (el) { el.classList.remove('tour-highlighted'); });
+    var target = step.selector === null
+        ? document.querySelector('#page-canvas .page-editable-block')
+        : document.querySelector(step.selector);
+    if (target) {
+        target.classList.add('tour-highlighted');
+        var inBottomBar = target.closest('.mob-editor-bottomtabs') || target.closest('.mob-editor-topbar');
+        if (!target.closest('.editor-toolbar') && !inBottomBar) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    var tooltip = document.getElementById('tour-tooltip');
+    var textEl  = document.getElementById('tour-tooltip-text');
+    var counter = document.getElementById('tour-step-counter');
+    var prevBtn = document.getElementById('tour-prev-btn');
+    var nextBtn = document.getElementById('tour-next-btn');
+    if (textEl) { if (step.html) textEl.innerHTML = step.html; else textEl.textContent = step.text || ''; }
+    if (counter) counter.textContent = 'Крок ' + (index + 1) + ' / ' + steps.length;
+    if (prevBtn) prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
+    if (nextBtn) nextBtn.textContent = index === steps.length - 1 ? 'Завершити' : 'Далі →';
+    _tourCurrentStep = index;
+    if (tooltip) {
+        tooltip.style.display = 'block';
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                if (target) _positionTourTooltip(tooltip, target, step.position);
+                else { tooltip.style.transform = 'translate(-50%,-50%)'; tooltip.style.top = '50%'; tooltip.style.left = '50%'; }
+            });
+        });
+    }
+}
+
+function _positionTourTooltip(tooltip, target, position) {
+    var rect = target.getBoundingClientRect();
+    var tw = tooltip.offsetWidth || 292, th = tooltip.offsetHeight || 140;
+    var m = 16, pad = 12, top, left;
+    switch (position) {
+        case 'bottom': top = rect.bottom + m; left = rect.left + (rect.width - tw) / 2; break;
+        case 'top':    top = rect.top - th - m; left = rect.left + (rect.width - tw) / 2; break;
+        case 'right':  top = rect.top + (rect.height - th) / 2; left = rect.right + m; break;
+        case 'left':   top = rect.top + (rect.height - th) / 2; left = rect.left - tw - m; break;
+        default:       top = rect.bottom + m; left = rect.left;
+    }
+    left = Math.max(pad, Math.min(left, window.innerWidth  - tw - pad));
+    top  = Math.max(pad, Math.min(top,  window.innerHeight - th - pad));
+    tooltip.style.transform = 'none';
+    tooltip.style.top  = top  + 'px';
+    tooltip.style.left = left + 'px';
+}
+
+function _endTour() {
+    var tooltip = document.getElementById('tour-tooltip');
+    if (tooltip) tooltip.style.display = 'none';
+    document.querySelectorAll('.tour-highlighted').forEach(function (el) { el.classList.remove('tour-highlighted'); });
+    localStorage.setItem(_TOUR_DONE_KEY, '1');
+    _showCompletionToast();
+}
+
+function _showCompletionToast() {
+    var toast = document.getElementById('tour-completion-toast');
+    if (!toast) return;
+    toast.style.opacity = '1'; toast.style.transition = ''; toast.style.display = 'flex';
+    setTimeout(function () {
+        toast.style.transition = 'opacity 0.45s ease'; toast.style.opacity = '0';
+        setTimeout(function () { toast.style.display = 'none'; toast.style.opacity = ''; toast.style.transition = ''; }, 450);
+    }, 4200);
+}
+
+// ==========================================================================
+// МОБІЛЬНИЙ РЕДАКТОР — функції керування шторками та панелями
+// ==========================================================================
+
+var _mobActiveSheet = null;  // 'blocks' | 'media' | 'bg' | 'decor' | 'layers'
+
+function _mobShowOverlay() {
+    var ov = document.getElementById('mob-sheet-overlay');
+    if (ov) ov.classList.add('active');
+}
+
+function _mobHideOverlay() {
+    var ov = document.getElementById('mob-sheet-overlay');
+    if (ov) ov.classList.remove('active');
+}
+
+function _mobSetTabActive(id) {
+    document.querySelectorAll('.mob-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    var tab = document.getElementById('mob-tab-' + id);
+    if (tab) tab.classList.add('active');
+}
+
+function closeMobSheet() {
+    if (!_mobActiveSheet) return;
+    if (_mobActiveSheet === 'layers') {
+        var lw = document.getElementById('layers-window');
+        if (lw) lw.classList.remove('mob-sheet-active');
+    } else {
+        var menu = document.getElementById('menu-' + _mobActiveSheet);
+        if (menu) menu.classList.remove('mob-sheet-active');
+    }
+    document.querySelectorAll('.mob-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    _mobHideOverlay();
+    _mobActiveSheet = null;
+}
+
+// Обгортка toggleMenu для мобільного
+(function() {
+    var _orig = toggleMenu;
+    window.toggleMenu = function(menuId) {
+        if (!isMobile()) { return _orig(menuId); }
+        // Mobile: показуємо шторку
+        if (_mobActiveSheet === menuId) { closeMobSheet(); return; }
+        closeMobSheet();
+        var menu = document.getElementById('menu-' + menuId);
+        if (!menu) return;
+        menu.classList.add('mob-sheet-active');
+        _mobSetTabActive(menuId);
+        _mobShowOverlay();
+        _mobActiveSheet = menuId;
+    };
+})();
+
+// Обгортка toggleLayers для мобільного
+(function() {
+    var _orig = toggleLayers;
+    window.toggleLayers = function() {
+        if (!isMobile()) { return _orig(); }
+        if (_mobActiveSheet === 'layers') { closeMobSheet(); return; }
+        closeMobSheet();
+        var lw = document.getElementById('layers-window');
+        if (!lw) return;
+        if (typeof window.refreshLayersPanel === 'function') window.refreshLayersPanel();
+        lw.classList.add('mob-sheet-active');
+        _mobSetTabActive('layers');
+        _mobShowOverlay();
+        _mobActiveSheet = 'layers';
+    };
+})();
+
+// Мобільне меню «···»
+function toggleMobMoreMenu() {
+    var menu = document.getElementById('mob-more-menu');
+    if (!menu) return;
+    menu.classList.toggle('is-open');
+}
+
+function closeMobMoreMenu() {
+    var menu = document.getElementById('mob-more-menu');
+    if (menu) menu.classList.remove('is-open');
+}
+
+// Закриваємо «···»-меню при кліку поза ним
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('#mob-more-menu') && !e.target.closest('#mob-more-btn')) {
+        closeMobMoreMenu();
+    }
+    // Закриваємо шторку при кліку поза нею (не на overlay — він має свій onclick)
+    // Overlay вже має onclick="closeMobSheet()"
+});
+
+// Свайп донизу для закриття шторки
+(function() {
+    var startY = 0, startX = 0;
+    document.addEventListener('touchstart', function(e) {
+        startY = e.touches[0].clientY;
+        startX = e.touches[0].clientX;
+    }, { passive: true });
+    document.addEventListener('touchend', function(e) {
+        if (!_mobActiveSheet) return;
+        var dy = e.changedTouches[0].clientY - startY;
+        var dx = Math.abs(e.changedTouches[0].clientX - startX);
+        // Свайп вниз ≥60px і переважно вертикальний
+        if (dy > 60 && dx < 60) {
+            // Перевіряємо, що свайп починався з ручки шторки або у верхній частині шторки
+            var sheet = _mobActiveSheet === 'layers'
+                ? document.getElementById('layers-window')
+                : document.getElementById('menu-' + _mobActiveSheet);
+            if (!sheet) return;
+            var rect = sheet.getBoundingClientRect();
+            if (startY >= rect.top - 10 && startY <= rect.top + 60) {
+                closeMobSheet();
+            }
+        }
+    }, { passive: true });
+})();
