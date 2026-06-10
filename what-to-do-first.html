@@ -530,8 +530,15 @@
         .wf-final {
             position: relative;
             height: 691px;
-            overflow: hidden;
+            overflow: visible;
             margin-top: 64px;
+            z-index: 1;
+        }
+        .wf-birds-clip {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
             z-index: 1;
         }
         .wf-final-bg {
@@ -1101,8 +1108,10 @@
 ════════════════════════════════════ -->
 <section class="wf-final">
     <div class="wf-final-bg"></div>
-    <img src="icons/desktop_birds.svg" alt="" class="wf-final-birds-desk">
-    <img src="icons/footer_mobile_birds.svg" alt="" class="wf-final-birds-mob">
+    <div class="wf-birds-clip">
+        <img src="icons/desktop_birds.svg" alt="" class="wf-final-birds-desk">
+        <img src="icons/footer_mobile_birds.svg" alt="" class="wf-final-birds-mob">
+    </div>
     <div class="wf-final-content">
         <div class="wf-final-texts">
             <h2 class="wf-final-h1">Потрібна допомога прямо зараз?</h2>

@@ -646,6 +646,8 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .inserted-sticker {
@@ -687,6 +689,10 @@ h1 {
     gap: 24px;
     box-sizing: border-box;
     position: relative;
+}
+
+.memory-section-block--photo-first {
+    flex-direction: row-reverse;
 }
 
 .memory-content {
@@ -990,6 +996,8 @@ h1 {
     justify-content: center;
     background: transparent;
     position: relative;
+}
+.quote-cloud-section.page-editable-block {
     z-index: 5;
 }
 
@@ -1053,11 +1061,11 @@ h1 {
 
 .bg-clouds-layer {
     position: absolute;
-    width: 1440px;
-    height: 820px;
+    width: 1800px;
+    height: 1000px;
     left: 50%;
     transform: translateX(-50%);
-    top: -153px;
+    top: -80px;
     z-index: -1;
     pointer-events: none;
 }
@@ -1067,6 +1075,7 @@ h1 {
     inset: 0;
     overflow: hidden;
     pointer-events: none;
+    z-index: -1;
 }
 
 .family-tribute-birds-mob {
@@ -1077,7 +1086,7 @@ h1 {
     transform: translateX(-50%);
     width: 160vw;
     height: auto;
-    z-index: 2;
+    z-index: -1;
     pointer-events: none;
 }
 
@@ -1090,7 +1099,6 @@ h1 {
     width: 80%;
     max-width: 800px;
     height: auto;
-    z-index: 1;
     pointer-events: none;
     animation: hp-birds-spin-desk 70s linear infinite;
 }
@@ -1147,6 +1155,8 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    z-index: 2;
 }
 
 .footer-top-wrapper {
@@ -2818,6 +2828,26 @@ h1 {
     border-radius: 12px;
     display: block;
 }
+
+/* Demo stickers — vertical cards: absolute-positioned within frame */
+.world-card.card-vertical .frame-sticker[data-sticker] {
+    position: absolute;
+    top: 0;
+    height: 109px;
+    width: auto;
+    border-radius: 0;
+}
+.world-card.card-vertical .frame-sticker[data-sticker="lego"]     { left: 145px; }
+.world-card.card-vertical .frame-sticker[data-sticker="notes"]    { left: -4px; }
+.world-card.card-vertical .frame-sticker[data-sticker="chestnut"] { left: 192px; }
+
+/* Demo stickers — horizontal cards: fill frame height, flex-centered */
+.world-card.card-horizontal .frame-sticker[data-sticker] {
+    height: 100%;
+    width: auto;
+    border-radius: 0;
+}
+
 .frame-add-photo-btn:hover,
 .frame-add-sticker-btn:hover {
     background: #E2F3FF;
@@ -4421,6 +4451,20 @@ body.demo-preview-mode .page-control-layer    { display: none !important; }
     .world-card h3 { font-size: 22px; text-align: left; }
     .world-card p  { font-size: 16px; text-align: left; }
     .card-body { text-align: left; }
+
+    /* Demo stickers on mobile — all cards are single-column */
+    .world-card .frame-sticker[data-sticker] {
+        position: absolute;
+        top: 0;
+        height: 93px;
+        width: auto;
+        border-radius: 0;
+    }
+    .world-card .frame-sticker[data-sticker="lego"]     { left: 7px; }
+    .world-card .frame-sticker[data-sticker="notes"]    { left: 0; }
+    .world-card .frame-sticker[data-sticker="chestnut"] { left: 0; }
+    .world-card .frame-sticker[data-sticker="strudel"]  { left: 77px; }
+    .world-card .frame-sticker[data-sticker="vinyl"]    { left: -15px; }
 
     /* ── Блоки спогадів ── */
     .memory-section-block {
