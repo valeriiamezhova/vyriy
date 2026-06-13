@@ -2082,7 +2082,7 @@
         <p class="hp-cta-desc">Не намагайтеся вирішити все самостійно. Дозвольте професіоналам подбати про гідне прощання, поки ви присвячуєте час родині.</p>
         <div class="hp-cta-buttons">
             <a href="#section-services" class="hp-btn hp-btn--outline">Переглянути послуги</a>
-            <button class="hp-btn hp-btn--solid">Замовити консультацію</button>
+            <button class="hp-btn hp-btn--solid" onclick="openVrModal()">Замовити консультацію</button>
         </div>
     </div>
 </section>
@@ -2455,6 +2455,36 @@
     })();
 </script>
 
+<div class="vr-modal-overlay" id="vrModal" role="dialog" aria-modal="true" aria-labelledby="vrModalTitle">
+    <div class="vr-modal">
+        <button class="vr-modal-close" id="vrModalClose" aria-label="Закрити"></button>
+        <div class="vr-modal-header">
+            <h2 class="vr-modal-title" id="vrModalTitle">Залишити заявку</h2>
+            <span class="vr-modal-badge">Менеджер передзвонить протягом 15 хвилин</span>
+        </div>
+        <form class="vr-modal-form" id="vrModalForm" novalidate>
+            <div class="vr-modal-field">
+                <label for="vr-phone">Ваш номер телефону *</label>
+                <input type="tel" id="vr-phone" name="phone" placeholder="+38 (___) ___-__-__" required>
+            </div>
+            <div class="vr-modal-field">
+                <label for="vr-name">Ваше ім'я</label>
+                <input type="text" id="vr-name" name="name" placeholder="Необов'язково">
+            </div>
+            <div class="vr-modal-field">
+                <label for="vr-comment">Коментар</label>
+                <textarea id="vr-comment" name="comment" placeholder="Опишіть ваш запит..."></textarea>
+            </div>
+            <button type="submit" class="vr-modal-submit">Надіслати заявку</button>
+        </form>
+        <div class="vr-modal-success" id="vrModalSuccess" style="display:none">
+            <div class="vr-modal-success-icon"></div>
+            <p>Дякуємо! Заявку прийнято.</p>
+            <p>Менеджер передзвонить протягом 15 хвилин.</p>
+        </div>
+    </div>
+</div>
+<script src="modal.js"></script>
 <script src="cart-storage.js"></script>
 <script>
 var HOME_PACKAGES = {

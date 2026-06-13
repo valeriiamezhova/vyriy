@@ -802,7 +802,7 @@
                 </div>
             </div>
             <div class="sc-hero-right">
-                <button class="sc-btn-light">Замовити консультацію</button>
+                <button class="sc-btn-light" onclick="openVrModal()">Замовити консультацію</button>
                 <button class="sc-btn-primary" onclick="addServiceToCart()">Додати в кошик</button>
             </div>
         </div>
@@ -928,7 +928,7 @@
     <div class="sc-cta-inner">
         <h2 class="sc-cta-title">Залишилися запитання<br>або потрібна допомога?</h2>
         <p class="sc-cta-desc"><span class="sc-body-22-accent">Ми на зв'язку 24/7.</span> Отримайте пряму, спокійну та безкоштовну консультацію без жодних зобов'язань.</p>
-        <button class="sc-btn-primary sc-cta-btn" style="width: auto; padding: 0 34px;">Консультація</button>
+        <button class="sc-btn-primary sc-cta-btn" style="width: auto; padding: 0 34px;" onclick="openVrModal()">Консультація</button>
     </div>
 </section>
 
@@ -1101,6 +1101,36 @@
         document.querySelectorAll('[data-mob-page="'+p+'"]').forEach(function(el){el.classList.add('is-active');});
     })();
 </script>
+<div class="vr-modal-overlay" id="vrModal" role="dialog" aria-modal="true" aria-labelledby="vrModalTitle">
+    <div class="vr-modal">
+        <button class="vr-modal-close" id="vrModalClose" aria-label="Закрити"></button>
+        <div class="vr-modal-header">
+            <h2 class="vr-modal-title" id="vrModalTitle">Залишити заявку</h2>
+            <span class="vr-modal-badge">Менеджер передзвонить протягом 15 хвилин</span>
+        </div>
+        <form class="vr-modal-form" id="vrModalForm" novalidate>
+            <div class="vr-modal-field">
+                <label for="vr-phone">Ваш номер телефону *</label>
+                <input type="tel" id="vr-phone" name="phone" placeholder="+38 (___) ___-__-__" required>
+            </div>
+            <div class="vr-modal-field">
+                <label for="vr-name">Ваше ім'я</label>
+                <input type="text" id="vr-name" name="name" placeholder="Необов'язково">
+            </div>
+            <div class="vr-modal-field">
+                <label for="vr-comment">Коментар</label>
+                <textarea id="vr-comment" name="comment" placeholder="Опишіть ваш запит..."></textarea>
+            </div>
+            <button type="submit" class="vr-modal-submit">Надіслати заявку</button>
+        </form>
+        <div class="vr-modal-success" id="vrModalSuccess" style="display:none">
+            <div class="vr-modal-success-icon"></div>
+            <p>Дякуємо! Заявку прийнято.</p>
+            <p>Менеджер передзвонить протягом 15 хвилин.</p>
+        </div>
+    </div>
+</div>
+<script src="modal.js"></script>
 <script src="cart-storage.js"></script>
 <script src="service-cart.js"></script>
 </body>
