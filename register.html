@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Створити акаунт — Вирій</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ═══ TOKENS ═══ */
@@ -148,15 +149,16 @@
                 <button class="nav-dropdown-trigger">Порядок дій</button>
                 <div class="nav-dropdown-menu">
                     <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
-                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
-                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
-                <button class="nav-dropdown-trigger">Послуги</button>
+                <a href="services.html" class="nav-dropdown-trigger">Послуги</a>
                 <div class="nav-dropdown-menu">
+                    <a href="services.html" class="nav-dropdown-item nav-dropdown-item--all">Усі послуги</a>
                     <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
@@ -191,7 +193,7 @@
 
                     <a href="psychological-tips.html" class="nav-dropdown-item">Короткі поради</a>
                     <a href="psychological-consultations.html" class="nav-dropdown-item">Професійні консультації</a>
-                    <a href="#" class="nav-dropdown-item">Професійні консультації</a>
+                    
                 </div>
             </div>
             <div class="header-icons">
@@ -290,7 +292,7 @@
         <!-- Bottom: login link -->
         <div class="reg-bottom">
             <span class="reg-bottom-text">Вже маєте акаунт?</span>
-            <a href="account.html" class="reg-bottom-link">Увійти</a>
+            <a href="#" class="reg-bottom-link" onclick="showDemoNotice(event)">Увійти</a>
         </div>
 
     </div>
@@ -311,11 +313,11 @@
                     <h4 class="footer-category-title">Швидка навігація</h4>
                     <ul class="footer-menu-list">
                         <li><a href="home.html">Головна</a></li>
-                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
                         <li><a href="services-packages.html">Готові пакети</a></li>
                         <li><a href="products.html">Товари</a></li>
-                        <li><a href="#">Послуги</a></li>
-                        <li><a href="#">Підтримка</a></li>
+                        <li><a href="services-packages.html">Послуги</a></li>
+                        <li><a href="how-to-support.html">Підтримка</a></li>
                     </ul>
                 </div>
                 <div class="footer-menu-col">
@@ -376,9 +378,9 @@
                 </button>
                 <div class="hp-mob-acc-body">
                     <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
-                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
-                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
                 </div>
             </div>
@@ -404,7 +406,7 @@
             <a href="products.html" class="hp-mob-nav-link">Товари</a>
             <a href="cart.html" class="hp-mob-nav-link">Кошик</a>
             <a href="register.html" class="hp-mob-nav-link is-active">Акаунт</a>
-            <a href="#" class="hp-mob-nav-link">Про нас</a>
+            <a href="about.html" class="hp-mob-nav-link">Про нас</a>
         </div>
         <hr class="hp-mob-nav-sep">
         <div class="hp-mob-nav-footer-section">
@@ -455,18 +457,36 @@ function submitRegForm(e) {
     e.preventDefault();
     var email = document.getElementById('regEmail').value.trim();
     if (!email) return;
-    localStorage.setItem('vyriy_email', email);
-    localStorage.setItem('vyriy_logged_in', '1');
-    window.location.href = _regFromMemory ? 'index.html?autostart=1' : 'account.html';
+    showDemoNotice();
 }
 
 function socialAuth(provider) {
-    var demoEmails = { google:'user@gmail.com', facebook:'user@facebook.com', apple:'user@icloud.com' };
-    localStorage.setItem('vyriy_email', demoEmails[provider] || 'user@example.com');
-    localStorage.setItem('vyriy_logged_in', '1');
-    window.location.href = _regFromMemory ? 'index.html?autostart=1' : 'account.html';
+    showDemoNotice();
 }
+
+function showDemoNotice(e) {
+    if (e) e.preventDefault();
+    document.getElementById('demoNotice').classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDemoNotice() {
+    document.getElementById('demoNotice').classList.remove('is-open');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDemoNotice(); });
 </script>
+
+<!-- Demo notice -->
+<div id="demoNotice" class="demo-notice-overlay" onclick="closeDemoNotice()">
+    <div class="demo-notice-card" onclick="event.stopPropagation()">
+        <div class="demo-notice-icon"><span class="demo-notice-icon-inner"></span></div>
+        <h3 class="demo-notice-title">Демо-версія</h3>
+        <p class="demo-notice-text">Авторизація поки недоступна. Ця функція буде реалізована у фінальній версії продукту.</p>
+        <button class="demo-notice-btn" onclick="closeDemoNotice()">Зрозуміло</button>
+    </div>
+</div>
 
 </body>
 </html>

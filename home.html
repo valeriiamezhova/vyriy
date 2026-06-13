@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вирій — Ритуальна агенція</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
 
@@ -491,6 +492,9 @@
             background: #FFFFFF;
             border-radius: 34px;
             padding: 64px 115px;
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
         }
         .hp-how-wrap {
             display: flex;
@@ -1118,8 +1122,8 @@
             top: calc(50% + 80px);
             transform: translate(-50%, -50%);
             transform-origin: center center;
-            width: 80%;
-            max-width: 800px;
+            width: 800px;
+            max-width: none;
             height: auto;
             z-index: 1;
             pointer-events: none;
@@ -1134,7 +1138,7 @@
             top: -56px;
             transform: translateX(-50%);
             transform-origin: center center;
-            width: 160vw;
+            width: 760px;
             height: auto;
             z-index: 2;
             pointer-events: none;
@@ -1367,15 +1371,16 @@
                 <button class="nav-dropdown-trigger">Порядок дій</button>
                 <div class="nav-dropdown-menu">
                     <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
-                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
-                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
-                <button class="nav-dropdown-trigger">Послуги</button>
+                <a href="services.html" class="nav-dropdown-trigger">Послуги</a>
                 <div class="nav-dropdown-menu">
+                    <a href="services.html" class="nav-dropdown-item nav-dropdown-item--all">Усі послуги</a>
                     <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
@@ -1464,7 +1469,7 @@
     </div>
     <div class="hp-action-cards">
 
-        <a href="#" class="hp-action-card">
+        <a href="services-legal.html" class="hp-action-card">
             <div class="hp-action-card-content">
                 <h3 class="hp-h3">Допомога з<br>документами</h3>
                 <p class="hp-body-14">Отримання свідоцтва про смерть та довідок — найважчий етап. Ми знаємо всі юридичні тонкощі та допоможемо оформити повний пакет документів за кілька годин, позбавляючи вас черг та бюрократії.</p>
@@ -1474,7 +1479,7 @@
             </div>
         </a>
 
-        <a href="#" class="hp-action-card">
+        <a href="psychological-consultations.html" class="hp-action-card">
             <div class="hp-action-card-content">
                 <h3 class="hp-h3">Психологічна допомога</h3>
                 <p class="hp-body-14">Втрата близької людини — це шлях, який важко пройти самостійно. Ми створили простір підтримки: короткі поради, робота з фахівцями та ресурси для тих, хто переживає горе.</p>
@@ -1484,10 +1489,10 @@
             </div>
         </a>
 
-        <a href="#" class="hp-action-card">
+        <a href="products.html" class="hp-action-card">
             <div class="hp-action-card-content">
-                <h3 class="hp-h3">Виклик агента</h3>
-                <p class="hp-body-14">Фахівець приїде до вас протягом 30–40 хвилин. Допоможе зорієнтуватися в ситуації, захистить від тиску сторонніх служб та безкоштовно проконсультує щодо перших кроків.</p>
+                <h3 class="hp-h3">Ритуальні<br>товари</h3>
+                <p class="hp-body-14">Труни, вінки, квіти, свічки та все необхідне для церемонії — у нашому каталозі. Зручний підбір онлайн або з допомогою агента, доставка в узгоджений час.</p>
             </div>
             <div class="hp-action-card-footer">
                 <div class="hp-arrow-icon"></div>
@@ -1851,7 +1856,7 @@
     </div>
 
     <div class="hp-services-btn-wrap">
-        <button class="hp-btn hp-btn--solid">Переглянути усі послуги</button>
+        <a href="services.html" class="hp-btn hp-btn--solid">Переглянути усі послуги</a>
     </div>
 
   </div>
@@ -2099,11 +2104,11 @@
                     <h4 class="footer-category-title">Швидка навігація</h4>
                     <ul class="footer-menu-list">
                         <li><a href="home.html">Головна</a></li>
-                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
                         <li><a href="services-packages.html">Готові пакети</a></li>
-                        <li><a href="#">Товари</a></li>
-                        <li><a href="#">Послуги</a></li>
-                        <li><a href="#">Підтримка</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="services-packages.html">Послуги</a></li>
+                        <li><a href="how-to-support.html">Підтримка</a></li>
                     </ul>
                 </div>
                 <div class="footer-menu-col">
@@ -2161,9 +2166,9 @@
                 <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="order">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
                 <div class="hp-mob-acc-body">
                     <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
-                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
-                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
                 </div>
             </div>

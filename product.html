@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">Товар — Вирій</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         html { scroll-behavior:smooth; background:#FFFFFF; min-height:100%; overflow-x:hidden; }
@@ -29,7 +30,7 @@
 
         
 
-        .product-page { width:100%; padding:0 80px 80px; display:flex; flex-direction:column; gap:0; }
+        .product-page { width:100%; max-width:1600px; margin:0 auto; padding:0 80px 80px; display:flex; flex-direction:column; gap:0; }
 
         .breadcrumb { display:flex; align-items:center; gap:8px; padding:20px 0 28px; }
         .breadcrumb-link { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; text-decoration:none; transition:color .15s; }
@@ -64,9 +65,7 @@
         .product-option-group { display:flex; flex-direction:column; gap:12px; }
         .product-option-label { font-family:'Raleway',sans-serif; font-size:20px; font-weight:600; line-height:120%; color:#1B3F57; }
         .product-option-pills { display:flex; flex-wrap:wrap; gap:8px; }
-        .product-pill { height:34px; padding:0 18px; border-radius:12px; border:1px solid transparent; font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; background:transparent; cursor:pointer; transition:background .15s, border-color .15s; display:inline-flex; align-items:center; white-space:nowrap; }
-        .product-pill:hover { background:#F6FBFF; border-color:#CEEBFF; }
-        .product-pill.is-active { background:#E2F3FF; border-color:#E2F3FF; font-weight:600; }
+        /* product-pill styles live in style.css */
         .product-option-divider { width:100%; height:1px; background:#F1F1F1; border:none; }
 
         .product-actions-row { display:flex; align-items:center; gap:20px; }
@@ -171,6 +170,7 @@
             .product-option-label { font-size:17px; }
             .product-options { gap:12px; }
             .product-pill { font-size:15px; height:36px; }
+            .product-pill--sub { height:auto; padding:8px 14px; }
 
             /* actions */
             .product-actions-row { gap:12px; }
@@ -264,15 +264,16 @@
                 <button class="nav-dropdown-trigger">Порядок дій</button>
                 <div class="nav-dropdown-menu">
                     <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
-                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
-                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
-                <button class="nav-dropdown-trigger">Послуги</button>
+                <a href="services.html" class="nav-dropdown-trigger">Послуги</a>
                 <div class="nav-dropdown-menu">
+                    <a href="services.html" class="nav-dropdown-item nav-dropdown-item--all">Усі послуги</a>
                     <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
@@ -434,11 +435,11 @@
                     <h4 class="footer-category-title">Швидка навігація</h4>
                     <ul class="footer-menu-list">
                         <li><a href="home.html">Головна</a></li>
-                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
                         <li><a href="services-packages.html">Готові пакети</a></li>
                         <li><a href="products.html">Товари</a></li>
-                        <li><a href="#">Послуги</a></li>
-                        <li><a href="#">Підтримка</a></li>
+                        <li><a href="services-packages.html">Послуги</a></li>
+                        <li><a href="how-to-support.html">Підтримка</a></li>
                     </ul>
                 </div>
                 <div class="footer-menu-col">
@@ -499,9 +500,9 @@
                 </button>
                 <div class="hp-mob-acc-body">
                     <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
-                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
-                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
                 </div>
             </div>
@@ -568,7 +569,7 @@ var PRODUCTS = {
     price: 1490, bonus: 25,
     img: 'img/products/product-coffin.png',
     options: [
-      { label:'Розмір', items:['Стандартний','Середній','Великий','Спецрозмір'] },
+      { label:'Розмір', items:[{text:'Стандартний',sub:'~180–185 × 52 × 42 см'},{text:'Середній',sub:'~190–195 × 58 × 44 см'},{text:'Великий',sub:'~200–210 × 64 × 48 см'},{text:'Спецрозмір',sub:'індивідуальний замір'}] },
       { label:'Матеріал оббивки', items:['Оксамит','Атлас','Без оббивки'] }
     ],
     desc: 'Труна соснова — класичний та доступний вибір для гідного прощання. Виготовлена з добре висушеної деревини сосни, яка відрізняється легкістю та природньою красою текстури. М\'яка внутрішня оббивка з оксамиту забезпечує відчуття спокою та гідності.',
@@ -580,7 +581,7 @@ var PRODUCTS = {
     img: 'img/products/product-coffin-oak.png',
     thumbs: ['img/products/product-coffin-oak.png','img/products/product-coffin.png'],
     options: [
-      { label:'Розмір', items:['Стандартний','Середній','Великий','Спецрозмір'] },
+      { label:'Розмір', items:[{text:'Стандартний',sub:'~180–185 × 52 × 42 см'},{text:'Середній',sub:'~190–195 × 58 × 44 см'},{text:'Великий',sub:'~200–210 × 64 × 48 см'},{text:'Спецрозмір',sub:'індивідуальний замір'}] },
       { label:'Матеріал оббивки', items:['Оксамит','Атлас','Без оббивки'] }
     ],
     desc: 'Дубова труна — виготовлена з масиву дуба преміальної якості. Деревина проходить природне сушіння, що забезпечує міцність і довговічність. Внутрішня оббивка з натурального оксамиту надає вигляду гідності та спокою. Доступна в кількох розмірах та варіантах оббивки.',
@@ -591,7 +592,7 @@ var PRODUCTS = {
     price: 3800,
     img: 'img/products/product-sarcophagus.png',
     options: [
-      { label:'Розмір', items:['Стандартний','Великий','Спецрозмір'] },
+      { label:'Розмір', items:[{text:'Стандартний',sub:'~180–185 × 52 × 42 см'},{text:'Великий',sub:'~200–210 × 64 × 48 см'},{text:'Спецрозмір',sub:'індивідуальний замір'}] },
       { label:'Оббивка', items:['Оксамит','Парча','Атлас'] }
     ],
     desc: 'Саркофаг оббитий — вибір преміального класу для урочистого прощання. Виготовлений з МДФ з оббивкою тканиною зовні та всередині. Масивна конструкція з декоративними різьбленими елементами по периметру. Підходить для православних, католицьких обрядів.',
@@ -602,7 +603,7 @@ var PRODUCTS = {
     price: 2200,
     img: 'img/products/product-coffin-walnut.png',
     options: [
-      { label:'Розмір', items:['Стандартний','Середній','Великий','Спецрозмір'] },
+      { label:'Розмір', items:[{text:'Стандартний',sub:'~180–185 × 52 × 42 см'},{text:'Середній',sub:'~190–195 × 58 × 44 см'},{text:'Великий',sub:'~200–210 × 64 × 48 см'},{text:'Спецрозмір',sub:'індивідуальний замір'}] },
       { label:'Матеріал оббивки', items:['Атлас','Оксамит','Без оббивки'] }
     ],
     desc: 'Труна горіхова — виготовлена з масиву горіха, твердої породи з благородним малюнком деревини. Природній темно-коричневий відтінок та унікальна текстура кожного виробу підкреслюють особливість прощання. Внутрішня оббивка з атласу.',
@@ -830,8 +831,14 @@ function loadProduct(id) {
         var pills = document.createElement('div'); pills.className = 'product-option-pills'; pills.setAttribute('role','group'); pills.setAttribute('aria-label', grp.label);
         grp.items.forEach(function(item, ii) {
             var btn = document.createElement('button');
-            btn.className = 'product-pill' + (ii === 0 ? ' is-active' : '');
-            btn.textContent = item;
+            var text = typeof item === 'string' ? item : item.text;
+            var sub  = typeof item === 'object' && item.sub ? item.sub : null;
+            btn.className = 'product-pill' + (ii === 0 ? ' is-active' : '') + (sub ? ' product-pill--sub' : '');
+            if (sub) {
+                btn.innerHTML = '<span class="product-pill-text">' + text + '</span><span class="product-pill-sub">' + sub + '</span>';
+            } else {
+                btn.textContent = text;
+            }
             btn.addEventListener('click', function() {
                 pills.querySelectorAll('.product-pill').forEach(function(b) { b.classList.remove('is-active'); });
                 this.classList.add('is-active');
@@ -957,50 +964,43 @@ function switchTab(btn) {
 </script>
 <script src="cart-storage.js"></script>
 <script>
-var _currentProduct = null;
-var _currentQty = 1;
-
-/* Patch loadProduct to capture current product data */
-(function() {
-    var orig = window.loadProduct;
-    if (!orig) return;
-    window.loadProduct = function(id) {
-        orig(id);
-        var p = window.PRODUCTS ? (PRODUCTS[id] || PRODUCTS['coffin-oak']) : null;
-        if (p) _currentProduct = { id: id, name: p.name, price: p.salePrice || p.price, img: p.img, type: 'product', attrs: '' };
-        _currentQty = 1;
-    };
-})();
-
-/* Listen to qty changes from the existing qty buttons */
-document.addEventListener('DOMContentLoaded', function() {
-    var minus = document.getElementById('qtyMinus');
-    var plus  = document.getElementById('qtyPlus');
-    var val   = document.getElementById('qtyVal');
-    if (minus) minus.addEventListener('click', function() { _currentQty = Math.max(1, parseInt(val ? val.textContent : 1) || 1); });
-    if (plus)  plus.addEventListener('click',  function() { _currentQty = parseInt(val ? val.textContent : 1) || 1; });
-});
-
 function addCurrentToCart() {
     if (!window.CartStorage) { window.location.href = 'cart.html'; return; }
     var btn = document.getElementById('addToCartBtn');
-    var p = _currentProduct;
-    if (!p) {
-        /* Fallback: read from DOM */
+
+    /* Build product data fresh each time from PRODUCTS or DOM */
+    var id = (new URLSearchParams(window.location.search)).get('id') || 'coffin-oak';
+    var prodData = window.PRODUCTS && PRODUCTS[id];
+    var p;
+    if (prodData) {
+        p = { id: id, type: 'product', name: prodData.name, price: prodData.salePrice || prodData.price, img: prodData.img };
+    } else {
         var nameEl  = document.getElementById('breadName');
         var priceEl = document.getElementById('priceRegular') || document.getElementById('priceNew');
         var imgEl   = document.getElementById('mainImg');
-        var urlId   = new URLSearchParams(window.location.search).get('id') || 'product';
         p = {
-            id: urlId,
-            type: 'product',
-            name: nameEl ? nameEl.textContent.trim() : urlId,
+            id: id, type: 'product',
+            name: nameEl ? nameEl.textContent.trim() : id,
             price: priceEl ? parseFloat(priceEl.textContent.replace(/[^\d]/g,'')) || 0 : 0,
-            img: imgEl ? imgEl.getAttribute('src') : '',
-            attrs: ''
+            img: imgEl ? imgEl.getAttribute('src') : ''
         };
     }
-    var item = Object.assign({}, p, { qty: _currentQty });
+
+    /* Collect active pill selections */
+    var optAttrs = [];
+    document.querySelectorAll('#optionsWrap .product-option-group').forEach(function(g) {
+        var active = g.querySelector('.product-pill.is-active');
+        if (active) {
+            var t = active.querySelector('.product-pill-text');
+            optAttrs.push(t ? t.textContent.trim() : active.textContent.trim());
+        }
+    });
+
+    /* Read qty from DOM */
+    var qtyEl = document.getElementById('qtyVal');
+    var qty = Math.max(1, parseInt(qtyEl ? qtyEl.textContent : 1) || 1);
+
+    var item = Object.assign({}, p, { qty: qty, attrs: optAttrs.join(' • ') });
     CartStorage.add(item);
     if (btn) {
         btn.style.background = '#3C9264';

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вирій — Підготовка до церемонії</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
 
@@ -556,14 +557,14 @@
         .wf-final-birds-desk {
             position: absolute; left: 50%; top: calc(50% + 180px);
             transform: translate(-50%, -50%); transform-origin: center center;
-            width: 110%; max-width: 1200px; height: auto;
+            width: 1200px; max-width: none; height: auto;
             z-index: 1; pointer-events: none;
             animation: wf-birds-spin-desk 70s linear infinite;
         }
         .wf-final-birds-mob {
             display: none; position: absolute; left: 50%; top: -56px;
             transform: translateX(-50%); transform-origin: center center;
-            width: 160vw; height: auto; z-index: 2; pointer-events: none;
+            width: 760px; height: auto; z-index: 2; pointer-events: none;
         }
         .wf-final-content {
             position: relative; z-index: 2; height: 100%;
@@ -806,8 +807,9 @@
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
-                <button class="nav-dropdown-trigger">Послуги</button>
+                <a href="services.html" class="nav-dropdown-trigger">Послуги</a>
                 <div class="nav-dropdown-menu">
+                    <a href="services.html" class="nav-dropdown-item nav-dropdown-item--all">Усі послуги</a>
                     <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
@@ -1114,7 +1116,7 @@
         <div class="cp-sec5-links">
 
             <!-- Card 1 -->
-            <a href="#" class="cp-sec5-card">
+            <a href="funeral-process.html" class="cp-sec5-card">
                 <div class="cp-sec5-card-inner">
                     <div class="cp-sec5-card-texts">
                         <h3 class="cp-sec5-card-title">ОРГАНІЗАЦІЯ ТА ПРОЦЕС ПОХОВАННЯ</h3>
@@ -1125,7 +1127,7 @@
             </a>
 
             <!-- Card 2 -->
-            <a href="#" class="cp-sec5-card">
+            <a href="documents-benefits.html" class="cp-sec5-card">
                 <div class="cp-sec5-card-inner">
                     <div class="cp-sec5-card-texts">
                         <h3 class="cp-sec5-card-title" style="max-width: 217px;">ДОКУМЕНТИ ТА ПІЛЬГИ</h3>
@@ -1136,7 +1138,7 @@
             </a>
 
             <!-- Card 3 -->
-            <a href="#" class="cp-sec5-card">
+            <a href="traditions-rites-etiquette.html" class="cp-sec5-card">
                 <div class="cp-sec5-card-inner">
                     <div class="cp-sec5-card-texts">
                         <h3 class="cp-sec5-card-title">ТРАДИЦІЇ, ОБРЯДИ ТА ЕТИКЕТ</h3>
@@ -1163,11 +1165,11 @@
         <div class="wf-final-texts">
             <h2 class="wf-final-h1">Потрібна допомога прямо зараз?</h2>
             <div class="wf-final-sub">
-                <p class="wf-final-p">Телефонуйте на гарячу лінію.</p>
+                <p class="wf-final-p">Залиште заявку — передзвонимо вам.</p>
                 <p class="wf-final-p wf-final-p--bold">Консультація безкоштовна.</p>
             </div>
         </div>
-        <a href="tel:+387777777" class="wf-final-btn">Консультація</a>
+        <button class="wf-final-btn" onclick="openVrModal()">Залишити заявку</button>
     </div>
 </section>
 
@@ -1191,8 +1193,8 @@
                         <li><a href="what-to-do-first.html">Порядок дій</a></li>
                         <li><a href="services-packages.html">Готові пакети</a></li>
                         <li><a href="products.html">Товари</a></li>
-                        <li><a href="#">Послуги</a></li>
-                        <li><a href="#">Підтримка</a></li>
+                        <li><a href="services-packages.html">Послуги</a></li>
+                        <li><a href="how-to-support.html">Підтримка</a></li>
                     </ul>
                 </div>
                 <div class="footer-menu-col">
@@ -1312,6 +1314,39 @@
     </div>
 </div>
 
+<!-- ════════════════════════════════════
+     MODAL — Залишити заявку
+════════════════════════════════════ -->
+<div class="vr-modal-overlay" id="vrModal" role="dialog" aria-modal="true" aria-labelledby="vrModalTitle">
+    <div class="vr-modal">
+        <button class="vr-modal-close" id="vrModalClose" aria-label="Закрити"></button>
+        <div class="vr-modal-header">
+            <h2 class="vr-modal-title" id="vrModalTitle">Залишити заявку</h2>
+            <span class="vr-modal-badge">Менеджер передзвонить протягом 15 хвилин</span>
+        </div>
+        <form class="vr-modal-form" id="vrModalForm" novalidate>
+            <div class="vr-modal-field">
+                <label for="vr-phone">Ваш номер телефону *</label>
+                <input type="tel" id="vr-phone" name="phone" placeholder="+38 (___) ___-__-__" required>
+            </div>
+            <div class="vr-modal-field">
+                <label for="vr-name">Ваше ім'я</label>
+                <input type="text" id="vr-name" name="name" placeholder="Необов'язково">
+            </div>
+            <div class="vr-modal-field">
+                <label for="vr-comment">Коментар</label>
+                <textarea id="vr-comment" name="comment" placeholder="Опишіть ваш запит..."></textarea>
+            </div>
+            <button type="submit" class="vr-modal-submit">Надіслати заявку</button>
+        </form>
+        <div class="vr-modal-success" id="vrModalSuccess" style="display:none">
+            <div class="vr-modal-success-icon"></div>
+            <p>Дякуємо! Заявку прийнято.</p>
+            <p>Менеджер передзвонить протягом 15 хвилин.</p>
+        </div>
+    </div>
+</div>
+<script src="modal.js"></script>
 <script>
     /* ── Mobile menu ── */
     (function() {

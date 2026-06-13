@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вирій — Юридичний супровід та правова допомога</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
 
@@ -223,7 +224,7 @@
             left: 50%; top: calc(50% + 80px);
             transform: translate(-50%, -50%);
             transform-origin: center center;
-            width: 80%; max-width: 800px; height: auto;
+            width: 800px; max-width: none; height: auto;
             z-index: 1; pointer-events: none;
             animation: sc-birds-spin 70s linear infinite;
         }
@@ -231,7 +232,7 @@
             display: none;
             position: absolute; left: 50%; top: -56px;
             transform: translateX(-50%);
-            width: 160vw; height: auto;
+            width: 760px; height: auto;
             z-index: 2; pointer-events: none;
         }
         @keyframes sc-birds-spin {
@@ -438,15 +439,16 @@
                 <button class="nav-dropdown-trigger">Порядок дій</button>
                 <div class="nav-dropdown-menu">
                     <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
-                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
-                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
-                <button class="nav-dropdown-trigger nav-active" style="color:#45799B;">Послуги</button>
+                <a href="services.html" class="nav-dropdown-trigger nav-active" style="color:#45799B;">Послуги</a>
                 <div class="nav-dropdown-menu">
+                    <a href="services.html" class="nav-dropdown-item nav-dropdown-item--all">Усі послуги</a>
                     <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
@@ -501,7 +503,7 @@
      BREADCRUMB — white
 ════════════════════════════════════ -->
 <nav class="sc-bc-bar">
-    <a href="#" class="sc-bc-link">Послуги</a>
+    <a href="services.html" class="sc-bc-link">Послуги</a>
     <span class="sc-bc-sep"></span>
     <span class="sc-bc-current">Юридичний супровід</span>
 </nav>
@@ -672,12 +674,12 @@
                 <div class="footer-menu-col">
                     <h4 class="footer-category-title">Швидка навігація</h4>
                     <ul class="footer-menu-list">
-                        <li><a href="#">Головна</a></li>
-                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
                         <li><a href="services-packages.html">Готові пакети</a></li>
                         <li><a href="products.html">Товари</a></li>
-                        <li><a href="#">Послуги</a></li>
-                        <li><a href="#">Підтримка</a></li>
+                        <li><a href="services-packages.html">Послуги</a></li>
+                        <li><a href="how-to-support.html">Підтримка</a></li>
                     </ul>
                 </div>
                 <div class="footer-menu-col">
@@ -737,9 +739,9 @@
                 <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="order">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
                 <div class="hp-mob-acc-body">
                     <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
-                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
-                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
                 </div>
             </div>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Товари — Вирій</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ═══ TOKENS: 25:#F6FBFF 50:#E2F3FF 600:#45799B 700:#2E5B79 800:#1B3F57 900:#0F2E43 ═══ */
@@ -45,7 +46,7 @@
         
 
         /* ─── PAGE WRAPPER ─── */
-        .products-page { width:100%; padding:0 80px 64px; display:flex; flex-direction:column; gap:20px; }
+        .products-page { width:100%; max-width:1600px; margin:0 auto; padding:0 80px 64px; display:flex; flex-direction:column; gap:20px; }
 
         /* ─── TITLE ROW ─── */
         .products-title-row {
@@ -249,12 +250,16 @@
         .btn-apply-filters { width:100%; height:48px; background:#1B3F57; border-radius:62px; border:none; cursor:pointer; font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#fff; display:flex; align-items:center; justify-content:center; transition:background .2s; margin-top:4px; }
         .btn-apply-filters:hover { background:#265879; }
 
+        /* Coffin size sub-labels */
+        .radio-label-sub { display:block; font-size:11px; font-weight:400; color:#45799B; line-height:1.3; margin-top:1px; }
+        .filter-radio-item:has(.radio-label-sub) { align-items:flex-start; }
+
         /* ─── PRODUCT GRID (953px, 4 cols × 223px, gap 20px) ─── */
         .products-grid { flex:1; min-width:0; display:flex; flex-wrap:wrap; gap:20px; align-content:flex-start; }
         .products-row { display:contents; }
 
-        /* Product card 223px */
-        .product-card { width:223px; flex-shrink:0; border:1px solid #F1F1F1; border-radius:24px; overflow:hidden; background:#fff; display:flex; flex-direction:column; text-decoration:none; transition:box-shadow .2s, transform .18s; cursor:pointer; }
+        /* Product card — 4 columns, fills grid evenly */
+        .product-card { width:calc(25% - 15px); flex-shrink:0; border:1px solid #F1F1F1; border-radius:24px; overflow:hidden; background:#fff; display:flex; flex-direction:column; text-decoration:none; transition:box-shadow .2s, transform .18s; cursor:pointer; }
         .product-card:hover { box-shadow:0 8px 24px rgba(15,46,67,.1); transform:translateY(-3px); }
 
         /* Image area 223×180, relative for badges */
@@ -453,15 +458,16 @@
                 <button class="nav-dropdown-trigger">Порядок дій</button>
                 <div class="nav-dropdown-menu">
                     <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
-                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
-                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
-                <button class="nav-dropdown-trigger">Послуги</button>
+                <a href="services.html" class="nav-dropdown-trigger">Послуги</a>
                 <div class="nav-dropdown-menu">
+                    <a href="services.html" class="nav-dropdown-item nav-dropdown-item--all">Усі послуги</a>
                     <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
@@ -700,10 +706,10 @@
                         <div class="filter-section">
                             <div class="filter-section-head"><h3 class="filter-section-title">Розмір труни</h3><span class="filter-section-toggle" aria-hidden="true"></span></div>
                             <div class="filter-section-body">
-                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="standard" checked><span class="radio-circle"></span><span class="radio-label">Стандартний</span></label>
-                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="medium"><span class="radio-circle"></span><span class="radio-label">Середній</span></label>
-                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="large"><span class="radio-circle"></span><span class="radio-label">Великий</span></label>
-                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="special"><span class="radio-circle"></span><span class="radio-label">Спецрозмір</span></label>
+                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="standard" checked><span class="radio-circle"></span><span class="radio-label">Стандартний<span class="radio-label-sub">~180–185 × 52 × 42 см</span></span></label>
+                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="medium"><span class="radio-circle"></span><span class="radio-label">Середній<span class="radio-label-sub">~190–195 × 58 × 44 см</span></span></label>
+                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="large"><span class="radio-circle"></span><span class="radio-label">Великий<span class="radio-label-sub">~200–210 × 64 × 48 см</span></span></label>
+                                <label class="filter-radio-item"><input type="radio" name="coffin-size" value="special"><span class="radio-circle"></span><span class="radio-label">Спецрозмір<span class="radio-label-sub">індивідуальний замір</span></span></label>
                             </div>
                         </div>
                         <div class="filter-section">
@@ -907,7 +913,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="product.html" class="product-card" data-category="coffins" data-price="1500" data-bonus="true" data-discount="true">
+                <a href="product.html?id=coffin-oak" class="product-card" data-category="coffins" data-price="1500" data-bonus="true" data-discount="true">
                     <div class="product-img-wrap">
                         <img src="img/products/product-coffin-oak.png" alt="Дубова труна" class="product-img" loading="lazy">
                         <div class="product-badges"><span class="product-badge product-badge--bonus"><span class="badge-bonus-icon" aria-hidden="true"></span>+30 бонусів</span><span class="product-badge product-badge--discount">-20%</span></div>
@@ -1195,11 +1201,11 @@
                     <h4 class="footer-category-title">Швидка навігація</h4>
                     <ul class="footer-menu-list">
                         <li><a href="home.html">Головна</a></li>
-                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
                         <li><a href="services-packages.html">Готові пакети</a></li>
                         <li><a href="products.html">Товари</a></li>
-                        <li><a href="#">Послуги</a></li>
-                        <li><a href="#">Підтримка</a></li>
+                        <li><a href="services-packages.html">Послуги</a></li>
+                        <li><a href="how-to-support.html">Підтримка</a></li>
                     </ul>
                 </div>
                 <div class="footer-menu-col">
@@ -1260,9 +1266,9 @@
                 </button>
                 <div class="hp-mob-acc-body">
                     <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
-                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
-                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
                 </div>
             </div>
@@ -1712,6 +1718,26 @@ var _replaceCtx = null;
     });
 })();
 
+/* ── Options data for quick-add sheet ── */
+var PRODUCT_OPTIONS = {
+  'coffin-pine':        [{ label:'Розмір', items:[{text:'Стандартний',sub:'~180–185 × 52 × 42 см'},{text:'Середній',sub:'~190–195 × 58 × 44 см'},{text:'Великий',sub:'~200–210 × 64 × 48 см'},{text:'Спецрозмір',sub:'індивідуальний замір'}] },{ label:'Матеріал оббивки', items:['Оксамит','Атлас','Без оббивки'] }],
+  'coffin-oak':         [{ label:'Розмір', items:[{text:'Стандартний',sub:'~180–185 × 52 × 42 см'},{text:'Середній',sub:'~190–195 × 58 × 44 см'},{text:'Великий',sub:'~200–210 × 64 × 48 см'},{text:'Спецрозмір',sub:'індивідуальний замір'}] },{ label:'Матеріал оббивки', items:['Оксамит','Атлас','Без оббивки'] }],
+  'coffin-sarcophagus': [{ label:'Розмір', items:[{text:'Стандартний',sub:'~180–185 × 52 × 42 см'},{text:'Великий',sub:'~200–210 × 64 × 48 см'},{text:'Спецрозмір',sub:'індивідуальний замір'}] },{ label:'Оббивка', items:['Оксамит','Парча','Атлас'] }],
+  'coffin-walnut':      [{ label:'Розмір', items:[{text:'Стандартний',sub:'~180–185 × 52 × 42 см'},{text:'Середній',sub:'~190–195 × 58 × 44 см'},{text:'Великий',sub:'~200–210 × 64 × 48 см'},{text:'Спецрозмір',sub:'індивідуальний замір'}] },{ label:'Матеріал оббивки', items:['Атлас','Оксамит','Без оббивки'] }],
+  'cross-metal':        [{ label:'Висота', items:['До 1 м','1–1,5 м','Понад 1,5 м'] },{ label:'Покриття', items:['Матове чорне','З позолотою','Срібне'] }],
+  'cross-wood-black':   [{ label:'Висота', items:['До 1 м','1–1,5 м','Понад 1,5 м'] },{ label:'Матеріал', items:['Береза','Сосна','Дуб'] }],
+  'cross-wood-grey':    [{ label:'Висота', items:['До 1 м','1–1,5 м','Понад 1,5 м'] },{ label:'Матеріал', items:['Береза','Сосна','Дуб'] }],
+  'cross-carved':       [{ label:'Висота', items:['До 1 м','1–1,5 м','Понад 1,5 м'] },{ label:'Матеріал', items:['Дуб','Горіх','Береза'] }],
+  'wreath-eternal':     [{ label:'Квіти', items:['Живі','Штучні','Змішані'] },{ label:'Розмір', items:['Малий (50 см)','Стандартний (65 см)','Великий (80 см)'] }],
+  'wreath-meadow':      [{ label:'Квіти', items:['Живі','Штучні','Змішані'] },{ label:'Розмір', items:['Малий (50 см)','Стандартний (65 см)','Великий (80 см)'] }],
+  'wreath-memory':      [{ label:'Квіти', items:['Живі','Штучні','Змішані'] },{ label:'Розмір', items:['Малий (50 см)','Стандартний (65 см)','Великий (80 см)'] }],
+  'wreath-sunny':       [{ label:'Квіти', items:['Живі','Штучні','Змішані'] },{ label:'Розмір', items:['Малий (50 см)','Стандартний (65 см)','Великий (80 см)'] }],
+  'lamp-gold':          [{ label:'Паливо', items:['Для масла','Для гасу','Для свічки'] },{ label:'Розмір', items:['Маленька','Стандартна','Велика'] }],
+  'lamp-dark':          [{ label:'Паливо', items:['Для масла','Для гасу','Для свічки'] },{ label:'Розмір', items:['Маленька','Стандартна','Велика'] }],
+  'lamp-silver':        [{ label:'Паливо', items:['Для масла','Для гасу','Для свічки'] },{ label:'Розмір', items:['Маленька','Стандартна','Велика'] }],
+  'lantern':            [{ label:'Колір каркасу', items:['Чорний','Бронзовий','Срібний'] },{ label:'Розмір', items:['Малий (22 см)','Стандартний (28 см)','Великий (35 см)'] }]
+};
+
 function addProductToCart(btn, event) {
     event.stopPropagation();
     event.preventDefault();
@@ -1725,17 +1751,13 @@ function addProductToCart(btn, event) {
     var img = imgEl ? imgEl.getAttribute('src') : '';
 
     if (_replaceCtx) {
-        /* Replace mode: update item in package */
         var cart = CartStorage.get();
-        var pkgs = cart.filter(function(i) { return i.type === 'package'; });
-        var pkg = pkgs[_replaceCtx.pkgIdx] || cart.find(function(i) { return i.id === _replaceCtx.pkgId; });
+        var pkg = cart.find(function(i) { return i.type === 'package' && (i.id === _replaceCtx.pkgId); });
+        if (!pkg) { var pkgs = cart.filter(function(i){ return i.type==='package'; }); pkg = pkgs[_replaceCtx.pkgIdx]; }
         if (pkg && pkg.items) {
             for (var i = 0; i < pkg.items.length; i++) {
                 if (pkg.items[i].key === _replaceCtx.itemKey) {
-                    pkg.items[i].name  = name;
-                    pkg.items[i].price = price;
-                    pkg.items[i].img   = img;
-                    pkg.items[i].attrs = '';
+                    pkg.items[i].name = name; pkg.items[i].price = price; pkg.items[i].img = img; pkg.items[i].attrs = '';
                     break;
                 }
             }
@@ -1747,10 +1769,100 @@ function addProductToCart(btn, event) {
         return;
     }
 
-    CartStorage.add({ id: id, type: 'product', name: name, price: price, img: img, attrs: '' });
+    var opts = PRODUCT_OPTIONS[id];
+    if (opts && opts.length) {
+        openQaSheet({ id: id, name: name, price: price, img: img, options: opts });
+        return;
+    }
+
+    CartStorage.add({ id: id, type: 'product', name: name, price: price, img: img, qty: 1, attrs: '' });
     btn.classList.add('is-added');
     setTimeout(function() { btn.classList.remove('is-added'); }, 1500);
 }
+
+/* ── Quick-add sheet ── */
+var _qaProduct = null;
+
+function openQaSheet(data) {
+    _qaProduct = data;
+    document.getElementById('qaImg').src = data.img;
+    document.getElementById('qaSheetName').textContent = data.name;
+    document.getElementById('qaSheetPrice').textContent = data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' ₴';
+
+    var ow = document.getElementById('qaOptions');
+    ow.innerHTML = '';
+    data.options.forEach(function(grp) {
+        var g = document.createElement('div');
+        g.className = 'qa-option-group';
+        var lbl = document.createElement('span');
+        lbl.className = 'qa-option-label';
+        lbl.textContent = grp.label;
+        var pills = document.createElement('div');
+        pills.className = 'qa-option-pills';
+        grp.items.forEach(function(item, ii) {
+            var b = document.createElement('button');
+            var text = typeof item === 'string' ? item : item.text;
+            var sub  = typeof item === 'object' && item.sub ? item.sub : null;
+            b.className = 'product-pill' + (ii === 0 ? ' is-active' : '') + (sub ? ' product-pill--sub' : '');
+            if (sub) {
+                b.innerHTML = '<span class="product-pill-text">' + text + '</span><span class="product-pill-sub">' + sub + '</span>';
+            } else {
+                b.textContent = text;
+            }
+            b.addEventListener('click', function() {
+                pills.querySelectorAll('.product-pill').forEach(function(x) { x.classList.remove('is-active'); });
+                this.classList.add('is-active');
+            });
+            pills.appendChild(b);
+        });
+        g.appendChild(lbl);
+        g.appendChild(pills);
+        ow.appendChild(g);
+    });
+
+    document.getElementById('qaOverlay').classList.add('is-open');
+    document.getElementById('qaSheet').classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeQaSheet() {
+    document.getElementById('qaOverlay').classList.remove('is-open');
+    document.getElementById('qaSheet').classList.remove('is-open');
+    document.body.style.overflow = '';
+    setTimeout(function() { _qaProduct = null; }, 300);
+}
+
+function confirmQaAdd() {
+    if (!_qaProduct) return;
+    var optAttrs = [];
+    document.querySelectorAll('#qaOptions .qa-option-group').forEach(function(g) {
+        var active = g.querySelector('.product-pill.is-active');
+        if (active) {
+            var t = active.querySelector('.product-pill-text');
+            optAttrs.push(t ? t.textContent.trim() : active.textContent.trim());
+        }
+    });
+    CartStorage.add({ id: _qaProduct.id, type: 'product', name: _qaProduct.name, price: _qaProduct.price, img: _qaProduct.img, qty: 1, attrs: optAttrs.join(' • ') });
+    closeQaSheet();
+}
+
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeQaSheet(); });
 </script>
+
+<!-- Quick-add options sheet -->
+<div id="qaOverlay" class="qa-overlay" onclick="closeQaSheet()"></div>
+<div id="qaSheet" class="qa-sheet" role="dialog" aria-modal="true" aria-labelledby="qaSheetName">
+    <div class="qa-sheet-drag"></div>
+    <div class="qa-sheet-header">
+        <img id="qaImg" class="qa-sheet-img" src="" alt="">
+        <div class="qa-sheet-info">
+            <div id="qaSheetName" class="qa-sheet-name"></div>
+            <div id="qaSheetPrice" class="qa-sheet-price"></div>
+        </div>
+        <button class="qa-sheet-close" onclick="closeQaSheet()" aria-label="Закрити">✕</button>
+    </div>
+    <div id="qaOptions" class="qa-sheet-options"></div>
+    <button class="qa-sheet-confirm" onclick="confirmQaAdd()">Додати в кошик</button>
+</div>
 </body>
 </html>

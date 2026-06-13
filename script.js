@@ -2175,6 +2175,11 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
             this.contentEditable = 'true';
             this.style.whiteSpace = 'normal';
             this.style.wordBreak = 'break-word';
+            if (this.dataset.isPlaceholder === 'true') {
+                this.innerText = '';
+                delete this.dataset.isPlaceholder;
+                this.classList.remove('text-is-placeholder');
+            }
             this.focus();
             this.style.outline = 'none';
             this.style.cursor = 'text';
@@ -2182,6 +2187,11 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
         el.addEventListener('blur', function () {
             this.contentEditable = 'false';
             this.style.cursor = '';
+            if (this.dataset.placeholder && this.innerText.trim() === '') {
+                this.innerText = this.dataset.placeholder;
+                this.dataset.isPlaceholder = 'true';
+                this.classList.add('text-is-placeholder');
+            }
         });
         el.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
@@ -2239,6 +2249,25 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
 
     addCharLimit('.cloud-quote-text', 260);
     addCharLimit('.family-memory-text', 1200);
+    addCharLimit('.dates', 25);
+
+    // ==========================================
+    // АВТО-ОЧИЩЕННЯ ТЕКСТОВИХ ЗАГЛУШОК
+    // ==========================================
+
+    function initTextPlaceholder(el) {
+        if (el.dataset.placeholderInited) return;
+        el.dataset.placeholderInited = '1';
+        el.dataset.placeholder = el.innerText.trim();
+        el.dataset.isPlaceholder = 'true';
+        el.classList.add('text-is-placeholder');
+    }
+
+    function applyPlaceholderToBlock(block) {
+        block.querySelectorAll('p, .dates').forEach(el => initTextPlaceholder(el));
+    }
+
+    document.querySelectorAll('.page-editable-block').forEach(block => applyPlaceholderToBlock(block));
 
     // ==========================================
     // ДОДАВАННЯ СТІКЕРІВ З МЕНЮ ДЕКОРУ
@@ -2927,7 +2956,11 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
 </section>`;
             case 'family': return `
 <section class="family-tribute-section page-editable-block">
-    <img src="img/clouds_bg.svg" alt="" class="bg-clouds-layer">
+    <img src="img/clouds_bg.png" alt="" class="bg-clouds-layer">
+    <div class="family-tribute-birds-clip">
+        <img src="icons/desktop_birds.svg" alt="" class="family-tribute-birds-desk">
+    </div>
+    <img src="icons/footer_mobile_birds.svg" alt="" class="family-tribute-birds-mob">
     <div class="family-tribute-container"><div class="family-memory-card">
         <h1>Від кого</h1>
         <p class="family-memory-text">Додати текст...</p>
@@ -2958,6 +2991,11 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
                 this.contentEditable = 'true';
                 this.style.whiteSpace = 'normal';
                 this.style.wordBreak = 'break-word';
+                if (this.dataset.isPlaceholder === 'true') {
+                    this.innerText = '';
+                    delete this.dataset.isPlaceholder;
+                    this.classList.remove('text-is-placeholder');
+                }
                 this.focus();
                 this.style.outline = 'none';
                 this.style.cursor = 'text';
@@ -2965,6 +3003,11 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
             el.addEventListener('blur', function () {
                 this.contentEditable = 'false';
                 this.style.cursor = '';
+                if (this.dataset.placeholder && this.innerText.trim() === '') {
+                    this.innerText = this.dataset.placeholder;
+                    this.dataset.isPlaceholder = 'true';
+                    this.classList.add('text-is-placeholder');
+                }
             });
             el.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') { this.contentEditable = 'false'; this.blur(); }
@@ -3040,6 +3083,8 @@ document.getElementById('btn-photo-scale').addEventListener('click', function (e
         });
         block.querySelectorAll('.cloud-quote-text').forEach(el => addCharLimitEl(el, 260));
         block.querySelectorAll('.family-memory-text').forEach(el => addCharLimitEl(el, 1200));
+        block.querySelectorAll('.dates').forEach(el => addCharLimitEl(el, 25));
+        applyPlaceholderToBlock(block);
     }
 
     function addCharLimitEl(el, max) {

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кошик — Вирій</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ═══ TOKENS: 25:#F6FBFF 50:#E2F3FF 600:#45799B 700:#2E5B79 800:#1B3F57 900:#0F2E43 ═══ */
@@ -44,7 +45,7 @@
         
 
         /* ─── CART PAGE ─── */
-        .cart-page { width:100%; padding:0 80px 64px; display:flex; flex-direction:column; gap:24px; }
+        .cart-page { width:100%; max-width:1600px; margin:0 auto; padding:0 80px 64px; display:flex; flex-direction:column; gap:24px; }
 
         /* ─── EMPTY STATE ─── */
         .cart-empty { display:flex; flex-direction:column; align-items:center; gap:16px; padding:80px 20px; text-align:center; }
@@ -91,6 +92,10 @@
         .cart-item-img img { width:100%; height:100%; object-fit:contain; }
         .cart-item-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:6px; }
         .cart-item-name { font-family:'Raleway',sans-serif; font-size:17px; font-weight:700; color:#1B3F57; margin:0; }
+        .cart-item-name-link { color:inherit; text-decoration:none; }
+        .cart-item-name-link:hover { text-decoration:underline; text-underline-offset:3px; }
+        a.cart-item-img { display:block; cursor:pointer; }
+        a.cart-item-img:hover img { opacity:0.88; transition:opacity .15s; }
         .cart-item-attrs { display:flex; flex-wrap:wrap; gap:0; font-family:'Raleway',sans-serif; font-size:13px; font-weight:500; color:#45799B; margin:0; }
         .cart-item-attr { white-space:nowrap; }
         .cart-item-attr + .cart-item-attr::before { content:' • '; color:#45799B; }
@@ -672,15 +677,16 @@
                 <button class="nav-dropdown-trigger">Порядок дій</button>
                 <div class="nav-dropdown-menu">
                     <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
-                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
-                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
-                <button class="nav-dropdown-trigger">Послуги</button>
+                <a href="services.html" class="nav-dropdown-trigger">Послуги</a>
                 <div class="nav-dropdown-menu">
+                    <a href="services.html" class="nav-dropdown-item nav-dropdown-item--all">Усі послуги</a>
                     <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
@@ -715,7 +721,7 @@
 
                     <a href="psychological-tips.html" class="nav-dropdown-item">Короткі поради</a>
                     <a href="psychological-consultations.html" class="nav-dropdown-item">Професійні консультації</a>
-                    <a href="#" class="nav-dropdown-item">Професійні консультації</a>
+                    
                 </div>
             </div>
             <div class="header-icons">
@@ -943,11 +949,11 @@
                     <h4 class="footer-category-title">Швидка навігація</h4>
                     <ul class="footer-menu-list">
                         <li><a href="home.html">Головна</a></li>
-                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
                         <li><a href="services-packages.html">Готові пакети</a></li>
                         <li><a href="products.html">Товари</a></li>
-                        <li><a href="#">Послуги</a></li>
-                        <li><a href="#">Підтримка</a></li>
+                        <li><a href="services-packages.html">Послуги</a></li>
+                        <li><a href="how-to-support.html">Підтримка</a></li>
                     </ul>
                 </div>
                 <div class="footer-menu-col">
@@ -1008,9 +1014,9 @@
                 </button>
                 <div class="hp-mob-acc-body">
                     <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
-                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
-                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
                 </div>
             </div>
@@ -1035,7 +1041,7 @@
             </div>
             <a href="products.html" class="hp-mob-nav-link">Товари</a>
             <a href="cart.html" class="hp-mob-nav-link is-active">Кошик</a>
-            <a href="#" class="hp-mob-nav-link">Про нас</a>
+            <a href="about.html" class="hp-mob-nav-link">Про нас</a>
         </div>
         <hr class="hp-mob-nav-sep">
         <div class="hp-mob-nav-footer-section">
@@ -1519,10 +1525,12 @@ function renderProductItem(p, idx) {
     var id = 'stored-' + idx;
     var html =
         '<div class="cart-item" data-item-id="' + id + '" data-item-type="product" data-item-price="' + p.price + '">' +
-        '<div class="cart-item-img"><img src="' + (p.img || '') + '" alt="' + p.name + '" loading="lazy"></div>' +
+        (p.id ? '<a href="product.html?id=' + p.id + '" class="cart-item-img" aria-label="Перейти до ' + p.name + '">' : '<div class="cart-item-img">') +
+        '<img src="' + (p.img || '') + '" alt="' + p.name + '" loading="lazy">' +
+        (p.id ? '</a>' : '</div>') +
         '<div class="cart-item-body">' +
-        '<h3 class="cart-item-name">' + p.name + '</h3>' +
-        (p.attrs ? '<div class="cart-item-attrs"><span class="cart-item-attr">' + p.attrs + '</span></div>' : '') +
+        '<h3 class="cart-item-name">' + (p.id ? '<a href="product.html?id=' + p.id + '" class="cart-item-name-link">' + p.name + '</a>' : p.name) + '</h3>' +
+        (p.attrs ? '<div class="cart-item-attrs">' + p.attrs.split(' • ').map(function(a){return '<span class="cart-item-attr">'+a.trim()+'</span>';}).join('') + '</div>' : '') +
         '<p class="cart-item-price" id="price-' + id + '">' + formatPrice(p.price * (p.qty || 1)) + '</p>' +
         '</div>' +
         '<div class="cart-item-side">' +
@@ -1552,13 +1560,15 @@ function removeStoredItem(id, idx) {
     /* Remove from localStorage */
     if (window.CartStorage) {
         var cart = CartStorage.get();
-        cart.splice(idx, 1);
+        var products = cart.filter(function(i) { return i.type === 'product'; });
+        products.splice(idx, 1);
+        var others = cart.filter(function(i) { return i.type !== 'product'; });
         /* Re-index remaining items' IDs in cartState */
         cartState.items = {};
-        cart.filter(function(i){return i.type==='product';}).forEach(function(p, i){
+        products.forEach(function(p, i) {
             cartState.items['stored-' + i] = { type: 'product', price: p.price, qty: p.qty || 1 };
         });
-        CartStorage.save(cart);
+        CartStorage.save(others.concat(products));
     }
     checkCartEmpty();
     updateDeliveryVisibility();

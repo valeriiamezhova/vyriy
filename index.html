@@ -9,6 +9,7 @@
     <meta property="og:image" content="https://vyriy.netlify.app/img/og-logo.png">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -139,15 +140,16 @@
                 <button class="nav-dropdown-trigger">Порядок дій</button>
                 <div class="nav-dropdown-menu">
                     <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
-                    <a href="#" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
-                    <a href="#" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
                 </div>
             </div>
             <div class="nav-dropdown-wrap">
-                <button class="nav-dropdown-trigger">Послуги</button>
+                <a href="services.html" class="nav-dropdown-trigger">Послуги</a>
                 <div class="nav-dropdown-menu">
+                    <a href="services.html" class="nav-dropdown-item nav-dropdown-item--all">Усі послуги</a>
                     <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
                     <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
                     <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
@@ -255,6 +257,7 @@
 </div>
 
 <div class="editor-toolbar" id="editor-toolbar">
+    <div class="toolbar-inner">
     <div class="toolbar-left">
         <button class="toolbar-btn has-dropdown" onclick="toggleMenu('blocks')" data-tour="blocks">Блоки</button>
         <button class="toolbar-btn has-dropdown" onclick="toggleMenu('media')">Медіа</button>
@@ -298,6 +301,7 @@
             <span class="btn-icon users-icon"></span>
             Поділитися
         </button>
+    </div>
     </div>
 </div>
 
@@ -593,33 +597,32 @@
                 </div>
             </div>
         </section>
-    </div>
-    </div>
 
-    <section class="quote-cloud-section page-editable-block">
-        <div class="top-cloud-quote">
-            <div class="cloud-quote-inner-box">
-                <p class="cloud-quote-text">«Сенс життя не в тому, щоб залишити після себе стіни, а в тому, щоб залишити після себе світло в очах тих, хто йде за нами».</p>
-                <p class="cloud-quote-author">О. Мельник</p>
+        <section class="quote-cloud-section page-editable-block">
+            <div class="top-cloud-quote">
+                <div class="cloud-quote-inner-box">
+                    <p class="cloud-quote-text">«Сенс життя не в тому, щоб залишити після себе стіни, а в тому, щоб залишити після себе світло в очах тих, хто йде за нами».</p>
+                    <p class="cloud-quote-author">О. Мельник</p>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="family-tribute-section page-editable-block">
-        <img src="img/clouds_bg.png" alt="" class="bg-clouds-layer">
-        <div class="family-tribute-birds-clip">
-            <img src="icons/desktop_birds.svg" alt="" class="family-tribute-birds-desk">
-        </div>
-        <img src="icons/footer_mobile_birds.svg" alt="" class="family-tribute-birds-mob">
-        <div class="family-tribute-container">
-            <div class="family-memory-card">
-                <h1>ВІД РОДИНИ</h1>
-                <p class="family-memory-text">
-                    «Твоє життя було архітектурою доброти. Ти навчив нас будувати не просто стіни, а дім, де завжди чекають. Твій голос продовжує звучати в кожному посадженому дереві та в кожній відновленій брамі нашого міста. Ми не кажемо "прощавай", ми кажемо "дякуємо за світло", яке ти залишив у наших серцях. Спочивай з миром, наш головний архітекторе».
-                </p>
+        <section class="family-tribute-section page-editable-block">
+            <img src="img/clouds_bg.png" alt="" class="bg-clouds-layer">
+            <div class="family-tribute-birds-clip">
+                <img src="icons/desktop_birds.svg" alt="" class="family-tribute-birds-desk">
             </div>
-        </div>
-    </section>
+            <img src="icons/footer_mobile_birds.svg" alt="" class="family-tribute-birds-mob">
+            <div class="family-tribute-container">
+                <div class="family-memory-card">
+                    <h1>ВІД РОДИНИ</h1>
+                    <p class="family-memory-text">
+                        «Твоє життя було архітектурою доброти. Ти навчив нас будувати не просто стіни, а дім, де завжди чекають. Твій голос продовжує звучати в кожному посадженому дереві та в кожній відновленій брамі нашого міста. Ми не кажемо "прощавай", ми кажемо "дякуємо за світло", яке ти залишив у наших серцях. Спочивай з миром, наш головний архітекторе».
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
 </main>
 
 <!-- ПАНЕЛЬ ПЕРЕГЛЯДУ -->
@@ -673,12 +676,12 @@
                 <div class="footer-menu-col">
                     <h4 class="footer-category-title">Швидка навігація</h4>
                     <ul class="footer-menu-list">
-                        <li><a href="#">Головна</a></li>
-                        <li><a href="#">Порядок дій</a></li>
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
                         <li><a href="services-packages.html">Готові пакети</a></li>
                         <li><a href="products.html">Товари</a></li>
-                        <li><a href="#">Послуги</a></li>
-                        <li><a href="#">Підтримка</a></li>
+                        <li><a href="services-packages.html">Послуги</a></li>
+                        <li><a href="how-to-support.html">Підтримка</a></li>
                     </ul>
                 </div>
                 <div class="footer-menu-col">
@@ -750,9 +753,9 @@
                 <button class="hp-mob-acc-trigger" aria-expanded="false" data-mob-page="order">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
                 <div class="hp-mob-acc-body">
                     <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
-                    <a href="#" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
                     <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
-                    <a href="#" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
                     <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
                 </div>
             </div>

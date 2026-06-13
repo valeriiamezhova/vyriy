@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вирій — Усі послуги</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+
+        html {
+            scroll-behavior: smooth;
+            background: linear-gradient(180deg, #FFFFFF 9%, #E2F3FF 59%, #E2F3FF 82%, #82BADF 100%);
+            min-height: 100%;
+            overflow-x: clip;
+        }
+        body { background: transparent; overflow-x: clip; max-width: 100vw; }
+        *, *::before, *::after { box-sizing: border-box; min-width: 0; }
+        img:not(.hp-hero-decor) { max-width: 100%; }
+
+        @media (min-width: 481px) {
+            .header-inner { max-width: 1303px; width: calc(100% - 80px); }
+            .footer-top-container, .footer-bottom-container { max-width: 1280px; width: calc(100% - 80px); }
+        }
+
+        /* ── Typography ── */
+        .hp-h2 { font-family:'Raleway',sans-serif; font-size:48px; font-weight:700; line-height:1.2; text-transform:uppercase; color:#1B3F57; margin:0; }
+        .hp-h3 { font-family:'Raleway',sans-serif; font-size:24px; font-weight:600; line-height:1.2; text-transform:uppercase; color:#1B3F57; margin:0; }
+        .hp-body-14 { font-family:'Raleway',sans-serif; font-size:14px; font-weight:500; line-height:1.4; color:#2E5B79; margin:0; }
+
+        /* ── Buttons ── */
+        .hp-btn { font-family:'Raleway',sans-serif; font-size:20px; font-weight:700; line-height:1; text-transform:uppercase; border-radius:32px; padding:24px 34px; cursor:pointer; white-space:nowrap; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; border:none; transition:background .2s,color .2s,border-color .2s; }
+        .hp-btn--outline { border:2px solid #1B3F57; background:transparent; color:#1B3F57; }
+        .hp-btn--outline:hover { border-color:#45799B; color:#45799B; }
+        .hp-btn--solid { background:#1B3F57; color:#FFFFFF; }
+        .hp-btn--solid:hover { background:#45799B; }
+
+        /* ── Floating help button ── */
+        @keyframes hp-help-ring {
+            0%   { box-shadow:0 0 0 0   rgba(27,63,87,.38),0px 8px 24px rgba(27,63,87,.22); }
+            60%  { box-shadow:0 0 0 10px rgba(27,63,87,0),  0px 8px 24px rgba(27,63,87,.22); }
+            100% { box-shadow:0 0 0 0   rgba(27,63,87,0),   0px 8px 24px rgba(27,63,87,.22); }
+        }
+        .hp-help-btn { position:fixed; right:25px; bottom:40px; z-index:9999; display:inline-flex; align-items:center; gap:12px; background:#1B3F57; border-radius:40px; padding:11px 18px; width:236px; cursor:pointer; text-decoration:none; border:none; animation:hp-help-ring 2.8s ease-out infinite; transition:background .2s; }
+        .hp-help-btn:hover { background:#2E5B79; animation-play-state:paused; box-shadow:0px 12px 28px rgba(27,63,87,.35); }
+        .hp-help-btn span { font-family:'Raleway',sans-serif; font-size:15px; font-weight:700; color:#FFFFFF; line-height:1; flex:1; }
+        .hp-help-icon { width:34px; height:34px; background-color:#FFFFFF; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .hp-help-icon::after { content:''; width:17px; height:17px; background-color:#1B3F57; mask-image:url('icons/phone-call.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/phone-call.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+
+        /* ── Breadcrumb ── */
+        .svc-bc { max-width:1280px; width:calc(100% - 160px); margin:0 auto; padding:20px 0 0; display:flex; align-items:center; gap:12px; }
+        .svc-bc-link { font-family:'Raleway',sans-serif; font-size:16px; font-weight:500; color:#1B3F57; text-decoration:none; }
+        .svc-bc-link:hover { opacity:.72; }
+        .svc-bc-sep { display:inline-block; width:16px; height:16px; background-color:#6298BD; mask-image:url('icons/chevron-right.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/chevron-right.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; flex-shrink:0; }
+        .svc-bc-cur { font-family:'Raleway',sans-serif; font-size:16px; font-weight:700; color:#1B3F57; }
+
+        /* ── Services section ── */
+        .svc-section { width:100%; padding:64px 80px; box-sizing:border-box; }
+        .svc-inner { max-width:1280px; margin:0 auto; display:flex; flex-direction:column; gap:48px; }
+
+        .svc-head { display:flex; flex-direction:column; align-items:center; gap:16px; }
+        .svc-head .hp-h2 { text-align:center; color:#1B3F57; }
+        .svc-subtitle { font-family:'Raleway',sans-serif; font-size:22px; font-weight:500; line-height:1.2; color:#1B3F57; margin:0; max-width:696px; text-align:center; }
+
+        /* ── Service grid ── */
+        .hp-services-grid { display:flex; flex-direction:column; gap:32px; }
+        .hp-services-row { display:flex; gap:32px; justify-content:center; }
+        .hp-service-card { flex:1 1 260px; min-width:0; max-width:336px; background:#FFFFFF; border-radius:24px; padding:16px; box-shadow:0px 4px 6px -2px rgba(56,90,116,0.03),0px 12px 16px -4px rgba(47,82,107,0.08); display:flex; flex-direction:column; gap:16px; text-decoration:none; transition:box-shadow .2s; position:relative; }
+        .hp-service-card:hover { box-shadow:0px 8px 16px -4px rgba(56,90,116,0.08),0px 20px 28px -8px rgba(47,82,107,0.12); }
+        .hp-service-img-wrap { border-radius:16px; overflow:hidden; height:203px; flex-shrink:0; }
+        .hp-service-img { width:100%; height:100%; object-fit:cover; display:block; }
+
+        /* Recommended badge */
+        .svc-badge { position:absolute; top:24px; left:24px; z-index:2; display:inline-flex; align-items:center; gap:6px; padding:6px 12px 6px 8px; background:#45799B; border-radius:20px; font-family:'Raleway',sans-serif; font-size:13px; font-weight:600; color:#FFFFFF; line-height:1; }
+        .svc-badge-star { width:14px; height:14px; flex-shrink:0; background-color:#FFFFFF; mask-image:url('icons/star.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/star.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+
+        .hp-service-body { display:flex; flex-direction:column; align-items:flex-end; gap:24px; flex:1; }
+        .hp-service-text { display:flex; flex-direction:column; gap:8px; width:100%; flex:1; }
+        .hp-service-text .hp-h3 { min-height:58px; }
+        .hp-service-footer { display:flex; justify-content:flex-end; width:100%; }
+        .hp-arrow-icon { width:54px; height:54px; background:#E2F3FF; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .2s,transform .2s; }
+        .hp-service-card:hover .hp-arrow-icon { background:#CEEBFF; transform:scale(1.1); }
+        .hp-arrow-icon::after { content:''; width:24px; height:24px; background-color:#1B3F57; mask-image:url('icons/arrow-right.svg'); mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-image:url('icons/arrow-right.svg'); -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+
+        /* ── Mobile carousel nav ── */
+        .hp-services-mob-nav { display:none; align-items:center; justify-content:space-between; width:100%; }
+        .hp-mob-arrow-btn { width:46px; height:46px; border-radius:50%; background:#FFFFFF; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; padding:0; box-shadow:0px 2px 8px rgba(27,63,87,0.12); transition:background .2s,opacity .2s; }
+        .hp-mob-arrow-btn:hover { background:#E2F3FF; }
+        .hp-mob-arrow-btn::after { content:''; width:24px; height:24px; background-color:#1B3F57; mask-repeat:no-repeat; mask-position:center; mask-size:contain; -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; -webkit-mask-size:contain; }
+        .hp-mob-arrow-btn--prev::after { mask-image:url('icons/chevron-left.svg'); -webkit-mask-image:url('icons/chevron-left.svg'); }
+        .hp-mob-arrow-btn--next::after { mask-image:url('icons/chevron-right.svg'); -webkit-mask-image:url('icons/chevron-right.svg'); }
+        .hp-mob-counter { font-family:'Raleway',sans-serif; font-size:16px; font-weight:600; line-height:1; color:#1B3F57; text-align:center; min-width:40px; }
+
+        /* ── Scroll reveal ── */
+        .hp-reveal { opacity:0; transform:translateY(24px); transition:opacity .55s ease,transform .55s ease; }
+        .hp-reveal.is-visible { opacity:1; transform:translateY(0); }
+
+        /* ── CTA ── */
+        .hp-cta { position:relative; width:100%; min-height:835px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+        .hp-cta-bg { position:absolute; inset:0; background-image:url('img/clouds_bg.png'); background-size:auto; background-position:center 44.84px; z-index:0; }
+        .hp-cta-inner { position:relative; z-index:2; max-width:1280px; width:calc(100% - 160px); display:flex; flex-direction:column; align-items:center; text-align:center; gap:28px; padding:160px 0; }
+        .hp-cta-title { font-family:'Raleway',sans-serif; font-size:64px; font-weight:700; line-height:1.2; text-transform:uppercase; color:#1B3F57; margin:0; max-width:788px; }
+        .hp-cta-desc { font-family:'Raleway',sans-serif; font-size:22px; font-weight:500; line-height:1.2; color:#2E5B79; margin:0; max-width:700px; }
+        .hp-cta-buttons { display:flex; gap:28px; margin-top:20px; }
+        @keyframes hp-birds-spin-desk { 0% { transform:translate(-50%,-50%) rotate(0deg); } 100% { transform:translate(-50%,-50%) rotate(-360deg); } }
+        @keyframes hp-birds-spin { 0% { transform:translateX(-50%) rotate(0deg); } 100% { transform:translateX(-50%) rotate(-360deg); } }
+        .hp-cta-birds-desk { position:absolute; left:50%; top:calc(50% + 80px); transform:translate(-50%,-50%); transform-origin:center center; width:800px; max-width:none; height:auto; z-index:1; pointer-events:none; animation:hp-birds-spin-desk 70s linear infinite; }
+        .hp-cta-birds-mob { display:none; position:absolute; left:50%; top:-56px; transform:translateX(-50%); transform-origin:center center; width:760px; height:auto; z-index:2; pointer-events:none; }
+
+        .mob-br { display:none; }
+
+        /* ── Responsive ── */
+        @media (max-width:1300px) {
+            .svc-section { padding:56px 60px; }
+        }
+        @media (max-width:1100px) {
+            .hp-h2 { font-size:38px; }
+            .hp-h3 { font-size:20px; }
+            .svc-subtitle { font-size:18px; }
+            .hp-cta-title { font-size:44px; }
+        }
+        @media (max-width:900px) {
+            .svc-section { padding:48px 24px; }
+            .hp-services-row { flex-direction:column; align-items:center; }
+            .hp-service-card { max-width:100%; width:100%; }
+            .hp-service-text .hp-h3 { min-height:unset; }
+        }
+        @media (max-width:480px) {
+            .hp-help-btn { width:60px; height:60px; border-radius:50%; padding:13px; gap:0; right:12px; bottom:20px; }
+            .hp-help-btn span { display:none; }
+            .hp-h2 { font-size:36px; font-weight:700; text-align:center; }
+            .hp-h3 { font-size:22px; font-weight:600; }
+            .svc-section { padding:26px 16px; }
+            .svc-head { gap:12px; }
+            .svc-subtitle { font-size:16px; }
+            .svc-bc { width:calc(100% - 32px); padding:16px 0 0; }
+            .hp-cta-bg { background-image:url('img/clouds_mobile.png'); background-position:center; }
+            .hp-cta { min-height:503px; }
+            .hp-cta-birds-desk { display:none; }
+            .hp-cta-birds-mob { display:block; animation:hp-birds-spin 70s linear infinite; }
+            .hp-cta-inner { padding:64px 0; width:calc(100% - 32px); gap:16px; z-index:3; }
+            .hp-cta-title { font-size:36px; font-weight:700; max-width:100%; }
+            .hp-cta-desc { font-size:16px; max-width:100%; }
+            .hp-cta-buttons { flex-direction:column; width:100%; margin-top:8px; gap:12px; }
+            .hp-cta-buttons .hp-btn--solid { order:-1; }
+            .hp-cta-buttons .hp-btn { width:100%; font-size:16px; padding:16px 22px; border-radius:22px; }
+            .mob-br { display:block; }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     HEADER
+════════════════════════════════════ -->
+<header class="site-header">
+    <div class="header-inner">
+        <button class="hp-mob-menu-btn" id="mobMenuBtn" aria-label="Меню">
+            <span class="hp-mob-menu-icon"></span>
+        </button>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-item">Головна</a>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Порядок дій</button>
+                <div class="nav-dropdown-menu">
+                    <a href="what-to-do-first.html" class="nav-dropdown-item">Що робити в першу чергу?</a>
+                    <a href="ceremony-preparation.html" class="nav-dropdown-item">Підготовка до церемонії</a>
+                    <a href="funeral-process.html" class="nav-dropdown-item">Організація та процес поховання</a>
+                    <a href="documents-benefits.html" class="nav-dropdown-item">Документи та пільги</a>
+                    <a href="traditions-rites-etiquette.html" class="nav-dropdown-item">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <a href="services.html" class="nav-dropdown-trigger nav-active" style="color:#45799B;">Послуги</a>
+                <div class="nav-dropdown-menu">
+                    <a href="services.html" class="nav-dropdown-item nav-dropdown-item--all nav-dropdown-active">Усі послуги</a>
+                    <a href="services-packages.html" class="nav-dropdown-item">Готові пакети послуг</a>
+                    <a href="services-legal.html" class="nav-dropdown-item">Юридичний супровід</a>
+                    <a href="services-cemetery.html" class="nav-dropdown-item">Місце на кладовищі</a>
+                    <a href="services-funeral-arrangements.html" class="nav-dropdown-item">Організація поховання</a>
+                    <a href="services-сremation.html" class="nav-dropdown-item">Кремація тіла</a>
+                    <a href="services-exhumation.html" class="nav-dropdown-item">Ексгумація та перепоховання</a>
+                    <a href="services-embalmment.html" class="nav-dropdown-item">Бальзамування</a>
+                    <a href="services-repatriation.html" class="nav-dropdown-item">Вантаж 200 та репатріація</a>
+                    <a href="services-storage.html" class="nav-dropdown-item">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="nav-dropdown-item">Транспортування тіла</a>
+                    <a href="services-dinners.html" class="nav-dropdown-item">Поминальні обіди</a>
+                </div>
+            </div>
+            <a href="products.html" class="nav-item">Товари</a>
+            <a href="about.html" class="nav-item">Про нас</a>
+        </nav>
+        <a href="home.html" class="header-logo">
+            <img src="icons/logo.svg" alt="ВИРИЙ" class="logo-img">
+        </a>
+        <div class="header-right">
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Вшанування Пам'яті</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="index.html" class="nav-dropdown-item">Сторінка пам'яті</a>
+                    <a href="#" class="nav-dropdown-item">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrap">
+                <button class="nav-dropdown-trigger">Психологічна підтримка</button>
+                <div class="nav-dropdown-menu nav-dropdown-menu--right">
+                    <a href="how-to-support.html" class="nav-dropdown-item">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="nav-dropdown-item">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="nav-dropdown-item">Професійні консультації</a>
+                </div>
+            </div>
+            <div class="header-icons">
+                <div class="icon-placeholder search-icon"></div>
+                <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+                <a href="register.html" class="icon-placeholder account-icon"></a>
+            </div>
+        </div>
+        <div class="hp-mob-header-icons">
+            <a href="cart.html" class="icon-placeholder cart-icon" aria-label="Кошик"></a>
+            <a href="register.html" class="icon-placeholder account-icon"></a>
+        </div>
+    </div>
+</header>
+
+<!-- ════════════════════════════════════
+     FLOATING HELP BUTTON
+════════════════════════════════════ -->
+<a href="tel:+387777777" class="hp-help-btn">
+    <span>Потрібна допомога?</span>
+    <div class="hp-help-icon"></div>
+</a>
+
+<!-- ════════════════════════════════════
+     BREADCRUMB
+════════════════════════════════════ -->
+<div class="svc-bc">
+    <a href="home.html" class="svc-bc-link">Головна</a>
+    <span class="svc-bc-sep" aria-hidden="true"></span>
+    <span class="svc-bc-cur">Послуги</span>
+</div>
+
+<!-- ════════════════════════════════════
+     SERVICES SECTION
+════════════════════════════════════ -->
+<section class="svc-section" id="section-services">
+    <div class="svc-inner">
+
+        <div class="svc-head">
+            <h1 class="hp-h2">Усі послуги</h1>
+            <p class="svc-subtitle">Повний спектр професійної допомоги для гідного прощання та вашого спокою</p>
+        </div>
+
+        <div class="hp-services-grid">
+
+            <!-- Row 1 -->
+            <div class="hp-services-row">
+
+                <a href="services-packages.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-packages.png" alt="Готові пакети послуг" class="hp-service-img">
+                        <span class="svc-badge"><span class="svc-badge-star" aria-hidden="true"></span>Рекомендовано</span>
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Готові пакети послуг</p>
+                            <p class="hp-body-14">Комплексні пакети для гідного прощання, що включають усе необхідне — від документів до церемонії.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="services-legal.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-legal.png" alt="Юридичний супровід" class="hp-service-img" style="object-position:center 20%;">
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Юридичний супровід та правова допомога</p>
+                            <p class="hp-body-14">Професійне вирішення правових питань, пов'язаних зі смертю особи.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="services-cemetery.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-cemetery.png" alt="Місце на кладовищі" class="hp-service-img">
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Місце на кладовищі</p>
+                            <p class="hp-body-14">Повний юридичний та організаційний супровід процедури виділення, бронювання або підпоховання на кладовищах міста та області.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- Row 2 -->
+            <div class="hp-services-row">
+
+                <a href="services-funeral-arrangements.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-funeral.png" alt="Організація поховання" class="hp-service-img">
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Організація поховання</p>
+                            <p class="hp-body-14">Комплексна координація похоронного процесу від оформлення документів до фінального поминального слова.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="services-сremation.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-cremation.png" alt="Кремація тіла" class="hp-service-img">
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Кремація тіла</p>
+                            <p class="hp-body-14">Екологічна та сучасна альтернатива традиційному похованню з дотриманням усіх обрядів і побажань родини.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="services-exhumation.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-exhumation.png" alt="Ексгумація та перепоховання" class="hp-service-img">
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Ексгумація та перепоховання</p>
+                            <p class="hp-body-14">Проведення ексгумації та повторного поховання з дотриманням усіх правових і санітарних вимог.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- Row 3 -->
+            <div class="hp-services-row">
+
+                <a href="services-embalmment.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-embalmment.png" alt="Бальзамування" class="hp-service-img">
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Бальзамування</p>
+                            <p class="hp-body-14">Професійна підготовка тіла до прощання з близькими, що забезпечує гідний вигляд і збереження протягом необхідного часу.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="services-repatriation.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-repatriation.png" alt="Вантаж 200 та репатріація" class="hp-service-img">
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Вантаж 200 та репатріація</p>
+                            <p class="hp-body-14">Транспортування померлих з-за кордону в Україну або в зворотному напрямку.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="services-storage.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-storage.png" alt="Зберігання тіла" class="hp-service-img">
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Зберігання тіла</p>
+                            <p class="hp-body-14">Безпечне та гідне зберігання в сучасно обладнаних морозильних камерах на необхідний строк.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- Row 4 -->
+            <div class="hp-services-row">
+
+                <a href="services-transportation.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-transport.png" alt="Транспортування тіла" class="hp-service-img">
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Транспортування тіла</p>
+                            <p class="hp-body-14">Дбайливе перевезення спеціалізованим автотранспортом у будь-якій точці країни.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="services-dinners.html" class="hp-service-card hp-reveal">
+                    <div class="hp-service-img-wrap">
+                        <img src="img/services/svc-dinners.png" alt="Поминальні обіди" class="hp-service-img">
+                    </div>
+                    <div class="hp-service-body">
+                        <div class="hp-service-text">
+                            <p class="hp-h3">Поминальні обіди</p>
+                            <p class="hp-body-14">Підбір залу, погодження традиційного меню та повне адміністрування трапези пам'яті.</p>
+                        </div>
+                        <div class="hp-service-footer">
+                            <div class="hp-arrow-icon" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+
+        </div><!-- /hp-services-grid -->
+
+    </div><!-- /svc-inner -->
+</section>
+
+<!-- ════════════════════════════════════
+     CTA — sky background
+════════════════════════════════════ -->
+<section class="hp-cta">
+    <div class="hp-cta-bg"></div>
+    <img src="icons/desktop_birds.svg" alt="" class="hp-cta-birds-desk">
+    <img src="icons/footer_mobile_birds.svg" alt="" class="hp-cta-birds-mob">
+    <div class="hp-cta-inner">
+        <h2 class="hp-cta-title">Ми поруч, щоб розділити <br class="mob-br">цей тягар</h2>
+        <p class="hp-cta-desc">Не намагайтеся вирішити все самостійно. Дозвольте професіоналам подбати про гідне прощання, поки ви присвячуєте час родині.</p>
+        <div class="hp-cta-buttons">
+            <a href="#section-services" class="hp-btn hp-btn--outline">Переглянути послуги</a>
+            <button class="hp-btn hp-btn--solid">Замовити консультацію</button>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="site-footer">
+    <div class="footer-top-wrapper">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <div class="logo-footer">
+                    <img src="icons/logo_footer.svg" alt="ВИРІЙ" class="footer-logo-img">
+                </div>
+                <p class="footer-tagline">Гідність та підтримка у кожну мить. Ми допомагаємо зберегти світлу пам'ять про тих, хто пішов.</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Швидка навігація</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="home.html">Головна</a></li>
+                        <li><a href="what-to-do-first.html">Порядок дій</a></li>
+                        <li><a href="services-packages.html">Готові пакети</a></li>
+                        <li><a href="products.html">Товари</a></li>
+                        <li><a href="services.html">Послуги</a></li>
+                        <li><a href="how-to-support.html">Підтримка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Вшанування пам'яті</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html">Сторінка пам'яті</a></li>
+                        <li><a href="#">Висадка рослин</a></li>
+                    </ul>
+                </div>
+                <div class="footer-menu-col">
+                    <h4 class="footer-category-title">Умови користування</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="#">Файли cookie</a></li>
+                        <li><a href="#">Політика конфіденційності</a></li>
+                        <li><a href="#">Умови використання</a></li>
+                        <li><a href="#">Ліцензія</a></li>
+                        <li><a href="#">Контакти</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-wrapper">
+        <div class="footer-bottom-container">
+            <p class="copyright">© 2026 ВИРІЙ. Всі права захищені.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-icon icon-x"></a>
+                <a href="#" class="social-icon icon-fb"></a>
+                <a href="#" class="social-icon icon-yt"></a>
+                <a href="#" class="social-icon icon-ig"></a>
+                <a href="#" class="social-icon icon-tg"></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ════════════════════════════════════
+     MOBILE NAV
+════════════════════════════════════ -->
+<div class="hp-mob-nav" id="mobNav" role="dialog" aria-modal="true" aria-label="Меню">
+    <div class="hp-mob-nav-head">
+        <img src="icons/logo.svg" alt="ВИРІЙ" width="64" height="43">
+        <button class="hp-mob-nav-close" id="mobNavClose" aria-label="Закрити меню">
+            <span class="hp-mob-nav-close-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="hp-mob-nav-search-wrap">
+        <div class="hp-mob-nav-search">
+            <input type="text" class="hp-mob-nav-search-input" placeholder="Пошук по сайту" aria-label="Пошук по сайту">
+            <span class="hp-mob-nav-search-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="hp-mob-nav-scroll">
+        <div class="hp-mob-nav-items">
+            <a href="home.html" class="hp-mob-nav-link">Головна</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Порядок дій<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="what-to-do-first.html" class="hp-mob-acc-link">Що робити в першу чергу?</a>
+                    <a href="ceremony-preparation.html" class="hp-mob-acc-link">Підготовка до церемонії</a>
+                    <a href="funeral-process.html" class="hp-mob-acc-link">Організація та процес поховання</a>
+                    <a href="documents-benefits.html" class="hp-mob-acc-link">Документи та пільги</a>
+                    <a href="traditions-rites-etiquette.html" class="hp-mob-acc-link">Традиції, обряди та етикет</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="true">Послуги<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="services-packages.html" class="hp-mob-acc-link">Готові пакети послуг</a>
+                    <a href="services-funeral-arrangements.html" class="hp-mob-acc-link">Організація поховання</a>
+                    <a href="services-сremation.html" class="hp-mob-acc-link">Кремація тіла</a>
+                    <a href="services-repatriation.html" class="hp-mob-acc-link">Вантаж 200 та репатріація</a>
+                    <a href="services-legal.html" class="hp-mob-acc-link">Юридичний супровід</a>
+                    <a href="services-dinners.html" class="hp-mob-acc-link">Поминальні обіди</a>
+                    <a href="services-cemetery.html" class="hp-mob-acc-link">Місце на кладовищі</a>
+                    <a href="services-embalmment.html" class="hp-mob-acc-link">Бальзамування</a>
+                    <a href="services-exhumation.html" class="hp-mob-acc-link">Ексгумація та перепоховання</a>
+                    <a href="services-storage.html" class="hp-mob-acc-link">Зберігання тіла</a>
+                    <a href="services-transportation.html" class="hp-mob-acc-link">Транспортування тіла</a>
+                </div>
+            </div>
+            <a href="products.html" class="hp-mob-nav-link">Товари</a>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Вшанування Пам'яті<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="index.html" class="hp-mob-acc-link">Сторінка пам'яті</a>
+                    <a href="#" class="hp-mob-acc-link">Висадка рослин</a>
+                </div>
+            </div>
+            <div class="hp-mob-acc">
+                <button class="hp-mob-acc-trigger" aria-expanded="false">Психологічна підтримка<span class="hp-mob-acc-chevron" aria-hidden="true"></span></button>
+                <div class="hp-mob-acc-body">
+                    <a href="how-to-support.html" class="hp-mob-acc-link">Як підтримати близьких</a>
+                    <a href="psychological-tips.html" class="hp-mob-acc-link">Короткі поради</a>
+                    <a href="psychological-consultations.html" class="hp-mob-acc-link">Професійні консультації</a>
+                </div>
+            </div>
+            <a href="about.html" class="hp-mob-nav-link">Про нас</a>
+        </div>
+        <hr class="hp-mob-nav-sep">
+        <div class="hp-mob-nav-footer-section">
+            <span class="hp-mob-nav-footer-title">Умови користування</span>
+            <a href="#" class="hp-mob-nav-footer-link">Файли cookie</a>
+            <a href="#" class="hp-mob-nav-footer-link">Політика конфіденційності</a>
+            <a href="#" class="hp-mob-nav-footer-link">Умови використання</a>
+            <a href="#" class="hp-mob-nav-footer-link">Ліцензія</a>
+            <a href="#" class="hp-mob-nav-footer-link">Контакти</a>
+        </div>
+    </div>
+</div>
+
+<script src="cart-storage.js"></script>
+<script>
+    /* ── Mobile menu ── */
+    (function() {
+        var btn   = document.getElementById('mobMenuBtn');
+        var nav   = document.getElementById('mobNav');
+        var close = document.getElementById('mobNavClose');
+        if (!btn || !nav) return;
+        function open()  { nav.classList.add('is-open');  document.body.style.overflow = 'hidden'; }
+        function shut()  { nav.classList.remove('is-open'); document.body.style.overflow = ''; }
+        btn.addEventListener('click', open);
+        if (close) close.addEventListener('click', shut);
+        nav.addEventListener('click', function(e) { if (e.target === nav) shut(); });
+        /* Mobile accordion */
+        nav.querySelectorAll('.hp-mob-acc-trigger').forEach(function(t) {
+            t.addEventListener('click', function() {
+                var body = t.nextElementSibling;
+                var open = t.getAttribute('aria-expanded') === 'true';
+                nav.querySelectorAll('.hp-mob-acc-trigger').forEach(function(o) {
+                    o.setAttribute('aria-expanded', 'false');
+                    if (o.nextElementSibling) o.nextElementSibling.style.maxHeight = '';
+                });
+                if (!open) {
+                    t.setAttribute('aria-expanded', 'true');
+                    if (body) body.style.maxHeight = body.scrollHeight + 'px';
+                }
+            });
+        });
+    })();
+
+    /* ── Desktop dropdown ── */
+    (function() {
+        document.querySelectorAll('.nav-dropdown-wrap').forEach(function(wrap) {
+            var trigger = wrap.querySelector('.nav-dropdown-trigger');
+            var menu    = wrap.querySelector('.nav-dropdown-menu');
+            if (!trigger || !menu) return;
+            trigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var isOpen = wrap.classList.contains('is-open');
+                document.querySelectorAll('.nav-dropdown-wrap.is-open').forEach(function(w) { w.classList.remove('is-open'); });
+                if (!isOpen) wrap.classList.add('is-open');
+            });
+        });
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.nav-dropdown-wrap.is-open').forEach(function(w) { w.classList.remove('is-open'); });
+        });
+    })();
+
+    /* ── Scroll reveal ── */
+    (function() {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.10, rootMargin: '0px 0px -24px 0px' });
+        document.querySelectorAll('.hp-reveal').forEach(function(el, i) {
+            el.style.transitionDelay = (i % 3 * 100) + 'ms';
+            observer.observe(el);
+        });
+    })();
+
+</script>
+
+</body>
+</html>

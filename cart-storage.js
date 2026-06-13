@@ -16,7 +16,7 @@
         var cart = getCart();
         var existing = null;
         for (var i = 0; i < cart.length; i++) {
-            if (cart[i].id === item.id && cart[i].type === item.type) {
+            if (cart[i].id === item.id && cart[i].type === item.type && (cart[i].attrs || '') === (item.attrs || '')) {
                 existing = cart[i]; break;
             }
         }
