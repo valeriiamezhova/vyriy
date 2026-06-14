@@ -457,11 +457,22 @@ function submitRegForm(e) {
     e.preventDefault();
     var email = document.getElementById('regEmail').value.trim();
     if (!email) return;
-    window.location.href = 'account.html';
+    if (_regFromMemory) {
+        localStorage.setItem('vyriy_logged_in', '1');
+        localStorage.setItem('vyriy_user_email', email);
+        window.location.href = 'index.html?autostart=1';
+    } else {
+        window.location.href = 'account.html';
+    }
 }
 
 function socialAuth(provider) {
-    window.location.href = 'account.html';
+    if (_regFromMemory) {
+        localStorage.setItem('vyriy_logged_in', '1');
+        window.location.href = 'index.html?autostart=1';
+    } else {
+        window.location.href = 'account.html';
+    }
 }
 
 function showDemoNotice(e) {

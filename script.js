@@ -3560,6 +3560,15 @@ document.addEventListener('DOMContentLoaded', function () {
         ws.style.display = 'none';
         document.body.classList.remove('welcome-mode');
         history.replaceState(null, '', window.location.pathname);
+        var _savedEmail = localStorage.getItem('vyriy_user_email');
+        if (_savedEmail) {
+            var _emailEl = document.querySelector('.share-user-email');
+            if (_emailEl) _emailEl.textContent = _savedEmail;
+            var _nameEl = document.querySelector('.share-user-name');
+            if (_nameEl) _nameEl.textContent = _savedEmail.split('@')[0] + ' (Ви)';
+            var _avatarEl = document.querySelector('.share-avatar');
+            if (_avatarEl) { _avatarEl.removeAttribute('src'); _avatarEl.alt = ''; }
+        }
         setTimeout(_startCreating, 100);
     } else {
         ws.style.display = 'flex';
