@@ -457,11 +457,11 @@ function submitRegForm(e) {
     e.preventDefault();
     var email = document.getElementById('regEmail').value.trim();
     if (!email) return;
-    showDemoNotice();
+    window.location.href = 'account.html';
 }
 
 function socialAuth(provider) {
-    showDemoNotice();
+    window.location.href = 'account.html';
 }
 
 function showDemoNotice(e) {
