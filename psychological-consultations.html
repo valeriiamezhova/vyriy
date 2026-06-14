@@ -104,6 +104,9 @@
             transform: translateX(-50%);
             width: 1261px; max-width: none; height: auto;
             pointer-events: none; z-index: 0;
+            filter: saturate(0) brightness(10);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 100%);
         }
         /* Mobile hero birds — hidden on desktop */
         .pc-hero-decor-mob {
@@ -452,18 +455,32 @@
         ════════════════════════════════════════ */
         .pc-cta {
             position: relative;
-            background-image: url('img/psych-consultations/cta-bg.png');
-            background-size: 140%;
-            background-position: center bottom;
+            overflow: visible;
             padding: 0;
+            z-index: 1;
+        }
+        .pc-cta-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('img/clouds_bg.png');
+            background-size: 110% auto;
+            background-position: center top;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+        .pc-cta-birds-clip {
+            position: absolute;
+            inset: 0;
             overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
         }
         @keyframes hp-birds-spin { 0% { transform: translateX(-50%) rotate(0deg); } 100% { transform: translateX(-50%) rotate(-360deg); } }
         @keyframes hp-birds-spin-desk { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(-360deg); } }
-        .pc-cta-birds-desk { position: absolute; left: 50%; top: calc(50% + 80px); transform: translate(-50%, -50%); width: 800px; max-width: none; height: auto; z-index: 1; pointer-events: none; animation: hp-birds-spin-desk 70s linear infinite; }
-        .pc-cta-birds-mob { display: none; position: absolute; left: 50%; top: -56px; transform: translateX(-50%); width: 760px; height: auto; z-index: 2; pointer-events: none; }
+        .pc-cta-birds-desk { position: absolute; left: 50%; top: calc(50% + 80px); transform: translate(-50%, -50%); transform-origin: center center; width: 800px; max-width: none; height: auto; z-index: 1; pointer-events: none; animation: hp-birds-spin-desk 70s linear infinite; }
+        .pc-cta-birds-mob { display: none; position: absolute; left: 50%; top: -56px; transform: translateX(-50%); transform-origin: center center; width: 760px; height: auto; z-index: 2; pointer-events: none; }
         .pc-cta-inner {
-            position: relative; z-index: 1;
+            position: relative; z-index: 3;
             max-width: 1280px; width: calc(100% - 160px);
             margin: 0 auto;
             display: flex; flex-direction: column; align-items: center;
@@ -587,7 +604,6 @@
             .pc-price-card { width: 100%; }
             .pc-price-card-title { font-size: 17px; }
 
-            .pc-cta { }
             .pc-cta-inner { padding: 64px 0; gap: 32px; z-index: 3; }
             .pc-cta-h1 { font-size: 32px; }
             .pc-cta-desc { font-size: 16px; }
@@ -695,12 +711,12 @@
             .pc-partner-logo-dup { display: block; }
 
             /* ── CTA section — mobile clouds background ── */
-            .pc-cta {
+            .pc-cta-bg {
                 background-image: url('img/clouds_mobile.png');
-                background-size: cover;
+                background-size: auto;
                 background-position: center;
-                min-height: 503px;
             }
+            .pc-cta { min-height: 503px; }
             .pc-cta-h1 { font-size: 36px; }
             .pc-cta-inner { gap: 16px; }
 
@@ -724,6 +740,9 @@
         @media (max-width: 480px) {
             .pc-h2 { text-align: center; }
         }
+
+        /* Footer sits above CTA overflow */
+        .site-footer { position: relative; z-index: 2; }
 
     </style>
 </head>
@@ -989,7 +1008,7 @@
 </section>
 
 <!-- ════════════════════════════════════
-     LIGHT-BG WRAPPER (sections 8 & 9)
+     LIGHT-BG WRAPPER (section 8)
 ════════════════════════════════════ -->
 <div class="pc-light-wrap">
 
@@ -1031,57 +1050,61 @@
         </div>
     </section>
 
-    <!-- ════════════════════════════════════
-         SECTION 9: ТИХИЙ ЗВ'ЯЗОК
-    ════════════════════════════════════ -->
-    <section class="pc-cta">
-        <img src="icons/desktop_birds.svg" alt="" class="pc-cta-birds-desk" aria-hidden="true">
-        <img src="icons/footer_mobile_birds.svg" alt="" class="pc-cta-birds-mob" aria-hidden="true">
-        <div class="pc-cta-inner">
-            <div class="pc-cta-title-block">
-                <h2 class="pc-cta-h1">Тихий зв'язок</h2>
-                <p class="pc-cta-desc">Ми знаємо, як важко зробити перший крок і попросити про допомогу. Наш координатор делікатно прийме ваш запит і підбере фахівця.</p>
-            </div>
-            <form class="pc-form" action="#" method="post" novalidate>
-                <div class="pc-field">
-                    <label class="pc-field-label" for="pc-name">Ваше ім'я</label>
-                    <input
-                        type="text"
-                        id="pc-name"
-                        name="name"
-                        class="pc-field-input"
-                        placeholder="Введіть ваше ім'я"
-                        autocomplete="given-name"
-                    >
-                </div>
-                <div class="pc-field">
-                    <label class="pc-field-label" for="pc-contact-method">Як краще зв'язатися з вами?</label>
-                    <input
-                        type="text"
-                        id="pc-contact-method"
-                        name="contact_method"
-                        class="pc-field-input"
-                        placeholder="Telegram / Viber / Телефонний дзвінок"
-                        autocomplete="off"
-                    >
-                </div>
-                <div class="pc-field">
-                    <label class="pc-field-label" for="pc-contact">Номер телефону / Нікнейм в месенджері</label>
-                    <input
-                        type="text"
-                        id="pc-contact"
-                        name="contact"
-                        class="pc-field-input"
-                        placeholder="+38 (055) 566 66"
-                        autocomplete="tel"
-                    >
-                </div>
-                <button type="submit" class="pc-btn-submit">Надіслати запит на підтримку</button>
-            </form>
-        </div>
-    </section>
 
 </div><!-- /pc-light-wrap -->
+
+<!-- ════════════════════════════════════
+     SECTION 9: ТИХИЙ ЗВ'ЯЗОК
+════════════════════════════════════ -->
+<section class="pc-cta">
+    <div class="pc-cta-bg"></div>
+    <div class="pc-cta-birds-clip">
+        <img src="icons/desktop_birds.svg" alt="" class="pc-cta-birds-desk" aria-hidden="true">
+        <img src="icons/footer_mobile_birds.svg" alt="" class="pc-cta-birds-mob" aria-hidden="true">
+    </div>
+    <div class="pc-cta-inner">
+        <div class="pc-cta-title-block">
+            <h2 class="pc-cta-h1">Тихий зв'язок</h2>
+            <p class="pc-cta-desc">Ми знаємо, як важко зробити перший крок і попросити про допомогу. Наш координатор делікатно прийме ваш запит і підбере фахівця.</p>
+        </div>
+        <form class="pc-form" action="#" method="post" novalidate>
+            <div class="pc-field">
+                <label class="pc-field-label" for="pc-name">Ваше ім'я</label>
+                <input
+                    type="text"
+                    id="pc-name"
+                    name="name"
+                    class="pc-field-input"
+                    placeholder="Введіть ваше ім'я"
+                    autocomplete="given-name"
+                >
+            </div>
+            <div class="pc-field">
+                <label class="pc-field-label" for="pc-contact-method">Як краще зв'язатися з вами?</label>
+                <input
+                    type="text"
+                    id="pc-contact-method"
+                    name="contact_method"
+                    class="pc-field-input"
+                    placeholder="Telegram / Viber / Телефонний дзвінок"
+                    autocomplete="off"
+                >
+            </div>
+            <div class="pc-field">
+                <label class="pc-field-label" for="pc-contact">Номер телефону / Нікнейм в месенджері</label>
+                <input
+                    type="text"
+                    id="pc-contact"
+                    name="contact"
+                    class="pc-field-input"
+                    placeholder="+38 (055) 566 66"
+                    autocomplete="tel"
+                >
+            </div>
+            <button type="submit" class="pc-btn-submit">Надіслати запит на підтримку</button>
+        </form>
+    </div>
+</section>
 
 <!-- ════════════════════════════════════
      FIXED FLOATING HELP BUTTON

@@ -64,10 +64,12 @@
         }
     };
 
-    /* Normalize filename — handle Cyrillic in URL encoding */
+    /* Normalize filename — handle Cyrillic in URL encoding and Netlify pretty URLs (no .html) */
     function getCurrentPageFile() {
         var raw = window.location.pathname.split('/').pop() || '';
-        try { return decodeURIComponent(raw); } catch(e) { return raw; }
+        try { raw = decodeURIComponent(raw); } catch(e) {}
+        if (raw && !raw.endsWith('.html')) raw += '.html';
+        return raw;
     }
 
     function getBtn() {
