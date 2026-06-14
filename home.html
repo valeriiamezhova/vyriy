@@ -2453,6 +2453,15 @@
             }
         }, { passive: true });
     })();
+
+    /* ── Scroll-to-services without adding hash to URL ── */
+    document.querySelectorAll('a[href="#section-services"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.getElementById('section-services');
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
 </script>
 
 <div class="vr-modal-overlay" id="vrModal" role="dialog" aria-modal="true" aria-labelledby="vrModalTitle">
